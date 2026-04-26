@@ -1,6 +1,4 @@
 // main.js - Comprehensive B2B Workflow for TORVO SPAIR
-import './index.css';
-
 const app = {
     state: {
         user: null,
