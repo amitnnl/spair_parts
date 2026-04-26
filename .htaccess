@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /spairparts/
+
+# Don't rewrite API calls, PHP files, or real files/directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.php$
+RewriteCond %{REQUEST_URI} !^/spairparts/api/
+RewriteCond %{REQUEST_URI} !^/spairparts/assets/
+RewriteCond %{REQUEST_URI} !^/spairparts/src/
+RewriteCond %{REQUEST_URI} !^/spairparts/node_modules/
+
+# Serve index.html for all SPA routes
+RewriteRule ^(.*)$ index.html [L]
