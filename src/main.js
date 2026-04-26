@@ -1092,13 +1092,17 @@ const app = {
             const res = await fetch(this.api('api/admin_stats.php'));
             const stats = await res.json();
             
-            document.getElementById('stat-active-quotations').textContent = stats.active_quotations;
-            document.getElementById('stat-total-partners').textContent = stats.total_partners;
-            document.getElementById('stat-total-skus').textContent = stats.total_skus;
-            document.getElementById('stat-revenue').textContent = this.state.settings.currency + stats.revenue.toLocaleString();
-            
-            const partnerStat = document.getElementById('user-active-quotations');
-            if (partnerStat) partnerStat.textContent = stats.active_quotations;
+            const elActive = document.getElementById('stat-active-quotations');
+            const elPartners = document.getElementById('stat-total-partners');
+            const elSkus = document.getElementById('stat-total-skus');
+            const elRevenue = document.getElementById('stat-revenue');
+            const elUserActive = document.getElementById('user-active-quotations');
+
+            if (elActive) elActive.textContent = stats.active_quotations;
+            if (elPartners) elPartners.textContent = stats.total_partners;
+            if (elSkus) elSkus.textContent = stats.total_skus;
+            if (elRevenue) elRevenue.textContent = (this.state.settings.currency || '₹') + stats.revenue.toLocaleString();
+            if (elUserActive) elUserActive.textContent = stats.active_quotations;
         } catch (e) {
             console.error('Failed to load stats', e);
         }
