@@ -281,40 +281,57 @@ const app = {
                     </div>
                 </section>
 
-                <!-- Shop by Category (Reference Image 3) -->
-                <section class="py-32 bg-white">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
-                            <div class="max-w-2xl">
-                                <h2 class="text-4xl font-black text-slate-900 tracking-tight">Shop by Core Categories.</h2>
-                                <p class="text-slate-500 mt-4 font-bold text-lg leading-relaxed">Precision-engineered spares for every industrial tool in your fleet.</p>
+                <!-- Shop by Category - Dynamic Accordion -->
+                <section class="py-32 bg-slate-900 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-slate-900 to-slate-900 pointer-events-none"></div>
+                    
+                    <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
+                            <div class="max-w-3xl">
+                                <h2 class="text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500 tracking-tight mb-4">Shop by Core Categories.</h2>
+                                <p class="text-slate-400 font-bold text-lg leading-relaxed max-w-xl">Precision-engineered spares for every industrial tool in your fleet. Hover to explore.</p>
                             </div>
-                            <a href="/catalog" data-link class="btn btn-secondary px-8 h-14 uppercase tracking-widest text-[10px] font-black group">
+                            <a href="/catalog" data-link class="inline-flex items-center gap-3 px-8 h-14 rounded-2xl bg-white/5 hover:bg-white/10 text-white uppercase tracking-widest text-[10px] font-black group transition-all backdrop-blur-md border border-white/10">
                                 View Entire Catalog 
-                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                </div>
                             </a>
                         </div>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                        <div class="flex flex-col md:flex-row gap-4 h-[800px] md:h-[500px] lg:h-[600px] w-full">
                             ${[
-                                { t:'Electrical Spares', d:'Switches, Carbon Brushes, Armatures & Field Coils', img:'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=600' },
-                                { t:'Mechanical Units', d:'Precision Gears, Bearings, Shafts & Housing Assemblies', img:'https://images.unsplash.com/photo-1530124566582-a618bc2615ad?auto=format&fit=crop&q=80&w=600' },
-                                { t:'Power Attachments', d:'Chucks, SDS Adaptors, Cutting Discs & Drill Bits', img:'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=600' },
-                                { t:'Maintenance Kits', d:'Complete Service Kits for Industrial Hammer Drills & Saws', img:'https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=600' }
-                            ].map(c => `
-                                <div class="group relative bg-slate-50 border border-slate-100 rounded-[40px] p-10 overflow-hidden hover:bg-white hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-700">
-                                    <div class="relative z-10">
-                                        <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all duration-500 mb-8">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                                { t: this.state.settings.cat1_title || 'Electrical Spares', d: this.state.settings.cat1_desc || 'Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.', img: this.state.settings.cat1_img || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800', icon:'M13 10V3L4 14h7v7l9-11h-7z' },
+                                { t: this.state.settings.cat2_title || 'Mechanical Units', d: this.state.settings.cat2_desc || 'Precision Gears, Bearings, Shafts & Housing Assemblies ensuring seamless kinetic transfer.', img: this.state.settings.cat2_img || 'https://images.unsplash.com/photo-1530124566582-a618bc2615ad?auto=format&fit=crop&q=80&w=800', icon:'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
+                                { t: this.state.settings.cat3_title || 'Power Attachments', d: this.state.settings.cat3_desc || 'Chucks, SDS Adaptors, Cutting Discs & Drill Bits engineered for brutal workloads.', img: this.state.settings.cat3_img || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800', icon:'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5' },
+                                { t: this.state.settings.cat4_title || 'Maintenance Kits', d: this.state.settings.cat4_desc || 'Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.', img: this.state.settings.cat4_img || 'https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800', icon:'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' }
+                            ].map((c) => `
+                                <a href="/catalog" data-link class="group relative rounded-[40px] overflow-hidden bg-slate-800 flex-1 hover:flex-[3] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-end p-6 md:p-10 shadow-2xl hover:shadow-primary/20 cursor-pointer">
+                                    <div class="absolute inset-0">
+                                        <img src="${c.img}" alt="${c.t}" class="w-full h-full object-cover opacity-50 mix-blend-overlay group-hover:scale-110 group-hover:opacity-100 transition-all duration-[1200ms] ease-out">
+                                    </div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-90 group-hover:opacity-70 transition-all duration-700"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-r from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                                    
+                                    <div class="relative z-10 w-full flex flex-col justify-end">
+                                        <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-6 group-hover:bg-primary group-hover:text-white group-hover:-translate-y-2 transition-all duration-500 border border-white/10 shrink-0 shadow-lg">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${c.icon}"/></svg>
                                         </div>
-                                        <h4 class="text-xl font-black text-slate-900 mb-3">${c.t}</h4>
-                                        <p class="text-xs text-slate-500 font-bold leading-relaxed mb-10">${c.d}</p>
-                                        <a href="/catalog" data-link class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-primary group-hover:gap-4 transition-all">Explore Spares <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+                                        <div class="overflow-hidden">
+                                            <h4 class="text-2xl md:text-3xl font-black text-white mb-2 whitespace-nowrap transform group-hover:translate-x-2 transition-transform duration-500">${c.t}</h4>
+                                            <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                                <div class="overflow-hidden">
+                                                    <div class="transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
+                                                        <p class="text-sm md:text-base text-slate-300 font-bold leading-relaxed pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 whitespace-normal min-w-[200px] max-w-sm">${c.d}</p>
+                                                        <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200 bg-primary/10 px-4 py-2 rounded-xl">
+                                                            Explore Collection <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="absolute -right-16 -bottom-16 w-64 h-64 opacity-10 group-hover:opacity-40 group-hover:scale-110 transition-all duration-700">
-                                        <img src="${c.img}" alt="${c.t}" class="w-full h-full object-cover">
-                                    </div>
-                                </div>
+                                </a>
                             `).join('')}
                         </div>
                     </div>
@@ -2562,59 +2579,130 @@ const app = {
                         <p class="text-slate-500 font-medium mt-2">Global configuration for the PARTSPRO ecosystem.</p>
                     </div>
 
-                    <div class="bg-white rounded-3xl border border-slate-200 p-10 space-y-8 shadow-xl shadow-blue-900/5">
-                        <form id="settings-form" class="space-y-8">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Platform Name</label>
-                                    <input type="text" name="site_name" value="${settings.site_name || ''}" class="input-field font-bold">
+                    <div class="bg-white rounded-[40px] p-8 md:p-14 shadow-2xl shadow-slate-200/50 border border-slate-100">
+                        <form id="settings-form" class="space-y-16">
+                            
+                            <!-- General Settings -->
+                            <div class="space-y-8">
+                                <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
+                                    <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shadow-inner">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-black text-slate-900 tracking-tight">General Setup</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Core platform identity & financials</p>
+                                    </div>
                                 </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Site Logo URL</label>
-                                    <input type="text" name="site_logo" value="${settings.site_logo || ''}" class="input-field font-bold" placeholder="Leave empty for default SVG">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Currency Symbol</label>
-                                    <input type="text" name="currency" value="${settings.currency || ''}" class="input-field font-bold">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tax Percentage (%)</label>
-                                    <input type="number" name="tax_percent" value="${settings.tax_percent || ''}" class="input-field font-bold">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Support Email</label>
-                                    <input type="email" name="contact_email" value="${settings.contact_email || ''}" class="input-field font-bold">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Contact Phone</label>
-                                    <input type="text" name="contact_phone" value="${settings.contact_phone || ''}" class="input-field font-bold">
-                                </div>
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Office Address</label>
-                                    <textarea name="contact_address" class="input-field font-bold h-24 py-4">${settings.contact_address || ''}</textarea>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Platform Name</label>
+                                        <input type="text" name="site_name" value="${settings.site_name || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Site Logo URL</label>
+                                        <input type="text" name="site_logo" value="${settings.site_logo || ''}" placeholder="Leave empty for default SVG" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Currency Symbol</label>
+                                        <input type="text" name="currency" value="${settings.currency || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tax Percentage (%)</label>
+                                        <input type="number" name="tax_percent" value="${settings.tax_percent || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="divider"></div>
+                            <!-- Contact Info -->
+                            <div class="space-y-8">
+                                <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
+                                    <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-inner">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-black text-slate-900 tracking-tight">Contact Details</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Official communication channels</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Support Email</label>
+                                        <input type="email" name="contact_email" value="${settings.contact_email || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Contact Phone</label>
+                                        <input type="text" name="contact_phone" value="${settings.contact_phone || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all">
+                                    </div>
+                                    <div class="space-y-2 md:col-span-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Office Address</label>
+                                        <textarea name="contact_address" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all h-28 resize-none">${settings.contact_address || ''}</textarea>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Title (Landing Page)</label>
-                                    <input type="text" name="hero_title" value="${settings.hero_title || ''}" class="input-field font-bold">
+                            <!-- Landing Page Hero -->
+                            <div class="space-y-8">
+                                <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
+                                    <div class="w-14 h-14 rounded-2xl bg-fuchsia-50 text-fuchsia-600 flex items-center justify-center shadow-inner">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-black text-slate-900 tracking-tight">Hero Section</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Landing page visual impact</p>
+                                    </div>
                                 </div>
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Subtitle</label>
-                                    <textarea name="hero_subtitle" class="input-field font-bold h-24 py-4">${settings.hero_subtitle || ''}</textarea>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="space-y-2 md:col-span-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Title</label>
+                                        <input type="text" name="hero_title" value="${settings.hero_title || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/10 transition-all">
+                                    </div>
+                                    <div class="space-y-2 md:col-span-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Subtitle</label>
+                                        <textarea name="hero_subtitle" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/10 transition-all h-28 resize-none">${settings.hero_subtitle || ''}</textarea>
+                                    </div>
+                                    <div class="space-y-2 md:col-span-2">
+                                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Image URL</label>
+                                        <input type="text" name="hero_image" value="${settings.hero_image || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/10 transition-all">
+                                    </div>
                                 </div>
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Image URL</label>
-                                    <input type="text" name="hero_image" value="${settings.hero_image || ''}" class="input-field font-bold">
+                            </div>
+
+                            <!-- Categories -->
+                            <div class="space-y-8">
+                                <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
+                                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-inner">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-black text-slate-900 tracking-tight">Home Categories</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Dynamic accordion sections</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-6">
+                                    ${[1, 2, 3, 4].map(i => `
+                                        <div class="p-8 bg-slate-50 border border-slate-100 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-6 relative group hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-900/5 transition-all">
+                                            <div class="absolute -left-3 -top-3 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs shadow-lg">0${i}</div>
+                                            <div class="space-y-2">
+                                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Category Title</label>
+                                                <input type="text" name="cat${i}_title" value="${settings['cat'+i+'_title'] || ''}" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all">
+                                            </div>
+                                            <div class="space-y-2">
+                                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Image URL</label>
+                                                <input type="text" name="cat${i}_img" value="${settings['cat'+i+'_img'] || ''}" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all">
+                                            </div>
+                                            <div class="space-y-2 md:col-span-2">
+                                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Description</label>
+                                                <input type="text" name="cat${i}_desc" value="${settings['cat'+i+'_desc'] || ''}" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all">
+                                            </div>
+                                        </div>
+                                    `).join('')}
                                 </div>
                             </div>
                             
-                            <div class="pt-6 border-t border-slate-100 flex justify-end gap-4">
-                                <button type="button" onclick="app.renderAdmin(document.getElementById('view-container'))" class="px-8 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest text-slate-400 hover:bg-slate-50 transition-all">Cancel</button>
-                                <button type="submit" class="px-8 py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:scale-[1.02] transition-all">Save Configuration</button>
+                            <!-- Actions -->
+                            <div class="pt-8 mt-12 border-t border-slate-100 flex flex-col sm:flex-row justify-end gap-4">
+                                <button type="button" onclick="app.renderAdmin(document.getElementById('view-container'))" class="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-50 transition-all border border-transparent hover:border-slate-200">Cancel</button>
+                                <button type="submit" class="px-10 py-5 rounded-2xl bg-slate-900 text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/30 transition-all">Save Global Settings</button>
                             </div>
                         </form>
                     </div>
