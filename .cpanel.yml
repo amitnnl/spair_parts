@@ -1,7 +1,7 @@
 deployment:
   tasks:
     # REPLACE 'username' with your actual cPanel username
-    - export DEPLOYPATH=/home/username/public_html
+    - export DEPLOYPATH=/home/hotelsunplaza/torvotool.com
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp .htaccess $DEPLOYPATH
     - /bin/cp -r api $DEPLOYPATH

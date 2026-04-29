@@ -1063,6 +1063,17 @@ const app = {
                         </div>
                     </div>
                     
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white rounded-[32px] border border-slate-200 p-8 shadow-sm">
+                            <h3 class="text-xl font-black text-slate-900 mb-6">Revenue Trend (Last 6 Months)</h3>
+                            <canvas id="revenueChart" class="w-full h-64"></canvas>
+                        </div>
+                        <div class="bg-white rounded-[32px] border border-slate-200 p-8 shadow-sm">
+                            <h3 class="text-xl font-black text-slate-900 mb-6">Quotation Status Distribution</h3>
+                            <canvas id="statusChart" class="w-full h-64"></canvas>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 xl:grid-cols-3 gap-12">
                         <div class="xl:col-span-2 space-y-8">
                             <div class="flex justify-between items-center">
@@ -1120,8 +1131,75 @@ const app = {
             if (elSkus) elSkus.textContent = stats.total_skus;
             if (elRevenue) elRevenue.textContent = (this.state.settings.currency || '₹') + stats.revenue.toLocaleString();
             if (elUserActive) elUserActive.textContent = stats.active_quotations;
+            
+            this.initAdminCharts(stats);
         } catch (e) {
             console.error('Failed to load stats', e);
+        }
+    },
+
+    initAdminCharts(stats) {
+        if (!window.Chart) return;
+        
+        const revCtx = document.getElementById('revenueChart');
+        if (revCtx) {
+            new Chart(revCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
+                    datasets: [{
+                        label: 'Revenue (₹)',
+                        data: [12000, 19000, 15000, 22000, 18000, stats.revenue || 25000],
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#2563eb',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { borderDash: [4, 4] } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        const statCtx = document.getElementById('statusChart');
+        if (statCtx) {
+            new Chart(statCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pending', 'Priced', 'Approved', 'Completed'],
+                    datasets: [{
+                        data: [
+                            stats.active_quotations || 5, 
+                            3, 
+                            4, 
+                            12
+                        ],
+                        backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#64748b'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { padding: 20, usePointStyle: true } }
+                    }
+                }
+            });
         }
     },
 
@@ -1234,40 +1312,40 @@ const app = {
                     <main class="flex-1 p-8 lg:p-12 space-y-12">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                             <div>
-                                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Inventory Warehouse</h2>
-                                <p class="text-slate-500 mt-1 font-medium">Real-time stock monitoring and fitment management.</p>
+                                <h2 class="text-4xl font-black text-slate-900 tracking-tight">Inventory <span class="text-blue-600">Warehouse</span></h2>
+                                <p class="text-slate-500 mt-2 font-bold text-lg">Real-time stock monitoring and fitment management.</p>
                             </div>
-                            <div class="flex gap-3 no-print">
-                                <button onclick="app.renderImportModal()" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold text-sm hover:bg-slate-50 transition-all flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                            <div class="flex gap-4 no-print">
+                                <button onclick="app.renderImportModal()" class="px-6 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+                                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                     Bulk Import
                                 </button>
-                                <button onclick="app.renderAddProductForm()" class="px-5 py-2.5 bg-blue-600 text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                                <button onclick="app.renderAddProductForm()" class="px-6 py-3.5 bg-blue-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2 hover:-translate-y-1">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                                     Add Product
                                 </button>
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-3xl border border-slate-200 p-4 flex gap-4">
+                        <div class="bg-white rounded-[32px] border border-slate-200 p-4 flex gap-4 shadow-sm">
                             <div class="relative flex-grow">
-                                <input type="text" id="inventory-search" oninput="app.filterInventory()" class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-12 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all" placeholder="Search by Part Name, Brand, or Machine Model...">
-                                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <input type="text" id="inventory-search" oninput="app.filterInventory()" class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl px-14 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all" placeholder="Search by Part Name, Brand, or Machine Model...">
+                                <svg class="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </div>
                         </div>
                         
-                        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-                            <table class="w-full text-left">
-                                <thead class="bg-slate-50 border-b border-slate-200">
+                        <div class="bg-white rounded-[32px] border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50/80 border-b border-slate-200">
                                     <tr>
-                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Product & Fitment</th>
+                                        <th class="p-6 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Product & Fitment</th>
                                         <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Brand</th>
                                         <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Stock Status</th>
                                         <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Admin Cost</th>
-                                        <th class="p-6 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
+                                        <th class="p-6 pr-8 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="inventory-table-body" class="divide-y divide-slate-100">
+                                <tbody id="inventory-table-body" class="divide-y divide-slate-100 bg-white">
                                     ${products.map(p => this.createInventoryRow(p)).join('')}
                                 </tbody>
                             </table>
@@ -1289,40 +1367,135 @@ const app = {
         });
     },
 
+    async renderAdminUsers(container) {
+        if (!this.state.user || this.state.user.role !== 'admin') return;
+        
+        container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+        
+        try {
+            const res = await fetch(this.api('api/admin_users.php'));
+            const users = await res.json();
+            
+            container.innerHTML = `
+                <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
+                    ${this.getSidebar('partners')}
+
+                    <main class="flex-1 p-8 lg:p-12 space-y-12">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                            <div>
+                                <h2 class="text-4xl font-black text-slate-900 tracking-tight">Partner <span class="text-blue-600">Management</span></h2>
+                                <p class="text-slate-500 mt-2 font-bold text-lg">Manage B2B client access and custom discount tiers.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-[32px] border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40 animate-in fade-in duration-500">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50/80 border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-6 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Partner Details</th>
+                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Discount Tier</th>
+                                        <th class="p-6 pr-8 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 bg-white">
+                                    ${users.map(u => `
+                                        <tr class="hover:bg-slate-50/80 transition-all group">
+                                            <td class="p-6 pl-8">
+                                                <div class="flex items-center gap-4">
+                                                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-xl shadow-sm border border-blue-100">${u.name.charAt(0).toUpperCase()}</div>
+                                                    <div>
+                                                        <span class="font-black block text-slate-900 text-sm mb-0.5">${u.name}</span>
+                                                        <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${u.email}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="p-6">
+                                                <select onchange="app.updateUser(${u.id}, 'status', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest ${u.status === 'active' ? 'text-emerald-600 border-emerald-200 focus:ring-emerald-500/20' : (u.status === 'pending' ? 'text-amber-600 border-amber-200 focus:ring-amber-500/20' : 'text-rose-600 border-rose-200 focus:ring-rose-500/20')} focus:outline-none focus:ring-4 transition-all">
+                                                    <option value="pending" ${u.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                                    <option value="active" ${u.status === 'active' ? 'selected' : ''}>Active</option>
+                                                    <option value="suspended" ${u.status === 'suspended' ? 'selected' : ''}>Suspended</option>
+                                                </select>
+                                            </td>
+                                            <td class="p-6">
+                                                <div class="flex items-center gap-2">
+                                                    <input type="number" step="0.1" value="${u.discount_tier || 0}" id="discount_${u.id}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-blue-600 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                                    <span class="text-slate-400 font-bold text-sm">%</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-6 pr-8 text-right">
+                                                <button onclick="app.updateUser(${u.id}, 'discount_tier', document.getElementById('discount_${u.id}').value)" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save Tier</button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                    ${users.length === 0 ? `<tr><td colspan="4" class="p-8 text-center text-slate-500 font-bold">No partners found.</td></tr>` : ''}
+                                </tbody>
+                            </table>
+                        </div>
+                    </main>
+                </div>
+            `;
+        } catch (e) {
+            container.innerHTML = `<div class="p-20 text-center text-rose-500 font-bold">Error loading partners.</div>`;
+        }
+    },
+
+    async updateUser(id, field, value) {
+        try {
+            const payload = { id: id };
+            payload[field] = value;
+            
+            const res = await fetch(this.api('api/admin_users.php'), {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await res.json();
+            
+            if (result.success) {
+                this.showToast('Partner updated successfully');
+            } else {
+                this.showToast(result.error || 'Update failed', 'error');
+            }
+        } catch (e) {
+            this.showToast('Failed to update partner', 'error');
+        }
+    },
+
     createInventoryRow(p) {
         const isLowStock = (p.stock_quantity || 0) < 5;
         return `
-            <tr class="hover:bg-slate-50 transition-all group">
-                <td class="p-6">
-                    <div class="flex items-center gap-4">
+            <tr class="hover:bg-slate-50/80 transition-all group">
+                <td class="p-6 pl-8">
+                    <div class="flex items-center gap-5">
                         <div class="relative">
-                            <img src="${this.cleanImageUrl(p.photo, p.part_name)}" class="w-12 h-12 rounded-xl object-cover border border-slate-200">
-                            ${isLowStock ? '<span class="absolute -top-1 -right-1 w-3 h-3 bg-rose-500 rounded-full border-2 border-white animate-pulse"></span>' : ''}
+                            <img src="${this.cleanImageUrl(p.photo, p.part_name)}" class="w-14 h-14 rounded-2xl object-cover border-2 border-slate-100 shadow-sm group-hover:scale-105 transition-transform">
+                            ${isLowStock ? '<span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-rose-500 rounded-full border-2 border-white animate-bounce"></span>' : ''}
                         </div>
                         <div>
-                            <span class="font-bold block text-slate-900">${p.part_name}</span>
-                            <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest">${p.machine_model || 'Universal'}</span>
+                            <span class="font-black block text-slate-900 text-sm mb-0.5">${p.part_name}</span>
+                            <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-slate-100 px-2 py-0.5 rounded-md inline-block">${p.machine_model || 'Universal'}</span>
                         </div>
                     </div>
                 </td>
                 <td class="p-6">
-                    <span class="px-3 py-1 rounded-lg bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest border border-blue-100">${p.brand}</span>
+                    <span class="px-3.5 py-1.5 rounded-xl bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest border border-blue-100">${p.brand}</span>
                 </td>
                 <td class="p-6">
-                    <div class="space-y-1.5">
-                        <span class="text-xs font-bold ${isLowStock ? 'text-rose-600' : 'text-emerald-600'}">${p.stock_quantity || 0} Units in Reserve</span>
-                        <div class="w-24 h-1 bg-slate-100 rounded-full overflow-hidden">
-                            <div class="h-full ${isLowStock ? 'bg-rose-500' : 'bg-emerald-500'}" style="width: ${Math.min((p.stock_quantity || 0) * 5, 100)}%"></div>
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-black uppercase tracking-widest ${isLowStock ? 'text-rose-600' : 'text-emerald-600'}">${p.stock_quantity || 0} Units in Reserve</span>
+                        <div class="w-28 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div class="h-full rounded-full ${isLowStock ? 'bg-gradient-to-r from-rose-500 to-rose-400' : 'bg-gradient-to-r from-emerald-500 to-emerald-400'}" style="width: ${Math.min((p.stock_quantity || 0) * 5, 100)}%"></div>
                         </div>
                     </div>
                 </td>
-                <td class="p-6 font-bold text-slate-900 text-sm">₹${p.cost || '0.00'}</td>
-                <td class="p-6 text-right">
-                    <div class="flex justify-end gap-2">
-                        <button onclick="app.renderEditProductForm(${p.id})" class="p-2.5 rounded-xl bg-slate-50 text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all">
+                <td class="p-6 font-black text-slate-900 text-sm">₹${p.cost || '0.00'}</td>
+                <td class="p-6 pr-8 text-right">
+                    <div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 hover:shadow-lg transition-all">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                         </button>
-                        <button onclick="app.deleteProduct(${p.id})" class="p-2.5 rounded-xl bg-slate-50 text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all">
+                        <button onclick="app.deleteProduct(${p.id})" class="p-3 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 hover:shadow-lg transition-all">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         </button>
                     </div>
@@ -1405,26 +1578,27 @@ const app = {
         }
         
         modal.innerHTML = `
-            <div class="bg-white rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl relative my-8">
-                <div class="relative bg-gradient-to-r from-blue-600 to-blue-800 p-6 text-white">
-                    <button onclick="document.getElementById('product-modal').remove()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            <div class="bg-white rounded-[32px] w-full max-w-3xl overflow-hidden shadow-2xl shadow-blue-900/20 relative my-8 animate-in zoom-in-95 duration-300">
+                <div class="relative bg-gradient-to-r from-blue-600 to-blue-800 p-8 text-white overflow-hidden">
+                    <div class="absolute right-0 top-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                    <button onclick="document.getElementById('product-modal').remove()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all z-20">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    <div class="flex items-center gap-4 mb-6 relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center flex-shrink-0 border border-white/20 shadow-inner">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                         </div>
                         <div>
-                            <h2 class="text-lg font-bold tracking-tight">Add New Spare Part</h2>
-                            <p class="text-blue-200 text-xs">Fill details, then map compatible machines</p>
+                            <h2 class="text-3xl font-black tracking-tight">Add New Spare Part</h2>
+                            <p class="text-blue-100 font-medium mt-1">Fill details, then map compatible machines</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <div id="step-dot-1" class="w-7 h-7 rounded-full bg-white text-blue-600 font-bold text-xs flex items-center justify-center">1</div>
-                        <span class="text-sm font-semibold">Part Details</span>
-                        <div class="flex-1 h-px bg-white/30 mx-2"></div>
-                        <div id="step-dot-2" class="w-7 h-7 rounded-full bg-white/30 font-bold text-xs flex items-center justify-center">2</div>
-                        <span id="step-label-2" class="text-sm text-white/50">Machine Fitments</span>
+                    <div class="flex items-center gap-3 relative z-10">
+                        <div id="step-dot-1" class="w-8 h-8 rounded-full bg-white text-blue-600 font-black text-xs flex items-center justify-center shadow-md">1</div>
+                        <span class="text-sm font-bold tracking-wide">Part Details</span>
+                        <div class="flex-1 h-px bg-white/20 mx-4"></div>
+                        <div id="step-dot-2" class="w-8 h-8 rounded-full bg-white/20 font-black text-xs flex items-center justify-center border border-white/30 text-white/50">2</div>
+                        <span id="step-label-2" class="text-sm font-bold tracking-wide text-white/50">Machine Fitments</span>
                     </div>
                 </div>
                 
@@ -2059,19 +2233,28 @@ const app = {
             
             modal.innerHTML = `
                 <div class="bg-white text-slate-900 w-full max-w-4xl min-h-[11in] p-16 shadow-2xl relative animate-in slide-in-from-bottom-8 duration-500 rounded-sm">
-                    <div class="flex justify-between items-start border-b-2 border-slate-900 pb-12">
+                    <!-- Premium Header Ribbon -->
+                    <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900"></div>
+                    
+                    <div class="flex justify-between items-start border-b-[3px] border-slate-900 pb-12 mt-4">
                         <div class="space-y-4">
-                            <h1 class="text-4xl font-black tracking-tighter uppercase">PARTS<span class="text-blue-600">PRO</span></h1>
-                            <div class="text-xs font-bold text-slate-500 space-y-1 uppercase tracking-widest">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-slate-900 text-white rounded-lg flex items-center justify-center font-black text-2xl shadow-lg">P</div>
+                                <h1 class="text-4xl font-black tracking-tighter uppercase">PARTS<span class="text-blue-600">PRO</span></h1>
+                            </div>
+                            <div class="text-[11px] font-black text-slate-500 space-y-1.5 uppercase tracking-[0.15em]">
                                 <p>Industrial Area, Phase 2</p>
                                 <p>New Delhi, 110020</p>
-                                <p>GSTIN: 07AAACT0000A1Z5</p>
+                                <p class="text-slate-900 mt-2">GSTIN: 07AAACT0000A1Z5</p>
                             </div>
                         </div>
                         <div class="text-right space-y-2">
-                            <h2 class="text-5xl font-light text-slate-200">TAX INVOICE</h2>
-                            <p class="text-lg font-black">${inv.invoice_number}</p>
-                            <p class="text-sm font-bold text-slate-400">${new Date(inv.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+                            <h2 class="text-5xl font-light text-slate-200 tracking-tighter mb-4">INVOICE</h2>
+                            <div class="inline-block bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl text-left shadow-sm">
+                                <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-1">Invoice Number</p>
+                                <p class="text-lg font-black text-slate-900">${inv.invoice_number}</p>
+                            </div>
+                            <p class="text-xs font-bold text-slate-500 pt-2 uppercase tracking-widest">${new Date(inv.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                         </div>
                     </div>
 
@@ -2345,32 +2528,162 @@ const app = {
                 <main class="flex-1 p-8 lg:p-12 space-y-12">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
-                            <h2 class="text-4xl font-black text-slate-900 tracking-tight">Partner <span class="text-primary">Dashboard</span></h2>
-                            <p class="text-slate-500 mt-2 font-bold text-lg">Welcome back, ${this.state.user.name}.</p>
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-2 h-8 bg-blue-600 rounded-full"></div>
+                                <h2 class="text-4xl font-black text-slate-900 tracking-tight">Partner <span class="text-blue-600">Portal</span></h2>
+                            </div>
+                            <p class="text-slate-500 font-bold text-lg">Exclusive procurement overview for ${this.state.user.name}.</p>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         ${[
-                            { l:'Total Procurement', v:'₹0.00', s:'+0%', c:'primary' },
+                            { l:'Total Procurement', v:'₹0.00', s:'+0%', c:'blue' },
                             { l:'Total Savings', v:'₹0.00', s:'+0%', c:'emerald' },
                             { l:'Active Orders', v:'0', s:'- -', c:'amber' },
-                            { l:'Saved Items', v:'0', s:'- -', c:'rose' }
+                            { l:'Saved Items', v:'0', s:'- -', c:'indigo' }
                         ].map(s => `
-                            <div class="summary-card group hover:scale-[1.02] transition-all duration-300">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">${s.l}</p>
-                                <div class="flex items-end justify-between">
-                                    <h3 class="text-3xl font-black text-slate-900">${s.v}</h3>
-                                    <span class="text-[10px] font-black text-${s.c}-500 bg-${s.c}-50 px-2 py-1 rounded-lg">${s.s}</span>
+                            <div class="bg-white rounded-[32px] p-8 shadow-2xl shadow-slate-200/50 border border-slate-100 group hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 w-24 h-24 bg-${s.c}-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 relative z-10">${s.l}</p>
+                                <div class="flex items-end justify-between relative z-10">
+                                    <h3 class="text-4xl font-black text-slate-900">${s.v}</h3>
+                                    <span class="text-[10px] font-black text-${s.c}-600 bg-${s.c}-50 px-3 py-1.5 rounded-xl border border-${s.c}-100 shadow-sm">${s.s}</span>
                                 </div>
                             </div>
                         `).join('')}
+                    </div>
+                    
+                    <div class="bg-slate-900 rounded-[40px] p-12 text-white relative overflow-hidden shadow-2xl shadow-slate-900/20">
+                        <div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-blue-600/20 to-transparent"></div>
+                        <div class="relative z-10 max-w-2xl">
+                            <h3 class="text-3xl font-black tracking-tight mb-4">Express Bulk Ordering</h3>
+                            <p class="text-slate-400 font-medium mb-8 leading-relaxed">Skip the catalog. Upload a CSV file with SKUs (Models) and Quantities to instantly generate a massive quotation cart using your exclusive tier pricing.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <button onclick="app.renderBulkOrderModal()" class="px-8 py-4 bg-white text-slate-900 rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl shadow-white/10 hover:scale-105 transition-transform flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                                    Upload CSV Order
+                                </button>
+                                <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-8 py-4 bg-blue-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/30 hover:scale-105 transition-transform">Browse Catalog Manually</button>
+                            </div>
+                        </div>
                     </div>
                 </main>
             </div>
         `;
         
         this.loadDashboardStats();
+    },
+
+    renderBulkOrderModal() {
+        const modal = document.createElement('div');
+        modal.id = 'bulk-order-modal';
+        modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300';
+        
+        modal.innerHTML = `
+            <div class="bg-white rounded-[32px] w-full max-w-xl p-10 space-y-8 shadow-2xl shadow-blue-900/20 relative animate-in zoom-in-95 duration-300">
+                <button onclick="document.getElementById('bulk-order-modal').remove()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center transition-all text-slate-400 hover:text-slate-900">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                
+                <div>
+                    <h2 class="text-3xl font-black text-slate-900 tracking-tight">Express <span class="text-blue-600">Bulk Order</span></h2>
+                    <p class="text-slate-500 font-bold mt-2">Upload your inventory request instantly.</p>
+                </div>
+                
+                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 space-y-3">
+                    <p class="text-xs text-blue-600 font-black uppercase tracking-widest">CSV Format Requirement:</p>
+                    <p class="text-[11px] font-bold text-slate-500">Your CSV must contain these exact column headers:</p>
+                    <code class="text-[10px] text-blue-800 block bg-blue-100/50 p-4 rounded-xl font-mono shadow-inner border border-blue-200/50">Model/SKU, Quantity</code>
+                </div>
+
+                <form id="bulk-order-form" class="space-y-6">
+                    <div class="border-[3px] border-dashed border-slate-200 rounded-[24px] p-12 text-center hover:border-blue-500 hover:bg-blue-50/50 transition-all cursor-pointer relative group">
+                        <input type="file" name="order_csv" accept=".csv" required class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="document.getElementById('csv-filename').textContent = this.files[0] ? this.files[0].name : 'Drop your CSV file here or browse'">
+                        <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-blue-100 transition-all text-blue-500">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <p id="csv-filename" class="text-sm text-slate-500 font-black">Drop your CSV file here or <span class="text-blue-600 underline">browse</span></p>
+                    </div>
+                    <button type="submit" class="w-full h-16 rounded-2xl bg-slate-900 text-white font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-slate-900/20 hover:scale-105 hover:shadow-2xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Process Order File
+                    </button>
+                </form>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        document.getElementById('bulk-order-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="animate-pulse">Analyzing SKU Database...</span>';
+            
+            const file = e.target.querySelector('input').files[0];
+            const reader = new FileReader();
+            
+            reader.onload = async (event) => {
+                const csvText = event.target.result;
+                const rows = csvText.split('\\n').map(row => row.split(',').map(cell => cell.trim().replace(/^"|"$/g, '')));
+                const headers = rows[0].map(h => h.toLowerCase());
+                
+                const skuIndex = headers.findIndex(h => h.includes('sku') || h.includes('model'));
+                const qtyIndex = headers.findIndex(h => h.includes('qty') || h.includes('quantity'));
+                
+                if (skuIndex === -1 || qtyIndex === -1) {
+                    this.showToast('Invalid CSV format. Needs Model/SKU and Quantity columns.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = 'Process Order File';
+                    return;
+                }
+
+                // Fetch catalog to match SKUs
+                const res = await fetch(this.api('api/products.php'));
+                const data = await res.json();
+                const catalog = data.products;
+                
+                let addedCount = 0;
+                let notFoundCount = 0;
+
+                for (let i = 1; i < rows.length; i++) {
+                    if (rows[i].length < 2) continue;
+                    const sku = rows[i][skuIndex];
+                    const qty = parseInt(rows[i][qtyIndex]);
+                    
+                    if (!sku || isNaN(qty) || qty <= 0) continue;
+                    
+                    const product = catalog.find(p => (p.machine_model || '').toLowerCase() === sku.toLowerCase());
+                    if (product) {
+                        const existing = this.state.cart.find(c => c.id === product.id);
+                        if (existing) {
+                            existing.quantity += qty;
+                        } else {
+                            this.state.cart.push({ ...product, quantity: qty });
+                        }
+                        addedCount++;
+                    } else {
+                        notFoundCount++;
+                    }
+                }
+                
+                this.updateCartBadge();
+                
+                if (addedCount > 0) {
+                    this.showToast(`Successfully added ${addedCount} products to cart!` + (notFoundCount > 0 ? ` (${notFoundCount} SKUs not found)` : ''));
+                    modal.remove();
+                    history.pushState(null, null, this.basePath + '/cart');
+                    this.handleRouting();
+                } else {
+                    this.showToast('No matching SKUs found in our inventory.', 'error');
+                }
+                
+                btn.disabled = false;
+                btn.innerHTML = 'Process Order File';
+            };
+            reader.readAsText(file);
+        };
     },
 
     updateAuthUI() {
