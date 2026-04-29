@@ -48,8 +48,7 @@
         body {
             background-color: #f8fafc;
             -webkit-font-smoothing: antialiased;
-            scrollbar-width: thin;
-            scrollbar-color: #cbd5e1 transparent;
+            -webkit-font-smoothing: antialiased;
         }
         .card {
             background: white;
@@ -164,7 +163,7 @@
                             
                             <!-- Logged In Links (Hidden by default) -->
                             <a href="/dashboard" data-link id="nav-dashboard" class="hidden px-5 py-2 rounded-xl text-sm font-black text-primary uppercase tracking-widest hover:bg-primary/5 transition-all">Dashboard</a>
-                            <button id="desktop-logout-btn" class="hidden items-center gap-3 px-4 py-2 rounded-xl bg-slate-50 border border-slate-100 text-sm font-bold text-slate-600 hover:bg-slate-100 transition-all">
+                            <button id="desktop-logout-btn" aria-label="User Account" class="hidden items-center gap-3 px-4 py-2 rounded-xl bg-slate-50 border border-slate-100 text-sm font-bold text-slate-600 hover:bg-slate-100 transition-all">
                                 <!-- JS will inject user info here -->
                             </button>
                         </div>

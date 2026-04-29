@@ -22,8 +22,7 @@
 @layer base {
     body {
         @apply font-sans bg-slate-50 text-slate-900 antialiased;
-        scrollbar-width: thin;
-        scrollbar-color: #cbd5e1 transparent;
+        @apply font-sans bg-slate-50 text-slate-900 antialiased;
     }
     h1, h2, h3, h4, h5, h6 {
         @apply font-display font-bold text-slate-900 tracking-tight;
