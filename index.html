@@ -15,96 +15,7 @@
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Tailwind Play CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0056B3',
-                        'primary-dark': '#004494',
-                        'primary-light': '#3385ff',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Poppins', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'premium': '0 10px 30px -10px rgba(0, 86, 179, 0.1), 0 4px 6px -4px rgba(0, 86, 179, 0.05)',
-                        'premium-hover': '0 20px 40px -12px rgba(0, 86, 179, 0.15)',
-                    }
-                }
-            }
-        }
-    </script>
 
-    <style type="text/css">
-        :root {
-            --primary: #0056B3;
-            --primary-dark: #004494;
-        }
-        body {
-            background-color: #f8fafc;
-            -webkit-font-smoothing: antialiased;
-            -webkit-font-smoothing: antialiased;
-        }
-        .card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 1rem;
-            transition: all 0.3s ease;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-        .nav-link {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #475569;
-            transition: color 0.2s;
-        }
-        .nav-link:hover { color: #0056B3; }
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            font-size: 0.875rem;
-            font-weight: 700;
-            color: #64748b;
-            transition: all 0.2s;
-        }
-        .sidebar-link.active {
-            background: #0056B3;
-            color: white;
-            box-shadow: 0 10px 15px -3px rgba(0, 86, 179, 0.3);
-        }
-        .data-table th {
-            padding: 1rem;
-            font-size: 10px;
-            font-weight: 900;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            background: #f8fafc;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .mobile-nav-item.active { color: #0056B3; }
-        .mobile-nav-item.active svg { transform: scale(1.1); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-    </style>
 </head>
 <body class="bg-slate-50">
 
@@ -122,6 +33,7 @@
                     <a href="#" class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg> Bulk Order</a>
                     <a href="#" class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Quick Order</a>
                     <a href="#" class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Download Center</a>
+                    <a href="/login" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Admin Access</a>
                     <span class="opacity-30">|</span>
                     <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg> EN</span>
                 </div>
@@ -254,7 +166,7 @@
     <!-- Toast Container -->
     <div id="toast-container" class="fixed bottom-24 right-6 z-[100] flex flex-col gap-3"></div>
 
-    <script type="module" src="src/main.js?v=1.0.4"></script>
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
 

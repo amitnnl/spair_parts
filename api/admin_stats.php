@@ -3,7 +3,7 @@ require_once '../config/database.php';
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
     echo json_encode(['error' => 'Unauthorized']);
     exit;
 }
@@ -16,11 +16,11 @@ try {
     $active_quotations = $stmt->fetchColumn();
 
     // 2. Total Partners (active or pending)
-    $stmt = $db->query("SELECT COUNT(*) FROM users WHERE role = 'user'");
+    $stmt = $db->query("SELECT COUNT(*) FROM users WHERE LOWER(role) = 'user'");
     $total_partners = $stmt->fetchColumn();
     
-    // 3. Pending Approvals
-    $stmt = $db->query("SELECT COUNT(*) FROM users WHERE status = 'pending'");
+    // 3. Pending Approvals (Partners only)
+    $stmt = $db->query("SELECT COUNT(*) FROM users WHERE status = 'pending' AND LOWER(role) = 'user'");
     $pending_partners = $stmt->fetchColumn();
 
     // 4. Total SKUs

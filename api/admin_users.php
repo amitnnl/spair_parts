@@ -3,7 +3,7 @@ require_once '../config/database.php';
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
     echo json_encode(['error' => 'Unauthorized']);
     exit;
 }
@@ -13,7 +13,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
     // List users (pending first)
-    $stmt = $db->query("SELECT id, name, email, role, status, discount_tier, created_at FROM users WHERE role != 'admin' ORDER BY CASE WHEN status = 'pending' THEN 0 ELSE 1 END, created_at DESC");
+    $stmt = $db->query("SELECT id, name, email, role, status, discount_tier, created_at FROM users WHERE LOWER(role) NOT IN ('admin', 'administrator') ORDER BY CASE WHEN status = 'pending' THEN 0 ELSE 1 END, created_at DESC");
     echo json_encode($stmt->fetchAll());
 } elseif ($method === 'PUT') {
     // Update user status or discount tier

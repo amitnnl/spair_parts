@@ -36,7 +36,7 @@ if ($method === 'GET') {
     echo json_encode($settings);
 } elseif ($method === 'PUT') {
     // Only admin can update settings
-    if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+    if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
         echo json_encode(['error' => 'Unauthorized']);
         exit;
     }
