@@ -1,4 +1,3 @@
-import './index.css';
 import { getSidebar } from './components/sidebar.js';
 import { renderCatalog as viewCatalog } from './views/catalog.js';
 import { 
@@ -37,10 +36,19 @@ import {
 } from './views/dashboard.js';
 import { renderLogin, renderRegister } from './views/auth.js';
 import { renderCart } from './views/cart.js';
+import { renderBrands } from './views/brands.js';
+import { renderCategories } from './views/categories.js';
+import { renderSupport } from './views/support.js';
 import { renderHome } from './views/home.js';
 
 const api = (endpoint) => {
-    return '/' + endpoint;
+    // If endpoint is missing, return an empty string or a default
+    if (!endpoint) return '';
+    // If it's already an absolute URL, return it
+    if (endpoint.startsWith('http')) return endpoint;
+    // Ensure we use the base path for relative endpoints
+    const base = '/spairparts';
+    return base + (endpoint.startsWith('/') ? '' : '/') + endpoint;
 };
 
 const app = {
@@ -105,7 +113,8 @@ const app = {
     cleanImageUrl(url, name) {
         if (!url || url === 'null') return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f1f5f9&color=64748b&bold=true`;
         if (url.startsWith('http')) return url;
-        return this.api('uploads/' + url);
+        // The path in DB now includes 'uploads/', so we just pass it to this.api()
+        return this.api(url);
     },
 
     async loadSettings() {
@@ -179,6 +188,12 @@ const app = {
             this.renderInvoices(container);
         } else if (path === '/cart') {
             this.renderCart(container);
+        } else if (path === '/brands') {
+            renderBrands(container, this);
+        } else if (path === '/categories') {
+            renderCategories(container, this);
+        } else if (path === '/support') {
+            renderSupport(container, this);
         } else if (path === '/logout') {
             this.state.user = null;
             this.updateAuthUI();

@@ -30,49 +30,13 @@ export function renderHome(container) {
                                 </div>
                             </div>
 
-                            <!-- Tabbed Search Module -->
-                            <div class="bg-white rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,86,179,0.15)] border border-slate-100 p-2 max-w-3xl overflow-hidden relative animate-slide-up">
-                                <div class="flex p-1 gap-1">
-                                    <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-primary bg-primary/5 rounded-2xl border border-primary/10">Search by Part</button>
-                                    <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors">Search by Tool</button>
-                                </div>
-                                <div class="p-6 flex flex-col md:flex-row gap-4">
-                                    <div class="relative flex-shrink-0 w-full md:w-56">
-                                        <select class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-6 text-sm font-black text-slate-800 appearance-none focus:outline-none focus:border-primary transition-all">
-                                            <option>SELECT BRAND</option>
-                                            <option>BOSCH</option>
-                                            <option>MAKITA</option>
-                                            <option>DEWALT</option>
-                                            <option>HIKOKI</option>
-                                        </select>
-                                        <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"/></svg>
-                                        </div>
-                                    </div>
-                                    <div class="relative flex-grow">
-                                        <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-14 text-sm font-bold text-slate-800 focus:outline-none focus:border-primary transition-all">
-                                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                        </div>
-                                    </div>
-                                    <button class="h-14 px-10 bg-primary text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-primary-dark transition-all shadow-xl shadow-primary/20">Find Parts</button>
-                                </div>
-                                <div class="px-8 pb-6 flex items-center gap-4">
-                                    <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Hot Searches:</span>
-                                    <div class="flex gap-4">
-                                        <a href="#" class="text-[11px] font-bold text-primary hover:underline">Carbon Brush</a>
-                                        <a href="#" class="text-[11px] font-bold text-primary hover:underline">Armature</a>
-                                        <a href="#" class="text-[11px] font-bold text-primary hover:underline">Field Coil</a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         
                         <!-- Hero Image -->
                         <div class="flex-1 relative hidden lg:block">
                             <div class="absolute -inset-10 bg-primary/10 rounded-full blur-[100px] opacity-40 animate-pulse"></div>
-                            <div class="relative rounded-[40px] overflow-hidden shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-all duration-700">
-                                <img src="${state.settings.hero_image || 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000'}" alt="Industrial Parts" class="w-full h-full object-cover">
+                            <div class="relative rounded-[48px] overflow-hidden shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-all duration-700 h-[650px]">
+                                <img src="${app.api(state.settings.hero_image) || 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000'}" alt="Industrial Parts" class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
                             </div>
                             <div class="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 flex items-center gap-6 animate-bounce">
@@ -87,10 +51,51 @@ export function renderHome(container) {
                         </div>
                     </div>
                 </div>
+
+                <!-- Tabbed Search Module (Full Width Command Center) -->
+                <div class="relative z-20 mt-12 mb-12">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="bg-white rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,86,179,0.15)] border border-slate-100 p-2 overflow-hidden animate-slide-up">
+                            <div class="flex p-1 gap-1">
+                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-primary bg-primary/5 rounded-2xl border border-primary/10">Search by Part</button>
+                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors">Search by Tool</button>
+                            </div>
+                            <div class="p-6 flex flex-col md:flex-row gap-4">
+                                <div class="relative flex-shrink-0 w-full md:w-64">
+                                    <select class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-6 text-sm font-black text-slate-800 appearance-none focus:outline-none focus:border-primary transition-all">
+                                        <option>SELECT BRAND</option>
+                                        <option>BOSCH</option>
+                                        <option>MAKITA</option>
+                                        <option>DEWALT</option>
+                                        <option>HIKOKI</option>
+                                    </select>
+                                    <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"/></svg>
+                                    </div>
+                                </div>
+                                <div class="relative flex-grow">
+                                    <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-14 text-sm font-bold text-slate-800 focus:outline-none focus:border-primary transition-all">
+                                    <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                    </div>
+                                </div>
+                                <button class="h-14 px-12 bg-primary text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-primary-dark transition-all shadow-xl shadow-primary/20">Find Parts</button>
+                            </div>
+                            <div class="px-8 pb-6 flex items-center gap-4">
+                                <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Hot Searches:</span>
+                                <div class="flex gap-4">
+                                    <a href="#" class="text-[11px] font-bold text-primary hover:underline">Carbon Brush</a>
+                                    <a href="#" class="text-[11px] font-bold text-primary hover:underline">Armature</a>
+                                    <a href="#" class="text-[11px] font-bold text-primary hover:underline">Field Coil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Features Section (Reference Image 2) -->
-            <section class="pb-32 bg-slate-50">
+            <section class="pb-16 bg-slate-50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-24">
                         <h2 class="text-4xl font-black text-slate-900 mb-4 tracking-tight">Built for Professionals.</h2>
@@ -117,7 +122,7 @@ export function renderHome(container) {
             </section>
 
             <!-- Shop by Category - Dynamic Accordion -->
-            <section class="pb-32 bg-white relative overflow-hidden">
+            <section class="pb-16 bg-white relative overflow-hidden">
                 <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
                         <div class="max-w-3xl">

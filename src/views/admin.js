@@ -511,19 +511,61 @@ export async function renderSystemSettings(container, app) {
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-2">
                                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Platform Name</label>
-                                    <input type="text" name="site_name" value="${settings.site_name || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                    <input type="text" name="site_name" value="${settings.site_name || 'PARTSPRO Portal'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Site Logo URL</label>
-                                    <input type="text" name="site_logo" value="${settings.site_logo || ''}" placeholder="Leave empty for default SVG" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                    <input type="text" name="site_logo" value="${settings.site_logo || ''}" placeholder="Leave empty for default SVG" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Currency Symbol</label>
-                                    <input type="text" name="currency" value="${settings.currency || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                    <input type="text" name="currency" value="${settings.currency || '₹'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tax Percentage (%)</label>
-                                    <input type="number" name="tax_percent" value="${settings.tax_percent || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                    <input type="number" name="tax_percent" value="${settings.tax_percent || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
+                                </div>
+                                <div class="space-y-2 md:col-span-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Main Title</label>
+                                    <input type="text" name="hero_title" value="${settings.hero_title || 'Industrial Spares.'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-lg font-black text-slate-900 focus:outline-none focus:border-indigo-500 transition-all">
+                                </div>
+                                <div class="space-y-2 md:col-span-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Subtitle</label>
+                                    <textarea name="hero_subtitle" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 transition-all h-24 resize-none">${settings.hero_subtitle || 'Authorized source for genuine industrial spare parts and technical components.'}</textarea>
+                                </div>
+                                <div class="space-y-2 md:col-span-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Section Image</label>
+                                    <div class="flex items-center gap-4">
+                                        <input type="file" name="hero_image" accept="image/*" class="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
+                                        ${settings.hero_image ? `<img src="${app.api(settings.hero_image)}" class="w-14 h-14 rounded-xl object-cover border-2 border-white shadow-sm">` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact & Support Info -->
+                        <div class="bg-white rounded-[40px] p-10 border border-slate-100 shadow-premium mb-8">
+                            <div class="flex items-center gap-4 mb-8">
+                                <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-black text-slate-900 tracking-tight">Contact & Support Center</h4>
+                                    <p class="text-slate-400 text-sm font-bold">Manage global contact details used across the platform.</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Support Email</label>
+                                    <input type="email" name="contact_email" value="${settings.contact_email || 'support@partspro.in'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-500 transition-all">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Technical Hotline</label>
+                                    <input type="text" name="contact_phone" value="${settings.contact_phone || '+91 70277 51544'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-500 transition-all">
+                                </div>
+                                <div class="space-y-2 md:col-span-2">
+                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Corporate Address</label>
+                                    <textarea name="contact_address" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-500 transition-all h-20 resize-none">${settings.contact_address || ''}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -576,8 +618,11 @@ export async function renderSystemSettings(container, app) {
                                                 <input type="text" name="cat${num}_title" value="${settings['cat' + num + '_title'] || ''}" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
                                             </div>
                                             <div class="space-y-2">
-                                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Background Image URL</label>
-                                                <input type="text" name="cat${num}_img" value="${settings['cat' + num + '_img'] || ''}" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
+                                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Background Image Upload</label>
+                                                <div class="flex items-center gap-3">
+                                                    <input type="file" name="cat${num}_img" accept="image/*" class="flex-1 bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
+                                                    ${settings['cat' + num + '_img'] ? `<img src="${app.api(settings['cat' + num + '_img'])}" class="w-10 h-10 rounded-lg object-cover shadow-sm">` : ''}
+                                                </div>
                                             </div>
                                             <div class="space-y-2 md:col-span-2">
                                                 <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Marketing Description</label>
@@ -601,12 +646,10 @@ export async function renderSystemSettings(container, app) {
         document.getElementById('settings-form').onsubmit = async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
             
             const updateRes = await fetch(app.api('api/admin_settings.php'), {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                method: 'POST',
+                body: formData
             });
             const result = await updateRes.json();
             if (result.success) {

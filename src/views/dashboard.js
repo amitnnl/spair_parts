@@ -22,8 +22,8 @@ export async function renderDashboard(container, app) {
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     ${[
-                        { l:'Total Procurement', v:'₹0.00', s:'+0%', c:'blue' },
-                        { l:'Total Savings', v:'₹0.00', s:'+0%', c:'emerald' },
+                        { l:'Total Procurement', v:(app.state.settings.currency || '₹') + '0.00', s:'+0%', c:'blue' },
+                        { l:'Total Savings', v:(app.state.settings.currency || '₹') + '0.00', s:'+0%', c:'emerald' },
                         { l:'Active Orders', v:'0', s:'- -', c:'amber' },
                         { l:'Saved Items', v:'0', s:'- -', c:'indigo' }
                     ].map(s => `
@@ -65,8 +65,9 @@ export async function loadDashboardStats(app) {
         const stats = await res.json();
         const cards = document.querySelectorAll('main h3');
         if (cards.length >= 4) {
-            cards[0].textContent = '₹' + parseFloat(stats.total_procured || 0).toLocaleString();
-            cards[1].textContent = '₹' + parseFloat(stats.total_savings || 0).toLocaleString();
+            const symbol = app.state.settings.currency || '₹';
+            cards[0].textContent = symbol + parseFloat(stats.total_procured || 0).toLocaleString();
+            cards[1].textContent = symbol + parseFloat(stats.total_savings || 0).toLocaleString();
             cards[2].textContent = stats.active_orders || 0;
             cards[3].textContent = stats.saved_items || 0;
         }
@@ -159,7 +160,7 @@ export async function renderMyPartsList(container, app) {
                                 <h2 class="text-4xl font-black tracking-tight text-slate-900">My <span class="text-primary">Parts List</span></h2>
                                 <p class="text-slate-500 font-medium mt-2 text-lg">Your curated selection of essential spares for quick procurement.</p>
                             </div>
-                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="btn btn-primary">Add More Spares</button>
+                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-8 py-3.5 bg-primary text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:bg-primary-dark transition-all shadow-lg shadow-primary/20">Add More Spares</button>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

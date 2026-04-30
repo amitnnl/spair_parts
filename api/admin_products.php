@@ -34,13 +34,13 @@ if ($method === 'POST') {
         // Handle photo upload
         $photo = '';
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = '../assets/uploads/';
+            $uploadDir = '../uploads/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             
             $ext = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
             $filename = uniqid() . '.' . $ext;
             if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadDir . $filename)) {
-                $photo = 'assets/uploads/' . $filename;
+                $photo = 'uploads/' . $filename;
             }
         } else if (isset($data['photo_url'])) {
             $photo = $data['photo_url'];

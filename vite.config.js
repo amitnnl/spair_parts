@@ -5,8 +5,9 @@ export default defineConfig({
   root: './',
   server: {
     proxy: {
-      '/api': {
+      '/spairparts/api': {
         target: 'http://localhost/spairparts',
+        rewrite: (path) => path.replace(/^\/spairparts/, ''),
         changeOrigin: true,
       }
     }

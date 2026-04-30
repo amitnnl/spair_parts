@@ -34,17 +34,43 @@ if ($method === 'GET') {
     // Settings are public-readable (needed for page load branding)
     $settings = $db->query("SELECT * FROM settings")->fetchAll(PDO::FETCH_KEY_PAIR);
     echo json_encode($settings);
-} elseif ($method === 'PUT') {
+} elseif ($method === 'POST') {
     // Only admin can update settings
     if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
         echo json_encode(['error' => 'Unauthorized']);
         exit;
     }
 
-    $data = json_decode(file_get_contents('php://input'), true);
+    $data = $_POST;
+    
+    // Handle file uploads
+    $uploadDir = '../uploads/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+    foreach ($_FILES as $key => $file) {
+        if ($file['error'] === UPLOAD_ERR_OK) {
+            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $filename = 'setting_' . $key . '_' . uniqid() . '.' . $ext;
+            if (move_uploaded_file($file['tmp_name'], $uploadDir . $filename)) {
+                $data[$key] = 'uploads/' . $filename;
+            } else {
+                echo json_encode(['error' => 'Failed to move uploaded file to ' . $uploadDir]);
+                exit;
+            }
+        } elseif ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+            echo json_encode(['error' => 'File upload error code: ' . $file['error']]);
+            exit;
+        }
+    }
+
     $db->beginTransaction();
     try {
         foreach ($data as $key => $value) {
+            // Fix: If this is an image/file field and the value is empty (no new upload), skip it
+            if (($key === 'hero_image' || strpos($key, '_img') !== false) && empty($value)) {
+                continue;
+            }
+            
             $stmt = $db->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = ?");
             $stmt->execute([$key, $value, $value]);
         }
