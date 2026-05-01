@@ -6,12 +6,106 @@
     <title>TORVO TOOLS V2</title>
     <meta name="description" content="Professional B2B portal for power tool spare parts. Genuine spares, bulk ordering, and inventory management.">
     
-    <!-- CSS custom properties for colours used in inline JS templates -->
-    <style>
-        :root {
-            --color-primary:      #0056B3;
-            --color-primary-dark: #004494;
-            --color-primary-light:#3378C2;
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#0056B3',
+                            dark: '#004494',
+                            light: '#3378C2',
+                        },
+                        'primary-dark': '#004494',
+                        'primary-light': '#3378C2',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 50px -12px rgba(0, 0, 0, 0.08)',
+                        'premium-hover': '0 20px 40px -12px rgba(0, 86, 179, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
+        
+        @layer base {
+            body {
+                font-family: 'Inter', sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                @apply text-slate-900 bg-slate-50;
+            }
+            .font-poppins { font-family: 'Poppins', sans-serif; }
+        }
+
+        @layer components {
+            .nav-link {
+                @apply px-4 py-2 text-sm font-bold text-slate-600 rounded-xl
+                       hover:bg-slate-50 hover:text-slate-900 transition-all duration-200;
+            }
+            .nav-link.active {
+                @apply text-primary bg-blue-50;
+            }
+            .mobile-nav-item span {
+                @apply text-[9px] font-bold uppercase;
+            }
+            .mobile-nav-item.active {
+                @apply text-primary;
+            }
+            .btn {
+                @apply inline-flex items-center justify-center px-6 py-3 rounded-2xl
+                       font-black text-[11px] uppercase tracking-widest transition-all duration-200;
+            }
+            .btn-primary {
+                @apply bg-primary text-white shadow-lg shadow-primary/20
+                       hover:bg-primary-dark hover:-translate-y-0.5;
+            }
+            .btn-secondary {
+                @apply bg-slate-100 text-slate-700
+                       hover:bg-slate-200;
+            }
+            .toast {
+                @apply flex items-center gap-3 bg-white border border-slate-100
+                       rounded-2xl px-5 py-4 shadow-xl text-sm font-semibold text-slate-700
+                       min-w-[280px] max-w-sm;
+            }
+            .table-auto thead th {
+                @apply text-[10px] font-black uppercase tracking-widest text-slate-400
+                       pb-4 text-left;
+            }
+            .table-auto tbody td {
+                @apply py-4 text-sm font-semibold text-slate-600 border-t border-slate-50;
+            }
+        }
+
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { 
+            background: #e2e8f0; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @media print {
+            .no-print { display: none !important; }
         }
     </style>
 
@@ -76,13 +170,7 @@
                         </div>
                         <div id="auth-nav" class="flex items-center gap-2">
                             <a href="/login" data-link id="desktop-login-btn" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">Log In</a>
-                            <a href="/register" data-link id="desktop-register-btn" class="btn btn-primary px-6">Sign Up</a>
-                            
-                            <!-- Logged In Links (Hidden by default) -->
-                            <a href="/dashboard" data-link id="nav-dashboard" class="hidden px-5 py-2 rounded-xl text-sm font-black text-primary uppercase tracking-widest hover:bg-primary/5 transition-all">Dashboard</a>
-                            <button id="desktop-logout-btn" aria-label="User Account" class="hidden items-center gap-3 px-4 py-2 rounded-xl bg-slate-50 border border-slate-100 text-sm font-bold text-slate-600 hover:bg-slate-100 transition-all">
-                                <!-- JS will inject user info here -->
-                            </button>
+                            <a href="/register" data-link id="desktop-register-btn" class="px-8 py-3.5 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20">Sign Up</a>
                         </div>
                     </div>
                 </div>
@@ -174,4 +262,3 @@
     <script type="module" src="src/main.js"></script>
 </body>
 </html>
-
