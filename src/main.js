@@ -1,3 +1,4 @@
+import './index.css';
 import { getSidebar } from './components/sidebar.js';
 import { renderCatalog as viewCatalog } from './views/catalog.js';
 import { 

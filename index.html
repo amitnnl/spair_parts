@@ -6,123 +6,10 @@
     <title>TORVO TOOLS V2</title>
     <meta name="description" content="Professional B2B portal for power tool spare parts. Genuine spares, bulk ordering, and inventory management.">
     
-    <!-- Dynamic Base Path Fix for SPAs -->
-    <script>
-        (function() {
-            var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            var base = isLocal ? '/spairparts/' : '/';
-            document.write('<base href="' + base + '">');
-        })();
-    </script>
-
-    <!-- Tailwind CSS Play CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            DEFAULT: '#0056B3',
-                            dark: '#004494',
-                            light: '#3378C2',
-                        },
-                        'primary-dark': '#004494',
-                        'primary-light': '#3378C2',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
-                        poppins: ['Poppins', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'premium': '0 20px 50px -12px rgba(0, 0, 0, 0.08)',
-                        'premium-hover': '0 20px 40px -12px rgba(0, 86, 179, 0.15)',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style type="text/tailwindcss">
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
-        
-        @layer base {
-            body {
-                font-family: 'Inter', sans-serif;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                @apply text-slate-900 bg-slate-50;
-            }
-            .font-poppins { font-family: 'Poppins', sans-serif; }
-        }
-
-        @layer components {
-            .nav-link {
-                @apply px-4 py-2 text-sm font-bold text-slate-600 rounded-xl
-                       hover:bg-slate-50 hover:text-slate-900 transition-all duration-200;
-            }
-            .nav-link.active {
-                @apply text-primary bg-blue-50;
-            }
-            .mobile-nav-item span {
-                @apply text-[9px] font-bold uppercase;
-            }
-            .mobile-nav-item.active {
-                @apply text-primary;
-            }
-            .btn {
-                @apply inline-flex items-center justify-center px-6 py-3 rounded-2xl
-                       font-black text-[11px] uppercase tracking-widest transition-all duration-200;
-            }
-            .btn-primary {
-                @apply bg-primary text-white shadow-lg shadow-primary/20
-                       hover:bg-primary-dark hover:-translate-y-0.5;
-            }
-            .btn-secondary {
-                @apply bg-slate-100 text-slate-700
-                       hover:bg-slate-200;
-            }
-            .toast {
-                @apply flex items-center gap-3 bg-white border border-slate-100
-                       rounded-2xl px-5 py-4 shadow-xl text-sm font-semibold text-slate-700
-                       min-w-[280px] max-w-sm;
-            }
-            .table-auto thead th {
-                @apply text-[10px] font-black uppercase tracking-widest text-slate-400
-                       pb-4 text-left;
-            }
-            .table-auto tbody td {
-                @apply py-4 text-sm font-semibold text-slate-600 border-t border-slate-50;
-            }
-        }
-
-        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f8fafc; }
-        ::-webkit-scrollbar-thumb { 
-            background: #e2e8f0; 
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        @media print {
-            .no-print { display: none !important; }
-        }
-    </style>
-
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230056B3'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
 <body class="bg-slate-50">
 
@@ -140,6 +27,7 @@
                     <a href="/catalog" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg> Bulk Order</a>
                     <a href="/catalog" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Quick Order</a>
                     <a href="/support" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Support</a>
+                    <a href="/login" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Admin Access</a>
                 </div>
             </div>
         </div>
@@ -159,7 +47,7 @@
                         </div>
                     </a>
 
-                    <!-- Nav Links (Visible from MD up now) -->
+                    <!-- Nav Links -->
                     <div class="hidden md:flex items-center gap-1">
                         <a href="/catalog" data-link class="nav-link">Products</a>
                         <a href="/brands" data-link class="nav-link">Brands</a>
@@ -167,7 +55,7 @@
                         <a href="/support" data-link class="nav-link">Support</a>
                     </div>
 
-                    <!-- Search & Auth -->
+                    <!-- Auth -->
                     <div class="flex items-center gap-4">
                         <div id="auth-nav" class="flex items-center gap-2">
                             <a href="/login" data-link id="desktop-login-btn" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">Partner Login</a>
@@ -226,7 +114,7 @@
             </div>
         </footer>
 
-        <!-- ═══ MOBILE BOTTOM NAV (Enhanced with Brands/Categories/Support) ═══ -->
+        <!-- ═══ MOBILE BOTTOM NAV ═══ -->
         <nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 flex justify-around items-center h-16 no-print">
             <a href="/" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
@@ -255,6 +143,6 @@
     <!-- Toast Container -->
     <div id="toast-container" class="fixed bottom-24 right-6 z-[100] flex flex-col gap-3"></div>
 
-    <script type="module" src="src/main.js"></script>
+    <script type="module" src="/src/main.js"></script>
 </body>
 </html>
