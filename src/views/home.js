@@ -4,7 +4,7 @@ export function renderHome(container) {
     container.innerHTML = `
         <div class="animate-fade-in">
             <!-- Hero Section (Reference Image 1) -->
-            <section class="relative bg-white pt-20 pb-32 overflow-hidden border-b border-slate-100">
+            <section class="relative bg-white pt-20 pb-16 overflow-hidden border-b border-slate-100">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div class="flex flex-col lg:flex-row items-center gap-20">
                         <div class="flex-1 text-center lg:text-left">
