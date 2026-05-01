@@ -13,11 +13,12 @@ node_modules/
 Thumbs.db
 
 # =============================================
-# SENSITIVE: Actual DB config - NEVER commit
-# Use config/database.example.php as template
-# Manually create/update this on live server
+# config/database.php IS now tracked in git.
+# It uses auto-detection (HTTP_HOST) to switch
+# between local XAMPP and live cPanel creds.
+# Update live credentials in the file directly.
 # =============================================
-config/database.php
+# config/database.php  <-- intentionally NOT ignored
 
 # Ignore dev specific settings
 scratch/
