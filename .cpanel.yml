@@ -2,5 +2,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/hotelsunplaza/torvotools.com
     - /bin/mkdir -p $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH/config
+    - /bin/mkdir -p $DEPLOYPATH/uploads
     - /bin/cp -a * $DEPLOYPATH/
     - /bin/cp -a .htaccess $DEPLOYPATH/

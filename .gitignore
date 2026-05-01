@@ -1,19 +1,27 @@
-# Dependencies
+# Dependencies - never commit these
 node_modules/
 .npm/
 
-# Build outputs
-dist/
+# =============================================
+# IMPORTANT: dist/ IS tracked for cPanel deploy
+# Run `npm run build` locally before committing
+# =============================================
+# dist/   <-- intentionally NOT ignored
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# Sensitive local config
+# =============================================
+# SENSITIVE: Actual DB config - NEVER commit
+# Use config/database.example.php as template
+# Manually create/update this on live server
+# =============================================
 config/database.php
 
 # Ignore dev specific settings
 scratch/
+
 # IDEs
 .vscode/
 .idea/
