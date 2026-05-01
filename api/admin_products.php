@@ -10,6 +10,12 @@ if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'ad
 }
 
 $db = getDB();
+
+// Ensure tables and columns exist
+$db->exec("CREATE TABLE IF NOT EXISTS machine_sizes (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL UNIQUE)");
+try { $db->exec("ALTER TABLE spare_parts ADD COLUMN machine_size_id INT DEFAULT NULL AFTER model_id"); } catch(Exception $e){}
+try { $db->exec("ALTER TABLE part_fitments ADD COLUMN machine_size_id INT DEFAULT NULL"); } catch(Exception $e){}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'POST') {
@@ -21,6 +27,7 @@ if ($method === 'POST') {
         $machine_name_id = !empty($data['machine_name_id']) ? $data['machine_name_id'] : null;
         $part_name_id = !empty($data['part_name_id']) ? $data['part_name_id'] : null;
         $model_id = !empty($data['model_id']) ? $data['model_id'] : null;
+        $machine_size_id = !empty($data['machine_size_id']) ? $data['machine_size_id'] : null;
 
         if (!$brand_id || !$machine_name_id || !$part_name_id || !$model_id) {
             echo json_encode(['error' => 'Please select Brand, Machine, Part Name, and Model.']);
@@ -47,8 +54,8 @@ if ($method === 'POST') {
         }
 
         try {
-            $stmt = $db->prepare("INSERT INTO spare_parts (brand_id, machine_name_id, part_name_id, model_id, photo, cost, stock_quantity, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $photo, $cost, $stock_quantity, $note]);
+            $stmt = $db->prepare("INSERT INTO spare_parts (brand_id, machine_name_id, part_name_id, model_id, machine_size_id, photo, cost, stock_quantity, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $machine_size_id, $photo, $cost, $stock_quantity, $note]);
             echo json_encode(['success' => true, 'id' => $db->lastInsertId()]);
         } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
@@ -92,6 +99,14 @@ if ($method === 'POST') {
                     $db->prepare("INSERT INTO machine_models (brand_id, machine_name_id, name) VALUES (?, ?, ?)")->execute([$brand_id, $machine_name_id, $name]);
                     $id = $db->lastInsertId();
                 }
+            } elseif ($type === 'machine_size') {
+                $stmt = $db->prepare("SELECT id FROM machine_sizes WHERE name = ?");
+                $stmt->execute([$name]);
+                $id = $stmt->fetchColumn();
+                if (!$id) {
+                    $db->prepare("INSERT INTO machine_sizes (name) VALUES (?)")->execute([$name]);
+                    $id = $db->lastInsertId();
+                }
             }
             echo json_encode(['success' => true, 'id' => $id]);
         } catch (Exception $e) {
@@ -100,14 +115,15 @@ if ($method === 'POST') {
     } elseif ($action === 'save_fitment') {
         $part_id = $data['part_id'];
         $model_id = $data['model_id'];
+        $machine_size_id = !empty($data['machine_size_id']) ? $data['machine_size_id'] : null;
 
         try {
             // Check if fitment already exists
-            $stmt = $db->prepare("SELECT id FROM part_fitments WHERE part_id = ? AND machine_model_id = ?");
-            $stmt->execute([$part_id, $model_id]);
+            $stmt = $db->prepare("SELECT id FROM part_fitments WHERE part_id = ? AND machine_model_id = ? AND (machine_size_id = ? OR (machine_size_id IS NULL AND ? IS NULL))");
+            $stmt->execute([$part_id, $model_id, $machine_size_id, $machine_size_id]);
             if (!$stmt->fetch()) {
-                $stmt = $db->prepare("INSERT INTO part_fitments (part_id, machine_model_id) VALUES (?, ?)");
-                $stmt->execute([$part_id, $model_id]);
+                $stmt = $db->prepare("INSERT INTO part_fitments (part_id, machine_model_id, machine_size_id) VALUES (?, ?, ?)");
+                $stmt->execute([$part_id, $model_id, $machine_size_id]);
             }
             echo json_encode(['success' => true]);
         } catch (Exception $e) {
@@ -122,12 +138,14 @@ if ($method === 'POST') {
         $machine_names = $db->query("SELECT * FROM machine_names ORDER BY name")->fetchAll();
         $part_names = $db->query("SELECT * FROM spare_part_names ORDER BY name")->fetchAll();
         $models = $db->query("SELECT * FROM machine_models ORDER BY name")->fetchAll();
+        $sizes = $db->query("SELECT * FROM machine_sizes ORDER BY name")->fetchAll();
         
         echo json_encode([
             'brands' => $brands,
             'machine_names' => $machine_names,
             'part_names' => $part_names,
-            'models' => $models
+            'models' => $models,
+            'sizes' => $sizes
         ]);
     } elseif ($action === 'get_fitments') {
         $part_id = $_GET['part_id'];
@@ -147,12 +165,13 @@ if ($method === 'POST') {
     $machine_name_id = $data['machine_name_id'];
     $part_name_id = $data['part_name_id'];
     $model_id = $data['model_id'];
+    $machine_size_id = $data['machine_size_id'] ?? null;
     $cost = $data['cost'] ?? 0;
     $note = $data['note'] ?? '';
     
     try {
-        $stmt = $db->prepare("UPDATE spare_parts SET brand_id = ?, machine_name_id = ?, part_name_id = ?, model_id = ?, cost = ?, note = ? WHERE id = ?");
-        $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $cost, $note, $id]);
+        $stmt = $db->prepare("UPDATE spare_parts SET brand_id = ?, machine_name_id = ?, part_name_id = ?, model_id = ?, machine_size_id = ?, cost = ?, note = ? WHERE id = ?");
+        $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $machine_size_id, $cost, $note, $id]);
         echo json_encode(['success' => true]);
     } catch (Exception $e) {
         echo json_encode(['error' => $e->getMessage()]);

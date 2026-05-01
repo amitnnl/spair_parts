@@ -857,86 +857,304 @@ export async function renderEditProductForm(id, app) {
     renderProductForm(product, app);
 }
 
-function renderProductForm(product, app) {
+async function renderProductForm(product, app) {
     const isEdit = !!product;
     const modal = document.createElement('div');
     modal.id = 'product-modal';
-    modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto';
+    modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto';
+
     modal.innerHTML = `
-        <div class="bg-white rounded-[32px] w-full max-w-2xl p-10 space-y-8 shadow-2xl animate-in zoom-in duration-300 my-8">
+        <div class="bg-white rounded-[32px] w-full max-w-3xl p-6 md:p-10 space-y-6 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
             <div class="flex justify-between items-center">
                 <h2 class="text-3xl font-black text-slate-900">${isEdit ? 'Edit' : 'Add New'} <span class="text-blue-600">Product</span></h2>
                 <button onclick="document.getElementById('product-modal').remove()" class="text-slate-400 hover:text-slate-900 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-            <form id="product-form" class="grid grid-cols-2 gap-6">
+            <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
                 ${isEdit ? `<input type="hidden" name="id" value="${product.id}">` : ''}
+                <input type="hidden" name="action" value="${isEdit ? 'update_product' : 'add_product'}">
+
+                <!-- Spare Part Name -->
                 <div class="col-span-2 space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Part Name</label>
-                    <input type="text" name="part_name" value="${product?.part_name || ''}" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-500">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Spare Part Name</label>
+                    <div class="flex gap-2">
+                        <select id="pf-partname" name="part_name_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                            <option value="">Select Part Name...</option>
+                        </select>
+                        <button type="button" onclick="window._pfAddLookup('part_name')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all" title="Add new part name">+</button>
+                    </div>
                 </div>
+
+                <!-- Primary Fitment Section -->
+                <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
+                    <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
+                </div>
+
+                <!-- Machine Brand -->
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Machine Brand</label>
+                    <div class="flex gap-2">
+                        <select id="pf-brand" name="brand_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                            <option value="">Select Brand...</option>
+                        </select>
+                        <button type="button" onclick="window._pfAddLookup('brand')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                    </div>
+                </div>
+
+                <!-- Machine Name -->
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Machine Name</label>
+                    <div class="flex gap-2">
+                        <select id="pf-machine" name="machine_name_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                            <option value="">Select Machine...</option>
+                        </select>
+                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                    </div>
+                </div>
+
+                <!-- Machine Model -->
                 <div class="space-y-2">
                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Machine Model</label>
-                    <input type="text" name="machine_model" value="${product?.machine_model || ''}" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-500">
+                    <div class="flex gap-2">
+                        <select id="pf-model" name="model_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                            <option value="">Select Model...</option>
+                        </select>
+                        <button type="button" onclick="window._pfAddLookup('model')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                    </div>
                 </div>
+
+                <!-- Machine Size -->
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Brand</label>
-                    <input type="text" name="brand" value="${product?.brand || ''}" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-500">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Machine Size</label>
+                    <div class="flex gap-2">
+                        <select id="pf-size" name="machine_size_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                            <option value="">Select Size...</option>
+                        </select>
+                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                    </div>
                 </div>
+
+                <!-- Additional Machines Section -->
+                <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Other Suitable Machines</h3>
+                        <button type="button" onclick="window._pfAddMachineRow()" class="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:underline">+ Add More Machine</button>
+                    </div>
+                    <div id="additional-machines-container" class="space-y-4 mt-4">
+                        <!-- Dynamic rows here -->
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
+                    <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Product Details</h3>
+                </div>
+
+                <!-- Cost -->
                 <div class="space-y-2">
                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Cost (₹)</label>
-                    <input type="number" step="0.01" name="cost" value="${product?.cost || ''}" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-500">
+                    <input type="number" step="0.01" name="cost" value="${product?.cost || ''}" placeholder="Enter Cost"
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
                 </div>
+
+                <!-- Stock Quantity -->
                 <div class="space-y-2">
                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Stock Quantity</label>
-                    <input type="number" name="stock_quantity" value="${product?.stock_quantity || ''}" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-blue-500">
+                    <input type="number" name="stock_quantity" value="${product?.stock_quantity || ''}" placeholder="Enter Stock"
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
                 </div>
+
+                <!-- Note -->
                 <div class="col-span-2 space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Photo</label>
-                    <input type="file" name="photo" class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Note</label>
+                    <input type="text" name="note" value="${product?.note || ''}" placeholder="Technical notes or descriptions"
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
                 </div>
-                <button type="submit" class="col-span-2 py-4 rounded-2xl bg-slate-900 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:scale-[1.02] transition-all mt-4">${isEdit ? 'Update' : 'Create'} Product</button>
+
+                <!-- Photo -->
+                <div class="col-span-2 space-y-2 pt-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Product Photo</label>
+                    <input type="file" name="photo" accept="image/*"
+                        class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
+                </div>
+
+                <div class="col-span-2 pt-4">
+                    <button type="submit" id="pf-submit-btn"
+                        class="w-full py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:scale-[1.02] transition-all">
+                        Save Complete Product
+                    </button>
+                </div>
             </form>
         </div>
     `;
     document.body.appendChild(modal);
+
+    let lookupData = null;
+
+    fetch(app.api('api/admin_products.php?action=lookups'))
+        .then(r => r.json())
+        .then(data => {
+            lookupData = data;
+            const populate = (selectId, items, currentId) => {
+                const sel = document.getElementById(selectId);
+                if (!sel) return;
+                items.forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item.id;
+                    opt.textContent = item.name;
+                    if (currentId && item.id == currentId) opt.selected = true;
+                    sel.appendChild(opt);
+                });
+            };
+            populate('pf-brand',    data.brands       || [], product?.brand_id);
+            populate('pf-machine',  data.machine_names|| [], product?.machine_name_id);
+            populate('pf-partname', data.part_names   || [], product?.part_name_id);
+            populate('pf-model',    data.models       || [], product?.model_id);
+            populate('pf-size',     data.sizes        || [], product?.machine_size_id);
+
+            if (isEdit) {
+                fetch(app.api(`api/admin_products.php?action=get_fitments&part_id=${product.id}`))
+                    .then(r => r.json())
+                    .then(fitRes => {
+                        (fitRes.fitments || []).forEach(f => window._pfAddMachineRow(f));
+                    });
+            }
+        })
+        .catch(() => app.showToast('Could not load dropdown options', 'error'));
+
+    window._pfAddMachineRow = (existing = null) => {
+        const container = document.getElementById('additional-machines-container');
+        const row = document.createElement('div');
+        row.className = 'grid grid-cols-2 lg:grid-cols-4 gap-2 p-3 bg-slate-50 rounded-2xl border border-slate-100 relative group animate-in slide-in-from-top-2 duration-300';
+        
+        const genSelect = (name, items, selected) => `
+            <div class="space-y-1">
+                <select name="${name}" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-[10px] font-bold text-slate-700 focus:outline-none focus:border-blue-500">
+                    <option value="">Select...</option>
+                    ${items.map(i => `<option value="${i.id}" ${i.id == selected ? 'selected' : ''}>${i.name}</option>`).join('')}
+                </select>
+            </div>
+        `;
+
+        row.innerHTML = `
+            <button type="button" onclick="this.parentElement.remove()" class="absolute -right-2 -top-2 w-6 h-6 bg-white border border-slate-200 text-rose-500 rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-50">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            ${genSelect('fit_brand_id', lookupData?.brands || [], existing?.brand_id)}
+            ${genSelect('fit_machine_id', lookupData?.machine_names || [], existing?.machine_id)}
+            ${genSelect('fit_model_id', lookupData?.models || [], existing?.machine_model_id)}
+            ${genSelect('fit_size_id', lookupData?.sizes || [], existing?.machine_size_id)}
+        `;
+        container.appendChild(row);
+    };
+
+    window._pfAddLookup = async (type) => {
+        const labelMap = { brand: 'Brand', machine_name: 'Machine Name', part_name: 'Part Name', model: 'Model', machine_size: 'Machine Size' };
+        const newName = prompt(`Enter new ${labelMap[type]} name:`);
+        if (!newName || !newName.trim()) return;
+        const payload = new FormData();
+        payload.append('action', 'add_lookup');
+        payload.append('type', type);
+        payload.append('name', newName.trim());
+        try {
+            const r = await fetch(app.api('api/admin_products.php'), { method: 'POST', body: payload });
+            const result = await r.json();
+            if (result.success) {
+                app.showToast(`${labelMap[type]} added!`);
+                const updatedLookups = await (await fetch(app.api('api/admin_products.php?action=lookups'))).json();
+                lookupData = updatedLookups;
+                const selectMap = { brand: 'pf-brand', machine_name: 'pf-machine', part_name: 'pf-partname', model: 'pf-model', machine_size: 'pf-size' };
+                const sel = document.getElementById(selectMap[type]);
+                if (sel) {
+                    const opt = document.createElement('option');
+                    opt.value = result.id;
+                    opt.textContent = newName.trim();
+                    opt.selected = true;
+                    sel.appendChild(opt);
+                }
+            } else {
+                app.showToast(result.error || 'Failed to add', 'error');
+            }
+        } catch {
+            app.showToast('Network error', 'error');
+        }
+    };
+
     document.getElementById('product-form').onsubmit = (e) => handleProductSubmit(e, app);
 }
 
 async function handleProductSubmit(e, app) {
     e.preventDefault();
-    const btn = e.target.querySelector('button');
+    const btn = document.getElementById('pf-submit-btn');
     btn.disabled = true;
-    
+    btn.innerHTML = '<span class="animate-pulse">Saving Product...</span>';
+
     const formData = new FormData(e.target);
     const isEdit = formData.has('id');
-    
+
     try {
-        const res = await fetch(app.api('api/products.php'), {
-            method: 'POST',
-            body: formData
-        });
+        let res;
+        if (isEdit) {
+            const payload = {
+                id: formData.get('id'),
+                brand_id: formData.get('brand_id'),
+                machine_name_id: formData.get('machine_name_id'),
+                part_name_id: formData.get('part_name_id'),
+                model_id: formData.get('model_id'),
+                machine_size_id: formData.get('machine_size_id'),
+                cost: formData.get('cost'),
+                note: formData.get('note'),
+            };
+            res = await fetch(app.api('api/admin_products.php'), {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } else {
+            res = await fetch(app.api('api/admin_products.php'), {
+                method: 'POST',
+                body: formData
+            });
+        }
+        
         const result = await res.json();
         if (result.success) {
-            app.showToast(`Product ${isEdit ? 'updated' : 'created'} successfully`);
+            const productId = isEdit ? formData.get('id') : result.id;
+            
+            const fitRows = document.querySelectorAll('#additional-machines-container > div');
+            for (const row of fitRows) {
+                const modelId = row.querySelector('[name="fit_model_id"]').value;
+                const sizeId = row.querySelector('[name="fit_size_id"]').value;
+                if (modelId) {
+                    const fitPayload = new FormData();
+                    fitPayload.append('action', 'save_fitment');
+                    fitPayload.append('part_id', productId);
+                    fitPayload.append('model_id', modelId);
+                    fitPayload.append('machine_size_id', sizeId);
+                    await fetch(app.api('api/admin_products.php'), { method: 'POST', body: fitPayload });
+                }
+            }
+
+            app.showToast(`Product ${isEdit ? 'updated' : 'created'} successfully with fitments`);
             document.getElementById('product-modal').remove();
             app.renderAdminInventory(document.getElementById('view-container'));
         } else {
-            app.showToast(result.error, 'error');
+            app.showToast(result.error || 'Submission failed', 'error');
         }
     } catch (err) {
         app.showToast('Submission failed', 'error');
     } finally {
         btn.disabled = false;
+        btn.textContent = 'Save Complete Product';
     }
 }
 
 export async function deleteProduct(id, app) {
     if (!confirm('Are you sure you want to remove this product?')) return;
-    
+
     try {
-        const res = await fetch(app.api(`api/products.php?id=${id}`), {
+        const res = await fetch(app.api(`api/admin_products.php?action=delete_product&id=${id}`), {
             method: 'DELETE'
         });
         const result = await res.json();
