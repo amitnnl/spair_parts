@@ -12,6 +12,9 @@ node_modules/
 .DS_Store
 Thumbs.db
 
+# Diagnostic tools (delete after use)
+db_check.php
+
 # =============================================
 # config/database.php IS now tracked in git.
 # It uses auto-detection (HTTP_HOST) to switch

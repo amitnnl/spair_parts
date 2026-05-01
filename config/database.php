@@ -46,12 +46,11 @@ $isLive = !in_array($host, ['localhost', '127.0.0.1']);
 if ($isLive) {
     // ╔══════════════════════════════════════════════════════╗
     // ║  LIVE SERVER (cPanel — torvotools.com)               ║
-    // ║  Update these with your actual cPanel DB credentials ║
     // ╚══════════════════════════════════════════════════════╝
     define('DB_HOST', 'localhost');
-    define('DB_USER', 'hotelsunplaza_spair');   // ← your cPanel DB username
-    define('DB_PASS', 'YourLivePassword123');   // ← your cPanel DB password
-    define('DB_NAME', 'hotelsunplaza_spair');   // ← your cPanel DB name
+    define('DB_USER', 'hotelsunplaza_torvo');
+    define('DB_PASS', 'Divine@56');
+    define('DB_NAME', 'hotelsunplaza_torvo');
 } else {
     // ╔══════════════════════════════════════════════════════╗
     // ║  LOCAL XAMPP (localhost)                             ║
