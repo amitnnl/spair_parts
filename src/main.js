@@ -41,14 +41,19 @@ import { renderCategories } from './views/categories.js';
 import { renderSupport } from './views/support.js';
 import { renderHome } from './views/home.js';
 
+// Auto-detect whether running locally or on live cPanel server.
+// LOCAL:  http://localhost/spairparts  => basePath = '/spairparts'
+// LIVE:   https://torvotools.com/      => basePath = ''
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const BASE_PATH = isLocal ? '/spairparts' : '';
+
 const api = (endpoint) => {
     // If endpoint is missing, return an empty string or a default
     if (!endpoint) return '';
-    // If it's already an absolute URL, return it
+    // If it's already an absolute URL, return it as-is
     if (endpoint.startsWith('http')) return endpoint;
-    // Ensure we use the base path for relative endpoints
-    const base = '/spairparts';
-    return base + (endpoint.startsWith('/') ? '' : '/') + endpoint;
+    // Build URL relative to the detected base path
+    return BASE_PATH + (endpoint.startsWith('/') ? '' : '/') + endpoint;
 };
 
 const app = {
@@ -57,7 +62,7 @@ const app = {
         cart: JSON.parse(localStorage.getItem('cart')) || [],
         settings: {}
     },
-    basePath: '/spairparts',
+    basePath: BASE_PATH,
     
     api: api,
 
@@ -163,7 +168,9 @@ const app = {
     },
 
     handleRouting() {
-        const path = window.location.pathname.replace(this.basePath, '') || '/';
+        // Strip basePath prefix to get the logical route (e.g. '/brands')
+        const raw = window.location.pathname;
+        const path = (this.basePath ? raw.replace(this.basePath, '') : raw) || '/';
         const container = document.getElementById('view-container');
         
         if (path === '/') {

@@ -1,22 +1,24 @@
 RewriteEngine On
 
 # =============================================
-# AUTO-DETECT: Works on both:
-#   LOCAL:  http://localhost/spairparts/
-#   LIVE:   https://torvotools.com/
+# Dual-environment SPA routing:
+#   LOCAL:  http://localhost/spairparts/brands → serves /spairparts/index.html
+#   LIVE:   https://torvotools.com/brands     → serves /index.html
 # =============================================
-RewriteBase /
 
 # Don't rewrite real files or directories
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Don't rewrite API, PHP files, or static assets
+# Don't rewrite PHP files or API calls
 RewriteCond %{REQUEST_URI} !\.php$
 RewriteCond %{REQUEST_URI} !/api/
-RewriteCond %{REQUEST_URI} !/assets/
-RewriteCond %{REQUEST_URI} !/dist/
-RewriteCond %{REQUEST_URI} !/uploads/
 
-# Serve index.html for all SPA routes
+# Don't rewrite static asset folders
+RewriteCond %{REQUEST_URI} !/assets/
+RewriteCond %{REQUEST_URI} !/dist/assets/
+RewriteCond %{REQUEST_URI} !/uploads/
+RewriteCond %{REQUEST_URI} !/src/
+
+# Serve index.html for all SPA routes (works at any RewriteBase)
 RewriteRule ^(.*)$ index.html [L]
