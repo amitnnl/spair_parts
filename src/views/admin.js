@@ -478,190 +478,271 @@ export async function updateUser(id, field, value, app) {
     }
 }
 
+
 export async function renderSystemSettings(container, app) {
     if (!app.state.user || app.state.user.role !== 'admin') {
         app.showToast('Access restricted to administrators', 'error');
         return;
     }
     container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
-    
+
     try {
         const res = await fetch(app.api('api/admin_settings.php'));
-        const settings = await res.json();
-        
-        container.innerHTML = `
-            <div class="max-w-4xl mx-auto space-y-12 animate-in fade-in duration-700">
-                <div>
-                    <h2 class="text-4xl font-black tracking-tight text-slate-900">System <span class="text-blue-600">Core</span></h2>
-                    <p class="text-slate-500 font-medium mt-2">Global configuration for the PARTSPRO ecosystem.</p>
-                </div>
+        const s = await res.json();
 
-                <div class="bg-white rounded-[40px] p-8 md:p-14 shadow-2xl shadow-slate-200/50 border border-slate-100">
-                    <form id="settings-form" class="space-y-16">
-                        <div class="space-y-8">
-                            <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
-                                <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shadow-inner">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
+        const field = (label, name, val, type = 'text', placeholder = '', extra = '') => `
+            <div class="space-y-2 ${extra}">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${label}</label>
+                <input type="${type}" name="${name}" value="${val || ''}" placeholder="${placeholder}"
+                    class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+            </div>`;
+
+        const textarea = (label, name, val, extra = '') => `
+            <div class="space-y-2 ${extra}">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${label}</label>
+                <textarea name="${name}" rows="3"
+                    class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all resize-none">${val || ''}</textarea>
+            </div>`;
+
+        const imgField = (label, name, current) => `
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${label}</label>
+                <div class="flex items-center gap-4">
+                    <input type="file" name="${name}" accept="image/*"
+                        class="flex-1 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl px-5 py-3 text-sm font-bold text-slate-500 focus:outline-none hover:border-blue-400 transition-all cursor-pointer">
+                    ${current
+                        ? `<img src="${app.api(current)}" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md flex-shrink-0">`
+                        : `<div class="w-16 h-16 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                           </div>`}
+                </div>
+            </div>`;
+
+        const tabs = [
+            { id: 'general', label: '⚙️ General' },
+            { id: 'home', label: '🏠 Home Page' },
+            { id: 'brands', label: '🏷️ Brands' },
+            { id: 'categories', label: '📂 Categories' },
+            { id: 'support', label: '💬 Support' },
+            { id: 'footer', label: '📋 Footer' },
+        ];
+
+        container.innerHTML = `
+            <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
+                ${app.getSidebar('settings')}
+                <main class="flex-1 p-6 lg:p-10 overflow-x-hidden">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="mb-8">
+                            <h2 class="text-3xl font-black text-slate-900">Website <span class="text-blue-600">Control Center</span></h2>
+                            <p class="text-slate-500 font-medium mt-1">Edit every page, image, and text on your live website from here.</p>
+                        </div>
+
+                        <!-- Tab Nav -->
+                        <div class="flex gap-2 mb-8 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm overflow-x-auto no-scrollbar">
+                            ${tabs.map((tab, i) => `
+                                <button type="button" onclick="window.switchCMSTab('${tab.id}')" id="tab-btn-${tab.id}"
+                                    class="cms-tab-btn flex-shrink-0 px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${i === 0 ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}">
+                                    ${tab.label}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <form id="cms-form" enctype="multipart/form-data">
+
+                            <!-- GENERAL -->
+                            <div id="cms-tab-general" class="cms-tab-panel space-y-6 bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm">
+                                <div class="pb-6 border-b border-slate-100 mb-6">
+                                    <h3 class="text-xl font-black text-slate-900">General Settings</h3>
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Site identity, pricing & contact info</p>
                                 </div>
-                                <div>
-                                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">General Setup</h3>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Core platform identity & financials</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    ${field('Platform / Site Name', 'site_name', s.site_name, 'text', 'PARTSPRO')}
+                                    ${field('Currency Symbol', 'currency', s.currency, 'text', '₹')}
+                                    ${field('Tax Rate (%)', 'tax_percent', s.tax_percent, 'number', '18')}
+                                    ${field('Support Email', 'contact_email', s.contact_email, 'email', 'support@partspro.in')}
+                                    ${field('Contact Phone', 'contact_phone', s.contact_phone, 'text', '+91 70277 51544')}
+                                    ${field('Footer Tagline', 'footer_desc', s.footer_desc, 'text', 'The premium B2B platform...')}
+                                    ${textarea('Corporate Address', 'contact_address', s.contact_address, 'md:col-span-2')}
+                                    ${field('Copyright Text', 'footer_copyright', s.footer_copyright, 'text', '© 2026 PARTSPRO B2B Division.')}
                                 </div>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Platform Name</label>
-                                    <input type="text" name="site_name" value="${settings.site_name || 'PARTSPRO Portal'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Site Logo URL</label>
-                                    <input type="text" name="site_logo" value="${settings.site_logo || ''}" placeholder="Leave empty for default SVG" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Currency Symbol</label>
-                                    <input type="text" name="currency" value="${settings.currency || '₹'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tax Percentage (%)</label>
-                                    <input type="number" name="tax_percent" value="${settings.tax_percent || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
-                                </div>
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Main Title</label>
-                                    <input type="text" name="hero_title" value="${settings.hero_title || 'Industrial Spares.'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-lg font-black text-slate-900 focus:outline-none focus:border-indigo-500 transition-all">
-                                </div>
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Subtitle</label>
-                                    <textarea name="hero_subtitle" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 transition-all h-24 resize-none">${settings.hero_subtitle || 'Authorized source for genuine industrial spare parts and technical components.'}</textarea>
-                                </div>
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Hero Section Image</label>
-                                    <div class="flex items-center gap-4">
-                                        <input type="file" name="hero_image" accept="image/*" class="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
-                                        ${settings.hero_image ? `<img src="${app.api(settings.hero_image)}" class="w-14 h-14 rounded-xl object-cover border-2 border-white shadow-sm">` : ''}
+
+                            <!-- HOME PAGE -->
+                            <div id="cms-tab-home" class="cms-tab-panel space-y-6 hidden">
+                                <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
+                                    <div class="pb-6 border-b border-slate-100">
+                                        <h3 class="text-xl font-black text-slate-900">Hero Section</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Main banner headline, subtitle, background image</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-5">
+                                        ${field('Hero Headline', 'hero_title', s.hero_title, 'text', 'THE RIGHT PART. EVERY TIME.')}
+                                        ${textarea('Hero Subtitle', 'hero_subtitle', s.hero_subtitle)}
+                                        ${imgField('Hero Background Image', 'hero_image', s.hero_image)}
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <!-- Contact & Support Info -->
-                        <div class="bg-white rounded-[40px] p-10 border border-slate-100 shadow-premium mb-8">
-                            <div class="flex items-center gap-4 mb-8">
-                                <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                </div>
-                                <div>
-                                    <h4 class="text-xl font-black text-slate-900 tracking-tight">Contact & Support Center</h4>
-                                    <p class="text-slate-400 text-sm font-bold">Manage global contact details used across the platform.</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Support Email</label>
-                                    <input type="email" name="contact_email" value="${settings.contact_email || 'support@partspro.in'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-500 transition-all">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Technical Hotline</label>
-                                    <input type="text" name="contact_phone" value="${settings.contact_phone || '+91 70277 51544'}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-500 transition-all">
-                                </div>
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Corporate Address</label>
-                                    <textarea name="contact_address" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-500 transition-all h-20 resize-none">${settings.contact_address || ''}</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="space-y-8">
-                            <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
-                                <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-inner">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">Contact Details</h3>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Official communication channels</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Support Email</label>
-                                    <input type="email" name="contact_email" value="${settings.contact_email || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Contact Phone</label>
-                                    <input type="text" name="contact_phone" value="${settings.contact_phone || ''}" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all">
-                                </div>
-                                <div class="space-y-2 md:col-span-2">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Office Address</label>
-                                    <textarea name="contact_address" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all h-28 resize-none">${settings.contact_address || ''}</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Home Page Categories -->
-                        <div class="space-y-12">
-                            <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
-                                <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-inner">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">Home Page Categories</h3>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Featured collections on storefront</p>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 gap-12">
-                                ${[1, 2, 3, 4].map(num => `
-                                    <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 space-y-6">
-                                        <h4 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">Featured Category 0${num}</h4>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div class="space-y-2">
-                                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Display Title</label>
-                                                <input type="text" name="cat${num}_title" value="${settings['cat' + num + '_title'] || ''}" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
-                                            </div>
-                                            <div class="space-y-2">
-                                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Background Image Upload</label>
-                                                <div class="flex items-center gap-3">
-                                                    <input type="file" name="cat${num}_img" accept="image/*" class="flex-1 bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
-                                                    ${settings['cat' + num + '_img'] ? `<img src="${app.api(settings['cat' + num + '_img'])}" class="w-10 h-10 rounded-lg object-cover shadow-sm">` : ''}
-                                                </div>
-                                            </div>
-                                            <div class="space-y-2 md:col-span-2">
-                                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Marketing Description</label>
-                                                <textarea name="cat${num}_desc" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all h-20 resize-none">${settings['cat' + num + '_desc'] || ''}</textarea>
+                                <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
+                                    <div class="pb-6 border-b border-slate-100">
+                                        <h3 class="text-xl font-black text-slate-900">Home Category Panels</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">4 animated category cards on the home page</p>
+                                    </div>
+                                    ${[1,2,3,4].map(n => `
+                                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
+                                            <span class="inline-block px-3 py-1 rounded-lg bg-blue-100 text-blue-700 text-[10px] font-black uppercase tracking-widest">Category ${n}</span>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                ${field('Title', 'cat' + n + '_title', s['cat' + n + '_title'])}
+                                                ${imgField('Card Image', 'cat' + n + '_img', s['cat' + n + '_img'])}
+                                                ${textarea('Description', 'cat' + n + '_desc', s['cat' + n + '_desc'], 'md:col-span-2')}
                                             </div>
                                         </div>
-                                    </div>
-                                `).join('')}
+                                    `).join('')}
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="pt-8 mt-12 border-t border-slate-100 flex flex-col sm:flex-row justify-end gap-4">
-                            <button type="button" onclick="app.renderAdmin(document.getElementById('view-container'))" class="px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-50 transition-all border border-transparent hover:border-slate-200">Cancel</button>
-                            <button type="submit" class="px-10 py-5 rounded-2xl bg-slate-900 text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/30 transition-all">Save Global Settings</button>
-                        </div>
-                    </form>
-                </div>
+                            <!-- BRANDS PAGE -->
+                            <div id="cms-tab-brands" class="cms-tab-panel space-y-6 hidden">
+                                <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
+                                    <div class="pb-6 border-b border-slate-100">
+                                        <h3 class="text-xl font-black text-slate-900">Brands Page</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading and 6 brand cards</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-4">
+                                        ${field('Page Heading', 'brands_title', s.brands_title, 'text', 'Our Trusted Brands')}
+                                        ${textarea('Page Subtitle', 'brands_subtitle', s.brands_subtitle)}
+                                    </div>
+                                    ${['Bosch', 'Makita', 'DeWalt', 'Hikoki', 'Milwaukee', 'Hilti'].map((bn, i) => {
+                                        const n = i + 1;
+                                        return `
+                                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
+                                            <span class="inline-block px-3 py-1 rounded-lg bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest">Brand ${n} — Default: ${bn}</span>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                ${field('Brand Name', 'brand' + n + '_name', s['brand' + n + '_name'], 'text', bn)}
+                                                ${field('Tag / Specialty', 'brand' + n + '_tag', s['brand' + n + '_tag'], 'text', 'Power Tools')}
+                                                ${textarea('Short Description', 'brand' + n + '_desc', s['brand' + n + '_desc'])}
+                                                ${imgField('Brand Logo', 'brand' + n + '_logo', s['brand' + n + '_logo'])}
+                                            </div>
+                                        </div>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+
+                            <!-- CATEGORIES PAGE -->
+                            <div id="cms-tab-categories" class="cms-tab-panel space-y-6 hidden">
+                                <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
+                                    <div class="pb-6 border-b border-slate-100">
+                                        <h3 class="text-xl font-black text-slate-900">Categories Page</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading and 4 category cards</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-4">
+                                        ${field('Page Heading', 'cats_page_title', s.cats_page_title, 'text', 'Core Categories')}
+                                        ${textarea('Page Subtitle', 'cats_page_subtitle', s.cats_page_subtitle)}
+                                    </div>
+                                    <div class="p-4 bg-amber-50 border border-amber-100 rounded-2xl text-sm text-amber-700 font-bold">
+                                        ℹ️ Category cards below are shared with the Home Page panels — editing here updates both places.
+                                    </div>
+                                    ${[1,2,3,4].map(n => `
+                                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
+                                            <span class="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-widest">Category ${n}</span>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                ${field('Title', 'cat' + n + '_title', s['cat' + n + '_title'])}
+                                                ${imgField('Card Image', 'cat' + n + '_img', s['cat' + n + '_img'])}
+                                                ${textarea('Description', 'cat' + n + '_desc', s['cat' + n + '_desc'], 'md:col-span-2')}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <!-- SUPPORT PAGE -->
+                            <div id="cms-tab-support" class="cms-tab-panel space-y-6 hidden">
+                                <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
+                                    <div class="pb-6 border-b border-slate-100">
+                                        <h3 class="text-xl font-black text-slate-900">Support Page</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading, description and contact info cards</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-4">
+                                        ${field('Page Heading', 'support_title', s.support_title, 'text', 'Expert Support Center')}
+                                        ${textarea('Page Subtitle / Description', 'support_subtitle', s.support_subtitle)}
+                                        ${field('Form Submit Button Text', 'support_form_cta', s.support_form_cta, 'text', 'Submit Technical Ticket')}
+                                    </div>
+                                    <div class="p-5 bg-green-50 border border-green-100 rounded-2xl space-y-4">
+                                        <span class="text-xs font-black text-green-700 uppercase tracking-widest">Contact Cards (auto-pulled from General Settings)</span>
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            ${field('Email', 'contact_email', s.contact_email, 'email')}
+                                            ${field('Phone', 'contact_phone', s.contact_phone)}
+                                            ${textarea('Address', 'contact_address', s.contact_address)}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FOOTER -->
+                            <div id="cms-tab-footer" class="cms-tab-panel space-y-6 hidden">
+                                <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
+                                    <div class="pb-6 border-b border-slate-100">
+                                        <h3 class="text-xl font-black text-slate-900">Footer Content</h3>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Tagline, address, email and copyright text</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-4">
+                                        ${field('Footer Brand Tagline', 'footer_desc', s.footer_desc, 'text', 'The premium B2B platform for genuine power tool spare parts.')}
+                                        ${field('Footer Email', 'contact_email', s.contact_email, 'email')}
+                                        ${textarea('Footer Address', 'contact_address', s.contact_address)}
+                                        ${field('Copyright Text', 'footer_copyright', s.footer_copyright, 'text', '© 2026 PARTSPRO B2B Division. All rights reserved.')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Save -->
+                            <div class="mt-8 flex flex-col sm:flex-row justify-end gap-4">
+                                <button type="button" onclick="app.renderAdmin(document.getElementById('view-container'))"
+                                    class="px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-500 hover:bg-white border border-slate-200 transition-all">
+                                    Cancel
+                                </button>
+                                <button type="submit" id="cms-save-btn"
+                                    class="px-10 py-4 rounded-2xl bg-blue-600 text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:-translate-y-0.5 hover:bg-blue-700 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    Save All Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </main>
             </div>
         `;
-        
-        document.getElementById('settings-form').onsubmit = async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            
-            const updateRes = await fetch(app.api('api/admin_settings.php'), {
-                method: 'POST',
-                body: formData
+
+        window.switchCMSTab = (tabId) => {
+            document.querySelectorAll('.cms-tab-panel').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.cms-tab-btn').forEach(b => {
+                b.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
+                b.classList.add('text-slate-500');
             });
-            const result = await updateRes.json();
-            if (result.success) {
-                app.showToast('System configuration synchronized successfully.');
-                await app.loadSettings();
-                app.renderAdmin(container);
+            document.getElementById('cms-tab-' + tabId)?.classList.remove('hidden');
+            const ab = document.getElementById('tab-btn-' + tabId);
+            if (ab) { ab.classList.add('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30'); ab.classList.remove('text-slate-500'); }
+        };
+
+        document.getElementById('cms-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('cms-save-btn');
+            btn.textContent = 'Saving…';
+            btn.disabled = true;
+            try {
+                const r = await fetch(app.api('api/admin_settings.php'), { method: 'POST', body: new FormData(e.target) });
+                const result = await r.json();
+                if (result.success) { app.showToast('✅ All changes saved and live!'); await app.loadSettings(); }
+                else app.showToast(result.error || 'Save failed', 'error');
+            } catch(err) { app.showToast('Network error', 'error'); }
+            finally {
+                btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Save All Changes';
+                btn.disabled = false;
             }
         };
+
     } catch (e) {
-        container.innerHTML = `<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load system settings.</div>`;
+        container.innerHTML = `<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load CMS. ${e.message}</div>`;
     }
 }
+
 
 export function printAdminReport() {
     const stats = {

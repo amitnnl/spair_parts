@@ -11,8 +11,8 @@ export function renderSupport(container, app) {
             <section class="bg-white border-b border-slate-100 py-24">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div class="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-6">Connect with us</div>
-                    <h2 class="text-6xl font-black text-slate-900 tracking-tight mb-6">Expert Support <span class="text-primary">Center</span></h2>
-                    <p class="text-slate-500 font-bold text-lg max-w-2xl mx-auto">Need technical assistance with a part? Our specialist engineers are available 24/7 to help your business stay operational.</p>
+                    <h2 class="text-6xl font-black text-slate-900 tracking-tight mb-6">${app.state.settings.support_title || 'Expert Support <span class="text-primary">Center</span>'}</h2>
+                    <p class="text-slate-500 font-bold text-lg max-w-2xl mx-auto">${app.state.settings.support_subtitle || 'Need technical assistance with a part? Our specialist engineers are available 24/7 to help your business stay operational.'}</p>
                 </div>
             </section>
 
@@ -79,7 +79,7 @@ export function renderSupport(container, app) {
                                 <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Detailed Message</label>
                                 <textarea required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold focus:outline-none focus:border-primary transition-all h-40 resize-none" placeholder="Describe your technical requirement..."></textarea>
                             </div>
-                            <button type="submit" class="w-full py-5 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/30 hover:bg-primary-dark hover:-translate-y-1 transition-all">Submit Technical Ticket</button>
+                            <button type="submit" class="w-full py-5 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/30 hover:bg-primary-dark hover:-translate-y-1 transition-all">${app.state.settings.support_form_cta || 'Submit Technical Ticket'}</button>
                         </form>
                     </div>
                 </div>
