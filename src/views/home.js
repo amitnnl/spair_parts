@@ -1,6 +1,5 @@
-import { state } from '../state.js';
-
-export function renderHome(container) {
+export function renderHome(container, app) {
+    const s = app.state.settings || {};
     container.innerHTML = `
         <div class="animate-fade-in">
             <!-- Hero Section (Reference Image 1) -->
@@ -9,10 +8,10 @@ export function renderHome(container) {
                     <div class="flex flex-col lg:flex-row items-center gap-20">
                         <div class="flex-1 text-center lg:text-left">
                             <h1 class="text-6xl lg:text-[84px] font-black text-slate-900 leading-[1.05] tracking-tight mb-8">
-                                ${(state.settings.hero_title || 'THE RIGHT PART. EVERY TIME.').split('.').join('.<br/>')}
+                                 ${(s.hero_title || 'THE RIGHT PART. EVERY TIME.').split('.').join('.<br/>')}
                             </h1>
                             <p class="text-xl text-slate-600 mb-12 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                                ${state.settings.hero_subtitle || 'Premium B2B procurement portal for genuine power tool spare parts.'}
+                                ${s.hero_subtitle || 'Premium B2B procurement portal for genuine power tool spare parts.'}
                             </p>
                             
                             <div class="flex flex-wrap justify-center lg:justify-start gap-10 mb-16">
@@ -32,14 +31,23 @@ export function renderHome(container) {
 
                         </div>
                         
-                        <!-- Hero Image -->
-                        <div class="flex-1 relative hidden lg:block">
+                        <!-- Hero Slider -->
+                        <div class="flex-1 relative hidden lg:block h-[650px]">
                             <div class="absolute -inset-10 bg-primary/10 rounded-full blur-[100px] opacity-40 animate-pulse"></div>
-                            <div class="relative rounded-[48px] overflow-hidden shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-all duration-700 h-[650px]">
-                                <img src="${app.api(state.settings.hero_image) || 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000'}" alt="Industrial Parts" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+                            
+                            <!-- Slider Container -->
+                            <div id="hero-slider" class="relative w-full h-full rounded-[48px] overflow-hidden shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-all duration-700">
+                                ${[s.hero_image, s.hero_image_2, s.hero_image_3].map((img, i) => `
+                                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}" data-index="${i}">
+                                        <img src="${app.api(img) || 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000'}" 
+                                             class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+                                    </div>
+                                `).join('')}
                             </div>
-                            <div class="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 flex items-center gap-6 animate-bounce">
+
+                            <!-- Floating Badge -->
+                            <div class="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 flex items-center gap-6 animate-bounce z-20">
                                 <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
                                 </div>
@@ -49,6 +57,7 @@ export function renderHome(container) {
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -139,10 +148,10 @@ export function renderHome(container) {
                     
                     <div class="flex flex-col md:flex-row gap-4 h-[400px] md:h-[250px] lg:h-[300px] w-full">
                         ${[
-                            { t: state.settings.cat1_title || 'Electrical Spares', d: state.settings.cat1_desc || 'Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.', img: state.settings.cat1_img || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800', icon:'M13 10V3L4 14h7v7l9-11h-7z' },
-                            { t: state.settings.cat2_title || 'Mechanical Units', d: state.settings.cat2_desc || 'Precision Gears, Bearings, Shafts & Housing Assemblies ensuring seamless kinetic transfer.', img: state.settings.cat2_img || 'https://images.unsplash.com/photo-1530124566582-a618bc2615ad?auto=format&fit=crop&q=80&w=800', icon:'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
-                            { t: state.settings.cat3_title || 'Power Attachments', d: state.settings.cat3_desc || 'Chucks, SDS Adaptors, Cutting Discs & Drill Bits engineered for brutal workloads.', img: state.settings.cat3_img || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800', icon:'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5' },
-                            { t: state.settings.cat4_title || 'Maintenance Kits', d: state.settings.cat4_desc || 'Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.', img: state.settings.cat4_img || 'https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800', icon:'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' }
+                              { t: s.cat1_title || 'Electrical Spares', d: s.cat1_desc || 'Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.', img: app.api(s.cat1_img) || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800', icon:'M13 10V3L4 14h7v7l9-11h-7z' },
+                            { t: s.cat2_title || 'Mechanical Units', d: s.cat2_desc || 'Precision Gears, Bearings, Shafts & Housing Assemblies ensuring seamless kinetic transfer.', img: app.api(s.cat2_img) || 'https://images.unsplash.com/photo-1530124566582-a618bc2615ad?auto=format&fit=crop&q=80&w=800', icon:'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
+                            { t: s.cat3_title || 'Power Attachments', d: s.cat3_desc || 'Chucks, SDS Adaptors, Cutting Discs & Drill Bits engineered for brutal workloads.', img: app.api(s.cat3_img) || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800', icon:'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5' },
+                            { t: s.cat4_title || 'Maintenance Kits', d: s.cat4_desc || 'Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.', img: app.api(s.cat4_img) || 'https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800', icon:'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' }
                         ].map((c) => `
                             <a href="/catalog" data-link class="group relative rounded-[40px] overflow-hidden bg-slate-800 flex-1 hover:flex-[3] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-end p-6 md:p-10 shadow-2xl hover:shadow-primary/20 cursor-pointer">
                                 <div class="absolute inset-0">
@@ -188,4 +197,35 @@ export function renderHome(container) {
             </section>
         </div>
     `;
+
+    // Initialize Hero Slider after DOM is ready
+    setTimeout(() => {
+        let current = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        if (slides.length <= 1) return;
+        
+        const timer = setInterval(() => {
+            const next = (current + 1) % slides.length;
+            const currentSlide = document.querySelector(`.hero-slide[data-index="${current}"]`);
+            const nextSlide = document.querySelector(`.hero-slide[data-index="${next}"]`);
+            
+            if (!currentSlide || !nextSlide) {
+                clearInterval(timer);
+                return;
+            }
+            
+            currentSlide.style.opacity = '0';
+            nextSlide.style.opacity = '1';
+            current = next;
+        }, 5000);
+
+        // Auto-cleanup when navigating away
+        const observer = new MutationObserver(() => {
+            if (!document.getElementById('hero-slider')) {
+                clearInterval(timer);
+                observer.disconnect();
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    }, 100);
 }

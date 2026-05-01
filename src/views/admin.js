@@ -480,14 +480,14 @@ export async function updateUser(id, field, value, app) {
 
 
 export async function renderSystemSettings(container, app) {
-    if (!app.state.user || app.state.user.role !== 'admin') {
+    if (!app.state.user || !app.state.user.role || app.state.user.role.toLowerCase() !== 'admin') {
         app.showToast('Access restricted to administrators', 'error');
         return;
     }
     container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
 
     try {
-        const res = await fetch(app.api('api/admin_settings.php'));
+        const res = await fetch(app.api('api/admin_settings.php'), { credentials: 'include' });
         const s = await res.json();
 
         const field = (label, name, val, type = 'text', placeholder = '', extra = '') => `
@@ -577,25 +577,15 @@ export async function renderSystemSettings(container, app) {
                                     <div class="grid grid-cols-1 gap-5">
                                         ${field('Hero Headline', 'hero_title', s.hero_title, 'text', 'THE RIGHT PART. EVERY TIME.')}
                                         ${textarea('Hero Subtitle', 'hero_subtitle', s.hero_subtitle)}
-                                        ${imgField('Hero Background Image', 'hero_image', s.hero_image)}
-                                    </div>
-                                </div>
-
-                                <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
-                                    <div class="pb-6 border-b border-slate-100">
-                                        <h3 class="text-xl font-black text-slate-900">Home Category Panels</h3>
-                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">4 animated category cards on the home page</p>
-                                    </div>
-                                    ${[1,2,3,4].map(n => `
-                                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
-                                            <span class="inline-block px-3 py-1 rounded-lg bg-blue-100 text-blue-700 text-[10px] font-black uppercase tracking-widest">Category ${n}</span>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                ${field('Title', 'cat' + n + '_title', s['cat' + n + '_title'])}
-                                                ${imgField('Card Image', 'cat' + n + '_img', s['cat' + n + '_img'])}
-                                                ${textarea('Description', 'cat' + n + '_desc', s['cat' + n + '_desc'], 'md:col-span-2')}
+                                        <div class="space-y-4 p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Hero Slider Images</span>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                ${imgField('Hero Image 1', 'hero_image', s.hero_image)}
+                                                ${imgField('Hero Image 2', 'hero_image_2', s.hero_image_2)}
+                                                ${imgField('Hero Image 3', 'hero_image_3', s.hero_image_3)}
                                             </div>
                                         </div>
-                                    `).join('')}
+                                    </div>
                                 </div>
                             </div>
 
@@ -727,7 +717,11 @@ export async function renderSystemSettings(container, app) {
             btn.textContent = 'Saving…';
             btn.disabled = true;
             try {
-                const r = await fetch(app.api('api/admin_settings.php'), { method: 'POST', body: new FormData(e.target) });
+                const r = await fetch(app.api('api/admin_settings.php'), { 
+                    method: 'POST', 
+                    body: new FormData(e.target),
+                    credentials: 'include'
+                });
                 const result = await r.json();
                 if (result.success) { app.showToast('✅ All changes saved and live!'); await app.loadSettings(); }
                 else app.showToast(result.error || 'Save failed', 'error');

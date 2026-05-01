@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
   return {
     // LOCAL:  base = '/spairparts/' so Vite dev server proxies correctly
     // LIVE:   base = '/'  so dist/index.html loads assets from root
-    base: isLocal ? '/spairparts/' : '/',
+    base: './',
     root: './',
     server: {
       proxy: {

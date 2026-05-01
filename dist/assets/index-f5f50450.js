@@ -1,4 +1,4 @@
-(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))s(o);new MutationObserver(o=>{for(const r of o)if(r.type==="childList")for(const n of r.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&s(n)}).observe(document,{childList:!0,subtree:!0});function a(o){const r={};return o.integrity&&(r.integrity=o.integrity),o.referrerPolicy&&(r.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?r.credentials="include":o.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function s(o){if(o.ep)return;o.ep=!0;const r=a(o);fetch(o.href,r)}})();function _(e,t){const a=t.state.user&&t.state.user.role&&t.state.user.role.toLowerCase()==="admin";return`
+(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))s(o);new MutationObserver(o=>{for(const r of o)if(r.type==="childList")for(const i of r.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&s(i)}).observe(document,{childList:!0,subtree:!0});function a(o){const r={};return o.integrity&&(r.integrity=o.integrity),o.referrerPolicy&&(r.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?r.credentials="include":o.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function s(o){if(o.ep)return;o.ep=!0;const r=a(o);fetch(o.href,r)}})();function _(e,t){const a=t.state.user&&t.state.user.role&&t.state.user.role.toLowerCase()==="admin";return`
         <aside class="w-full lg:w-72 bg-[#fdfdfd] border-r border-slate-200 flex flex-col sticky top-20 h-[calc(100vh-80px)] overflow-y-auto no-scrollbar z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
             <!-- User Status Card -->
             <div class="p-8 border-b border-slate-100 bg-slate-50/30">
@@ -74,7 +74,7 @@
             </svg>
             <span class="${s?"":"group-hover:translate-x-1"} transition-transform">${t}</span>
         </a>
-    `}const u={user:null,cart:[],products:[],quotations:[],invoices:[],view:"home",isLoading:!1,settings:{site_name:"PARTSPRO",currency:"₹",tax_percent:"18"}};async function $(e,t){e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const s=await(await fetch(t.api("api/products.php"))).json();u.products=s.products,u.brands=s.brands,u.models=s.models,e.innerHTML=`
+    `}const m={user:null,cart:[],products:[],quotations:[],invoices:[],view:"home",isLoading:!1,settings:{site_name:"PARTSPRO",currency:"₹",tax_percent:"18"}};async function $(e,t){e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const s=await(await fetch(t.api("api/products.php"))).json();m.products=s.products,m.brands=s.brands,m.models=s.models,e.innerHTML=`
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${t.getSidebar("catalog")}
                 <main class="flex-1 p-8 lg:p-12">
@@ -101,14 +101,14 @@
                 <div class="relative">
                     <select id="brand-filter" class="w-full h-14 bg-slate-50 border border-slate-200 rounded-xl px-4 text-xs font-bold text-slate-700 appearance-none focus:outline-none focus:border-blue-500 transition-all cursor-pointer uppercase tracking-widest">
                         <option value="">Filter by Brand</option>
-                        ${(u.brands||[]).map(o=>`<option value="${o}">${o}</option>`).join("")}
+                        ${(m.brands||[]).map(o=>`<option value="${o}">${o}</option>`).join("")}
                     </select>
                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
                 </div>
                 <div class="relative">
                     <select id="model-filter" class="w-full h-14 bg-slate-50 border border-slate-200 rounded-xl px-4 text-xs font-bold text-slate-700 appearance-none focus:outline-none focus:border-blue-500 transition-all cursor-pointer uppercase tracking-widest">
                         <option value="">Filter by Model</option>
-                        ${(u.models||[]).map(o=>`<option value="${o}">${o}</option>`).join("")}
+                        ${(m.models||[]).map(o=>`<option value="${o}">${o}</option>`).join("")}
                     </select>
                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
                 </div>
@@ -118,7 +118,7 @@
         <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             ${v()}
         </div>
-    `;const s=()=>{document.getElementById("catalog-grid").innerHTML=v()};document.getElementById("catalog-search").oninput=s,document.getElementById("brand-filter").onchange=s,document.getElementById("model-filter").onchange=s}function v(){var o,r,n;const e=((o=document.getElementById("catalog-search"))==null?void 0:o.value.toLowerCase())||"",t=((r=document.getElementById("brand-filter"))==null?void 0:r.value)||"",a=((n=document.getElementById("model-filter"))==null?void 0:n.value)||"",s=(u.products||[]).filter(d=>{const l=d.part_name.toLowerCase().includes(e)||d.machine_model&&d.machine_model.toLowerCase().includes(e)||d.brand&&d.brand.toLowerCase().includes(e),c=!t||d.brand===t,i=!a||d.machine_model===a||d.other_fitments&&d.other_fitments.includes(a);return l&&c&&i});return s.length===0?`
+    `;const s=()=>{document.getElementById("catalog-grid").innerHTML=v()};document.getElementById("catalog-search").oninput=s,document.getElementById("brand-filter").onchange=s,document.getElementById("model-filter").onchange=s}function v(){var o,r,i;const e=((o=document.getElementById("catalog-search"))==null?void 0:o.value.toLowerCase())||"",t=((r=document.getElementById("brand-filter"))==null?void 0:r.value)||"",a=((i=document.getElementById("model-filter"))==null?void 0:i.value)||"",s=(m.products||[]).filter(d=>{const n=d.part_name.toLowerCase().includes(e)||d.machine_model&&d.machine_model.toLowerCase().includes(e)||d.brand&&d.brand.toLowerCase().includes(e),c=!t||d.brand===t,l=!a||d.machine_model===a||d.other_fitments&&d.other_fitments.includes(a);return n&&c&&l});return s.length===0?`
             <div class="col-span-full py-20 text-center animate-in fade-in duration-500">
                 <h3 class="text-xl font-bold text-slate-400">No parts found</h3>
             </div>
@@ -594,7 +594,7 @@
                     </div>
                 </main>
             </div>
-        `}catch{e.innerHTML='<div class="p-20 text-center text-rose-500 font-bold">Error loading partners.</div>'}}}async function R(e,t){const a=document.createElement("div");a.id="process-modal",a.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto";const r=(await(await fetch(t.api("api/admin_quotations.php"))).json()).find(i=>i.id==e),d=await(await fetch(t.api(`api/admin_quotations.php?id=${e}`))).json(),l=d.items,c=parseFloat(d.discount_tier||0);a.innerHTML=`
+        `}catch{e.innerHTML='<div class="p-20 text-center text-rose-500 font-bold">Error loading partners.</div>'}}}async function R(e,t){const a=document.createElement("div");a.id="process-modal",a.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto";const r=(await(await fetch(t.api("api/admin_quotations.php"))).json()).find(l=>l.id==e),d=await(await fetch(t.api(`api/admin_quotations.php?id=${e}`))).json(),n=d.items,c=parseFloat(d.discount_tier||0);a.innerHTML=`
         <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative animate-in zoom-in duration-300 my-8">
             <div class="bg-slate-900 p-8 text-white flex justify-between items-center">
                 <div>
@@ -631,23 +631,23 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
-                                ${l.map(i=>`
+                                ${n.map(l=>`
                                     <tr class="group">
                                         <td class="p-6">
-                                            <div class="font-bold text-slate-900">${i.part_name}</div>
-                                            <div class="text-[10px] text-slate-500 uppercase font-black tracking-tighter mt-0.5">${i.brand} • ${i.machine_model}</div>
+                                            <div class="font-bold text-slate-900">${l.part_name}</div>
+                                            <div class="text-[10px] text-slate-500 uppercase font-black tracking-tighter mt-0.5">${l.brand} • ${l.machine_model}</div>
                                         </td>
-                                        <td class="p-6 text-slate-600 font-black">${i.quantity}</td>
-                                        <td class="p-6 text-slate-400 font-bold text-sm">₹${i.cost||"0.00"}</td>
+                                        <td class="p-6 text-slate-600 font-black">${l.quantity}</td>
+                                        <td class="p-6 text-slate-400 font-bold text-sm">₹${l.cost||"0.00"}</td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" name="price_${i.id}" data-item-id="${i.id}" data-qty="${i.quantity}" data-msrp="${i.cost||0}" step="0.01" value="${i.unit_price||""}" required class="w-28 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-black text-blue-600 focus:outline-none focus:border-blue-500 transition-all unit-price-input">
+                                                <input type="number" name="price_${l.id}" data-item-id="${l.id}" data-qty="${l.quantity}" data-msrp="${l.cost||0}" step="0.01" value="${l.unit_price||""}" required class="w-28 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-black text-blue-600 focus:outline-none focus:border-blue-500 transition-all unit-price-input">
                                                 <button type="button" onclick="app.applyDiscountToItem(this, ${c})" class="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td class="p-6 text-right font-black text-blue-600 subtotal-cell">₹${(i.quantity*(i.unit_price||0)).toFixed(2)}</td>
+                                        <td class="p-6 text-right font-black text-blue-600 subtotal-cell">₹${(l.quantity*(l.unit_price||0)).toFixed(2)}</td>
                                     </tr>
                                 `).join("")}
                             </tbody>
@@ -673,23 +673,23 @@
                 </form>
             </div>
         </div>
-    `,document.body.appendChild(a),document.querySelectorAll(".unit-price-input").forEach(i=>{i.oninput=()=>g()}),g(),document.getElementById("price-quotation-form").onsubmit=async i=>{i.preventDefault();const p=Array.from(document.querySelectorAll(".unit-price-input")).map(m=>({item_id:m.dataset.itemId,unit_price:m.value})),b=await(await fetch(t.api("api/admin_quotations.php"),{method:"PUT",body:JSON.stringify({quotation_id:e,items:p})})).json();b.success?(t.showToast("Quotation priced and sent successfully!"),a.remove(),t.loadAdminQuotations()):t.showToast(b.error,"error")}}function F(e,t){const a=e.closest(".flex").querySelector("input"),o=parseFloat(a.dataset.msrp)*(1-t/100);a.value=o.toFixed(2),g()}function O(e){document.querySelectorAll(".unit-price-input").forEach(t=>{const s=parseFloat(t.dataset.msrp)*(1-e/100);t.value=s.toFixed(2)}),g()}function g(){let e=0;document.querySelectorAll(".unit-price-input").forEach(a=>{const s=parseFloat(a.dataset.qty),o=parseFloat(a.value)||0,r=s*o,n=a.closest("tr");n&&(n.querySelector(".subtotal-cell").textContent=`₹${r.toFixed(2)}`),e+=r});const t=document.getElementById("quotation-total-display");t&&(t.textContent=`₹${e.toFixed(2)}`)}async function N(e,t){try{const s=await(await fetch(t.api("api/invoices.php"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({quotation_id:e})})).json();s.success?(t.showToast("Invoice generated successfully!"),t.loadAdminQuotations()):t.showToast(s.error,"error")}catch{t.showToast("Failed to generate invoice","error")}}async function Q(e,t,a,s){try{const o={id:e};o[t]=a;const n=await(await fetch(s.api("api/admin_users.php"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(o)})).json();n.success?s.showToast("Partner updated successfully"):s.showToast(n.error||"Update failed","error")}catch{s.showToast("Failed to update partner","error")}}async function U(e,t){if(!t.state.user||t.state.user.role!=="admin"){t.showToast("Access restricted to administrators","error");return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const s=await(await fetch(t.api("api/admin_settings.php"))).json(),o=(l,c,i,p="text",x="",b="")=>`
-            <div class="space-y-2 ${b}">
-                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${l}</label>
-                <input type="${p}" name="${c}" value="${i||""}" placeholder="${x}"
+    `,document.body.appendChild(a),document.querySelectorAll(".unit-price-input").forEach(l=>{l.oninput=()=>g()}),g(),document.getElementById("price-quotation-form").onsubmit=async l=>{l.preventDefault();const p=Array.from(document.querySelectorAll(".unit-price-input")).map(b=>({item_id:b.dataset.itemId,unit_price:b.value})),x=await(await fetch(t.api("api/admin_quotations.php"),{method:"PUT",body:JSON.stringify({quotation_id:e,items:p})})).json();x.success?(t.showToast("Quotation priced and sent successfully!"),a.remove(),t.loadAdminQuotations()):t.showToast(x.error,"error")}}function F(e,t){const a=e.closest(".flex").querySelector("input"),o=parseFloat(a.dataset.msrp)*(1-t/100);a.value=o.toFixed(2),g()}function O(e){document.querySelectorAll(".unit-price-input").forEach(t=>{const s=parseFloat(t.dataset.msrp)*(1-e/100);t.value=s.toFixed(2)}),g()}function g(){let e=0;document.querySelectorAll(".unit-price-input").forEach(a=>{const s=parseFloat(a.dataset.qty),o=parseFloat(a.value)||0,r=s*o,i=a.closest("tr");i&&(i.querySelector(".subtotal-cell").textContent=`₹${r.toFixed(2)}`),e+=r});const t=document.getElementById("quotation-total-display");t&&(t.textContent=`₹${e.toFixed(2)}`)}async function N(e,t){try{const s=await(await fetch(t.api("api/invoices.php"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({quotation_id:e})})).json();s.success?(t.showToast("Invoice generated successfully!"),t.loadAdminQuotations()):t.showToast(s.error,"error")}catch{t.showToast("Failed to generate invoice","error")}}async function Q(e,t,a,s){try{const o={id:e};o[t]=a;const i=await(await fetch(s.api("api/admin_users.php"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(o)})).json();i.success?s.showToast("Partner updated successfully"):s.showToast(i.error||"Update failed","error")}catch{s.showToast("Failed to update partner","error")}}async function U(e,t){if(!t.state.user||!t.state.user.role||t.state.user.role.toLowerCase()!=="admin"){t.showToast("Access restricted to administrators","error");return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const s=await(await fetch(t.api("api/admin_settings.php"),{credentials:"include"})).json(),o=(n,c,l,p="text",u="",x="")=>`
+            <div class="space-y-2 ${x}">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${n}</label>
+                <input type="${p}" name="${c}" value="${l||""}" placeholder="${u}"
                     class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
-            </div>`,r=(l,c,i,p="")=>`
+            </div>`,r=(n,c,l,p="")=>`
             <div class="space-y-2 ${p}">
-                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${l}</label>
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${n}</label>
                 <textarea name="${c}" rows="3"
-                    class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all resize-none">${i||""}</textarea>
-            </div>`,n=(l,c,i)=>`
+                    class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all resize-none">${l||""}</textarea>
+            </div>`,i=(n,c,l)=>`
             <div class="space-y-2">
-                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${l}</label>
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${n}</label>
                 <div class="flex items-center gap-4">
                     <input type="file" name="${c}" accept="image/*"
                         class="flex-1 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl px-5 py-3 text-sm font-bold text-slate-500 focus:outline-none hover:border-blue-400 transition-all cursor-pointer">
-                    ${i?`<img src="${t.api(i)}" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md flex-shrink-0">`:`<div class="w-16 h-16 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
+                    ${l?`<img src="${t.api(l)}" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md flex-shrink-0">`:`<div class="w-16 h-16 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                            </div>`}
                 </div>
@@ -705,10 +705,10 @@
 
                         <!-- Tab Nav -->
                         <div class="flex gap-2 mb-8 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm overflow-x-auto no-scrollbar">
-                            ${d.map((l,c)=>`
-                                <button type="button" onclick="window.switchCMSTab('${l.id}')" id="tab-btn-${l.id}"
+                            ${d.map((n,c)=>`
+                                <button type="button" onclick="window.switchCMSTab('${n.id}')" id="tab-btn-${n.id}"
                                     class="cms-tab-btn flex-shrink-0 px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${c===0?"bg-blue-600 text-white shadow-lg shadow-blue-600/30":"text-slate-500 hover:bg-slate-100 hover:text-slate-700"}">
-                                    ${l.label}
+                                    ${n.label}
                                 </button>
                             `).join("")}
                         </div>
@@ -743,25 +743,15 @@
                                     <div class="grid grid-cols-1 gap-5">
                                         ${o("Hero Headline","hero_title",s.hero_title,"text","THE RIGHT PART. EVERY TIME.")}
                                         ${r("Hero Subtitle","hero_subtitle",s.hero_subtitle)}
-                                        ${n("Hero Background Image","hero_image",s.hero_image)}
-                                    </div>
-                                </div>
-
-                                <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
-                                    <div class="pb-6 border-b border-slate-100">
-                                        <h3 class="text-xl font-black text-slate-900">Home Category Panels</h3>
-                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">4 animated category cards on the home page</p>
-                                    </div>
-                                    ${[1,2,3,4].map(l=>`
-                                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
-                                            <span class="inline-block px-3 py-1 rounded-lg bg-blue-100 text-blue-700 text-[10px] font-black uppercase tracking-widest">Category ${l}</span>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                ${o("Title","cat"+l+"_title",s["cat"+l+"_title"])}
-                                                ${n("Card Image","cat"+l+"_img",s["cat"+l+"_img"])}
-                                                ${r("Description","cat"+l+"_desc",s["cat"+l+"_desc"],"md:col-span-2")}
+                                        <div class="space-y-4 p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Hero Slider Images</span>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                ${i("Hero Image 1","hero_image",s.hero_image)}
+                                                ${i("Hero Image 2","hero_image_2",s.hero_image_2)}
+                                                ${i("Hero Image 3","hero_image_3",s.hero_image_3)}
                                             </div>
                                         </div>
-                                    `).join("")}
+                                    </div>
                                 </div>
                             </div>
 
@@ -776,14 +766,14 @@
                                         ${o("Page Heading","brands_title",s.brands_title,"text","Our Trusted Brands")}
                                         ${r("Page Subtitle","brands_subtitle",s.brands_subtitle)}
                                     </div>
-                                    ${["Bosch","Makita","DeWalt","Hikoki","Milwaukee","Hilti"].map((l,c)=>{const i=c+1;return`
+                                    ${["Bosch","Makita","DeWalt","Hikoki","Milwaukee","Hilti"].map((n,c)=>{const l=c+1;return`
                                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
-                                            <span class="inline-block px-3 py-1 rounded-lg bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest">Brand ${i} — Default: ${l}</span>
+                                            <span class="inline-block px-3 py-1 rounded-lg bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest">Brand ${l} — Default: ${n}</span>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                ${o("Brand Name","brand"+i+"_name",s["brand"+i+"_name"],"text",l)}
-                                                ${o("Tag / Specialty","brand"+i+"_tag",s["brand"+i+"_tag"],"text","Power Tools")}
-                                                ${r("Short Description","brand"+i+"_desc",s["brand"+i+"_desc"])}
-                                                ${n("Brand Logo","brand"+i+"_logo",s["brand"+i+"_logo"])}
+                                                ${o("Brand Name","brand"+l+"_name",s["brand"+l+"_name"],"text",n)}
+                                                ${o("Tag / Specialty","brand"+l+"_tag",s["brand"+l+"_tag"],"text","Power Tools")}
+                                                ${r("Short Description","brand"+l+"_desc",s["brand"+l+"_desc"])}
+                                                ${i("Brand Logo","brand"+l+"_logo",s["brand"+l+"_logo"])}
                                             </div>
                                         </div>`}).join("")}
                                 </div>
@@ -803,13 +793,13 @@
                                     <div class="p-4 bg-amber-50 border border-amber-100 rounded-2xl text-sm text-amber-700 font-bold">
                                         ℹ️ Category cards below are shared with the Home Page panels — editing here updates both places.
                                     </div>
-                                    ${[1,2,3,4].map(l=>`
+                                    ${[1,2,3,4].map(n=>`
                                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
-                                            <span class="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-widest">Category ${l}</span>
+                                            <span class="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-widest">Category ${n}</span>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                ${o("Title","cat"+l+"_title",s["cat"+l+"_title"])}
-                                                ${n("Card Image","cat"+l+"_img",s["cat"+l+"_img"])}
-                                                ${r("Description","cat"+l+"_desc",s["cat"+l+"_desc"],"md:col-span-2")}
+                                                ${o("Title","cat"+n+"_title",s["cat"+n+"_title"])}
+                                                ${i("Card Image","cat"+n+"_img",s["cat"+n+"_img"])}
+                                                ${r("Description","cat"+n+"_desc",s["cat"+n+"_desc"],"md:col-span-2")}
                                             </div>
                                         </div>
                                     `).join("")}
@@ -871,7 +861,7 @@
                     </div>
                 </main>
             </div>
-        `,window.switchCMSTab=l=>{var i;document.querySelectorAll(".cms-tab-panel").forEach(p=>p.classList.add("hidden")),document.querySelectorAll(".cms-tab-btn").forEach(p=>{p.classList.remove("bg-blue-600","text-white","shadow-lg","shadow-blue-600/30"),p.classList.add("text-slate-500")}),(i=document.getElementById("cms-tab-"+l))==null||i.classList.remove("hidden");const c=document.getElementById("tab-btn-"+l);c&&(c.classList.add("bg-blue-600","text-white","shadow-lg","shadow-blue-600/30"),c.classList.remove("text-slate-500"))},document.getElementById("cms-form").onsubmit=async l=>{l.preventDefault();const c=document.getElementById("cms-save-btn");c.textContent="Saving…",c.disabled=!0;try{const p=await(await fetch(t.api("api/admin_settings.php"),{method:"POST",body:new FormData(l.target)})).json();p.success?(t.showToast("✅ All changes saved and live!"),await t.loadSettings()):t.showToast(p.error||"Save failed","error")}catch{t.showToast("Network error","error")}finally{c.innerHTML='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Save All Changes',c.disabled=!1}}}catch(a){e.innerHTML=`<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load CMS. ${a.message}</div>`}}function V(){var a,s,o,r;const e={quotes:((a=document.getElementById("stat-active-quotations"))==null?void 0:a.textContent)||"--",partners:((s=document.getElementById("stat-total-partners"))==null?void 0:s.textContent)||"--",skus:((o=document.getElementById("stat-total-skus"))==null?void 0:o.textContent)||"--",revenue:((r=document.getElementById("stat-revenue"))==null?void 0:r.textContent)||"₹0"},t=window.open("","_blank");t.document.write(`
+        `,window.switchCMSTab=n=>{var l;document.querySelectorAll(".cms-tab-panel").forEach(p=>p.classList.add("hidden")),document.querySelectorAll(".cms-tab-btn").forEach(p=>{p.classList.remove("bg-blue-600","text-white","shadow-lg","shadow-blue-600/30"),p.classList.add("text-slate-500")}),(l=document.getElementById("cms-tab-"+n))==null||l.classList.remove("hidden");const c=document.getElementById("tab-btn-"+n);c&&(c.classList.add("bg-blue-600","text-white","shadow-lg","shadow-blue-600/30"),c.classList.remove("text-slate-500"))},document.getElementById("cms-form").onsubmit=async n=>{n.preventDefault();const c=document.getElementById("cms-save-btn");c.textContent="Saving…",c.disabled=!0;try{const p=await(await fetch(t.api("api/admin_settings.php"),{method:"POST",body:new FormData(n.target),credentials:"include"})).json();p.success?(t.showToast("✅ All changes saved and live!"),await t.loadSettings()):t.showToast(p.error||"Save failed","error")}catch{t.showToast("Network error","error")}finally{c.innerHTML='<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Save All Changes',c.disabled=!1}}}catch(a){e.innerHTML=`<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load CMS. ${a.message}</div>`}}function V(){var a,s,o,r;const e={quotes:((a=document.getElementById("stat-active-quotations"))==null?void 0:a.textContent)||"--",partners:((s=document.getElementById("stat-total-partners"))==null?void 0:s.textContent)||"--",skus:((o=document.getElementById("stat-total-skus"))==null?void 0:o.textContent)||"--",revenue:((r=document.getElementById("stat-revenue"))==null?void 0:r.textContent)||"₹0"},t=window.open("","_blank");t.document.write(`
         <html>
             <head>
                 <title>PARTSPRO - Executive Report</title>
@@ -1049,22 +1039,22 @@
                 </div>
             </form>
         </div>
-    `,document.body.appendChild(s);let o=null;fetch(t.api("api/admin_products.php?action=lookups")).then(r=>r.json()).then(r=>{o=r;const n=(d,l,c)=>{const i=document.getElementById(d);i&&l.forEach(p=>{const x=document.createElement("option");x.value=p.id,x.textContent=p.name,c&&p.id==c&&(x.selected=!0),i.appendChild(x)})};n("pf-brand",r.brands||[],e==null?void 0:e.brand_id),n("pf-machine",r.machine_names||[],e==null?void 0:e.machine_name_id),n("pf-partname",r.part_names||[],e==null?void 0:e.part_name_id),n("pf-model",r.models||[],e==null?void 0:e.model_id),n("pf-size",r.sizes||[],e==null?void 0:e.machine_size_id),a&&fetch(t.api(`api/admin_products.php?action=get_fitments&part_id=${e.id}`)).then(d=>d.json()).then(d=>{(d.fitments||[]).forEach(l=>window._pfAddMachineRow(l))})}).catch(()=>t.showToast("Could not load dropdown options","error")),window._pfAddMachineRow=(r=null)=>{const n=document.getElementById("additional-machines-container"),d=document.createElement("div");d.className="grid grid-cols-2 lg:grid-cols-4 gap-2 p-3 bg-slate-50 rounded-2xl border border-slate-100 relative group animate-in slide-in-from-top-2 duration-300";const l=(c,i,p)=>`
+    `,document.body.appendChild(s);let o=null;fetch(t.api("api/admin_products.php?action=lookups")).then(r=>r.json()).then(r=>{o=r;const i=(d,n,c)=>{const l=document.getElementById(d);l&&n.forEach(p=>{const u=document.createElement("option");u.value=p.id,u.textContent=p.name,c&&p.id==c&&(u.selected=!0),l.appendChild(u)})};i("pf-brand",r.brands||[],e==null?void 0:e.brand_id),i("pf-machine",r.machine_names||[],e==null?void 0:e.machine_name_id),i("pf-partname",r.part_names||[],e==null?void 0:e.part_name_id),i("pf-model",r.models||[],e==null?void 0:e.model_id),i("pf-size",r.sizes||[],e==null?void 0:e.machine_size_id),a&&fetch(t.api(`api/admin_products.php?action=get_fitments&part_id=${e.id}`)).then(d=>d.json()).then(d=>{(d.fitments||[]).forEach(n=>window._pfAddMachineRow(n))})}).catch(()=>t.showToast("Could not load dropdown options","error")),window._pfAddMachineRow=(r=null)=>{const i=document.getElementById("additional-machines-container"),d=document.createElement("div");d.className="grid grid-cols-2 lg:grid-cols-4 gap-2 p-3 bg-slate-50 rounded-2xl border border-slate-100 relative group animate-in slide-in-from-top-2 duration-300";const n=(c,l,p)=>`
             <div class="space-y-1">
                 <select name="${c}" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-[10px] font-bold text-slate-700 focus:outline-none focus:border-blue-500">
                     <option value="">Select...</option>
-                    ${i.map(x=>`<option value="${x.id}" ${x.id==p?"selected":""}>${x.name}</option>`).join("")}
+                    ${l.map(u=>`<option value="${u.id}" ${u.id==p?"selected":""}>${u.name}</option>`).join("")}
                 </select>
             </div>
         `;d.innerHTML=`
             <button type="button" onclick="this.parentElement.remove()" class="absolute -right-2 -top-2 w-6 h-6 bg-white border border-slate-200 text-rose-500 rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-50">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-            ${l("fit_brand_id",(o==null?void 0:o.brands)||[],r==null?void 0:r.brand_id)}
-            ${l("fit_machine_id",(o==null?void 0:o.machine_names)||[],r==null?void 0:r.machine_id)}
-            ${l("fit_model_id",(o==null?void 0:o.models)||[],r==null?void 0:r.machine_model_id)}
-            ${l("fit_size_id",(o==null?void 0:o.sizes)||[],r==null?void 0:r.machine_size_id)}
-        `,n.appendChild(d)},window._pfAddLookup=async r=>{const n={brand:"Brand",machine_name:"Machine Name",part_name:"Part Name",model:"Model",machine_size:"Machine Size"},d=prompt(`Enter new ${n[r]} name:`);if(!d||!d.trim())return;const l=new FormData;l.append("action","add_lookup"),l.append("type",r),l.append("name",d.trim());try{const i=await(await fetch(t.api("api/admin_products.php"),{method:"POST",body:l})).json();if(i.success){t.showToast(`${n[r]} added!`),o=await(await fetch(t.api("api/admin_products.php?action=lookups"))).json();const x={brand:"pf-brand",machine_name:"pf-machine",part_name:"pf-partname",model:"pf-model",machine_size:"pf-size"},b=document.getElementById(x[r]);if(b){const m=document.createElement("option");m.value=i.id,m.textContent=d.trim(),m.selected=!0,b.appendChild(m)}}else t.showToast(i.error||"Failed to add","error")}catch{t.showToast("Network error","error")}},document.getElementById("product-form").onsubmit=r=>Y(r,t)}async function Y(e,t){e.preventDefault();const a=document.getElementById("pf-submit-btn");a.disabled=!0,a.innerHTML='<span class="animate-pulse">Saving Product...</span>';const s=new FormData(e.target),o=s.has("id");try{let r;if(o){const d={id:s.get("id"),brand_id:s.get("brand_id"),machine_name_id:s.get("machine_name_id"),part_name_id:s.get("part_name_id"),model_id:s.get("model_id"),machine_size_id:s.get("machine_size_id"),cost:s.get("cost"),note:s.get("note")};r=await fetch(t.api("api/admin_products.php"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)})}else r=await fetch(t.api("api/admin_products.php"),{method:"POST",body:s});const n=await r.json();if(n.success){const d=o?s.get("id"):n.id,l=document.querySelectorAll("#additional-machines-container > div");for(const c of l){const i=c.querySelector('[name="fit_model_id"]').value,p=c.querySelector('[name="fit_size_id"]').value;if(i){const x=new FormData;x.append("action","save_fitment"),x.append("part_id",d),x.append("model_id",i),x.append("machine_size_id",p),await fetch(t.api("api/admin_products.php"),{method:"POST",body:x})}}t.showToast(`Product ${o?"updated":"created"} successfully with fitments`),document.getElementById("product-modal").remove(),t.renderAdminInventory(document.getElementById("view-container"))}else t.showToast(n.error||"Submission failed","error")}catch{t.showToast("Submission failed","error")}finally{a.disabled=!1,a.textContent="Save Complete Product"}}async function X(e,t){if(confirm("Are you sure you want to remove this product?"))try{const s=await(await fetch(t.api(`api/admin_products.php?action=delete_product&id=${e}`),{method:"DELETE"})).json();s.success?(t.showToast("Product removed"),t.renderAdminInventory(document.getElementById("view-container"))):t.showToast(s.error,"error")}catch{t.showToast("Deletion failed","error")}}async function Z(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML=`
+            ${n("fit_brand_id",(o==null?void 0:o.brands)||[],r==null?void 0:r.brand_id)}
+            ${n("fit_machine_id",(o==null?void 0:o.machine_names)||[],r==null?void 0:r.machine_id)}
+            ${n("fit_model_id",(o==null?void 0:o.models)||[],r==null?void 0:r.machine_model_id)}
+            ${n("fit_size_id",(o==null?void 0:o.sizes)||[],r==null?void 0:r.machine_size_id)}
+        `,i.appendChild(d)},window._pfAddLookup=async r=>{const i={brand:"Brand",machine_name:"Machine Name",part_name:"Part Name",model:"Model",machine_size:"Machine Size"},d=prompt(`Enter new ${i[r]} name:`);if(!d||!d.trim())return;const n=new FormData;n.append("action","add_lookup"),n.append("type",r),n.append("name",d.trim());try{const l=await(await fetch(t.api("api/admin_products.php"),{method:"POST",body:n})).json();if(l.success){t.showToast(`${i[r]} added!`),o=await(await fetch(t.api("api/admin_products.php?action=lookups"))).json();const u={brand:"pf-brand",machine_name:"pf-machine",part_name:"pf-partname",model:"pf-model",machine_size:"pf-size"},x=document.getElementById(u[r]);if(x){const b=document.createElement("option");b.value=l.id,b.textContent=d.trim(),b.selected=!0,x.appendChild(b)}}else t.showToast(l.error||"Failed to add","error")}catch{t.showToast("Network error","error")}},document.getElementById("product-form").onsubmit=r=>Y(r,t)}async function Y(e,t){e.preventDefault();const a=document.getElementById("pf-submit-btn");a.disabled=!0,a.innerHTML='<span class="animate-pulse">Saving Product...</span>';const s=new FormData(e.target),o=s.has("id");try{let r;if(o){const d={id:s.get("id"),brand_id:s.get("brand_id"),machine_name_id:s.get("machine_name_id"),part_name_id:s.get("part_name_id"),model_id:s.get("model_id"),machine_size_id:s.get("machine_size_id"),cost:s.get("cost"),note:s.get("note")};r=await fetch(t.api("api/admin_products.php"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)})}else r=await fetch(t.api("api/admin_products.php"),{method:"POST",body:s});const i=await r.json();if(i.success){const d=o?s.get("id"):i.id,n=document.querySelectorAll("#additional-machines-container > div");for(const c of n){const l=c.querySelector('[name="fit_model_id"]').value,p=c.querySelector('[name="fit_size_id"]').value;if(l){const u=new FormData;u.append("action","save_fitment"),u.append("part_id",d),u.append("model_id",l),u.append("machine_size_id",p),await fetch(t.api("api/admin_products.php"),{method:"POST",body:u})}}t.showToast(`Product ${o?"updated":"created"} successfully with fitments`),document.getElementById("product-modal").remove(),t.renderAdminInventory(document.getElementById("view-container"))}else t.showToast(i.error||"Submission failed","error")}catch{t.showToast("Submission failed","error")}finally{a.disabled=!1,a.textContent="Save Complete Product"}}async function X(e,t){if(confirm("Are you sure you want to remove this product?"))try{const s=await(await fetch(t.api(`api/admin_products.php?action=delete_product&id=${e}`),{method:"DELETE"})).json();s.success?(t.showToast("Product removed"),t.renderAdminInventory(document.getElementById("view-container"))):t.showToast(s.error,"error")}catch{t.showToast("Deletion failed","error")}}async function Z(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML=`
         <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
             ${t.getSidebar("dashboard")}
 
@@ -1136,7 +1126,7 @@
                 <button type="submit" class="w-full py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:scale-[1.02] transition-all">Generate Quotation Cart</button>
             </form>
         </div>
-    `,document.body.appendChild(t),document.getElementById("bulk-order-form").onsubmit=async a=>{a.preventDefault();const s=a.target.querySelector("button");s.disabled=!0,s.innerHTML='<span class="animate-pulse">Processing Order...</span>';const o=new FormData(a.target);try{const n=await(await fetch(e.api("api/bulk_order.php"),{method:"POST",body:o})).json();n.success?(e.showToast(`Success! ${n.count} items added to your cart.`),t.remove(),e.state.cart=n.cart,e.renderCart(document.getElementById("view-container"))):e.showToast(n.error,"error")}catch{e.showToast("Bulk order failed. Check CSV format.","error")}finally{s.disabled=!1,s.innerHTML="Generate Quotation Cart"}}}async function st(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{e.innerHTML=`
+    `,document.body.appendChild(t),document.getElementById("bulk-order-form").onsubmit=async a=>{a.preventDefault();const s=a.target.querySelector("button");s.disabled=!0,s.innerHTML='<span class="animate-pulse">Processing Order...</span>';const o=new FormData(a.target);try{const i=await(await fetch(e.api("api/bulk_order.php"),{method:"POST",body:o})).json();i.success?(e.showToast(`Success! ${i.count} items added to your cart.`),t.remove(),e.state.cart=i.cart,e.renderCart(document.getElementById("view-container"))):e.showToast(i.error,"error")}catch{e.showToast("Bulk order failed. Check CSV format.","error")}finally{s.disabled=!1,s.innerHTML="Generate Quotation Cart"}}}async function st(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{e.innerHTML=`
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${t.getSidebar("parts_list")}
 
@@ -1333,7 +1323,7 @@
             <rect x="0" y="5" width="155" height="32" rx="4" fill="#E31837"/>
             <text x="78" y="27" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Arial" letter-spacing="1">MILWAUKEE</text></svg>`,`<svg viewBox="0 0 110 40" xmlns="http://www.w3.org/2000/svg" class="h-10 w-auto">
             <rect x="0" y="5" width="105" height="32" rx="4" fill="#E2001A"/>
-            <text x="52" y="27" text-anchor="middle" fill="white" font-size="17" font-weight="900" font-family="Arial" letter-spacing="3">HILTI</text></svg>`],o=[1,2,3,4,5,6].map((r,n)=>({name:a["brand"+r+"_name"]||["BOSCH","MAKITA","DEWALT","HIKOKI","MILWAUKEE","HILTI"][n],tag:a["brand"+r+"_tag"]||"Power Tools",desc:a["brand"+r+"_desc"]||"",logo:a["brand"+r+"_logo"]||"",svg:s[n]}));e.innerHTML=`
+            <text x="52" y="27" text-anchor="middle" fill="white" font-size="17" font-weight="900" font-family="Arial" letter-spacing="3">HILTI</text></svg>`],o=[1,2,3,4,5,6].map((r,i)=>({name:a["brand"+r+"_name"]||["BOSCH","MAKITA","DEWALT","HIKOKI","MILWAUKEE","HILTI"][i],tag:a["brand"+r+"_tag"]||"Power Tools",desc:a["brand"+r+"_desc"]||"",logo:a["brand"+r+"_logo"]||"",svg:s[i]}));e.innerHTML=`
         <div class="animate-fade-in min-h-screen bg-slate-50">
             <!-- Page Header -->
             <section class="bg-white border-b border-slate-100 py-24">
@@ -1474,7 +1464,7 @@
                 </div>
             </section>
         </div>
-    `,document.getElementById("support-form").onsubmit=s=>{s.preventDefault(),t.showToast("Support ticket submitted successfully. Reference: #PP-"+Math.floor(Math.random()*1e5)),s.target.reset()}}function f(e){e.innerHTML=`
+    `,document.getElementById("support-form").onsubmit=s=>{s.preventDefault(),t.showToast("Support ticket submitted successfully. Reference: #PP-"+Math.floor(Math.random()*1e5)),s.target.reset()}}function f(e,t){const a=t.state.settings||{};e.innerHTML=`
         <div class="animate-fade-in">
             <!-- Hero Section (Reference Image 1) -->
             <section class="relative bg-white pt-20 pb-16 overflow-hidden border-b border-slate-100">
@@ -1482,10 +1472,10 @@
                     <div class="flex flex-col lg:flex-row items-center gap-20">
                         <div class="flex-1 text-center lg:text-left">
                             <h1 class="text-6xl lg:text-[84px] font-black text-slate-900 leading-[1.05] tracking-tight mb-8">
-                                ${(u.settings.hero_title||"THE RIGHT PART. EVERY TIME.").split(".").join(".<br/>")}
+                                 ${(a.hero_title||"THE RIGHT PART. EVERY TIME.").split(".").join(".<br/>")}
                             </h1>
                             <p class="text-xl text-slate-600 mb-12 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                                ${u.settings.hero_subtitle||"Premium B2B procurement portal for genuine power tool spare parts."}
+                                ${a.hero_subtitle||"Premium B2B procurement portal for genuine power tool spare parts."}
                             </p>
                             
                             <div class="flex flex-wrap justify-center lg:justify-start gap-10 mb-16">
@@ -1505,14 +1495,23 @@
 
                         </div>
                         
-                        <!-- Hero Image -->
-                        <div class="flex-1 relative hidden lg:block">
+                        <!-- Hero Slider -->
+                        <div class="flex-1 relative hidden lg:block h-[650px]">
                             <div class="absolute -inset-10 bg-primary/10 rounded-full blur-[100px] opacity-40 animate-pulse"></div>
-                            <div class="relative rounded-[48px] overflow-hidden shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-all duration-700 h-[650px]">
-                                <img src="${app.api(u.settings.hero_image)||"https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000"}" alt="Industrial Parts" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+                            
+                            <!-- Slider Container -->
+                            <div id="hero-slider" class="relative w-full h-full rounded-[48px] overflow-hidden shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-all duration-700">
+                                ${[a.hero_image,a.hero_image_2,a.hero_image_3].map((s,o)=>`
+                                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ${o===0?"opacity-100":"opacity-0"}" data-index="${o}">
+                                        <img src="${t.api(s)||"https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000"}" 
+                                             class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+                                    </div>
+                                `).join("")}
                             </div>
-                            <div class="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 flex items-center gap-6 animate-bounce">
+
+                            <!-- Floating Badge -->
+                            <div class="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 flex items-center gap-6 animate-bounce z-20">
                                 <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
                                 </div>
@@ -1522,6 +1521,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -1576,13 +1576,13 @@
                         <div class="w-24 h-1.5 bg-primary mx-auto rounded-full mt-8"></div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                        ${[{icon:"M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4",t:"Wide Inventory",d:"Over 15,000 SKUs from 20+ world-class brands ready to ship."},{icon:"M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",t:"Precision Lookup",d:"Advanced search by part number, model, or technical diagram."},{icon:"M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6 0a1 1 0 001 1h1m-6 0a1 1 0 001 1h1",t:"Bulk Processing",d:"Dedicated workflow for volume orders and recurring maintenance."},{icon:"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",t:"B2B Benefits",d:"Special contract pricing, credit facility, and priority support."}].map(t=>`
+                        ${[{icon:"M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4",t:"Wide Inventory",d:"Over 15,000 SKUs from 20+ world-class brands ready to ship."},{icon:"M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",t:"Precision Lookup",d:"Advanced search by part number, model, or technical diagram."},{icon:"M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6 0a1 1 0 001 1h1m-6 0a1 1 0 001 1h1",t:"Bulk Processing",d:"Dedicated workflow for volume orders and recurring maintenance."},{icon:"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",t:"B2B Benefits",d:"Special contract pricing, credit facility, and priority support."}].map(s=>`
                             <div class="flex flex-col items-center text-center group">
                                 <div class="w-20 h-20 rounded-[28px] bg-white shadow-premium border border-slate-100 flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500 transform group-hover:-translate-y-2">
-                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="${t.icon}"/></svg>
+                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="${s.icon}"/></svg>
                                 </div>
-                                <h4 class="text-lg font-black text-slate-900 mb-3">${t.t}</h4>
-                                <p class="text-sm text-slate-500 font-medium leading-relaxed px-2">${t.d}</p>
+                                <h4 class="text-lg font-black text-slate-900 mb-3">${s.t}</h4>
+                                <p class="text-sm text-slate-500 font-medium leading-relaxed px-2">${s.d}</p>
                             </div>
                         `).join("")}
                     </div>
@@ -1606,24 +1606,24 @@
                     </div>
                     
                     <div class="flex flex-col md:flex-row gap-4 h-[400px] md:h-[250px] lg:h-[300px] w-full">
-                        ${[{t:u.settings.cat1_title||"Electrical Spares",d:u.settings.cat1_desc||"Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.",img:u.settings.cat1_img||"https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800",icon:"M13 10V3L4 14h7v7l9-11h-7z"},{t:u.settings.cat2_title||"Mechanical Units",d:u.settings.cat2_desc||"Precision Gears, Bearings, Shafts & Housing Assemblies ensuring seamless kinetic transfer.",img:u.settings.cat2_img||"https://images.unsplash.com/photo-1530124566582-a618bc2615ad?auto=format&fit=crop&q=80&w=800",icon:"M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"},{t:u.settings.cat3_title||"Power Attachments",d:u.settings.cat3_desc||"Chucks, SDS Adaptors, Cutting Discs & Drill Bits engineered for brutal workloads.",img:u.settings.cat3_img||"https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800",icon:"M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"},{t:u.settings.cat4_title||"Maintenance Kits",d:u.settings.cat4_desc||"Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.",img:u.settings.cat4_img||"https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800",icon:"M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"}].map(t=>`
+                        ${[{t:a.cat1_title||"Electrical Spares",d:a.cat1_desc||"Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.",img:t.api(a.cat1_img)||"https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800",icon:"M13 10V3L4 14h7v7l9-11h-7z"},{t:a.cat2_title||"Mechanical Units",d:a.cat2_desc||"Precision Gears, Bearings, Shafts & Housing Assemblies ensuring seamless kinetic transfer.",img:t.api(a.cat2_img)||"https://images.unsplash.com/photo-1530124566582-a618bc2615ad?auto=format&fit=crop&q=80&w=800",icon:"M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"},{t:a.cat3_title||"Power Attachments",d:a.cat3_desc||"Chucks, SDS Adaptors, Cutting Discs & Drill Bits engineered for brutal workloads.",img:t.api(a.cat3_img)||"https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800",icon:"M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"},{t:a.cat4_title||"Maintenance Kits",d:a.cat4_desc||"Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.",img:t.api(a.cat4_img)||"https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800",icon:"M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"}].map(s=>`
                             <a href="/catalog" data-link class="group relative rounded-[40px] overflow-hidden bg-slate-800 flex-1 hover:flex-[3] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-end p-6 md:p-10 shadow-2xl hover:shadow-primary/20 cursor-pointer">
                                 <div class="absolute inset-0">
-                                    <img src="${t.img}" alt="${t.t}" class="w-full h-full object-cover opacity-50 mix-blend-overlay group-hover:scale-110 group-hover:opacity-100 transition-all duration-[1200ms] ease-out">
+                                    <img src="${s.img}" alt="${s.t}" class="w-full h-full object-cover opacity-50 mix-blend-overlay group-hover:scale-110 group-hover:opacity-100 transition-all duration-[1200ms] ease-out">
                                 </div>
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-90 group-hover:opacity-70 transition-all duration-700"></div>
                                 <div class="absolute inset-0 bg-gradient-to-r from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
                                 
                                 <div class="relative z-10 w-full flex flex-col justify-end">
                                     <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-6 group-hover:bg-primary group-hover:text-white group-hover:-translate-y-2 transition-all duration-500 border border-white/10 shrink-0 shadow-lg">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${t.icon}"/></svg>
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${s.icon}"/></svg>
                                     </div>
                                     <div class="overflow-hidden">
-                                        <h4 class="text-2xl md:text-3xl font-black text-white mb-2 whitespace-nowrap transform group-hover:translate-x-2 transition-transform duration-500">${t.t}</h4>
+                                        <h4 class="text-2xl md:text-3xl font-black text-white mb-2 whitespace-nowrap transform group-hover:translate-x-2 transition-transform duration-500">${s.t}</h4>
                                         <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                             <div class="overflow-hidden">
                                                 <div class="transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
-                                                    <p class="text-sm md:text-base text-slate-300 font-bold leading-relaxed pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 whitespace-normal min-w-[200px] max-w-sm">${t.d}</p>
+                                                    <p class="text-sm md:text-base text-slate-300 font-bold leading-relaxed pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 whitespace-normal min-w-[200px] max-w-sm">${s.d}</p>
                                                     <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200 bg-primary/10 px-4 py-2 rounded-xl">
                                                         Explore Collection <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                                                     </span>
@@ -1650,7 +1650,7 @@
                 </div>
             </section>
         </div>
-    `}const dt=window.location.hostname==="localhost"||window.location.hostname==="127.0.0.1",y=dt?"/spairparts":"",ct=e=>e?e.startsWith("http")?e:y+(e.startsWith("/")?"":"/")+e:"",k={state:{user:JSON.parse(localStorage.getItem("user")),cart:JSON.parse(localStorage.getItem("cart"))||[],settings:{}},basePath:y,api:ct,getSidebar(e){return _(e,this)},renderCatalog(e){return $(e,this)},renderQuotations(e){return B(e,this)},viewQuotationDetails(e){return T(e,this)},approveQuotation(e){return P(e,this)},renderInvoices(e){return j(e,this)},renderInvoiceDocument(e){return A(e,this)},renderAdmin(e){return E(e,this)},loadAdminStats(){return L(this)},loadAdminQuotations(){return I(this)},renderAdminInventory(e){return H(e,this)},filterInventory(){return z()},renderAdminUsers(e){return D(e,this)},updateUser(e,t,a){return Q(e,t,a,this)},renderProcessQuotation(e){return R(e,this)},applyDiscountToItem(e,t){return F(e,t)},applyDiscountToAll(e){return O(e)},generateInvoice(e){return N(e,this)},renderSystemSettings(){return U(document.getElementById("view-container"),this)},printAdminReport(){return V()},renderImportModal(){return G(this)},renderAddProductForm(){return W(this)},renderEditProductForm(e){return J(e,this)},deleteProduct(e){return X(e,this)},renderDashboard(e){return Z(e,this)},loadDashboardStats(){return tt(this)},renderBulkOrderModal(){return et(this)},renderMyPartsList(e){return st(e,this)},renderLogin(e){return at(e,this)},renderRegister(e){return ot(e,this)},renderCart(e){return rt(e,this)},getStatusClass(e){switch(e){case"pending":return"bg-amber-50 text-amber-600 border border-amber-200";case"priced":return"bg-blue-50 text-blue-600 border border-blue-200";case"approved":return"bg-emerald-50 text-emerald-600 border border-emerald-200";case"completed":return"bg-slate-50 text-slate-500 border border-slate-200";default:return"bg-slate-50 text-slate-400 border border-slate-100"}},cleanImageUrl(e,t){return!e||e==="null"?`https://ui-avatars.com/api/?name=${encodeURIComponent(t)}&background=f1f5f9&color=64748b&bold=true`:e.startsWith("http")?e:this.api(e)},async loadSettings(){try{const e=await fetch(this.api("api/admin_settings.php"));this.state.settings=await e.json()}catch(e){console.error("Failed to load settings",e)}},updateAuthUI(){const e=document.getElementById("auth-nav");if(this.state.user){localStorage.setItem("user",JSON.stringify(this.state.user));const t=this.state.user.role&&this.state.user.role.toLowerCase()==="admin";e.innerHTML=`
+    `,setTimeout(()=>{let s=0;const o=document.querySelectorAll(".hero-slide");if(o.length<=1)return;const r=setInterval(()=>{const d=(s+1)%o.length,n=document.querySelector(`.hero-slide[data-index="${s}"]`),c=document.querySelector(`.hero-slide[data-index="${d}"]`);if(!n||!c){clearInterval(r);return}n.style.opacity="0",c.style.opacity="1",s=d},5e3),i=new MutationObserver(()=>{document.getElementById("hero-slider")||(clearInterval(r),i.disconnect())});i.observe(document.body,{childList:!0,subtree:!0})},100)}const dt=window.location.hostname==="localhost"||window.location.hostname==="127.0.0.1",y=dt?"/spairparts":"",ct=e=>e?e.startsWith("http")?e:y+(e.startsWith("/")?"":"/")+e:"",k={state:{user:JSON.parse(localStorage.getItem("user")),cart:JSON.parse(localStorage.getItem("cart"))||[],settings:{}},basePath:y,api:ct,getSidebar(e){return _(e,this)},renderCatalog(e){return $(e,this)},renderQuotations(e){return B(e,this)},viewQuotationDetails(e){return T(e,this)},approveQuotation(e){return P(e,this)},renderInvoices(e){return j(e,this)},renderInvoiceDocument(e){return A(e,this)},renderAdmin(e){return E(e,this)},loadAdminStats(){return L(this)},loadAdminQuotations(){return I(this)},renderAdminInventory(e){return H(e,this)},filterInventory(){return z()},renderAdminUsers(e){return D(e,this)},updateUser(e,t,a){return Q(e,t,a,this)},renderProcessQuotation(e){return R(e,this)},applyDiscountToItem(e,t){return F(e,t)},applyDiscountToAll(e){return O(e)},generateInvoice(e){return N(e,this)},renderSystemSettings(){return U(document.getElementById("view-container"),this)},printAdminReport(){return V()},renderImportModal(){return G(this)},renderAddProductForm(){return W(this)},renderEditProductForm(e){return J(e,this)},deleteProduct(e){return X(e,this)},renderDashboard(e){return Z(e,this)},loadDashboardStats(){return tt(this)},renderBulkOrderModal(){return et(this)},renderMyPartsList(e){return st(e,this)},renderLogin(e){return at(e,this)},renderRegister(e){return ot(e,this)},renderCart(e){return rt(e,this)},getStatusClass(e){switch(e){case"pending":return"bg-amber-50 text-amber-600 border border-amber-200";case"priced":return"bg-blue-50 text-blue-600 border border-blue-200";case"approved":return"bg-emerald-50 text-emerald-600 border border-emerald-200";case"completed":return"bg-slate-50 text-slate-500 border border-slate-200";default:return"bg-slate-50 text-slate-400 border border-slate-100"}},cleanImageUrl(e,t){return!e||e==="null"?`https://ui-avatars.com/api/?name=${encodeURIComponent(t)}&background=f1f5f9&color=64748b&bold=true`:e.startsWith("http")?e:this.api(e)},async loadSettings(){try{const e=await fetch(this.api("api/admin_settings.php"));this.state.settings=await e.json(),this.applySettings()}catch(e){console.error("Failed to load settings",e)}},applySettings(){const e=this.state.settings;if(e){if(e.site_name&&(document.querySelectorAll(".logo-text").forEach(t=>t.textContent=e.site_name),document.title=e.site_name),e.site_logo&&document.querySelectorAll(".logo-container").forEach(t=>{t.innerHTML=`<img src="${this.api(e.site_logo)}" class="w-full h-full object-contain p-1">`,t.classList.remove("bg-primary")}),e.footer_desc){const t=document.getElementById("footer-desc");t&&(t.textContent=e.footer_desc)}if(e.contact_address){const t=document.getElementById("footer-address");t&&(t.innerHTML=e.contact_address.replace(/\n/g,"<br>"))}if(e.contact_email){const t=document.getElementById("footer-email");t&&(t.textContent=e.contact_email,t.href=`mailto:${e.contact_email}`)}}},updateAuthUI(){const e=document.getElementById("auth-nav");if(this.state.user){localStorage.setItem("user",JSON.stringify(this.state.user));const t=this.state.user.role&&this.state.user.role.toLowerCase()==="admin";e.innerHTML=`
                 <div class="flex items-center gap-6">
                     <div class="hidden md:block text-right">
                         <p class="text-xs font-black text-slate-900">${this.state.user.name}</p>
@@ -1673,4 +1673,4 @@
                 </div>
             `}else localStorage.removeItem("user"),e.innerHTML=`
                 <a href="/login" data-link class="px-8 py-3.5 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20">Partner Login</a>
-            `},handleRouting(){const e=window.location.pathname,t=(this.basePath?e.replace(this.basePath,""):e)||"/",a=document.getElementById("view-container");t==="/"?f(a):t==="/catalog"?this.renderCatalog(a):t==="/dashboard"?this.renderDashboard(a):t==="/admin"?this.renderAdmin(a):t==="/admin/inventory"?this.renderAdminInventory(a):t==="/admin/partners"?this.renderAdminUsers(a):t==="/quotations"?this.renderQuotations(a):t==="/login"?this.renderLogin(a):t==="/register"?this.renderRegister(a):t==="/invoices"?this.renderInvoices(a):t==="/cart"?this.renderCart(a):t==="/brands"?lt(a,this):t==="/categories"?it(a,this):t==="/support"?nt(a,this):t==="/logout"?(this.state.user=null,this.updateAuthUI(),history.pushState(null,null,this.basePath+"/"),this.handleRouting()):f(a),document.querySelectorAll(".nav-link, .mobile-nav-item").forEach(s=>{const o=s.getAttribute("href");s.classList.toggle("active",o===t)}),window.scrollTo({top:0,behavior:"smooth"}),this.animatePageEntry()},showToast(e,t="success"){const a=document.getElementById("toast-container");if(!a)return;const s=document.createElement("div");s.className=`toast ${t}`;const o=t==="error"?'<svg style="width:16px;height:16px;color:#ef4444;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>':'<svg style="width:16px;height:16px;color:#10b981;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';s.innerHTML=`${o}<span>${e}</span><button onclick="this.parentElement.remove()" style="margin-left:auto;color:#64748b;background:none;border:none;cursor:pointer;font-size:16px">✕</button>`,a.appendChild(s),setTimeout(()=>{s.style.opacity="0",s.style.transform="translateX(20px)",s.style.transition="all 0.3s ease",setTimeout(()=>s.remove(),300)},4e3)},animatePageEntry(){const e=document.getElementById("view-container");e&&(e.style.opacity="0",e.style.transform="translateY(16px)",e.style.transition="opacity 0.4s ease, transform 0.4s ease",requestAnimationFrame(()=>{requestAnimationFrame(()=>{e.style.opacity="1",e.style.transform="translateY(0)"})}))},async init(){await this.loadSettings(),this.updateAuthUI(),this.handleRouting(),document.addEventListener("click",e=>{const t=e.target.closest("[data-link]");if(t){e.preventDefault();const a=t.getAttribute("href");history.pushState(null,null,this.basePath+a),this.handleRouting()}}),window.addEventListener("popstate",()=>this.handleRouting())}};k.init();window.app=k;
+            `},handleRouting(){const e=window.location.pathname,t=(this.basePath?e.replace(this.basePath,""):e)||"/",a=document.getElementById("view-container");t==="/"?f(a,this):t==="/catalog"?this.renderCatalog(a):t==="/dashboard"?this.renderDashboard(a):t==="/admin"?this.renderAdmin(a):t==="/admin/inventory"?this.renderAdminInventory(a):t==="/admin/partners"?this.renderAdminUsers(a):t==="/quotations"?this.renderQuotations(a):t==="/login"?this.renderLogin(a):t==="/register"?this.renderRegister(a):t==="/invoices"?this.renderInvoices(a):t==="/cart"?this.renderCart(a):t==="/brands"?lt(a,this):t==="/categories"?it(a,this):t==="/support"?nt(a,this):t==="/logout"?(this.state.user=null,this.updateAuthUI(),history.pushState(null,null,this.basePath+"/"),this.handleRouting()):f(a,this),document.querySelectorAll(".nav-link, .mobile-nav-item").forEach(s=>{const o=s.getAttribute("href");s.classList.toggle("active",o===t)}),window.scrollTo({top:0,behavior:"smooth"}),this.animatePageEntry()},showToast(e,t="success"){const a=document.getElementById("toast-container");if(!a)return;const s=document.createElement("div");s.className=`toast ${t}`;const o=t==="error"?'<svg style="width:16px;height:16px;color:#ef4444;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>':'<svg style="width:16px;height:16px;color:#10b981;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';s.innerHTML=`${o}<span>${e}</span><button onclick="this.parentElement.remove()" style="margin-left:auto;color:#64748b;background:none;border:none;cursor:pointer;font-size:16px">✕</button>`,a.appendChild(s),setTimeout(()=>{s.style.opacity="0",s.style.transform="translateX(20px)",s.style.transition="all 0.3s ease",setTimeout(()=>s.remove(),300)},4e3)},animatePageEntry(){const e=document.getElementById("view-container");e&&(e.style.opacity="0",e.style.transform="translateY(16px)",e.style.transition="opacity 0.4s ease, transform 0.4s ease",requestAnimationFrame(()=>{requestAnimationFrame(()=>{e.style.opacity="1",e.style.transform="translateY(0)"})}))},async init(){try{const t=await(await fetch(this.api("api/auth.php"),{method:"POST",body:JSON.stringify({action:"check"}),headers:{"Content-Type":"application/json"},credentials:"include"})).json();t.logged_in?(this.state.user=t.user,localStorage.setItem("user",JSON.stringify(t.user))):(this.state.user=null,localStorage.removeItem("user"))}catch(e){console.error("Session check failed",e)}await this.loadSettings(),this.updateAuthUI(),this.handleRouting(),document.addEventListener("click",e=>{const t=e.target.closest("[data-link]");if(t){e.preventDefault();const a=t.getAttribute("href");history.pushState(null,null,this.basePath+a),this.handleRouting()}}),window.addEventListener("popstate",()=>this.handleRouting())}};k.init();window.app=k;

@@ -126,8 +126,45 @@ const app = {
         try {
             const res = await fetch(this.api('api/admin_settings.php'));
             this.state.settings = await res.json();
+            this.applySettings();
         } catch (e) {
             console.error('Failed to load settings', e);
+        }
+    },
+
+    applySettings() {
+        const s = this.state.settings;
+        if (!s) return;
+
+        // Update Site Name
+        if (s.site_name) {
+            document.querySelectorAll('.logo-text').forEach(el => el.textContent = s.site_name);
+            document.title = s.site_name;
+        }
+
+        // Update Site Logo
+        if (s.site_logo) {
+            document.querySelectorAll('.logo-container').forEach(el => {
+                el.innerHTML = `<img src="${this.api(s.site_logo)}" class="w-full h-full object-contain p-1">`;
+                el.classList.remove('bg-primary'); // Remove default background if it's a full logo
+            });
+        }
+
+        // Update Footer Info
+        if (s.footer_desc) {
+            const el = document.getElementById('footer-desc');
+            if (el) el.textContent = s.footer_desc;
+        }
+        if (s.contact_address) {
+            const el = document.getElementById('footer-address');
+            if (el) el.innerHTML = s.contact_address.replace(/\n/g, '<br>');
+        }
+        if (s.contact_email) {
+            const el = document.getElementById('footer-email');
+            if (el) {
+                el.textContent = s.contact_email;
+                el.href = `mailto:${s.contact_email}`;
+            }
         }
     },
 
@@ -253,6 +290,26 @@ const app = {
     },
 
     async init() {
+        // 1. Verify session with backend first
+        try {
+            const checkRes = await fetch(this.api('api/auth.php'), { 
+                method: 'POST', 
+                body: JSON.stringify({ action: 'check' }),
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            });
+            const checkData = await checkRes.json();
+            if (checkData.logged_in) {
+                this.state.user = checkData.user;
+                localStorage.setItem('user', JSON.stringify(checkData.user));
+            } else {
+                this.state.user = null;
+                localStorage.removeItem('user');
+            }
+        } catch (e) {
+            console.error('Session check failed', e);
+        }
+
         await this.loadSettings();
         this.updateAuthUI();
         this.handleRouting();

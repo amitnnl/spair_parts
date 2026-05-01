@@ -11,8 +11,14 @@ export function getBasePath() {
 export const basePath = getBasePath();
 
 export function api(path) {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    
+    // Normalize path to avoid double slashes
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    
     if (basePath) {
-        return basePath + '/' + path;
+        return basePath + '/' + cleanPath;
     }
-    return '/' + path;
+    return '/' + cleanPath;
 }
