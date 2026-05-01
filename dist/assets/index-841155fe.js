@@ -1,4 +1,4 @@
-(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))a(o);new MutationObserver(o=>{for(const r of o)if(r.type==="childList")for(const l of r.addedNodes)l.tagName==="LINK"&&l.rel==="modulepreload"&&a(l)}).observe(document,{childList:!0,subtree:!0});function s(o){const r={};return o.integrity&&(r.integrity=o.integrity),o.referrerPolicy&&(r.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?r.credentials="include":o.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function a(o){if(o.ep)return;o.ep=!0;const r=s(o);fetch(o.href,r)}})();function k(e,t){const s=t.state.user&&t.state.user.role&&t.state.user.role.toLowerCase()==="admin";return`
+(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))a(r);new MutationObserver(r=>{for(const o of r)if(o.type==="childList")for(const l of o.addedNodes)l.tagName==="LINK"&&l.rel==="modulepreload"&&a(l)}).observe(document,{childList:!0,subtree:!0});function s(r){const o={};return r.integrity&&(o.integrity=r.integrity),r.referrerPolicy&&(o.referrerPolicy=r.referrerPolicy),r.crossOrigin==="use-credentials"?o.credentials="include":r.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function a(r){if(r.ep)return;r.ep=!0;const o=s(r);fetch(r.href,o)}})();function k(e,t){const s=t.state.user&&t.state.user.role&&t.state.user.role.toLowerCase()==="admin";return`
         <aside class="w-full lg:w-72 bg-[#fdfdfd] border-r border-slate-200 flex flex-col sticky top-20 h-[calc(100vh-80px)] overflow-y-auto no-scrollbar z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
             <!-- User Status Card -->
             <div class="p-8 border-b border-slate-100 bg-slate-50/30">
@@ -67,8 +67,8 @@
                 </a>
             </div>
         </aside>
-    `}function p(e,t,s,a,o="blue"){return`
-        <a href="${e}" data-link class="flex items-center gap-4 px-4 py-3.5 rounded-2xl ${a?o==="blue"?"bg-blue-600 text-white shadow-xl shadow-blue-600/20":"bg-slate-900 text-white shadow-xl shadow-slate-900/20":"text-slate-500 hover:bg-slate-50 hover:text-slate-900"} transition-all font-bold text-[11px] uppercase tracking-tight group">
+    `}function p(e,t,s,a,r="blue"){return`
+        <a href="${e}" data-link class="flex items-center gap-4 px-4 py-3.5 rounded-2xl ${a?r==="blue"?"bg-blue-600 text-white shadow-xl shadow-blue-600/20":"bg-slate-900 text-white shadow-xl shadow-slate-900/20":"text-slate-500 hover:bg-slate-50 hover:text-slate-900"} transition-all font-bold text-[11px] uppercase tracking-tight group">
             <svg class="w-4 h-4 ${a?"":"group-hover:scale-110"} transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="${a?"2.5":"2"}">
                 <path stroke-linecap="round" stroke-linejoin="round" d="${s}"/>
             </svg>
@@ -89,7 +89,7 @@
                     </div>
                 </main>
             </div>
-        `,M(a.products,document.getElementById("catalog-content"),t)}catch{e.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load products.</div>'}}function M(e,t,s){t.innerHTML=`
+        `,S(a.products,document.getElementById("catalog-content"),t)}catch{e.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load products.</div>'}}function S(e,t,s){t.innerHTML=`
         <div class="bg-white rounded-3xl border border-slate-200 shadow-xl shadow-blue-900/5 p-8 lg:p-12 relative overflow-hidden mb-12">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
                 <div class="relative md:col-span-1">
@@ -101,14 +101,14 @@
                 <div class="relative">
                     <select id="brand-filter" class="w-full h-14 bg-slate-50 border border-slate-200 rounded-xl px-4 text-xs font-bold text-slate-700 appearance-none focus:outline-none focus:border-blue-500 transition-all cursor-pointer uppercase tracking-widest">
                         <option value="">Filter by Brand</option>
-                        ${(n.brands||[]).map(o=>`<option value="${o}">${o}</option>`).join("")}
+                        ${(n.brands||[]).map(r=>`<option value="${r}">${r}</option>`).join("")}
                     </select>
                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
                 </div>
                 <div class="relative">
                     <select id="model-filter" class="w-full h-14 bg-slate-50 border border-slate-200 rounded-xl px-4 text-xs font-bold text-slate-700 appearance-none focus:outline-none focus:border-blue-500 transition-all cursor-pointer uppercase tracking-widest">
                         <option value="">Filter by Model</option>
-                        ${(n.models||[]).map(o=>`<option value="${o}">${o}</option>`).join("")}
+                        ${(n.models||[]).map(r=>`<option value="${r}">${r}</option>`).join("")}
                     </select>
                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
                 </div>
@@ -116,13 +116,13 @@
         </div>
 
         <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            ${h()}
+            ${m()}
         </div>
-    `;const a=()=>{document.getElementById("catalog-grid").innerHTML=h()};document.getElementById("catalog-search").oninput=a,document.getElementById("brand-filter").onchange=a,document.getElementById("model-filter").onchange=a}function h(){var o,r,l;const e=((o=document.getElementById("catalog-search"))==null?void 0:o.value.toLowerCase())||"",t=((r=document.getElementById("brand-filter"))==null?void 0:r.value)||"",s=((l=document.getElementById("model-filter"))==null?void 0:l.value)||"",a=(n.products||[]).filter(i=>{const x=i.part_name.toLowerCase().includes(e)||i.machine_model&&i.machine_model.toLowerCase().includes(e)||i.brand&&i.brand.toLowerCase().includes(e),c=!t||i.brand===t,d=!s||i.machine_model===s||i.other_fitments&&i.other_fitments.includes(s);return x&&c&&d});return a.length===0?`
+    `;const a=()=>{document.getElementById("catalog-grid").innerHTML=m()};document.getElementById("catalog-search").oninput=a,document.getElementById("brand-filter").onchange=a,document.getElementById("model-filter").onchange=a}function m(){var r,o,l;const e=((r=document.getElementById("catalog-search"))==null?void 0:r.value.toLowerCase())||"",t=((o=document.getElementById("brand-filter"))==null?void 0:o.value)||"",s=((l=document.getElementById("model-filter"))==null?void 0:l.value)||"",a=(n.products||[]).filter(i=>{const x=i.part_name.toLowerCase().includes(e)||i.machine_model&&i.machine_model.toLowerCase().includes(e)||i.brand&&i.brand.toLowerCase().includes(e),c=!t||i.brand===t,d=!s||i.machine_model===s||i.other_fitments&&i.other_fitments.includes(s);return x&&c&&d});return a.length===0?`
             <div class="col-span-full py-20 text-center animate-in fade-in duration-500">
                 <h3 class="text-xl font-bold text-slate-400">No parts found</h3>
             </div>
-        `:a.map(i=>S(i)).join("")}function S(e){return`
+        `:a.map(i=>M(i)).join("")}function M(e){return`
         <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden group hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500 animate-in zoom-in duration-700">
             <div class="relative h-64 bg-slate-50 overflow-hidden">
                 <img src="${C(e.photo,e.part_name)}" class="w-full h-full object-contain p-8 group-hover:scale-110 transition-transform duration-700">
@@ -178,25 +178,25 @@
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100">
-                                    ${a.length?a.map(o=>`
+                                    ${a.length?a.map(r=>`
                                         <tr class="hover:bg-slate-50 transition-all">
                                             <td class="p-6">
-                                                <div class="font-bold text-slate-900">#Q-${String(o.id).padStart(4,"0")}</div>
-                                                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(o.created_at).toLocaleDateString()}</div>
+                                                <div class="font-bold text-slate-900">#Q-${String(r.id).padStart(4,"0")}</div>
+                                                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(r.created_at).toLocaleDateString()}</div>
                                             </td>
-                                            <td class="p-6 font-bold text-slate-600">${o.item_count||0} Products</td>
+                                            <td class="p-6 font-bold text-slate-600">${r.item_count||0} Products</td>
                                             <td class="p-6">
-                                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${t.getStatusClass(o.status)}">
-                                                    ${o.status}
+                                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${t.getStatusClass(r.status)}">
+                                                    ${r.status}
                                                 </span>
                                             </td>
                                             <td class="p-6 font-black text-slate-900">
-                                                ${o.status==="pending"?'<span class="text-slate-400 font-bold italic">Awaiting Pricing</span>':`₹${parseFloat(o.total_amount||0).toLocaleString()}`}
+                                                ${r.status==="pending"?'<span class="text-slate-400 font-bold italic">Awaiting Pricing</span>':`₹${parseFloat(r.total_amount||0).toLocaleString()}`}
                                             </td>
                                             <td class="p-6 text-right">
                                                 <div class="flex justify-end gap-3">
-                                                    <button onclick="app.viewQuotationDetails(${o.id})" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">View</button>
-                                                    ${o.status==="priced"?`<button onclick="app.approveQuotation(${o.id})" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20">Approve</button>`:""}
+                                                    <button onclick="app.viewQuotationDetails(${r.id})" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">View</button>
+                                                    ${r.status==="priced"?`<button onclick="app.approveQuotation(${r.id})" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20">Approve</button>`:""}
                                                 </div>
                                             </td>
                                         </tr>
@@ -211,12 +211,12 @@
                     </div>
                 </main>
             </div>
-        `}catch{e.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load quotations.</div>'}}async function j(e,t){const s=document.createElement("div");s.id="quotation-modal",s.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto";try{const o=await(await fetch(t.api(`api/quotations.php?id=${e}`))).json();s.innerHTML=`
+        `}catch{e.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load quotations.</div>'}}async function j(e,t){const s=document.createElement("div");s.id="quotation-modal",s.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto";try{const r=await(await fetch(t.api(`api/quotations.php?id=${e}`))).json();s.innerHTML=`
             <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative animate-in zoom-in duration-300 my-8">
                 <div class="p-10 border-b border-slate-100 flex justify-between items-center">
                     <div>
                         <h2 class="text-2xl font-black text-slate-900">Quotation Details</h2>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">#Q-${String(e).padStart(4,"0")} • Requested on ${new Date(o.created_at).toLocaleDateString()}</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">#Q-${String(e).padStart(4,"0")} • Requested on ${new Date(r.created_at).toLocaleDateString()}</p>
                     </div>
                     <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-900 flex items-center justify-center transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -235,23 +235,23 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
-                                ${o.items.map(r=>`
+                                ${r.items.map(o=>`
                                     <tr>
                                         <td class="p-6">
-                                            <div class="font-bold text-slate-900">${r.part_name}</div>
-                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-0.5">${r.brand} • ${r.machine_model}</div>
+                                            <div class="font-bold text-slate-900">${o.part_name}</div>
+                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-0.5">${o.brand} • ${o.machine_model}</div>
                                         </td>
-                                        <td class="p-6 text-sm font-bold text-slate-600">${r.quantity}</td>
-                                        <td class="p-6 text-sm font-black text-slate-900 text-right">${r.unit_price?`₹${parseFloat(r.unit_price).toLocaleString()}`:'<span class="text-slate-400 italic">Pending</span>'}</td>
-                                        <td class="p-6 text-sm font-black text-slate-900 text-right">${r.unit_price?`₹${(r.quantity*r.unit_price).toLocaleString()}`:"---"}</td>
+                                        <td class="p-6 text-sm font-bold text-slate-600">${o.quantity}</td>
+                                        <td class="p-6 text-sm font-black text-slate-900 text-right">${o.unit_price?`₹${parseFloat(o.unit_price).toLocaleString()}`:'<span class="text-slate-400 italic">Pending</span>'}</td>
+                                        <td class="p-6 text-sm font-black text-slate-900 text-right">${o.unit_price?`₹${(o.quantity*o.unit_price).toLocaleString()}`:"---"}</td>
                                     </tr>
                                 `).join("")}
                             </tbody>
-                            ${o.total_amount?`
+                            ${r.total_amount?`
                                 <tfoot class="bg-slate-50 font-black">
                                     <tr>
                                         <td colspan="3" class="p-6 text-right text-slate-400 uppercase tracking-widest text-xs">Total Amount</td>
-                                        <td class="p-6 text-right text-2xl text-slate-900">₹${parseFloat(o.total_amount).toLocaleString()}</td>
+                                        <td class="p-6 text-right text-2xl text-slate-900">₹${parseFloat(r.total_amount).toLocaleString()}</td>
                                     </tr>
                                 </tfoot>
                             `:""}
@@ -260,11 +260,11 @@
                     
                     <div class="flex justify-end gap-4">
                         <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-2xl border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all">Close Details</button>
-                        ${o.status==="priced"?`<button onclick="app.approveQuotation(${e})" class="px-10 py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 transition-all">Approve & Order</button>`:""}
+                        ${r.status==="priced"?`<button onclick="app.approveQuotation(${e})" class="px-10 py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 transition-all">Approve & Order</button>`:""}
                     </div>
                 </div>
             </div>
-        `,document.body.appendChild(s)}catch{t.showToast("Failed to load quotation details","error")}}async function _(e,t){try{if((await(await fetch(t.api("api/quotations.php"),{method:"PUT",body:JSON.stringify({quotation_id:e,status:"approved"})})).json()).success){t.showToast("Quotation approved. We will generate your invoice shortly.");const o=document.getElementById("quotation-modal");o&&o.remove(),t.renderQuotations(document.getElementById("view-container"))}}catch{t.showToast("Error approving quotation","error")}}async function T(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const a=await(await fetch(t.api("api/invoices.php"))).json();e.innerHTML=`
+        `,document.body.appendChild(s)}catch{t.showToast("Failed to load quotation details","error")}}async function T(e,t){try{if((await(await fetch(t.api("api/quotations.php"),{method:"PUT",body:JSON.stringify({quotation_id:e,status:"approved"})})).json()).success){t.showToast("Quotation approved. We will generate your invoice shortly.");const r=document.getElementById("quotation-modal");r&&r.remove(),t.renderQuotations(document.getElementById("view-container"))}}catch{t.showToast("Error approving quotation","error")}}async function P(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const a=await(await fetch(t.api("api/invoices.php"))).json();e.innerHTML=`
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${t.getSidebar("invoices")}
                 <main class="flex-1 p-8 lg:p-12">
@@ -276,23 +276,23 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            ${a.length?a.map(o=>`
+                            ${a.length?a.map(r=>`
                                 <div class="bg-white border border-slate-200 rounded-3xl p-8 space-y-6 hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500 group">
                                     <div class="flex justify-between items-start">
                                         <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-all">
                                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                         </div>
                                         <div class="text-right">
-                                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">${new Date(o.created_at).toLocaleDateString()}</p>
-                                            <p class="text-sm font-black text-slate-900">${o.invoice_number}</p>
+                                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">${new Date(r.created_at).toLocaleDateString()}</p>
+                                            <p class="text-sm font-black text-slate-900">${r.invoice_number}</p>
                                         </div>
                                     </div>
                                     <div class="space-y-4 pt-6 border-t border-slate-100">
                                         <div class="flex justify-between items-center">
                                             <span class="text-xs font-bold text-slate-400">Total Amount</span>
-                                            <span class="text-xl font-black text-slate-900">₹${parseFloat(o.total_amount).toLocaleString()}</span>
+                                            <span class="text-xl font-black text-slate-900">₹${parseFloat(r.total_amount).toLocaleString()}</span>
                                         </div>
-                                        <button onclick="app.renderInvoiceDocument(${o.id})" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20">Download PDF</button>
+                                        <button onclick="app.renderInvoiceDocument(${r.id})" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20">Download PDF</button>
                                     </div>
                                 </div>
                             `).join(""):`
@@ -302,7 +302,7 @@
                     </div>
                 </main>
             </div>
-        `}catch{e.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load invoices.</div>'}}async function P(e,t){const s=document.createElement("div");s.id="invoice-doc-modal",s.className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-lg overflow-y-auto";try{const o=await(await fetch(t.api(`api/invoices.php?id=${e}`))).json();s.innerHTML=`
+        `}catch{e.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load invoices.</div>'}}async function _(e,t){const s=document.createElement("div");s.id="invoice-doc-modal",s.className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-lg overflow-y-auto";try{const r=await(await fetch(t.api(`api/invoices.php?id=${e}`))).json();s.innerHTML=`
             <div class="bg-white text-slate-900 w-full max-w-4xl min-h-[11in] p-16 shadow-2xl relative animate-in slide-in-from-bottom-8 duration-500 rounded-sm">
                 <!-- Premium Header Ribbon -->
                 <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900"></div>
@@ -321,8 +321,8 @@
                     </div>
                     <div class="text-right space-y-1">
                         <h2 class="text-6xl font-black text-slate-200 tracking-tighter uppercase opacity-50">Invoice</h2>
-                        <p class="text-sm font-black text-slate-900">NO: ${o.invoice_number}</p>
-                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest pt-2">Date: ${new Date(o.created_at).toLocaleDateString()}</p>
+                        <p class="text-sm font-black text-slate-900">NO: ${r.invoice_number}</p>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest pt-2">Date: ${new Date(r.created_at).toLocaleDateString()}</p>
                     </div>
                 </div>
 
@@ -330,8 +330,8 @@
                     <div>
                         <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-4">Billed To:</p>
                         <div class="space-y-1">
-                            <h3 class="text-xl font-black text-slate-900">${o.user_name}</h3>
-                            <p class="text-sm font-medium text-slate-500">${o.user_email}</p>
+                            <h3 class="text-xl font-black text-slate-900">${r.user_name}</h3>
+                            <p class="text-sm font-medium text-slate-500">${r.user_email}</p>
                         </div>
                     </div>
                     <div class="text-right">
@@ -351,15 +351,15 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
-                            ${o.items.map(r=>`
+                            ${r.items.map(o=>`
                                 <tr>
                                     <td class="p-6">
-                                        <p class="font-black text-slate-900 text-sm">${r.part_name}</p>
-                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tight">${r.brand} • ${r.machine_model}</p>
+                                        <p class="font-black text-slate-900 text-sm">${o.part_name}</p>
+                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tight">${o.brand} • ${o.machine_model}</p>
                                     </td>
-                                    <td class="p-6 text-sm font-bold text-slate-600">${r.quantity}</td>
-                                    <td class="p-6 text-sm font-bold text-slate-900 text-right">₹${parseFloat(r.unit_price).toLocaleString()}</td>
-                                    <td class="p-6 text-sm font-black text-slate-900 text-right">₹${(r.quantity*r.unit_price).toLocaleString()}</td>
+                                    <td class="p-6 text-sm font-bold text-slate-600">${o.quantity}</td>
+                                    <td class="p-6 text-sm font-bold text-slate-900 text-right">₹${parseFloat(o.unit_price).toLocaleString()}</td>
+                                    <td class="p-6 text-sm font-black text-slate-900 text-right">₹${(o.quantity*o.unit_price).toLocaleString()}</td>
                                 </tr>
                             `).join("")}
                         </tbody>
@@ -370,7 +370,7 @@
                     <div class="w-72 space-y-4">
                         <div class="flex justify-between items-center text-sm font-bold text-slate-500 uppercase tracking-widest">
                             <span>Subtotal</span>
-                            <span>₹${parseFloat(o.total_amount).toLocaleString()}</span>
+                            <span>₹${parseFloat(r.total_amount).toLocaleString()}</span>
                         </div>
                         <div class="flex justify-between items-center text-sm font-bold text-slate-500 uppercase tracking-widest">
                             <span>GST (0%)</span>
@@ -378,7 +378,7 @@
                         </div>
                         <div class="flex justify-between items-center pt-4 border-t border-slate-100">
                             <span class="text-xs font-black text-slate-900 uppercase tracking-widest">Total Payable</span>
-                            <span class="text-3xl font-black text-slate-900">₹${parseFloat(o.total_amount).toLocaleString()}</span>
+                            <span class="text-3xl font-black text-slate-900">₹${parseFloat(r.total_amount).toLocaleString()}</span>
                         </div>
                     </div>
                 </div>
@@ -399,7 +399,7 @@
                 </div>
             </div>
         </div>
-    `,document.body.appendChild(s)}catch{t.showToast("Failed to load invoice details","error"),s.remove()}}async function L(e,t){if((t.state.user&&t.state.user.role?t.state.user.role.toLowerCase():"")!=="admin"){t.showToast("Administrative privileges required","error"),history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML=`
+    `,document.body.appendChild(s)}catch{t.showToast("Failed to load invoice details","error"),s.remove()}}async function A(e,t){if((t.state.user&&t.state.user.role?t.state.user.role.toLowerCase():"")!=="admin"){t.showToast("Administrative privileges required","error"),history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML=`
         <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
             ${t.getSidebar("admin")}
 
@@ -438,18 +438,18 @@
                 </div>
             </main>
         </div>
-    `,t.loadAdminStats(),t.loadAdminQuotations()}async function I(e){try{const s=await(await fetch(e.api("api/admin_stats.php"))).json();document.getElementById("stat-active-quotations")&&(document.getElementById("stat-active-quotations").textContent=s.active_quotations),document.getElementById("stat-total-partners")&&(document.getElementById("stat-total-partners").textContent=s.total_partners),document.getElementById("stat-total-skus")&&(document.getElementById("stat-total-skus").textContent=s.total_skus),document.getElementById("stat-revenue")&&(document.getElementById("stat-revenue").textContent="₹"+parseFloat(s.total_revenue||0).toLocaleString())}catch(t){console.error("Failed to load admin stats",t)}}async function A(e){const t=document.getElementById("admin-quotation-list");if(t)try{const a=await(await fetch(e.api("api/admin_quotations.php"))).json();t.innerHTML=a.length?a.map(o=>`
+    `,t.loadAdminStats(),t.loadAdminQuotations()}async function I(e){try{const s=await(await fetch(e.api("api/admin_stats.php"))).json();document.getElementById("stat-active-quotations")&&(document.getElementById("stat-active-quotations").textContent=s.active_quotations),document.getElementById("stat-total-partners")&&(document.getElementById("stat-total-partners").textContent=s.total_partners),document.getElementById("stat-total-skus")&&(document.getElementById("stat-total-skus").textContent=s.total_skus),document.getElementById("stat-revenue")&&(document.getElementById("stat-revenue").textContent="₹"+parseFloat(s.total_revenue||0).toLocaleString())}catch(t){console.error("Failed to load admin stats",t)}}async function L(e){const t=document.getElementById("admin-quotation-list");if(t)try{const a=await(await fetch(e.api("api/admin_quotations.php"))).json();t.innerHTML=a.length?a.map(r=>`
             <div class="bg-white border border-slate-200 rounded-3xl p-6 flex justify-between items-center hover:shadow-xl hover:shadow-blue-900/5 transition-all">
                 <div>
-                    <div class="font-black text-slate-900">${o.user_name}</div>
-                    <div class="text-[11px] text-slate-500 font-medium mt-1">${o.user_email} • ${new Date(o.created_at).toLocaleString()}</div>
+                    <div class="font-black text-slate-900">${r.user_name}</div>
+                    <div class="text-[11px] text-slate-500 font-medium mt-1">${r.user_email} • ${new Date(r.created_at).toLocaleString()}</div>
                 </div>
                 <div class="flex items-center gap-6">
-                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${e.getStatusClass(o.status)}">
-                        ${o.status}
+                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${e.getStatusClass(r.status)}">
+                        ${r.status}
                     </span>
-                    ${o.status==="pending"?`<button onclick="app.renderProcessQuotation(${o.id})" class="px-5 py-2 rounded-xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition-all">Process</button>`:""}
-                    ${o.status==="approved"?`<button onclick="app.generateInvoice(${o.id})" class="px-5 py-2 rounded-xl bg-emerald-600 text-white text-[11px] font-black uppercase tracking-widest shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition-all">Generate Invoice</button>`:""}
+                    ${r.status==="pending"?`<button onclick="app.renderProcessQuotation(${r.id})" class="px-5 py-2 rounded-xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition-all">Process</button>`:""}
+                    ${r.status==="approved"?`<button onclick="app.generateInvoice(${r.id})" class="px-5 py-2 rounded-xl bg-emerald-600 text-white text-[11px] font-black uppercase tracking-widest shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition-all">Generate Invoice</button>`:""}
                 </div>
             </div>
         `).join(""):'<div class="bg-slate-50 border border-slate-100 rounded-3xl p-12 text-center text-slate-400 font-bold">No pending requests</div>'}catch{t.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load requests</div>'}}async function E(e,t){e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const s=await fetch(t.api("api/products.php")),{products:a}=await s.json();t.state.products=a,e.innerHTML=`
@@ -493,13 +493,13 @@
                                 </tr>
                             </thead>
                             <tbody id="inventory-table-body" class="divide-y divide-slate-100 bg-white">
-                                ${a.map(o=>q(o,t)).join("")}
+                                ${a.map(r=>q(r,t)).join("")}
                             </tbody>
                         </table>
                     </div>
                 </main>
             </div>
-        `}catch{e.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-20 text-center text-rose-500 font-bold">Error loading warehouse data.</div>'}}function H(){var s;const e=(((s=document.getElementById("inventory-search"))==null?void 0:s.value)||"").toLowerCase();document.querySelectorAll("#inventory-table-body tr").forEach(a=>{const o=a.textContent.toLowerCase();a.style.display=o.includes(e)?"":"none"})}function q(e,t){const s=(e.stock_quantity||0)<5;return`
+        `}catch{e.innerHTML='<div class="bg-rose-50 border border-rose-100 rounded-3xl p-20 text-center text-rose-500 font-bold">Error loading warehouse data.</div>'}}function H(){var s;const e=(((s=document.getElementById("inventory-search"))==null?void 0:s.value)||"").toLowerCase();document.querySelectorAll("#inventory-table-body tr").forEach(a=>{const r=a.textContent.toLowerCase();a.style.display=r.includes(e)?"":"none"})}function q(e,t){const s=(e.stock_quantity||0)<5;return`
         <tr class="hover:bg-slate-50/80 transition-all group">
             <td class="p-6 pl-8">
                 <div class="flex items-center gap-5">
@@ -536,7 +536,7 @@
                 </div>
             </td>
         </tr>
-    `}async function D(e,t){if(!(!t.state.user||t.state.user.role!=="admin")){e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const a=await(await fetch(t.api("api/admin_users.php"))).json();e.innerHTML=`
+    `}async function z(e,t){if(!(!t.state.user||t.state.user.role!=="admin")){e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const a=await(await fetch(t.api("api/admin_users.php"))).json();e.innerHTML=`
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${t.getSidebar("partners")}
 
@@ -559,32 +559,32 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 bg-white">
-                                ${a.map(o=>`
+                                ${a.map(r=>`
                                     <tr class="hover:bg-slate-50/80 transition-all group">
                                         <td class="p-6 pl-8">
                                             <div class="flex items-center gap-4">
-                                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-xl shadow-sm border border-blue-100">${o.name.charAt(0).toUpperCase()}</div>
+                                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-xl shadow-sm border border-blue-100">${r.name.charAt(0).toUpperCase()}</div>
                                                 <div>
-                                                    <span class="font-black block text-slate-900 text-sm mb-0.5">${o.name}</span>
-                                                    <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${o.email}</span>
+                                                    <span class="font-black block text-slate-900 text-sm mb-0.5">${r.name}</span>
+                                                    <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${r.email}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="p-6">
-                                            <select onchange="app.updateUser(${o.id}, 'status', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest ${o.status==="active"?"text-emerald-600 border-emerald-200 focus:ring-emerald-500/20":o.status==="pending"?"text-amber-600 border-amber-200 focus:ring-amber-500/20":"text-rose-600 border-rose-200 focus:ring-rose-500/20"} focus:outline-none focus:ring-4 transition-all">
-                                                <option value="pending" ${o.status==="pending"?"selected":""}>Pending</option>
-                                                <option value="active" ${o.status==="active"?"selected":""}>Active</option>
-                                                <option value="suspended" ${o.status==="suspended"?"selected":""}>Suspended</option>
+                                            <select onchange="app.updateUser(${r.id}, 'status', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest ${r.status==="active"?"text-emerald-600 border-emerald-200 focus:ring-emerald-500/20":r.status==="pending"?"text-amber-600 border-amber-200 focus:ring-amber-500/20":"text-rose-600 border-rose-200 focus:ring-rose-500/20"} focus:outline-none focus:ring-4 transition-all">
+                                                <option value="pending" ${r.status==="pending"?"selected":""}>Pending</option>
+                                                <option value="active" ${r.status==="active"?"selected":""}>Active</option>
+                                                <option value="suspended" ${r.status==="suspended"?"selected":""}>Suspended</option>
                                             </select>
                                         </td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" step="0.1" value="${o.discount_tier||0}" id="discount_${o.id}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-blue-600 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                                <input type="number" step="0.1" value="${r.discount_tier||0}" id="discount_${r.id}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-blue-600 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                                                 <span class="text-slate-400 font-bold text-sm">%</span>
                                             </div>
                                         </td>
                                         <td class="p-6 pr-8 text-right">
-                                            <button onclick="app.updateUser(${o.id}, 'discount_tier', document.getElementById('discount_${o.id}').value)" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save Tier</button>
+                                            <button onclick="app.updateUser(${r.id}, 'discount_tier', document.getElementById('discount_${r.id}').value)" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save Tier</button>
                                         </td>
                                     </tr>
                                 `).join("")}
@@ -594,12 +594,12 @@
                     </div>
                 </main>
             </div>
-        `}catch{e.innerHTML='<div class="p-20 text-center text-rose-500 font-bold">Error loading partners.</div>'}}}async function z(e,t){const s=document.createElement("div");s.id="process-modal",s.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto";const r=(await(await fetch(t.api("api/admin_quotations.php"))).json()).find(d=>d.id==e),i=await(await fetch(t.api(`api/admin_quotations.php?id=${e}`))).json(),x=i.items,c=parseFloat(i.discount_tier||0);s.innerHTML=`
+        `}catch{e.innerHTML='<div class="p-20 text-center text-rose-500 font-bold">Error loading partners.</div>'}}}async function D(e,t){const s=document.createElement("div");s.id="process-modal",s.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto";const o=(await(await fetch(t.api("api/admin_quotations.php"))).json()).find(d=>d.id==e),i=await(await fetch(t.api(`api/admin_quotations.php?id=${e}`))).json(),x=i.items,c=parseFloat(i.discount_tier||0);s.innerHTML=`
         <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative animate-in zoom-in duration-300 my-8">
             <div class="bg-slate-900 p-8 text-white flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-black tracking-tight">Process Quotation</h2>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Request from ${r.user_name} (#Q-${String(r.id).padStart(4,"0")})</p>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Request from ${o.user_name} (#Q-${String(o.id).padStart(4,"0")})</p>
                 </div>
                 <button onclick="document.getElementById('process-modal').remove()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -614,7 +614,7 @@
                     </div>
                     <div class="flex-1 min-w-[200px] p-6 bg-slate-50 border border-slate-200 rounded-2xl">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Status</p>
-                        <h4 class="text-xl font-black text-amber-600 uppercase">${r.status}</h4>
+                        <h4 class="text-xl font-black text-amber-600 uppercase">${o.status}</h4>
                     </div>
                 </div>
                 
@@ -673,7 +673,7 @@
                 </form>
             </div>
         </div>
-    `,document.body.appendChild(s),document.querySelectorAll(".unit-price-input").forEach(d=>{d.oninput=()=>u()}),u(),document.getElementById("price-quotation-form").onsubmit=async d=>{d.preventDefault();const y=Array.from(document.querySelectorAll(".unit-price-input")).map(m=>({item_id:m.dataset.itemId,unit_price:m.value})),b=await(await fetch(t.api("api/admin_quotations.php"),{method:"PUT",body:JSON.stringify({quotation_id:e,items:y})})).json();b.success?(t.showToast("Quotation priced and sent successfully!"),s.remove(),t.loadAdminQuotations()):t.showToast(b.error,"error")}}function R(e,t){const s=e.closest(".flex").querySelector("input"),o=parseFloat(s.dataset.msrp)*(1-t/100);s.value=o.toFixed(2),u()}function F(e){document.querySelectorAll(".unit-price-input").forEach(t=>{const a=parseFloat(t.dataset.msrp)*(1-e/100);t.value=a.toFixed(2)}),u()}function u(){let e=0;document.querySelectorAll(".unit-price-input").forEach(s=>{const a=parseFloat(s.dataset.qty),o=parseFloat(s.value)||0,r=a*o,l=s.closest("tr");l&&(l.querySelector(".subtotal-cell").textContent=`₹${r.toFixed(2)}`),e+=r});const t=document.getElementById("quotation-total-display");t&&(t.textContent=`₹${e.toFixed(2)}`)}async function O(e,t){try{const a=await(await fetch(t.api("api/invoices.php"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({quotation_id:e})})).json();a.success?(t.showToast("Invoice generated successfully!"),t.loadAdminQuotations()):t.showToast(a.error,"error")}catch{t.showToast("Failed to generate invoice","error")}}async function N(e,t,s,a){try{const o={id:e};o[t]=s;const l=await(await fetch(a.api("api/admin_users.php"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(o)})).json();l.success?a.showToast("Partner updated successfully"):a.showToast(l.error||"Update failed","error")}catch{a.showToast("Failed to update partner","error")}}async function Q(e,t){if(!t.state.user||t.state.user.role!=="admin"){t.showToast("Access restricted to administrators","error");return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const a=await(await fetch(t.api("api/admin_settings.php"))).json();e.innerHTML=`
+    `,document.body.appendChild(s),document.querySelectorAll(".unit-price-input").forEach(d=>{d.oninput=()=>u()}),u(),document.getElementById("price-quotation-form").onsubmit=async d=>{d.preventDefault();const y=Array.from(document.querySelectorAll(".unit-price-input")).map(h=>({item_id:h.dataset.itemId,unit_price:h.value})),b=await(await fetch(t.api("api/admin_quotations.php"),{method:"PUT",body:JSON.stringify({quotation_id:e,items:y})})).json();b.success?(t.showToast("Quotation priced and sent successfully!"),s.remove(),t.loadAdminQuotations()):t.showToast(b.error,"error")}}function R(e,t){const s=e.closest(".flex").querySelector("input"),r=parseFloat(s.dataset.msrp)*(1-t/100);s.value=r.toFixed(2),u()}function F(e){document.querySelectorAll(".unit-price-input").forEach(t=>{const a=parseFloat(t.dataset.msrp)*(1-e/100);t.value=a.toFixed(2)}),u()}function u(){let e=0;document.querySelectorAll(".unit-price-input").forEach(s=>{const a=parseFloat(s.dataset.qty),r=parseFloat(s.value)||0,o=a*r,l=s.closest("tr");l&&(l.querySelector(".subtotal-cell").textContent=`₹${o.toFixed(2)}`),e+=o});const t=document.getElementById("quotation-total-display");t&&(t.textContent=`₹${e.toFixed(2)}`)}async function O(e,t){try{const a=await(await fetch(t.api("api/invoices.php"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({quotation_id:e})})).json();a.success?(t.showToast("Invoice generated successfully!"),t.loadAdminQuotations()):t.showToast(a.error,"error")}catch{t.showToast("Failed to generate invoice","error")}}async function N(e,t,s,a){try{const r={id:e};r[t]=s;const l=await(await fetch(a.api("api/admin_users.php"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(r)})).json();l.success?a.showToast("Partner updated successfully"):a.showToast(l.error||"Update failed","error")}catch{a.showToast("Failed to update partner","error")}}async function Q(e,t){if(!t.state.user||t.state.user.role!=="admin"){t.showToast("Access restricted to administrators","error");return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const a=await(await fetch(t.api("api/admin_settings.php"))).json();e.innerHTML=`
             <div class="max-w-4xl mx-auto space-y-12 animate-in fade-in duration-700">
                 <div>
                     <h2 class="text-4xl font-black tracking-tight text-slate-900">System <span class="text-blue-600">Core</span></h2>
@@ -793,24 +793,24 @@
                             </div>
 
                             <div class="grid grid-cols-1 gap-12">
-                                ${[1,2,3,4].map(o=>`
+                                ${[1,2,3,4].map(r=>`
                                     <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 space-y-6">
-                                        <h4 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">Featured Category 0${o}</h4>
+                                        <h4 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">Featured Category 0${r}</h4>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div class="space-y-2">
                                                 <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Display Title</label>
-                                                <input type="text" name="cat${o}_title" value="${a["cat"+o+"_title"]||""}" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
+                                                <input type="text" name="cat${r}_title" value="${a["cat"+r+"_title"]||""}" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
                                             </div>
                                             <div class="space-y-2">
                                                 <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Background Image Upload</label>
                                                 <div class="flex items-center gap-3">
-                                                    <input type="file" name="cat${o}_img" accept="image/*" class="flex-1 bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
-                                                    ${a["cat"+o+"_img"]?`<img src="${t.api(a["cat"+o+"_img"])}" class="w-10 h-10 rounded-lg object-cover shadow-sm">`:""}
+                                                    <input type="file" name="cat${r}_img" accept="image/*" class="flex-1 bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all">
+                                                    ${a["cat"+r+"_img"]?`<img src="${t.api(a["cat"+r+"_img"])}" class="w-10 h-10 rounded-lg object-cover shadow-sm">`:""}
                                                 </div>
                                             </div>
                                             <div class="space-y-2 md:col-span-2">
                                                 <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Marketing Description</label>
-                                                <textarea name="cat${o}_desc" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all h-20 resize-none">${a["cat"+o+"_desc"]||""}</textarea>
+                                                <textarea name="cat${r}_desc" class="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 transition-all h-20 resize-none">${a["cat"+r+"_desc"]||""}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -825,7 +825,7 @@
                     </form>
                 </div>
             </div>
-        `,document.getElementById("settings-form").onsubmit=async o=>{o.preventDefault();const r=new FormData(o.target);(await(await fetch(t.api("api/admin_settings.php"),{method:"POST",body:r})).json()).success&&(t.showToast("System configuration synchronized successfully."),await t.loadSettings(),t.renderAdmin(e))}}catch{e.innerHTML='<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load system settings.</div>'}}function U(){var s,a,o,r;const e={quotes:((s=document.getElementById("stat-active-quotations"))==null?void 0:s.textContent)||"--",partners:((a=document.getElementById("stat-total-partners"))==null?void 0:a.textContent)||"--",skus:((o=document.getElementById("stat-total-skus"))==null?void 0:o.textContent)||"--",revenue:((r=document.getElementById("stat-revenue"))==null?void 0:r.textContent)||"₹0"},t=window.open("","_blank");t.document.write(`
+        `,document.getElementById("settings-form").onsubmit=async r=>{r.preventDefault();const o=new FormData(r.target);(await(await fetch(t.api("api/admin_settings.php"),{method:"POST",body:o})).json()).success&&(t.showToast("System configuration synchronized successfully."),await t.loadSettings(),t.renderAdmin(e))}}catch{e.innerHTML='<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load system settings.</div>'}}function U(){var s,a,r,o;const e={quotes:((s=document.getElementById("stat-active-quotations"))==null?void 0:s.textContent)||"--",partners:((a=document.getElementById("stat-total-partners"))==null?void 0:a.textContent)||"--",skus:((r=document.getElementById("stat-total-skus"))==null?void 0:r.textContent)||"--",revenue:((o=document.getElementById("stat-revenue"))==null?void 0:o.textContent)||"₹0"},t=window.open("","_blank");t.document.write(`
         <html>
             <head>
                 <title>PARTSPRO - Executive Report</title>
@@ -879,7 +879,7 @@
                 <button type="submit" class="w-full py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 transition-all">Process Import</button>
             </form>
         </div>
-    `,document.body.appendChild(t),document.getElementById("import-form").onsubmit=s=>W(s,e)}async function W(e,t){e.preventDefault();const s=e.target.querySelector("button");s.disabled=!0,s.textContent="Importing...";const a=new FormData(e.target);try{const r=await(await fetch(t.api("api/import_products.php"),{method:"POST",body:a})).json();r.success?(t.showToast(`Imported ${r.count} products successfully`),document.getElementById("import-modal").remove(),t.renderAdminInventory(document.getElementById("view-container"))):t.showToast(r.error,"error")}catch{t.showToast("Import failed","error")}finally{s.disabled=!1,s.textContent="Process Import"}}function K(e){g(null,e)}async function G(e,t){const s=t.state.products.find(a=>a.id==e);g(s,t)}function g(e,t){const s=!!e,a=document.createElement("div");a.id="product-modal",a.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto",a.innerHTML=`
+    `,document.body.appendChild(t),document.getElementById("import-form").onsubmit=s=>K(s,e)}async function K(e,t){e.preventDefault();const s=e.target.querySelector("button");s.disabled=!0,s.textContent="Importing...";const a=new FormData(e.target);try{const o=await(await fetch(t.api("api/import_products.php"),{method:"POST",body:a})).json();o.success?(t.showToast(`Imported ${o.count} products successfully`),document.getElementById("import-modal").remove(),t.renderAdminInventory(document.getElementById("view-container"))):t.showToast(o.error,"error")}catch{t.showToast("Import failed","error")}finally{s.disabled=!1,s.textContent="Process Import"}}function W(e){g(null,e)}async function G(e,t){const s=t.state.products.find(a=>a.id==e);g(s,t)}function g(e,t){const s=!!e,a=document.createElement("div");a.id="product-modal",a.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto",a.innerHTML=`
         <div class="bg-white rounded-[32px] w-full max-w-2xl p-10 space-y-8 shadow-2xl animate-in zoom-in duration-300 my-8">
             <div class="flex justify-between items-center">
                 <h2 class="text-3xl font-black text-slate-900">${s?"Edit":"Add New"} <span class="text-blue-600">Product</span></h2>
@@ -916,7 +916,7 @@
                 <button type="submit" class="col-span-2 py-4 rounded-2xl bg-slate-900 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:scale-[1.02] transition-all mt-4">${s?"Update":"Create"} Product</button>
             </form>
         </div>
-    `,document.body.appendChild(a),document.getElementById("product-form").onsubmit=o=>J(o,t)}async function J(e,t){e.preventDefault();const s=e.target.querySelector("button");s.disabled=!0;const a=new FormData(e.target),o=a.has("id");try{const l=await(await fetch(t.api("api/products.php"),{method:"POST",body:a})).json();l.success?(t.showToast(`Product ${o?"updated":"created"} successfully`),document.getElementById("product-modal").remove(),t.renderAdminInventory(document.getElementById("view-container"))):t.showToast(l.error,"error")}catch{t.showToast("Submission failed","error")}finally{s.disabled=!1}}async function Y(e,t){if(confirm("Are you sure you want to remove this product?"))try{const a=await(await fetch(t.api(`api/products.php?id=${e}`),{method:"DELETE"})).json();a.success?(t.showToast("Product removed"),t.renderAdminInventory(document.getElementById("view-container"))):t.showToast(a.error,"error")}catch{t.showToast("Deletion failed","error")}}async function X(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML=`
+    `,document.body.appendChild(a),document.getElementById("product-form").onsubmit=r=>J(r,t)}async function J(e,t){e.preventDefault();const s=e.target.querySelector("button");s.disabled=!0;const a=new FormData(e.target),r=a.has("id");try{const l=await(await fetch(t.api("api/products.php"),{method:"POST",body:a})).json();l.success?(t.showToast(`Product ${r?"updated":"created"} successfully`),document.getElementById("product-modal").remove(),t.renderAdminInventory(document.getElementById("view-container"))):t.showToast(l.error,"error")}catch{t.showToast("Submission failed","error")}finally{s.disabled=!1}}async function Y(e,t){if(confirm("Are you sure you want to remove this product?"))try{const a=await(await fetch(t.api(`api/products.php?id=${e}`),{method:"DELETE"})).json();a.success?(t.showToast("Product removed"),t.renderAdminInventory(document.getElementById("view-container"))):t.showToast(a.error,"error")}catch{t.showToast("Deletion failed","error")}}async function X(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML=`
         <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
             ${t.getSidebar("dashboard")}
 
@@ -960,7 +960,7 @@
                 </div>
             </main>
         </div>
-    `,t.loadDashboardStats()}async function Z(e){try{const s=await(await fetch(e.api("api/dashboard_stats.php"))).json(),a=document.querySelectorAll("main h3");if(a.length>=4){const o=e.state.settings.currency||"₹";a[0].textContent=o+parseFloat(s.total_procured||0).toLocaleString(),a[1].textContent=o+parseFloat(s.total_savings||0).toLocaleString(),a[2].textContent=s.active_orders||0,a[3].textContent=s.saved_items||0}}catch(t){console.error("Failed to load dashboard stats",t)}}function tt(e){const t=document.createElement("div");t.id="bulk-order-modal",t.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300",t.innerHTML=`
+    `,t.loadDashboardStats()}async function Z(e){try{const s=await(await fetch(e.api("api/dashboard_stats.php"))).json(),a=document.querySelectorAll("main h3");if(a.length>=4){const r=e.state.settings.currency||"₹";a[0].textContent=r+parseFloat(s.total_procured||0).toLocaleString(),a[1].textContent=r+parseFloat(s.total_savings||0).toLocaleString(),a[2].textContent=s.active_orders||0,a[3].textContent=s.saved_items||0}}catch(t){console.error("Failed to load dashboard stats",t)}}function tt(e){const t=document.createElement("div");t.id="bulk-order-modal",t.className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300",t.innerHTML=`
         <div class="bg-white rounded-[32px] w-full max-w-xl p-10 space-y-8 shadow-2xl shadow-blue-900/20 relative animate-in zoom-in-95 duration-300">
             <button onclick="document.getElementById('bulk-order-modal').remove()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center transition-all text-slate-400 hover:text-slate-900">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -988,7 +988,7 @@
                 <button type="submit" class="w-full py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:scale-[1.02] transition-all">Generate Quotation Cart</button>
             </form>
         </div>
-    `,document.body.appendChild(t),document.getElementById("bulk-order-form").onsubmit=async s=>{s.preventDefault();const a=s.target.querySelector("button");a.disabled=!0,a.innerHTML='<span class="animate-pulse">Processing Order...</span>';const o=new FormData(s.target);try{const l=await(await fetch(e.api("api/bulk_order.php"),{method:"POST",body:o})).json();l.success?(e.showToast(`Success! ${l.count} items added to your cart.`),t.remove(),e.state.cart=l.cart,e.renderCart(document.getElementById("view-container"))):e.showToast(l.error,"error")}catch{e.showToast("Bulk order failed. Check CSV format.","error")}finally{a.disabled=!1,a.innerHTML="Generate Quotation Cart"}}}async function et(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{e.innerHTML=`
+    `,document.body.appendChild(t),document.getElementById("bulk-order-form").onsubmit=async s=>{s.preventDefault();const a=s.target.querySelector("button");a.disabled=!0,a.innerHTML='<span class="animate-pulse">Processing Order...</span>';const r=new FormData(s.target);try{const l=await(await fetch(e.api("api/bulk_order.php"),{method:"POST",body:r})).json();l.success?(e.showToast(`Success! ${l.count} items added to your cart.`),t.remove(),e.state.cart=l.cart,e.renderCart(document.getElementById("view-container"))):e.showToast(l.error,"error")}catch{e.showToast("Bulk order failed. Check CSV format.","error")}finally{a.disabled=!1,a.innerHTML="Generate Quotation Cart"}}}async function et(e,t){if(!t.state.user){history.pushState(null,null,t.basePath+"/login"),t.handleRouting();return}e.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{e.innerHTML=`
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${t.getSidebar("parts_list")}
 
@@ -1063,7 +1063,7 @@
                 </div>
             </div>
         </div>
-    `,document.getElementById("login-form").onsubmit=async s=>{s.preventDefault();const a=s.target.querySelector("button");a.disabled=!0,a.innerHTML='<span class="animate-pulse">Authorizing...</span>';const o=new FormData(s.target),r=Object.fromEntries(o.entries());r.action="login";try{const i=await(await fetch(t.api("api/auth.php"),{method:"POST",body:JSON.stringify(r)})).json();i.success?(t.state.user=i.user,t.updateAuthUI(),history.pushState(null,null,t.basePath+"/dashboard"),t.handleRouting(),t.showToast(`System synchronized. Welcome, ${i.user.name}.`)):t.showToast(i.error||"Authorization failed","error")}catch{t.showToast("Authentication server offline","error")}finally{a.disabled=!1,a.innerHTML="Synchronize & Enter"}}}function at(e,t){e.innerHTML=`
+    `,document.getElementById("login-form").onsubmit=async s=>{s.preventDefault();const a=s.target.querySelector("button");a.disabled=!0,a.innerHTML='<span class="animate-pulse">Authorizing...</span>';const r=new FormData(s.target),o=Object.fromEntries(r.entries());o.action="login";try{const i=await(await fetch(t.api("api/auth.php"),{method:"POST",body:JSON.stringify(o)})).json();i.success?(t.state.user=i.user,t.updateAuthUI(),history.pushState(null,null,t.basePath+"/dashboard"),t.handleRouting(),t.showToast(`System synchronized. Welcome, ${i.user.name}.`)):t.showToast(i.error||"Authorization failed","error")}catch{t.showToast("Authentication server offline","error")}finally{a.disabled=!1,a.innerHTML="Synchronize & Enter"}}}function at(e,t){e.innerHTML=`
         <div class="min-h-[calc(100vh-80px)] flex items-center justify-center py-12 px-4 bg-slate-50">
             <div class="w-full max-w-2xl animate-fade-in">
                 <div class="bg-white rounded-[40px] shadow-premium border border-slate-100 p-12 lg:p-16 space-y-12">
@@ -1111,7 +1111,7 @@
                 </div>
             </div>
         </div>
-    `,document.getElementById("register-form").onsubmit=async s=>{s.preventDefault();const a=s.target.querySelector("button");a.disabled=!0,a.innerHTML='<span class="animate-pulse">Processing...</span>';const o=new FormData(s.target),r=Object.fromEntries(o.entries());r.action="register";try{const i=await(await fetch(t.api("api/auth.php"),{method:"POST",body:JSON.stringify(r)})).json();i.success?(t.showToast("Application submitted. We will review your account soon."),history.pushState(null,null,t.basePath+"/login"),t.handleRouting()):t.showToast(i.error||"Submission failed","error")}catch{t.showToast("Network error during submission","error")}finally{a.disabled=!1,a.innerHTML="Submit Application"}}}function ot(e,t){if(t.state.cart.length===0){e.innerHTML=`
+    `,document.getElementById("register-form").onsubmit=async s=>{s.preventDefault();const a=s.target.querySelector("button");a.disabled=!0,a.innerHTML='<span class="animate-pulse">Processing...</span>';const r=new FormData(s.target),o=Object.fromEntries(r.entries());o.action="register";try{const i=await(await fetch(t.api("api/auth.php"),{method:"POST",body:JSON.stringify(o)})).json();i.success?(t.showToast("Application submitted. We will review your account soon."),history.pushState(null,null,t.basePath+"/login"),t.handleRouting()):t.showToast(i.error||"Submission failed","error")}catch{t.showToast("Network error during submission","error")}finally{a.disabled=!1,a.innerHTML="Submit Application"}}}function rt(e,t){if(t.state.cart.length===0){e.innerHTML=`
             <div class="text-center py-32 animate-in fade-in duration-500">
                 <div class="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
                     <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -1173,7 +1173,28 @@
                 </button>
             </div>
         </div>
-    `}function rt(e,t){const s=[{name:"BOSCH",image:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Bosch-logo.svg/1280px-Bosch-logo.svg.png",desc:"World leader in professional power tools and accessories."},{name:"MAKITA",image:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Makita_logo.svg/1280px-Makita_logo.svg.png",desc:"Innovation and quality in cordless tool technology."},{name:"DEWALT",image:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/DeWalt_logo.svg/1280px-DeWalt_logo.svg.png",desc:"Guaranteed Tough. Heavy-duty industrial power tools."},{name:"HIKOKI",image:"https://www.hikoki-powertools.com/common/img/logo_hikoki.png",desc:"High-performance power tools for extreme professional use."},{name:"MILWAUKEE",image:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Milwaukee_Tool_Logo.svg/1280px-Milwaukee_Tool_Logo.svg.png",desc:"Nothing but Heavy Duty. Leading industry innovation."},{name:"HILTI",image:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Hilti_logo.svg/1280px-Hilti_logo.svg.png",desc:"Specialized solutions for construction professionals."}];e.innerHTML=`
+    `}function ot(e,t){const s=[{name:"BOSCH",desc:"World leader in professional power tools and accessories.",svg:`<svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" class="h-10 w-auto">
+                <circle cx="20" cy="20" r="18" fill="#E20015"/>
+                <text x="20" y="25" text-anchor="middle" fill="white" font-size="11" font-weight="bold" font-family="Arial">b</text>
+                <text x="50" y="26" fill="#1a1a1a" font-size="18" font-weight="900" font-family="Arial">BOSCH</text>
+            </svg>`},{name:"MAKITA",desc:"Innovation and quality in cordless tool technology.",svg:`<svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg" class="h-10 w-auto">
+                <rect x="0" y="8" width="26" height="26" rx="3" fill="#00ADEF"/>
+                <text x="13" y="27" text-anchor="middle" fill="white" font-size="14" font-weight="900" font-family="Arial">M</text>
+                <text x="36" y="28" fill="#1a1a1a" font-size="18" font-weight="900" font-family="Arial">MAKITA</text>
+            </svg>`},{name:"DEWALT",desc:"Guaranteed Tough. Heavy-duty industrial power tools.",svg:`<svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg" class="h-10 w-auto">
+                <rect x="0" y="5" width="135" height="32" rx="4" fill="#FEBD17"/>
+                <text x="68" y="27" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="900" font-family="Arial" letter-spacing="2">DEWALT</text>
+            </svg>`},{name:"HIKOKI",desc:"High-performance power tools for extreme professional use.",svg:`<svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg" class="h-10 w-auto">
+                <rect x="0" y="5" width="32" height="32" rx="4" fill="#E30613"/>
+                <text x="16" y="27" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Arial">HI</text>
+                <text x="42" y="28" fill="#1a1a1a" font-size="18" font-weight="900" font-family="Arial">HiKOKI</text>
+            </svg>`},{name:"MILWAUKEE",desc:"Nothing but Heavy Duty. Leading industry innovation.",svg:`<svg viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg" class="h-10 w-auto">
+                <rect x="0" y="5" width="155" height="32" rx="4" fill="#E31837"/>
+                <text x="78" y="27" text-anchor="middle" fill="white" font-size="13" font-weight="900" font-family="Arial" letter-spacing="1">MILWAUKEE</text>
+            </svg>`},{name:"HILTI",desc:"Specialized solutions for construction professionals.",svg:`<svg viewBox="0 0 110 40" xmlns="http://www.w3.org/2000/svg" class="h-10 w-auto">
+                <rect x="0" y="5" width="105" height="32" rx="4" fill="#E2001A"/>
+                <text x="52" y="27" text-anchor="middle" fill="white" font-size="17" font-weight="900" font-family="Arial" letter-spacing="3">HILTI</text>
+            </svg>`}];e.innerHTML=`
         <div class="animate-fade-in py-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-20">
@@ -1185,7 +1206,7 @@
                     ${s.map(a=>`
                         <div class="bg-white rounded-[40px] p-10 border border-slate-100 shadow-premium hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group text-center flex flex-col items-center">
                             <div class="h-20 flex items-center justify-center mb-10 grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
-                                <img src="${a.image}" alt="${a.name}" class="max-h-full max-w-[200px] object-contain">
+                                ${a.svg}
                             </div>
                             <h4 class="text-2xl font-black text-slate-900 mb-4">${a.name}</h4>
                             <p class="text-sm text-slate-500 font-medium leading-relaxed mb-8">${a.desc}</p>
@@ -1480,7 +1501,7 @@
                 </div>
             </section>
         </div>
-    `}const nt=window.location.hostname==="localhost"||window.location.hostname==="127.0.0.1",f=nt?"/spairparts":"",dt=e=>e?e.startsWith("http")?e:f+(e.startsWith("/")?"":"/")+e:"",w={state:{user:JSON.parse(localStorage.getItem("user")),cart:JSON.parse(localStorage.getItem("cart"))||[],settings:{}},basePath:f,api:dt,getSidebar(e){return k(e,this)},renderCatalog(e){return $(e,this)},renderQuotations(e){return B(e,this)},viewQuotationDetails(e){return j(e,this)},approveQuotation(e){return _(e,this)},renderInvoices(e){return T(e,this)},renderInvoiceDocument(e){return P(e,this)},renderAdmin(e){return L(e,this)},loadAdminStats(){return I(this)},loadAdminQuotations(){return A(this)},renderAdminInventory(e){return E(e,this)},filterInventory(){return H()},renderAdminUsers(e){return D(e,this)},updateUser(e,t,s){return N(e,t,s,this)},renderProcessQuotation(e){return z(e,this)},applyDiscountToItem(e,t){return R(e,t)},applyDiscountToAll(e){return F(e)},generateInvoice(e){return O(e,this)},renderSystemSettings(){return Q(document.getElementById("view-container"),this)},printAdminReport(){return U()},renderImportModal(){return V(this)},renderAddProductForm(){return K(this)},renderEditProductForm(e){return G(e,this)},deleteProduct(e){return Y(e,this)},renderDashboard(e){return X(e,this)},loadDashboardStats(){return Z(this)},renderBulkOrderModal(){return tt(this)},renderMyPartsList(e){return et(e,this)},renderLogin(e){return st(e,this)},renderRegister(e){return at(e,this)},renderCart(e){return ot(e,this)},getStatusClass(e){switch(e){case"pending":return"bg-amber-50 text-amber-600 border border-amber-200";case"priced":return"bg-blue-50 text-blue-600 border border-blue-200";case"approved":return"bg-emerald-50 text-emerald-600 border border-emerald-200";case"completed":return"bg-slate-50 text-slate-500 border border-slate-200";default:return"bg-slate-50 text-slate-400 border border-slate-100"}},cleanImageUrl(e,t){return!e||e==="null"?`https://ui-avatars.com/api/?name=${encodeURIComponent(t)}&background=f1f5f9&color=64748b&bold=true`:e.startsWith("http")?e:this.api(e)},async loadSettings(){try{const e=await fetch(this.api("api/admin_settings.php"));this.state.settings=await e.json()}catch(e){console.error("Failed to load settings",e)}},updateAuthUI(){const e=document.getElementById("auth-nav");if(this.state.user){localStorage.setItem("user",JSON.stringify(this.state.user));const t=this.state.user.role&&this.state.user.role.toLowerCase()==="admin";e.innerHTML=`
+    `}const nt=window.location.hostname==="localhost"||window.location.hostname==="127.0.0.1",f=nt?"/spairparts":"",dt=e=>e?e.startsWith("http")?e:f+(e.startsWith("/")?"":"/")+e:"",w={state:{user:JSON.parse(localStorage.getItem("user")),cart:JSON.parse(localStorage.getItem("cart"))||[],settings:{}},basePath:f,api:dt,getSidebar(e){return k(e,this)},renderCatalog(e){return $(e,this)},renderQuotations(e){return B(e,this)},viewQuotationDetails(e){return j(e,this)},approveQuotation(e){return T(e,this)},renderInvoices(e){return P(e,this)},renderInvoiceDocument(e){return _(e,this)},renderAdmin(e){return A(e,this)},loadAdminStats(){return I(this)},loadAdminQuotations(){return L(this)},renderAdminInventory(e){return E(e,this)},filterInventory(){return H()},renderAdminUsers(e){return z(e,this)},updateUser(e,t,s){return N(e,t,s,this)},renderProcessQuotation(e){return D(e,this)},applyDiscountToItem(e,t){return R(e,t)},applyDiscountToAll(e){return F(e)},generateInvoice(e){return O(e,this)},renderSystemSettings(){return Q(document.getElementById("view-container"),this)},printAdminReport(){return U()},renderImportModal(){return V(this)},renderAddProductForm(){return W(this)},renderEditProductForm(e){return G(e,this)},deleteProduct(e){return Y(e,this)},renderDashboard(e){return X(e,this)},loadDashboardStats(){return Z(this)},renderBulkOrderModal(){return tt(this)},renderMyPartsList(e){return et(e,this)},renderLogin(e){return st(e,this)},renderRegister(e){return at(e,this)},renderCart(e){return rt(e,this)},getStatusClass(e){switch(e){case"pending":return"bg-amber-50 text-amber-600 border border-amber-200";case"priced":return"bg-blue-50 text-blue-600 border border-blue-200";case"approved":return"bg-emerald-50 text-emerald-600 border border-emerald-200";case"completed":return"bg-slate-50 text-slate-500 border border-slate-200";default:return"bg-slate-50 text-slate-400 border border-slate-100"}},cleanImageUrl(e,t){return!e||e==="null"?`https://ui-avatars.com/api/?name=${encodeURIComponent(t)}&background=f1f5f9&color=64748b&bold=true`:e.startsWith("http")?e:this.api(e)},async loadSettings(){try{const e=await fetch(this.api("api/admin_settings.php"));this.state.settings=await e.json()}catch(e){console.error("Failed to load settings",e)}},updateAuthUI(){const e=document.getElementById("auth-nav");if(this.state.user){localStorage.setItem("user",JSON.stringify(this.state.user));const t=this.state.user.role&&this.state.user.role.toLowerCase()==="admin";e.innerHTML=`
                 <div class="flex items-center gap-6">
                     <div class="hidden md:block text-right">
                         <p class="text-xs font-black text-slate-900">${this.state.user.name}</p>
@@ -1503,4 +1524,4 @@
                 </div>
             `}else localStorage.removeItem("user"),e.innerHTML=`
                 <a href="/login" data-link class="px-8 py-3.5 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20">Partner Login</a>
-            `},handleRouting(){const e=window.location.pathname,t=(this.basePath?e.replace(this.basePath,""):e)||"/",s=document.getElementById("view-container");t==="/"?v(s):t==="/catalog"?this.renderCatalog(s):t==="/dashboard"?this.renderDashboard(s):t==="/admin"?this.renderAdmin(s):t==="/admin/inventory"?this.renderAdminInventory(s):t==="/admin/partners"?this.renderAdminUsers(s):t==="/quotations"?this.renderQuotations(s):t==="/login"?this.renderLogin(s):t==="/register"?this.renderRegister(s):t==="/invoices"?this.renderInvoices(s):t==="/cart"?this.renderCart(s):t==="/brands"?rt(s):t==="/categories"?lt(s,this):t==="/support"?it(s,this):t==="/logout"?(this.state.user=null,this.updateAuthUI(),history.pushState(null,null,this.basePath+"/"),this.handleRouting()):v(s),document.querySelectorAll(".nav-link, .mobile-nav-item").forEach(a=>{const o=a.getAttribute("href");a.classList.toggle("active",o===t)}),window.scrollTo({top:0,behavior:"smooth"}),this.animatePageEntry()},showToast(e,t="success"){const s=document.getElementById("toast-container");if(!s)return;const a=document.createElement("div");a.className=`toast ${t}`;const o=t==="error"?'<svg style="width:16px;height:16px;color:#ef4444;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>':'<svg style="width:16px;height:16px;color:#10b981;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';a.innerHTML=`${o}<span>${e}</span><button onclick="this.parentElement.remove()" style="margin-left:auto;color:#64748b;background:none;border:none;cursor:pointer;font-size:16px">✕</button>`,s.appendChild(a),setTimeout(()=>{a.style.opacity="0",a.style.transform="translateX(20px)",a.style.transition="all 0.3s ease",setTimeout(()=>a.remove(),300)},4e3)},animatePageEntry(){const e=document.getElementById("view-container");e&&(e.style.opacity="0",e.style.transform="translateY(16px)",e.style.transition="opacity 0.4s ease, transform 0.4s ease",requestAnimationFrame(()=>{requestAnimationFrame(()=>{e.style.opacity="1",e.style.transform="translateY(0)"})}))},async init(){await this.loadSettings(),this.updateAuthUI(),this.handleRouting(),document.addEventListener("click",e=>{const t=e.target.closest("[data-link]");if(t){e.preventDefault();const s=t.getAttribute("href");history.pushState(null,null,this.basePath+s),this.handleRouting()}}),window.addEventListener("popstate",()=>this.handleRouting())}};w.init();window.app=w;
+            `},handleRouting(){const e=window.location.pathname,t=(this.basePath?e.replace(this.basePath,""):e)||"/",s=document.getElementById("view-container");t==="/"?v(s):t==="/catalog"?this.renderCatalog(s):t==="/dashboard"?this.renderDashboard(s):t==="/admin"?this.renderAdmin(s):t==="/admin/inventory"?this.renderAdminInventory(s):t==="/admin/partners"?this.renderAdminUsers(s):t==="/quotations"?this.renderQuotations(s):t==="/login"?this.renderLogin(s):t==="/register"?this.renderRegister(s):t==="/invoices"?this.renderInvoices(s):t==="/cart"?this.renderCart(s):t==="/brands"?ot(s):t==="/categories"?lt(s,this):t==="/support"?it(s,this):t==="/logout"?(this.state.user=null,this.updateAuthUI(),history.pushState(null,null,this.basePath+"/"),this.handleRouting()):v(s),document.querySelectorAll(".nav-link, .mobile-nav-item").forEach(a=>{const r=a.getAttribute("href");a.classList.toggle("active",r===t)}),window.scrollTo({top:0,behavior:"smooth"}),this.animatePageEntry()},showToast(e,t="success"){const s=document.getElementById("toast-container");if(!s)return;const a=document.createElement("div");a.className=`toast ${t}`;const r=t==="error"?'<svg style="width:16px;height:16px;color:#ef4444;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>':'<svg style="width:16px;height:16px;color:#10b981;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';a.innerHTML=`${r}<span>${e}</span><button onclick="this.parentElement.remove()" style="margin-left:auto;color:#64748b;background:none;border:none;cursor:pointer;font-size:16px">✕</button>`,s.appendChild(a),setTimeout(()=>{a.style.opacity="0",a.style.transform="translateX(20px)",a.style.transition="all 0.3s ease",setTimeout(()=>a.remove(),300)},4e3)},animatePageEntry(){const e=document.getElementById("view-container");e&&(e.style.opacity="0",e.style.transform="translateY(16px)",e.style.transition="opacity 0.4s ease, transform 0.4s ease",requestAnimationFrame(()=>{requestAnimationFrame(()=>{e.style.opacity="1",e.style.transform="translateY(0)"})}))},async init(){await this.loadSettings(),this.updateAuthUI(),this.handleRouting(),document.addEventListener("click",e=>{const t=e.target.closest("[data-link]");if(t){e.preventDefault();const s=t.getAttribute("href");history.pushState(null,null,this.basePath+s),this.handleRouting()}}),window.addEventListener("popstate",()=>this.handleRouting())}};w.init();window.app=w;
