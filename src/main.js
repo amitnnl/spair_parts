@@ -40,6 +40,8 @@ import { renderBrands } from './views/brands.js';
 import { renderCategories } from './views/categories.js';
 import { renderSupport } from './views/support.js';
 import { renderHome } from './views/home.js';
+import viewShipping from './views/shipping.js';
+import viewWarranty from './views/warranty.js';
 
 // Auto-detect whether running locally or on live cPanel server.
 // LOCAL:  http://localhost/spairparts  => basePath = '/spairparts'
@@ -96,8 +98,10 @@ const app = {
     deleteProduct(id) { return removeProduct(id, this); },
 
     renderDashboard(container) { return viewDashboard(container, this); },
-    loadDashboardStats() { return fetchDashboardStats(this); },
-    renderBulkOrderModal() { return viewBulkOrderModal(this); },
+    renderSupport(container) { return renderSupport(container, this); },
+    renderHome(container) { return renderHome(container, this); },
+    renderShipping(container) { return viewShipping.render(container); },
+    renderWarranty(container) { return viewWarranty.render(container); },
     renderMyPartsList(container) { return viewMyPartsList(container, this); },
 
     renderLogin(container) { return renderLogin(container, this); },
@@ -261,6 +265,10 @@ const app = {
             renderCategories(container, this);
         } else if (path === '/support') {
             renderSupport(container, this);
+        } else if (path === '/shipping') {
+            this.renderShipping(container);
+        } else if (path === '/warranty') {
+            this.renderWarranty(container);
         } else if (path === '/logout') {
             this.state.user = null;
             this.updateAuthUI();
