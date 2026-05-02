@@ -270,10 +270,18 @@ const app = {
         } else if (path === '/warranty') {
             this.renderWarranty(container);
         } else if (path === '/logout') {
-            this.state.user = null;
-            this.updateAuthUI();
-            history.pushState(null, null, this.basePath + '/');
-            this.handleRouting();
+            fetch(this.api('api/auth.php'), { 
+                method: 'POST', 
+                body: JSON.stringify({ action: 'logout' }),
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            }).then(() => {
+                this.state.user = null;
+                localStorage.removeItem('user');
+                this.updateAuthUI();
+                history.pushState(null, null, this.basePath + '/');
+                this.handleRouting();
+            });
         } else {
             renderHome(container, this);
         }
