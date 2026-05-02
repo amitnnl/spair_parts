@@ -561,6 +561,7 @@ export async function renderSystemSettings(container, app) {
                                     ${field('Tax Rate (%)', 'tax_percent', s.tax_percent, 'number', '18')}
                                     ${field('Support Email', 'contact_email', s.contact_email, 'email', 'support@partspro.in')}
                                     ${field('Contact Phone', 'contact_phone', s.contact_phone, 'text', '+91 70277 51544')}
+                                    ${field('WhatsApp Number (with country code)', 'whatsapp_number', s.whatsapp_number, 'text', '+917027751544')}
                                     ${field('Footer Tagline', 'footer_desc', s.footer_desc, 'text', 'The premium B2B platform...')}
                                     ${textarea('Corporate Address', 'contact_address', s.contact_address, 'md:col-span-2')}
                                     ${field('Copyright Text', 'footer_copyright', s.footer_copyright, 'text', '© 2026 PARTSPRO B2B Division.')}

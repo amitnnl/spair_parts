@@ -18,6 +18,7 @@ $defaults = [
     'tax_percent'       => '18',
     'contact_email'     => 'support@partspro.in',
     'contact_phone'     => '+91 70277 51544',
+    'whatsapp_number'   => '+917027751544',
     'contact_address'   => 'Phase 2, Industrial Estate, New Delhi, IN 110020',
     'footer_desc'       => 'The premium B2B platform for genuine power tool spare parts procurement and industrial maintenance solutions.',
     'footer_copyright'  => '© 2026 PARTSPRO B2B Division. All rights reserved.',
