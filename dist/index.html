@@ -37,8 +37,8 @@
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="module" crossorigin src="./assets/index-c80c31cc.js"></script>
-  <link rel="stylesheet" href="./assets/index-9150eca3.css">
+  <script type="module" crossorigin src="./assets/index-fe590b63.js"></script>
+  <link rel="stylesheet" href="./assets/index-c094cbd9.css">
 </head>
 <body class="bg-slate-50">
 
@@ -62,32 +62,32 @@
         </div>
 
         <!-- ═══ MAIN NAVBAR ═══ -->
-        <nav id="main-nav" class="bg-white border-b border-slate-200 sticky top-0 z-50 no-print transition-all duration-300">
+        <nav id="main-nav" class="bg-white/80 backdrop-blur-xl border-b border-slate-100 sticky top-0 z-50 no-print transition-all duration-500 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_4px_6px_-2px_rgba(0,0,0,0.05)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-20">
                     <!-- Logo -->
-                    <a href="/" data-link class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 logo-container">
+                    <a href="/" data-link class="flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]">
+                        <div class="w-11 h-11 bg-slate-900 rounded-2xl flex items-center justify-center shadow-2xl shadow-slate-900/20 logo-container transition-all duration-300 group-hover:bg-blue-600 group-hover:rotate-6">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="2.5"/></svg>
                         </div>
-                        <div>
+                        <div class="flex flex-col">
                             <div class="text-xl font-black text-slate-900 tracking-tighter leading-none logo-text">PARTSPRO</div>
-                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Powering Performance</div>
+                            <div class="text-[9px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1 opacity-80">B2B Division</div>
                         </div>
                     </a>
 
                     <!-- Nav Links -->
-                    <div class="hidden md:flex items-center gap-1">
-                        <a href="/catalog" data-link class="nav-link">Products</a>
-                        <a href="/brands" data-link class="nav-link">Brands</a>
-                        <a href="/categories" data-link class="nav-link">Categories</a>
-                        <a href="/support" data-link class="nav-link">Support</a>
+                    <div class="hidden md:flex items-center bg-slate-50/50 p-1.5 rounded-2xl border border-slate-100 shadow-inner">
+                        <a href="/catalog" data-link class="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Products</a>
+                        <a href="/brands" data-link class="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Brands</a>
+                        <a href="/categories" data-link class="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Categories</a>
+                        <a href="/support" data-link class="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Support</a>
                     </div>
 
                     <!-- Auth -->
                     <div class="flex items-center gap-4">
                         <div id="auth-nav" class="flex items-center gap-2">
-                            <a href="/login" data-link id="desktop-login-btn" class="px-5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">Partner Login</a>
+                            <a href="/login" data-link id="desktop-login-btn" class="px-6 py-3.5 rounded-2xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:-translate-y-0.5 transition-all duration-300">Partner Login</a>
                         </div>
                     </div>
                 </div>
