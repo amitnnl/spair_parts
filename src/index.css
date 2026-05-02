@@ -92,7 +92,7 @@
 
 /* ── WhatsApp Widget ─────────────────────────────────────── */
 .whatsapp-widget {
-    @apply fixed bottom-8 left-8 z-[90] flex items-center gap-4 group cursor-pointer;
+    @apply fixed bottom-8 right-8 z-[90] flex items-center gap-4 cursor-pointer;
 }
 
 .whatsapp-btn {
