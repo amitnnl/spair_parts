@@ -92,26 +92,38 @@
 
 /* ── WhatsApp Widget ─────────────────────────────────────── */
 .whatsapp-widget {
-    @apply fixed bottom-8 right-8 z-[90] flex items-center gap-4 cursor-pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    margin-bottom: 5rem; /* Space for mobile nav */
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
 }
 
 .whatsapp-btn {
-    @apply w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center
-           shadow-[0_8px_30px_rgb(37,211,102,0.4)] transition-all duration-300
-           hover:scale-110 active:scale-95 text-white relative;
+    width: 4rem;
+    height: 4rem;
+    background-color: #25D366;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s;
+    cursor: pointer;
 }
 
-.whatsapp-btn::after {
-    content: '';
-    @apply absolute inset-0 rounded-full border-4 border-[#25D366] opacity-0;
-    animation: whatsappPulse 2s infinite;
+.whatsapp-btn:hover {
+    transform: scale(1.1);
 }
 
 .whatsapp-tooltip {
-    @apply bg-white border border-slate-100 rounded-2xl px-5 py-3 shadow-2xl
-           text-sm font-bold text-slate-700 opacity-0 -translate-x-4
-           pointer-events-none transition-all duration-300
-           group-hover:opacity-100 group-hover:translate-x-0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #334155;
 }
 
 @keyframes whatsappPulse {
