@@ -696,17 +696,26 @@ export async function renderSystemSettings(container, app) {
                                         <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Value</span>
                                     </div>
                                     <div class="space-y-3 font-mono text-xs overflow-x-auto">
-                                        <div class="flex justify-between gap-4">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all" onclick="switchCMSTab('general')">
                                             <span class="text-blue-600 font-bold">whatsapp_number</span>
-                                            <span class="text-slate-600">${s.whatsapp_number || '<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-slate-600">${s.whatsapp_number || '<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
+                                                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                                            </div>
                                         </div>
-                                        <div class="flex justify-between gap-4 border-t border-slate-100 pt-3">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="switchCMSTab('general')">
                                             <span class="text-blue-600 font-bold">site_name</span>
-                                            <span class="text-slate-600">${s.site_name}</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-slate-600">${s.site_name}</span>
+                                                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                                            </div>
                                         </div>
-                                        <div class="flex justify-between gap-4 border-t border-slate-100 pt-3">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="switchCMSTab('general')">
                                             <span class="text-blue-600 font-bold">contact_email</span>
-                                            <span class="text-slate-600">${s.contact_email}</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-slate-600">${s.contact_email}</span>
+                                                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

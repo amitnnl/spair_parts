@@ -23,16 +23,16 @@
                 <div class="space-y-2">
                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4 ml-4 opacity-60">Procurement Hub</p>
                     <nav class="space-y-1.5">
-                        ${h("/catalog","Spare Parts","M4 6h16M4 10h16M4 14h16M4 18h16",t==="catalog")}
-                        ${h("/dashboard","Operational Overview","M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",t==="dashboard")}
+                        ${m("/catalog","Spare Parts","M4 6h16M4 10h16M4 14h16M4 18h16",t==="catalog")}
+                        ${m("/dashboard","Operational Overview","M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",t==="dashboard")}
                     </nav>
                 </div>
 
                 <div class="space-y-2">
                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4 ml-4 opacity-60">Transactions</p>
                     <nav class="space-y-1.5">
-                        ${h("/quotations","Active Quotations","M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",t==="quotations")}
-                        ${h("/invoices","Financial Records","M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",t==="invoices")}
+                        ${m("/quotations","Active Quotations","M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",t==="quotations")}
+                        ${m("/invoices","Financial Records","M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",t==="invoices")}
                     </nav>
                 </div>
 
@@ -40,7 +40,7 @@
                     <div class="space-y-2 pt-8 border-t border-slate-100">
                         <p class="text-[9px] font-black text-primary uppercase tracking-[0.3em] mb-4 ml-4 font-poppins">Administrative Console</p>
                         <nav class="space-y-1.5">
-                            ${h("/admin","Executive Insights","M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z",t==="admin","slate")}
+                            ${m("/admin","Executive Insights","M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z",t==="admin","slate")}
                             <button onclick="app.renderAdminInventory(document.getElementById('view-container'))" class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl ${t==="inventory"?"bg-slate-900 text-white shadow-xl shadow-slate-900/20":"text-slate-500 hover:bg-slate-50 hover:text-slate-900"} transition-all font-bold text-xs group">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                 <span class="group-hover:translate-x-1 transition-transform">Inventory Systems</span>
@@ -67,14 +67,14 @@
                 </a>
             </div>
         </aside>
-    `}function h(t,e,s,a,r="blue"){return`
+    `}function m(t,e,s,a,r="blue"){return`
         <a href="${t}" data-link class="flex items-center gap-4 px-4 py-3.5 rounded-2xl ${a?r==="blue"?"bg-blue-600 text-white shadow-xl shadow-blue-600/20":"bg-slate-900 text-white shadow-xl shadow-slate-900/20":"text-slate-500 hover:bg-slate-50 hover:text-slate-900"} transition-all font-bold text-[11px] uppercase tracking-tight group">
             <svg class="w-4 h-4 ${a?"":"group-hover:scale-110"} transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="${a?"2.5":"2"}">
                 <path stroke-linecap="round" stroke-linejoin="round" d="${s}"/>
             </svg>
             <span class="${a?"":"group-hover:translate-x-1"} transition-transform">${e}</span>
         </a>
-    `}const m={user:null,cart:[],products:[],quotations:[],invoices:[],view:"home",isLoading:!1,settings:{site_name:"PARTSPRO",currency:"₹",tax_percent:"18"}};async function S(t,e){t.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const a=await(await fetch(e.api("api/products.php"))).json();m.products=a.products,m.brands=a.brands,m.models=a.models,t.innerHTML=`
+    `}const h={user:null,cart:[],products:[],quotations:[],invoices:[],view:"home",isLoading:!1,settings:{site_name:"PARTSPRO",currency:"₹",tax_percent:"18"}};async function S(t,e){t.innerHTML='<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>';try{const a=await(await fetch(e.api("api/products.php"))).json();h.products=a.products,h.brands=a.brands,h.models=a.models,t.innerHTML=`
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${e.getSidebar("catalog")}
                 <main class="flex-1 p-8 lg:p-12">
@@ -101,14 +101,14 @@
                 <div class="relative">
                     <select id="brand-filter" class="w-full h-14 bg-slate-50 border border-slate-200 rounded-xl px-4 text-xs font-bold text-slate-700 appearance-none focus:outline-none focus:border-blue-500 transition-all cursor-pointer uppercase tracking-widest">
                         <option value="">Filter by Brand</option>
-                        ${(m.brands||[]).map(r=>`<option value="${r}">${r}</option>`).join("")}
+                        ${(h.brands||[]).map(r=>`<option value="${r}">${r}</option>`).join("")}
                     </select>
                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
                 </div>
                 <div class="relative">
                     <select id="model-filter" class="w-full h-14 bg-slate-50 border border-slate-200 rounded-xl px-4 text-xs font-bold text-slate-700 appearance-none focus:outline-none focus:border-blue-500 transition-all cursor-pointer uppercase tracking-widest">
                         <option value="">Filter by Model</option>
-                        ${(m.models||[]).map(r=>`<option value="${r}">${r}</option>`).join("")}
+                        ${(h.models||[]).map(r=>`<option value="${r}">${r}</option>`).join("")}
                     </select>
                     <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
                 </div>
@@ -118,7 +118,7 @@
         <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             ${f()}
         </div>
-    `;const a=()=>{document.getElementById("catalog-grid").innerHTML=f()};document.getElementById("catalog-search").oninput=a,document.getElementById("brand-filter").onchange=a,document.getElementById("model-filter").onchange=a}function f(){var r,l,d;const t=((r=document.getElementById("catalog-search"))==null?void 0:r.value.toLowerCase())||"",e=((l=document.getElementById("brand-filter"))==null?void 0:l.value)||"",s=((d=document.getElementById("model-filter"))==null?void 0:d.value)||"",a=(m.products||[]).filter(n=>{const i=n.part_name.toLowerCase().includes(t)||n.machine_model&&n.machine_model.toLowerCase().includes(t)||n.brand&&n.brand.toLowerCase().includes(t),c=!e||n.brand===e,o=!s||n.machine_model===s||n.other_fitments&&n.other_fitments.includes(s);return i&&c&&o});return a.length===0?`
+    `;const a=()=>{document.getElementById("catalog-grid").innerHTML=f()};document.getElementById("catalog-search").oninput=a,document.getElementById("brand-filter").onchange=a,document.getElementById("model-filter").onchange=a}function f(){var r,l,d;const t=((r=document.getElementById("catalog-search"))==null?void 0:r.value.toLowerCase())||"",e=((l=document.getElementById("brand-filter"))==null?void 0:l.value)||"",s=((d=document.getElementById("model-filter"))==null?void 0:d.value)||"",a=(h.products||[]).filter(n=>{const i=n.part_name.toLowerCase().includes(t)||n.machine_model&&n.machine_model.toLowerCase().includes(t)||n.brand&&n.brand.toLowerCase().includes(t),c=!e||n.brand===e,o=!s||n.machine_model===s||n.other_fitments&&n.other_fitments.includes(s);return i&&c&&o});return a.length===0?`
             <div class="col-span-full py-20 text-center animate-in fade-in duration-500">
                 <h3 class="text-xl font-bold text-slate-400">No parts found</h3>
             </div>
@@ -858,17 +858,26 @@
                                         <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Value</span>
                                     </div>
                                     <div class="space-y-3 font-mono text-xs overflow-x-auto">
-                                        <div class="flex justify-between gap-4">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all" onclick="switchCMSTab('general')">
                                             <span class="text-blue-600 font-bold">whatsapp_number</span>
-                                            <span class="text-slate-600">${a.whatsapp_number||'<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-slate-600">${a.whatsapp_number||'<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
+                                                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                                            </div>
                                         </div>
-                                        <div class="flex justify-between gap-4 border-t border-slate-100 pt-3">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="switchCMSTab('general')">
                                             <span class="text-blue-600 font-bold">site_name</span>
-                                            <span class="text-slate-600">${a.site_name}</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-slate-600">${a.site_name}</span>
+                                                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                                            </div>
                                         </div>
-                                        <div class="flex justify-between gap-4 border-t border-slate-100 pt-3">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="switchCMSTab('general')">
                                             <span class="text-blue-600 font-bold">contact_email</span>
-                                            <span class="text-slate-600">${a.contact_email}</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-slate-600">${a.contact_email}</span>
+                                                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
