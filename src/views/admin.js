@@ -525,6 +525,7 @@ export async function renderSystemSettings(container, app) {
             { id: 'categories', label: '📂 Categories' },
             { id: 'support', label: '💬 Support' },
             { id: 'footer', label: '📋 Footer' },
+            { id: 'system', label: '🔍 System Status' },
         ];
 
         container.innerHTML = `
@@ -680,6 +681,38 @@ export async function renderSystemSettings(container, app) {
                                         ${textarea('Footer Address', 'contact_address', s.contact_address)}
                                         ${field('Copyright Text', 'footer_copyright', s.footer_copyright, 'text', '© 2026 PARTSPRO B2B Division. All rights reserved.')}
                                     </div>
+                                </div>
+                            </div>
+ 
+                            <!-- SYSTEM STATUS -->
+                            <div id="cms-tab-system" class="cms-tab-panel space-y-6 hidden bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm">
+                                <div class="pb-6 border-b border-slate-100">
+                                    <h3 class="text-xl font-black text-slate-900">Platform Diagnostics</h3>
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Verify live database values and system integrity</p>
+                                </div>
+                                <div class="bg-slate-50 rounded-2xl p-6 space-y-4">
+                                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Database Key</span>
+                                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Value</span>
+                                    </div>
+                                    <div class="space-y-3 font-mono text-xs overflow-x-auto">
+                                        <div class="flex justify-between gap-4">
+                                            <span class="text-blue-600 font-bold">whatsapp_number</span>
+                                            <span class="text-slate-600">${s.whatsapp_number || '<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
+                                        </div>
+                                        <div class="flex justify-between gap-4 border-t border-slate-100 pt-3">
+                                            <span class="text-blue-600 font-bold">site_name</span>
+                                            <span class="text-slate-600">${s.site_name}</span>
+                                        </div>
+                                        <div class="flex justify-between gap-4 border-t border-slate-100 pt-3">
+                                            <span class="text-blue-600 font-bold">contact_email</span>
+                                            <span class="text-slate-600">${s.contact_email}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                                    <h4 class="text-sm font-black text-blue-900 mb-2">Troubleshooting Tip</h4>
+                                    <p class="text-xs text-blue-700 leading-relaxed font-medium">If "whatsapp_number" shows as <span class="text-rose-500 font-bold">NOT FOUND</span> on your live site, please click "Save All Changes" at the bottom of this page to force-sync the database registry.</p>
                                 </div>
                             </div>
 
