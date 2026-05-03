@@ -803,7 +803,7 @@ export function printAdminReport() {
                     .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
                     .stat-item { padding: 25px; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
                     .stat-label { font-size: 11px; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; }
-                    .stat-value { font-size: 28px; font-weight: 900; margin-top: 10px; color: #0f172a; }
+                    .stat-value { font-size: 28px; font-weight: 900; margin-top: 10px; color: #003e64; }
                     .footer { margin-top: 60px; font-size: 11px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 20px; font-weight: 700; }
                 </style>
             </head>

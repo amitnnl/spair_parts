@@ -16,6 +16,9 @@ export default {
         // Flat aliases so `text-primary-dark` works in templates
         'primary-dark':  '#004494',
         'primary-light': '#3378C2',
+        slate: {
+          900: '#003e64',
+        },
       },
       fontFamily: {
         sans:    ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
