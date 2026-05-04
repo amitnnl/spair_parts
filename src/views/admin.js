@@ -1132,29 +1132,10 @@ async function handleProductSubmit(e, app) {
     const isEdit = formData.has('id');
 
     try {
-        let res;
-        if (isEdit) {
-            const payload = {
-                id: formData.get('id'),
-                brand_id: formData.get('brand_id'),
-                machine_name_id: formData.get('machine_name_id'),
-                part_name_id: formData.get('part_name_id'),
-                model_id: formData.get('model_id'),
-                machine_size_id: formData.get('machine_size_id'),
-                cost: formData.get('cost'),
-                note: formData.get('note'),
-            };
-            res = await fetch(app.api('api/admin_products.php'), {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-        } else {
-            res = await fetch(app.api('api/admin_products.php'), {
-                method: 'POST',
-                body: formData
-            });
-        }
+        const res = await fetch(app.api('api/admin_products.php'), {
+            method: 'POST',
+            body: formData
+        });
         
         const result = await res.json();
         if (result.success) {

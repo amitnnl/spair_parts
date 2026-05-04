@@ -81,6 +81,15 @@ if ($method === 'GET') {
 
     foreach ($_FILES as $key => $file) {
         if ($file['error'] === UPLOAD_ERR_OK) {
+            // Delete old file if exists
+            $stmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = ?");
+            $stmt->execute([$key]);
+            $oldValue = $stmt->fetchColumn();
+            if ($oldValue && !filter_var($oldValue, FILTER_VALIDATE_URL)) {
+                $oldPath = '../' . $oldValue;
+                if (file_exists($oldPath)) unlink($oldPath);
+            }
+
             $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
             $filename = 'setting_' . $key . '_' . uniqid() . '.' . $ext;
             if (move_uploaded_file($file['tmp_name'], $uploadDir . $filename)) {

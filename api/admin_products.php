@@ -22,7 +22,8 @@ if ($method === 'POST') {
     $data = $_POST;
     $action = $data['action'] ?? 'add_product';
 
-    if ($action === 'add_product') {
+    if ($action === 'add_product' || $action === 'update_product') {
+        $id = $data['id'] ?? null;
         $brand_id = !empty($data['brand_id']) ? $data['brand_id'] : null;
         $machine_name_id = !empty($data['machine_name_id']) ? $data['machine_name_id'] : null;
         $part_name_id = !empty($data['part_name_id']) ? $data['part_name_id'] : null;
@@ -39,24 +40,44 @@ if ($method === 'POST') {
         $note = $data['note'] ?? '';
         
         // Handle photo upload
-        $photo = '';
+        $photo = null;
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = '../uploads/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+            // Delete old photo if updating
+            if ($action === 'update_product' && $id) {
+                $stmt = $db->prepare("SELECT photo FROM spare_parts WHERE id = ?");
+                $stmt->execute([$id]);
+                $oldPhoto = $stmt->fetchColumn();
+                if ($oldPhoto && !filter_var($oldPhoto, FILTER_VALIDATE_URL)) {
+                    $oldPath = '../' . $oldPhoto;
+                    if (file_exists($oldPath)) unlink($oldPath);
+                }
+            }
             
             $ext = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
             $filename = uniqid() . '.' . $ext;
             if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadDir . $filename)) {
                 $photo = 'uploads/' . $filename;
             }
-        } else if (isset($data['photo_url'])) {
-            $photo = $data['photo_url'];
         }
 
         try {
-            $stmt = $db->prepare("INSERT INTO spare_parts (brand_id, machine_name_id, part_name_id, model_id, machine_size_id, photo, cost, stock_quantity, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $machine_size_id, $photo, $cost, $stock_quantity, $note]);
-            echo json_encode(['success' => true, 'id' => $db->lastInsertId()]);
+            if ($action === 'add_product') {
+                $stmt = $db->prepare("INSERT INTO spare_parts (brand_id, machine_name_id, part_name_id, model_id, machine_size_id, photo, cost, stock_quantity, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $machine_size_id, $photo || '', $cost, $stock_quantity, $note]);
+                echo json_encode(['success' => true, 'id' => $db->lastInsertId()]);
+            } else {
+                if ($photo) {
+                    $stmt = $db->prepare("UPDATE spare_parts SET brand_id = ?, machine_name_id = ?, part_name_id = ?, model_id = ?, machine_size_id = ?, photo = ?, cost = ?, stock_quantity = ?, note = ? WHERE id = ?");
+                    $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $machine_size_id, $photo, $cost, $stock_quantity, $note, $id]);
+                } else {
+                    $stmt = $db->prepare("UPDATE spare_parts SET brand_id = ?, machine_name_id = ?, part_name_id = ?, model_id = ?, machine_size_id = ?, cost = ?, stock_quantity = ?, note = ? WHERE id = ?");
+                    $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $machine_size_id, $cost, $stock_quantity, $note, $id]);
+                }
+                echo json_encode(['success' => true]);
+            }
         } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
@@ -157,24 +178,6 @@ if ($method === 'POST') {
                               WHERE f.part_id = ?");
         $stmt->execute([$part_id]);
         echo json_encode(['fitments' => $stmt->fetchAll()]);
-    }
-} elseif ($method === 'PUT') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $id = $data['id'];
-    $brand_id = $data['brand_id'];
-    $machine_name_id = $data['machine_name_id'];
-    $part_name_id = $data['part_name_id'];
-    $model_id = $data['model_id'];
-    $machine_size_id = $data['machine_size_id'] ?? null;
-    $cost = $data['cost'] ?? 0;
-    $note = $data['note'] ?? '';
-    
-    try {
-        $stmt = $db->prepare("UPDATE spare_parts SET brand_id = ?, machine_name_id = ?, part_name_id = ?, model_id = ?, machine_size_id = ?, cost = ?, note = ? WHERE id = ?");
-        $stmt->execute([$brand_id, $machine_name_id, $part_name_id, $model_id, $machine_size_id, $cost, $note, $id]);
-        echo json_encode(['success' => true]);
-    } catch (Exception $e) {
-        echo json_encode(['error' => $e->getMessage()]);
     }
 } elseif ($method === 'DELETE') {
     $action = $_GET['action'] ?? 'delete_product';
