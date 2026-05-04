@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TORVO TOOLS V2</title>
-    <meta name="description" content="Professional B2B portal for power tool spare parts. Genuine spares, bulk ordering, and inventory management.">
-    
+    <meta name="description"
+        content="Professional B2B portal for power tool spare parts. Genuine spares, bulk ordering, and inventory management.">
+
     <!-- Tailwind CSS Play CDN (For local XAMPP/Dev) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,61 +38,106 @@
     <!-- Production Styles handled by Vite/PostCSS -->
     <link rel="stylesheet" href="src/index.css?v=1.0.1">
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230056B3'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
-    
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230056B3'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body class="bg-slate-50">
 
     <div id="app" class="min-h-screen flex flex-col">
-        
+
         <!-- ═══ TOP BAR ═══ -->
         <div id="top-bar" class="bg-slate-900 text-white py-2 px-6 lg:px-10 no-print hidden md:block">
             <div class="flex justify-between items-center text-[11px] font-bold uppercase tracking-wider">
                 <div class="flex gap-6 opacity-70">
-                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg> B2B Only Portal</span>
-                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Genuine Parts</span>
-                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Pan India Delivery</span>
+                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg> B2B Only Portal</span>
+                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path d="M5 13l4 4L19 7" />
+                        </svg> Genuine Parts</span>
+                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg> Pan India Delivery</span>
                 </div>
                 <div class="flex gap-6 items-center">
-                    <a href="/catalog" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg> Bulk Order</a>
-                    <a href="/catalog" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Quick Order</a>
-                    <a href="/support" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Support</a>
-                    <a href="/login" data-link class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Admin Access</a>
+                    <a href="/catalog" data-link
+                        class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg
+                            class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg> Bulk Order</a>
+                    <a href="/catalog" data-link
+                        class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg
+                            class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg> Quick Order</a>
+                    <a href="/support" data-link
+                        class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg
+                            class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg> Support</a>
+                    <a href="/login" data-link
+                        class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg
+                            class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg> Admin Access</a>
                 </div>
             </div>
         </div>
 
         <!-- ═══ MAIN NAVBAR ═══ -->
-        <nav id="main-nav" class="bg-white/80 backdrop-blur-xl border-b border-slate-100 sticky top-0 z-50 no-print transition-all duration-500 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_4px_6px_-2px_rgba(0,0,0,0.05)]">
+        <nav id="main-nav"
+            class="bg-white/80 backdrop-blur-xl border-b border-slate-100 sticky top-0 z-50 no-print transition-all duration-500 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_4px_6px_-2px_rgba(0,0,0,0.05)]">
             <div class="w-full px-6 lg:px-10">
                 <div class="flex justify-between items-center h-20">
                     <!-- Logo & Title -->
-                    <a href="/" data-link class="flex items-center gap-4 group transition-transform duration-300 hover:scale-[1.02] flex-shrink-0">
-                        <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center shadow-2xl shadow-slate-900/20 logo-container transition-all duration-300 group-hover:bg-blue-600 group-hover:rotate-6">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="2.5"/></svg>
+                    <!-- Premium Branding: Large Logo + Title -->
+                    <a href="/" data-link
+                        class="flex items-center gap-6 group transition-all duration-300 hover:scale-[1.01] flex-shrink-0">
+                        <!-- Extra Large Transparent Logo -->
+                        <div
+                            class="relative w-32 h-32 flex items-center justify-center transition-transform duration-700 group-hover:rotate-[360deg] logo-container">
+                            <div
+                                class="absolute inset-0 bg-blue-600/5 rounded-full scale-0 group-hover:scale-125 transition-transform duration-500 blur-xl">
+                            </div>
+                            <svg class="w-12 h-12 text-slate-900 transition-all duration-500 group-hover:text-blue-600 drop-shadow-xl"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                            </svg>
                         </div>
-                        <div class="flex flex-col">
-                            <div class="text-2xl font-black text-slate-900 tracking-tighter leading-none logo-text">PARTSPRO</div>
-                            <div class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1.5 opacity-80">B2B Division</div>
-                        </div>
+
                     </a>
 
                     <!-- Nav Links - Centered & Expanded -->
                     <div class="hidden md:flex flex-1 justify-center px-12">
-                        <div class="flex items-center bg-slate-50/50 p-1.5 rounded-2xl border border-slate-100 shadow-inner w-full max-w-2xl justify-between">
-                            <a href="/catalog" data-link class="px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Products</a>
-                            <a href="/brands" data-link class="px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Brands</a>
-                            <a href="/categories" data-link class="px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Categories</a>
-                            <a href="/support" data-link class="px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Support</a>
+                        <div
+                            class="flex items-center bg-slate-50/50 p-1.5 rounded-2xl border border-slate-100 shadow-inner w-full max-w-2xl justify-between">
+                            <a href="/catalog" data-link
+                                class="px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Products</a>
+                            <a href="/brands" data-link
+                                class="px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Brands</a>
+                            <a href="/categories" data-link
+                                class="px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Categories</a>
+                            <a href="/support" data-link
+                                class="px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all duration-300">Support</a>
                         </div>
                     </div>
 
                     <!-- Auth Button - Right Aligned & Wide -->
                     <div class="flex items-center gap-4 flex-shrink-0">
                         <div id="auth-nav" class="flex items-center">
-                            <a href="/login" data-link id="desktop-login-btn" class="px-10 py-4 rounded-2xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-[0.15em] shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap">Partner Login</a>
+                            <a href="/login" data-link id="desktop-login-btn"
+                                class="px-10 py-4 rounded-2xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-[0.15em] shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap">Partner
+                                Login</a>
                         </div>
                     </div>
                 </div>
@@ -107,36 +154,50 @@
                     <div class="space-y-6">
                         <div class="flex items-center gap-3">
                             <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center logo-container">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                </svg>
                             </div>
                             <span class="text-xl font-black tracking-tighter logo-text">PARTSPRO</span>
                         </div>
-                        <p id="footer-desc" class="text-slate-400 text-sm leading-relaxed">The premium B2B platform for genuine power tool spare parts procurement and industrial maintenance solutions.</p>
+                        <p id="footer-desc" class="text-slate-400 text-sm leading-relaxed">The premium B2B platform for
+                            genuine power tool spare parts procurement and industrial maintenance solutions.</p>
                     </div>
                     <div>
                         <h4 class="text-xs font-black uppercase tracking-[0.2em] mb-6">Quick Links</h4>
                         <ul class="space-y-4 text-sm font-semibold text-slate-400">
-                            <li><a href="/catalog" data-link class="hover:text-primary transition-colors">Product Catalog</a></li>
-                            <li><a href="/brands" data-link class="hover:text-primary transition-colors">Browse Brands</a></li>
-                            <li><a href="/categories" data-link class="hover:text-primary transition-colors">Browse Categories</a></li>
-                            <li><a href="/support" data-link class="hover:text-primary transition-colors">Support Center</a></li>
+                            <li><a href="/catalog" data-link class="hover:text-primary transition-colors">Product
+                                    Catalog</a></li>
+                            <li><a href="/brands" data-link class="hover:text-primary transition-colors">Browse
+                                    Brands</a></li>
+                            <li><a href="/categories" data-link class="hover:text-primary transition-colors">Browse
+                                    Categories</a></li>
+                            <li><a href="/support" data-link class="hover:text-primary transition-colors">Support
+                                    Center</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="text-xs font-black uppercase tracking-[0.2em] mb-6">Customer Care</h4>
                         <ul class="space-y-4 text-sm font-semibold text-slate-400">
-                            <li><a href="/support" data-link class="hover:text-primary transition-colors">Help Center</a></li>
-                            <li><a href="/shipping" data-link class="hover:text-primary transition-colors">Shipping Information</a></li>
-                            <li><a href="/warranty" data-link class="hover:text-primary transition-colors">Warranty & Returns</a></li>
+                            <li><a href="/support" data-link class="hover:text-primary transition-colors">Help
+                                    Center</a></li>
+                            <li><a href="/shipping" data-link class="hover:text-primary transition-colors">Shipping
+                                    Information</a></li>
+                            <li><a href="/warranty" data-link class="hover:text-primary transition-colors">Warranty &
+                                    Returns</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="text-xs font-black uppercase tracking-[0.2em] mb-6">Contact Us</h4>
-                        <p id="footer-address" class="text-sm font-semibold text-slate-400 mb-4">Phase 2, Industrial Estate<br>New Delhi, IN 110020</p>
-                        <a id="footer-email" href="mailto:support@partspro.in" class="text-primary font-bold text-sm">support@partspro.in</a>
+                        <p id="footer-address" class="text-sm font-semibold text-slate-400 mb-4">Phase 2, Industrial
+                            Estate<br>New Delhi, IN 110020</p>
+                        <a id="footer-email" href="mailto:support@partspro.in"
+                            class="text-primary font-bold text-sm">support@partspro.in</a>
                     </div>
                 </div>
-                <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                <div
+                    class="flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
                     <p>&copy; 2026 PARTSPRO B2B DIVISION. ALL RIGHTS RESERVED.</p>
                     <div class="flex gap-8">
                         <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
@@ -147,25 +208,41 @@
         </footer>
 
         <!-- ═══ MOBILE BOTTOM NAV ═══ -->
-        <nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 flex justify-around items-center h-16 no-print">
+        <nav id="mobile-nav"
+            class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 flex justify-around items-center h-16 no-print">
             <a href="/" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
                 <span class="text-[8px] font-bold uppercase">Home</span>
             </a>
             <a href="/catalog" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
                 <span class="text-[8px] font-bold uppercase">Shop</span>
             </a>
             <a href="/brands" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
                 <span class="text-[8px] font-bold uppercase">Brands</span>
             </a>
             <a href="/categories" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
                 <span class="text-[8px] font-bold uppercase">Categories</span>
             </a>
             <a href="/support" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
                 <span class="text-[8px] font-bold uppercase">Help</span>
             </a>
         </nav>
@@ -177,4 +254,5 @@
 
     <script type="module" src="src/main.js?v=1.0.1"></script>
 </body>
+
 </html>

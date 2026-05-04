@@ -558,6 +558,7 @@ export async function renderSystemSettings(container, app) {
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     ${field('Platform / Site Name', 'site_name', s.site_name, 'text', 'PARTSPRO')}
+                                    ${imgField('Platform Logo', 'site_logo', s.site_logo)}
                                     ${field('Currency Symbol', 'currency', s.currency, 'text', '₹')}
                                     ${field('Tax Rate (%)', 'tax_percent', s.tax_percent, 'number', '18')}
                                     ${field('Support Email', 'contact_email', s.contact_email, 'email', 'support@partspro.in')}
