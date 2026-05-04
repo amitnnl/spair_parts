@@ -98,6 +98,8 @@ const app = {
     deleteProduct(id) { return removeProduct(id, this); },
 
     renderDashboard(container) { return viewDashboard(container, this); },
+    loadDashboardStats() { return fetchDashboardStats(this); },
+    renderBulkOrderModal() { return viewBulkOrderModal(this); },
     renderSupport(container) { return renderSupport(container, this); },
     renderHome(container) { return renderHome(container, this); },
     renderShipping(container) { return viewShipping.render(container); },

@@ -8,6 +8,17 @@
     <meta name="description"
         content="Professional B2B portal for power tool spare parts. Genuine spares, bulk ordering, and inventory management.">
 
+    <!-- Suppress Tailwind Production Warning -->
+    <script>
+        (function() {
+            const originalWarn = console.warn;
+            console.warn = function(message) {
+                if (typeof message === 'string' && message.includes('cdn.tailwindcss.com should not be used in production')) return;
+                originalWarn.apply(console, arguments);
+            };
+        })();
+    </script>
+
     <!-- Tailwind CSS Play CDN (For local XAMPP/Dev) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
