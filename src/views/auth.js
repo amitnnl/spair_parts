@@ -64,9 +64,11 @@ export function renderLogin(container, app) {
             if (result.success) {
                 app.state.user = result.user;
                 app.updateAuthUI();
-                history.pushState(null, null, app.basePath + '/dashboard');
+                const role = result.user.role?.toLowerCase();
+                const dest = role === 'admin' ? '/admin' : role === 'staff' ? '/staff' : '/dashboard';
+                history.pushState(null, null, app.basePath + dest);
                 app.handleRouting();
-                app.showToast(`System synchronized. Welcome, ${result.user.name}.`);
+                app.showToast(`Welcome, ${result.user.name}.`);
             } else {
                 app.showToast(result.error || 'Authorization failed', 'error');
             }

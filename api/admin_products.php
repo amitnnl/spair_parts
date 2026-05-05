@@ -30,8 +30,8 @@ if ($method === 'POST') {
         $model_id = !empty($data['model_id']) ? $data['model_id'] : null;
         $machine_size_id = !empty($data['machine_size_id']) ? $data['machine_size_id'] : null;
 
-        if (!$brand_id || !$machine_name_id || !$part_name_id || !$model_id) {
-            echo json_encode(['error' => 'Please select Brand, Machine, Part Name, and Model.']);
+        if (!$part_name_id) {
+            echo json_encode(['error' => 'Spare Part Name is required.']);
             exit;
         }
 

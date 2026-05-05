@@ -1,9 +1,16 @@
 export async function renderQuotations(container, appInstance) {
     if (!appInstance.state.user) { history.pushState(null, null, appInstance.basePath + '/login'); appInstance.handleRouting(); return; }
+    
+    // Robust role check
+    const userRole = (appInstance.state.user.role || '').toLowerCase();
+    const isAdmin = userRole === 'admin';
+    
+    console.log('Quotation View Access - Role:', userRole, 'IsAdmin:', isAdmin);
     container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
     
     try {
-        const res = await fetch(appInstance.api('api/quotations.php'));
+        const apiUrl = isAdmin ? 'api/admin_quotations.php' : 'api/quotations.php';
+        const res = await fetch(appInstance.api(apiUrl));
         const quotations = await res.json();
         
         container.innerHTML = `
@@ -13,21 +20,23 @@ export async function renderQuotations(container, appInstance) {
                     <div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                             <div>
-                                <div class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">Procurement History</div>
-                                <h2 class="text-4xl font-black tracking-tight text-slate-900">Your <span class="text-blue-600">Quotations</span></h2>
-                                <p class="text-slate-500 font-medium mt-2 text-lg">Track your request for quotes and approval statuses.</p>
+                                <div class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">${isAdmin ? 'Global Transaction Monitor' : 'Procurement History'}</div>
+                                <h2 class="text-4xl font-black tracking-tight text-slate-900">${isAdmin ? 'All <span class="text-blue-600">Quotations</span>' : 'Your <span class="text-blue-600">Quotations</span>'}</h2>
+                                <p class="text-slate-500 font-medium mt-2 text-lg">${isAdmin ? 'Manage and price all incoming partner requests.' : 'Track your request for quotes and approval statuses.'}</p>
                             </div>
+                            ${!isAdmin ? `
                             <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="btn btn-secondary flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                                 New Request
                             </button>
+                            ` : ''}
                         </div>
 
                         <div class="table-container">
                             <table class="data-table w-full text-left">
                                 <thead>
                                     <tr>
-                                        <th>ID / Date</th>
+                                        <th>${isAdmin ? 'Partner / Date' : 'ID / Date'}</th>
                                         <th>Items Count</th>
                                         <th>Status</th>
                                         <th>Amount</th>
@@ -38,8 +47,8 @@ export async function renderQuotations(container, appInstance) {
                                     ${quotations.length ? quotations.map(q => `
                                         <tr class="hover:bg-slate-50 transition-all">
                                             <td class="p-6">
-                                                <div class="font-bold text-slate-900">#Q-${String(q.id).padStart(4, '0')}</div>
-                                                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(q.created_at).toLocaleDateString()}</div>
+                                                <div class="font-bold text-slate-900">${isAdmin ? q.user_name : `#Q-${String(q.id).padStart(4, '0')}`}</div>
+                                                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(q.created_at).toLocaleDateString()} ${isAdmin ? `• #Q-${String(q.id).padStart(4, '0')}` : ''}</div>
                                             </td>
                                             <td class="p-6 font-bold text-slate-600">${q.item_count || 0} Products</td>
                                             <td class="p-6">
@@ -52,14 +61,17 @@ export async function renderQuotations(container, appInstance) {
                                             </td>
                                             <td class="p-6 text-right">
                                                 <div class="flex justify-end gap-3">
-                                                    <button onclick="app.viewQuotationDetails(${q.id})" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">View</button>
-                                                    ${q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20">Approve</button>` : ''}
+                                                    <button onclick="${isAdmin ? `app.renderProcessQuotation(${q.id})` : `app.viewQuotationDetails(${q.id})`}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">
+                                                        ${isAdmin && q.status === 'pending' ? 'Process' : 'View'}
+                                                    </button>
+                                                    ${!isAdmin && q.status === 'pending' ? `<button onclick="app.editQuotation(${q.id})" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>` : ''}
+                                                    ${!isAdmin && q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20">Approve</button>` : ''}
                                                 </div>
                                             </td>
                                         </tr>
                                     `).join('') : `
                                         <tr>
-                                            <td colspan="5" class="p-20 text-center text-slate-400 font-bold">You haven't requested any quotations yet.</td>
+                                            <td colspan="5" class="p-20 text-center text-slate-400 font-bold">${isAdmin ? 'No partner requests found.' : "You haven't requested any quotations yet."}</td>
                                         </tr>
                                     `}
                                 </tbody>

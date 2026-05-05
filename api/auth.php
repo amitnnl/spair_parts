@@ -6,6 +6,12 @@ require_once '../config/database.php';
 header('Content-Type: application/json');
 
 $db = getDB();
+
+// Ensure user profile columns exist
+try { $db->exec("ALTER TABLE users ADD COLUMN phone VARCHAR(20) DEFAULT NULL"); } catch(Exception $e){}
+try { $db->exec("ALTER TABLE users ADD COLUMN whatsapp VARCHAR(20) DEFAULT NULL"); } catch(Exception $e){}
+try { $db->exec("ALTER TABLE users ADD COLUMN address TEXT DEFAULT NULL"); } catch(Exception $e){}
+
 $data = json_decode(file_get_contents('php://input'), true);
 $action = $data['action'] ?? '';
 

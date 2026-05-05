@@ -25,11 +25,11 @@ export async function renderAdmin(container, app) {
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     ${[
-                        { l:'Active Quotations', v:'--', id:'stat-active-quotations', c:'blue' },
-                        { l:'Total Partners', v:'--', id:'stat-total-partners', c:'indigo' },
-                        { l:'Inventory SKUs', v:'--', id:'stat-total-skus', c:'emerald' },
-                        { l:'Monthly Revenue', v:'₹0', id:'stat-revenue', c:'rose' }
-                    ].map(s => `
+            { l: 'Active Quotations', v: '--', id: 'stat-active-quotations', c: 'blue' },
+            { l: 'Total Partners', v: '--', id: 'stat-total-partners', c: 'indigo' },
+            { l: 'Inventory SKUs', v: '--', id: 'stat-total-skus', c: 'emerald' },
+            { l: 'Monthly Revenue', v: '₹0', id: 'stat-revenue', c: 'rose' }
+        ].map(s => `
                         <div class="bg-white border border-slate-200 rounded-3xl p-8 space-y-4 hover:shadow-2xl hover:shadow-blue-900/5 transition-all">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${s.l}</p>
                             <h3 class="text-3xl font-black text-slate-900" id="${s.id}">${s.v}</h3>
@@ -49,12 +49,57 @@ export async function renderAdmin(container, app) {
                         <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>
                     </div>
                 </div>
+
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <div class="w-2 h-8 bg-emerald-600 rounded-full"></div>
+                        <h3 class="text-xl font-black text-slate-900 tracking-tight">Order Fulfillment & Logistics</h3>
+                    </div>
+                    <div id="admin-invoice-list" class="grid grid-cols-1 gap-4">
+                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full"></div></div>
+                    </div>
+                </div>
             </main>
         </div>
     `;
-    
+
     app.loadAdminStats();
     app.loadAdminQuotations();
+    app.loadAdminInvoices();
+}
+
+export async function loadAdminInvoices(app) {
+    const list = document.getElementById('admin-invoice-list');
+    if (!list) return;
+    try {
+        const res = await fetch(app.api('api/invoices.php'));
+        const invoices = await res.json();
+
+        list.innerHTML = invoices.length ? invoices.map(inv => `
+            <div class="bg-white border border-slate-200 rounded-3xl p-6 flex justify-between items-center hover:shadow-xl hover:shadow-emerald-900/5 transition-all">
+                <div class="flex items-center gap-6">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <div>
+                        <div class="font-black text-slate-900">${inv.invoice_number} • ${inv.user_name}</div>
+                        <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">
+                            ${new Date(inv.created_at).toLocaleDateString()} • ₹${parseFloat(inv.total_amount).toLocaleString()}
+                            ${inv.tracking_number ? ` • Tracking: <span class="text-blue-600 font-bold">${inv.tracking_number}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${getInvoiceStatusClass(inv.status)}">
+                        ${inv.status}
+                    </span>
+                    <button onclick="app.renderDispatchModal(${inv.id}, '${inv.status}', '${inv.tracking_number || ''}')" class="px-5 py-2 rounded-xl bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all">Manage</button>
+                </div>
+            </div>
+        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-3xl p-12 text-center text-slate-400 font-bold">No active orders in fulfillment</div>';
+    } catch (e) {
+        list.innerHTML = '<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load orders</div>';
+    }
 }
 
 export async function loadAdminStats(app) {
@@ -76,7 +121,7 @@ export async function loadAdminQuotations(app) {
     try {
         const res = await fetch(app.api('api/admin_quotations.php'));
         const quotations = await res.json();
-        
+
         list.innerHTML = quotations.length ? quotations.map(q => `
             <div class="bg-white border border-slate-200 rounded-3xl p-6 flex justify-between items-center hover:shadow-xl hover:shadow-blue-900/5 transition-all">
                 <div>
@@ -99,12 +144,12 @@ export async function loadAdminQuotations(app) {
 
 export async function renderAdminInventory(container, app) {
     container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
-    
+
     try {
         const res = await fetch(app.api('api/products.php'));
         const { products } = await res.json();
         app.state.products = products;
-        
+
         container.innerHTML = `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${app.getSidebar('inventory')}
@@ -211,13 +256,13 @@ function createInventoryRow(p, app) {
 
 export async function renderAdminUsers(container, app) {
     if (!app.state.user || app.state.user.role !== 'admin') return;
-    
+
     container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
-    
+
     try {
         const res = await fetch(app.api('api/admin_users.php'));
         const users = await res.json();
-        
+
         container.innerHTML = `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${app.getSidebar('partners')}
@@ -234,8 +279,9 @@ export async function renderAdminUsers(container, app) {
                         <table class="w-full text-left border-collapse">
                             <thead class="bg-slate-50/80 border-b border-slate-200">
                                 <tr>
-                                    <th class="p-6 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Partner Details</th>
+                                    <th class="p-6 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">User Details</th>
                                     <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Role</th>
                                     <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Discount Tier</th>
                                     <th class="p-6 pr-8 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
                                 </tr>
@@ -253,10 +299,16 @@ export async function renderAdminUsers(container, app) {
                                             </div>
                                         </td>
                                         <td class="p-6">
-                                            <select onchange="app.updateUser(${u.id}, 'status', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest ${u.status === 'active' ? 'text-emerald-600 border-emerald-200 focus:ring-emerald-500/20' : (u.status === 'pending' ? 'text-amber-600 border-amber-200 focus:ring-amber-500/20' : 'text-rose-600 border-rose-200 focus:ring-rose-500/20')} focus:outline-none focus:ring-4 transition-all">
+                                            <select onchange="app.updateUser(${u.id}, 'status', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest ${u.status === 'active' ? 'text-emerald-600 border-emerald-200' : (u.status === 'pending' ? 'text-amber-600 border-amber-200' : 'text-rose-600 border-rose-200')} focus:outline-none focus:ring-4 transition-all">
                                                 <option value="pending" ${u.status === 'pending' ? 'selected' : ''}>Pending</option>
                                                 <option value="active" ${u.status === 'active' ? 'selected' : ''}>Active</option>
                                                 <option value="suspended" ${u.status === 'suspended' ? 'selected' : ''}>Suspended</option>
+                                            </select>
+                                        </td>
+                                        <td class="p-6">
+                                            <select onchange="app.updateUser(${u.id}, 'role', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest focus:outline-none focus:ring-4 transition-all">
+                                                <option value="user" ${u.role?.toLowerCase() === 'user' || !u.role ? 'selected' : ''}>Partner</option>
+                                                <option value="staff" ${u.role?.toLowerCase() === 'staff' ? 'selected' : ''}>Staff</option>
                                             </select>
                                         </td>
                                         <td class="p-6">
@@ -266,7 +318,7 @@ export async function renderAdminUsers(container, app) {
                                             </div>
                                         </td>
                                         <td class="p-6 pr-8 text-right">
-                                            <button onclick="app.updateUser(${u.id}, 'discount_tier', document.getElementById('discount_${u.id}').value)" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save Tier</button>
+                                            <button onclick="app.updateUser(${u.id}, 'discount_tier', document.getElementById('discount_${u.id}').value)" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save</button>
                                         </td>
                                     </tr>
                                 `).join('')}
@@ -286,16 +338,21 @@ export async function renderProcessQuotation(quotationId, app) {
     const modal = document.createElement('div');
     modal.id = 'process-modal';
     modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto';
-    
+
     const res = await fetch(app.api('api/admin_quotations.php'));
     const all = await res.json();
     const q = all.find(item => item.id == quotationId);
-    
+
+    if (!q) {
+        app.showToast('Quotation not found or already processed.', 'error');
+        return;
+    }
+
     const itemRes = await fetch(app.api(`api/admin_quotations.php?id=${quotationId}`));
     const data = await itemRes.json();
     const details = data.items;
     const discountTier = parseFloat(data.discount_tier || 0);
-    
+
     modal.innerHTML = `
         <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative animate-in zoom-in duration-300 my-8">
             <div class="bg-slate-900 p-8 text-white flex justify-between items-center">
@@ -376,21 +433,21 @@ export async function renderProcessQuotation(quotationId, app) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     document.querySelectorAll('.unit-price-input').forEach(input => {
         input.oninput = () => updateQuotationTotals();
     });
     updateQuotationTotals();
-    
+
     document.getElementById('price-quotation-form').onsubmit = async (e) => {
         e.preventDefault();
         const items = Array.from(document.querySelectorAll('.unit-price-input')).map(input => ({
             item_id: input.dataset.itemId,
             unit_price: input.value
         }));
-        
+
         const res = await fetch(app.api('api/admin_quotations.php'), {
             method: 'PUT',
             body: JSON.stringify({ quotation_id: quotationId, items })
@@ -460,14 +517,14 @@ export async function updateUser(id, field, value, app) {
     try {
         const payload = { id: id };
         payload[field] = value;
-        
+
         const res = await fetch(app.api('api/admin_users.php'), {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         const result = await res.json();
-        
+
         if (result.success) {
             app.showToast('Partner updated successfully');
         } else {
@@ -511,8 +568,8 @@ export async function renderSystemSettings(container, app) {
                     <input type="file" name="${name}" accept="image/*"
                         class="flex-1 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl px-5 py-3 text-sm font-bold text-slate-500 focus:outline-none hover:border-blue-400 transition-all cursor-pointer">
                     ${current
-                        ? `<img src="${app.api(current)}" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md flex-shrink-0">`
-                        : `<div class="w-16 h-16 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
+                ? `<img src="${app.api(current)}" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md flex-shrink-0">`
+                : `<div class="w-16 h-16 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                            </div>`}
                 </div>
@@ -604,8 +661,8 @@ export async function renderSystemSettings(container, app) {
                                         ${textarea('Page Subtitle', 'brands_subtitle', s.brands_subtitle)}
                                     </div>
                                     ${['Bosch', 'Makita', 'DeWalt', 'Hikoki', 'Milwaukee', 'Hilti'].map((bn, i) => {
-                                        const n = i + 1;
-                                        return `
+            const n = i + 1;
+            return `
                                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
                                             <span class="inline-block px-3 py-1 rounded-lg bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest">Brand ${n} — Default: ${bn}</span>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -615,7 +672,7 @@ export async function renderSystemSettings(container, app) {
                                                 ${imgField('Brand Logo', 'brand' + n + '_logo', s['brand' + n + '_logo'])}
                                             </div>
                                         </div>`;
-                                    }).join('')}
+        }).join('')}
                                 </div>
                             </div>
 
@@ -633,7 +690,7 @@ export async function renderSystemSettings(container, app) {
                                     <div class="p-4 bg-amber-50 border border-amber-100 rounded-2xl text-sm text-amber-700 font-bold">
                                         ℹ️ Category cards below are shared with the Home Page panels — editing here updates both places.
                                     </div>
-                                    ${[1,2,3,4].map(n => `
+                                    ${[1, 2, 3, 4].map(n => `
                                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
                                             <span class="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-widest">Category ${n}</span>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -761,15 +818,15 @@ export async function renderSystemSettings(container, app) {
             btn.textContent = 'Saving…';
             btn.disabled = true;
             try {
-                const r = await fetch(app.api('api/admin_settings.php'), { 
-                    method: 'POST', 
+                const r = await fetch(app.api('api/admin_settings.php'), {
+                    method: 'POST',
                     body: new FormData(e.target),
                     credentials: 'include'
                 });
                 const result = await r.json();
                 if (result.success) { app.showToast('✅ All changes saved and live!'); await app.loadSettings(); }
                 else app.showToast(result.error || 'Save failed', 'error');
-            } catch(err) { app.showToast('Network error', 'error'); }
+            } catch (err) { app.showToast('Network error', 'error'); }
             finally {
                 btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Save All Changes';
                 btn.disabled = false;
@@ -863,7 +920,7 @@ async function importProducts(e, app) {
     const btn = e.target.querySelector('button');
     btn.disabled = true;
     btn.textContent = 'Importing...';
-    
+
     const formData = new FormData(e.target);
     try {
         const res = await fetch(app.api('api/import_products.php'), {
@@ -925,8 +982,12 @@ async function renderProductForm(product, app) {
                 </div>
 
                 <!-- Primary Fitment Section -->
-                <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
+                <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2 flex justify-between items-center">
                     <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input type="checkbox" onchange="window._pfToggleUnknownMachine(this.checked)" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-all">Suitable machine abhi pata nahi hai</span>
+                    </label>
                 </div>
 
                 <!-- Machine Brand -->
@@ -1045,11 +1106,11 @@ async function renderProductForm(product, app) {
                     sel.appendChild(opt);
                 });
             };
-            populate('pf-brand',    data.brands       || [], product?.brand_id);
-            populate('pf-machine',  data.machine_names|| [], product?.machine_name_id);
-            populate('pf-partname', data.part_names   || [], product?.part_name_id);
-            populate('pf-model',    data.models       || [], product?.model_id);
-            populate('pf-size',     data.sizes        || [], product?.machine_size_id);
+            populate('pf-brand', data.brands || [], product?.brand_id);
+            populate('pf-machine', data.machine_names || [], product?.machine_name_id);
+            populate('pf-partname', data.part_names || [], product?.part_name_id);
+            populate('pf-model', data.models || [], product?.model_id);
+            populate('pf-size', data.sizes || [], product?.machine_size_id);
 
             if (isEdit) {
                 fetch(app.api(`api/admin_products.php?action=get_fitments&part_id=${product.id}`))
@@ -1065,7 +1126,7 @@ async function renderProductForm(product, app) {
         const container = document.getElementById('additional-machines-container');
         const row = document.createElement('div');
         row.className = 'grid grid-cols-2 lg:grid-cols-4 gap-2 p-3 bg-slate-50 rounded-2xl border border-slate-100 relative group animate-in slide-in-from-top-2 duration-300';
-        
+
         const genSelect = (name, items, selected) => `
             <div class="space-y-1">
                 <select name="${name}" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-[10px] font-bold text-slate-700 focus:outline-none focus:border-blue-500">
@@ -1136,11 +1197,11 @@ async function handleProductSubmit(e, app) {
             method: 'POST',
             body: formData
         });
-        
+
         const result = await res.json();
         if (result.success) {
             const productId = isEdit ? formData.get('id') : result.id;
-            
+
             const fitRows = document.querySelectorAll('#additional-machines-container > div');
             for (const row of fitRows) {
                 const modelId = row.querySelector('[name="fit_model_id"]').value;
@@ -1186,4 +1247,84 @@ export async function deleteProduct(id, app) {
     } catch (err) {
         app.showToast('Deletion failed', 'error');
     }
+}
+
+export function getInvoiceStatusClass(status) {
+    switch (status) {
+        case 'processing': return 'bg-amber-50 text-amber-600 border border-amber-200';
+        case 'dispatched': return 'bg-blue-50 text-blue-600 border border-blue-200';
+        case 'delivered': return 'bg-emerald-50 text-emerald-600 border border-emerald-200';
+        default: return 'bg-slate-50 text-slate-400 border border-slate-100';
+    }
+}
+
+export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
+    const modal = document.createElement('div');
+    modal.id = 'dispatch-modal';
+    modal.className = 'fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm';
+
+    modal.innerHTML = `
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-300">
+            <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight">Fulfillment Status</h2>
+                <button onclick="document.getElementById('dispatch-modal').remove()" class="text-slate-400 hover:text-slate-900 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-8 space-y-8">
+                <div class="space-y-4">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Update Order Status</label>
+                    <div class="grid grid-cols-1 gap-3">
+                        ${currentStatus === 'processing' ? `
+                            <button onclick="app.updateOrderStatus(${invoiceId}, 'dispatched')" class="flex items-center justify-between p-4 rounded-2xl border-2 border-blue-100 bg-blue-50 text-blue-700 hover:border-blue-600 transition-all group">
+                                <span class="font-black text-xs uppercase tracking-widest">Mark as Dispatched</span>
+                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                            </button>
+                        ` : ''}
+                        ${currentStatus === 'dispatched' ? `
+                            <button onclick="app.updateOrderStatus(${invoiceId}, 'delivered')" class="flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-emerald-600 transition-all group">
+                                <span class="font-black text-xs uppercase tracking-widest">Mark as Delivered</span>
+                                <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                            </button>
+                        ` : ''}
+                        ${currentStatus === 'delivered' ? `
+                            <div class="p-6 text-center bg-slate-50 border border-slate-200 rounded-2xl">
+                                <p class="text-xs font-black text-slate-900 uppercase tracking-widest">Order Successfully Delivered</p>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                ${currentStatus === 'processing' ? `
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tracking Number (Optional)</label>
+                        <input type="text" id="tracking-input" placeholder="Enter Courier Tracking ID" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-bold text-sm">
+                    </div>
+                ` : tracking ? `
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Tracking ID</p>
+                        <p class="font-black text-slate-900">${tracking}</p>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+export async function updateOrderStatus(invoiceId, status, app) {
+    const tracking = document.getElementById('tracking-input')?.value || null;
+    try {
+        const res = await fetch(app.api('api/invoices.php'), {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ invoice_id: invoiceId, status, tracking_number: tracking })
+        });
+        const result = await res.json();
+        if (result.success) {
+            app.showToast(`Order marked as ${status}!`);
+            document.getElementById('dispatch-modal')?.remove();
+            app.renderAdmin(document.getElementById('view-container'));
+        }
+    } catch (e) { app.showToast('Failed to update status', 'error'); }
 }

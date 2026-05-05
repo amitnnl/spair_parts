@@ -8,16 +8,29 @@
     <meta name="description"
         content="Professional B2B portal for power tool spare parts. Genuine spares, bulk ordering, and inventory management.">
 
-    <!-- Suppress Tailwind Production Warning -->
-    <script>
-        (function() {
-            const originalWarn = console.warn;
-            console.warn = function(message) {
-                if (typeof message === 'string' && message.includes('cdn.tailwindcss.com should not be used in production')) return;
-                originalWarn.apply(console, arguments);
-            };
-        })();
-    </script>
+        <!-- Suppress Tailwind Production Warning & Extension Noise -->
+        <script>
+            (function() {
+                const originalError = console.error;
+                const originalWarn = console.warn;
+                const noiseFilters = [
+                    'cdn.tailwindcss.com',
+                    'message channel closed',
+                    'Could not establish connection',
+                    'Receiving end does not exist',
+                    'installHook.js'
+                ];
+                
+                console.warn = (...args) => {
+                    if (args[0] && typeof args[0] === 'string' && noiseFilters.some(f => args[0].includes(f))) return;
+                    originalWarn(...args);
+                };
+                console.error = (...args) => {
+                    if (args[0] && typeof args[0] === 'string' && noiseFilters.some(f => args[0].includes(f))) return;
+                    originalError(...args);
+                };
+            })();
+        </script>
 
     <!-- Tailwind CSS Play CDN (For local XAMPP/Dev) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -52,8 +65,15 @@
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230056B3'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js (loaded on-demand in reports.js) -->
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #printable-report, #printable-report * { visibility: visible; }
+            #printable-report { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print, aside, nav, header { display: none !important; }
+        }
+    </style>
 </head>
 
 <body class="bg-slate-50">
@@ -111,7 +131,7 @@
                 <div class="flex justify-between items-center h-20">
                     <!-- Logo & Title -->
                     <!-- Premium Branding: Large Logo + Title -->
-                    <a href="/" data-link
+                    <a href="/" data-link aria-label="Home"
                         class="flex items-center gap-6 group transition-all duration-300 hover:scale-[1.01] flex-shrink-0">
                         <!-- Extra Large Transparent Logo -->
                         <div
@@ -143,8 +163,16 @@
                         </div>
                     </div>
 
-                    <!-- Auth Button - Right Aligned & Wide -->
+                    <!-- Auth & Cart -->
                     <div class="flex items-center gap-4 flex-shrink-0">
+                        <!-- Shopping Cart Button -->
+                        <a href="/cart" data-link class="relative p-3.5 rounded-2xl bg-slate-50 text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all group">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                            </svg>
+                            <span id="cart-badge" class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1.5 flex items-center justify-center bg-rose-600 text-white text-[10px] font-black rounded-full border-2 border-white hidden">0</span>
+                        </a>
+
                         <div id="auth-nav" class="flex items-center">
                             <a href="/login" data-link id="desktop-login-btn"
                                 class="px-10 py-4 rounded-2xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-[0.15em] shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap">Partner
@@ -248,6 +276,12 @@
                         d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                 </svg>
                 <span class="text-[8px] font-bold uppercase">Categories</span>
+            </a>
+            <a href="/cart" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <span class="text-[8px] font-bold uppercase">Cart</span>
             </a>
             <a href="/support" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

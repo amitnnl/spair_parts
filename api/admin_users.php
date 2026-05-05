@@ -30,7 +30,17 @@ if ($method === 'GET') {
             $stmt = $db->prepare("UPDATE users SET discount_tier = ? WHERE id = ?");
             $stmt->execute([$data['discount_tier'], $user_id]);
         }
-        
+
+        if (isset($data['role'])) {
+            // Only allow promoting to 'user' or 'staff' — never to 'admin' via this endpoint
+            $allowed = ['user', 'staff'];
+            $newRole = strtolower($data['role']);
+            if (in_array($newRole, $allowed)) {
+                $stmt = $db->prepare("UPDATE users SET role = ? WHERE id = ?");
+                $stmt->execute([$newRole, $user_id]);
+            }
+        }
+
         echo json_encode(['success' => true]);
     } catch (Exception $e) {
         echo json_encode(['error' => $e->getMessage()]);

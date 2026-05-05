@@ -24,17 +24,26 @@ export async function renderInvoices(container, appInstance) {
                                         <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-all">
                                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                         </div>
-                                        <div class="text-right">
-                                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">${new Date(inv.created_at).toLocaleDateString()}</p>
+                                        <div class="text-right space-y-2">
+                                            <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider ${inv.status === 'processing' ? 'bg-amber-50 text-amber-600' : inv.status === 'dispatched' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}">
+                                                ${inv.status || 'processing'}
+                                            </span>
+                                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${new Date(inv.created_at).toLocaleDateString()}</p>
                                             <p class="text-sm font-black text-slate-900">${inv.invoice_number}</p>
                                         </div>
                                     </div>
                                     <div class="space-y-4 pt-6 border-t border-slate-100">
-                                        <div class="flex justify-between items-center">
+                                        ${inv.tracking_number ? `
+                                            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Tracking Number</p>
+                                                <p class="text-xs font-black text-slate-900">${inv.tracking_number}</p>
+                                            </div>
+                                        ` : ''}
+                                        <div class="flex justify-between items-center px-1">
                                             <span class="text-xs font-bold text-slate-400">Total Amount</span>
                                             <span class="text-xl font-black text-slate-900">₹${parseFloat(inv.total_amount).toLocaleString()}</span>
                                         </div>
-                                        <button onclick="app.renderInvoiceDocument(${inv.id})" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20">Download PDF</button>
+                                        <button onclick="app.renderInvoiceDocument(${inv.id})" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20">View & Download</button>
                                     </div>
                                 </div>
                             `).join('') : `

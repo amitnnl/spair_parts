@@ -4,8 +4,11 @@ require_once '../config/database.php';
 header('Content-Type: application/json');
 
 // Check if admin
-if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
-    echo json_encode(['error' => 'Unauthorized']);
+$isAdmin = isset($_SESSION['user_role']) && strtolower($_SESSION['user_role']) === 'admin';
+
+if (!$isAdmin) {
+    http_response_code(403);
+    echo json_encode(['error' => 'Administrative privileges required']);
     exit;
 }
 
@@ -17,12 +20,13 @@ if ($method === 'GET') {
         $id = $_GET['id'];
         // Fetch specific quotation items
         $stmt = $db->prepare("
-            SELECT qi.*, spn.name as part_name, b.name as brand, mm.name as machine_model 
+            SELECT qi.*, spn.name as part_name, b.name as brand, mn.name as machine_name, mm.name as machine_model 
             FROM quotation_items qi
             JOIN spare_parts sp ON qi.part_id = sp.id
-            JOIN brands b ON sp.brand_id = b.id
-            JOIN spare_part_names spn ON sp.part_name_id = spn.id
-            JOIN machine_models mm ON sp.model_id = mm.id
+            LEFT JOIN brands b ON sp.brand_id = b.id
+            LEFT JOIN spare_part_names spn ON sp.part_name_id = spn.id
+            LEFT JOIN machine_names mn ON sp.machine_name_id = mn.id
+            LEFT JOIN machine_models mm ON sp.model_id = mm.id
             WHERE qi.quotation_id = ?
         ");
         $stmt->execute([$id]);
@@ -39,7 +43,7 @@ if ($method === 'GET') {
         $stmt = $db->query("
             SELECT q.*, u.name as user_name, u.email as user_email, u.discount_tier 
             FROM quotations q 
-            JOIN users u ON q.user_id = u.id 
+            LEFT JOIN users u ON q.user_id = u.id 
             ORDER BY q.created_at DESC
         ");
         echo json_encode($stmt->fetchAll());

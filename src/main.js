@@ -13,6 +13,9 @@ import {
     renderAdmin as viewAdmin, 
     loadAdminStats as fetchAdminStats, 
     loadAdminQuotations as fetchAdminQuotations, 
+    loadAdminInvoices as fetchAdminInvoices,
+    renderDispatchModal as viewDispatchModal,
+    updateOrderStatus as patchOrderStatus,
     renderAdminInventory as viewAdminInventory, 
     filterInventory as searchInventory, 
     renderAdminUsers as viewAdminUsers, 
@@ -28,6 +31,17 @@ import {
     renderEditProductForm as viewEditProductForm,
     deleteProduct as removeProduct
 } from './views/admin.js';
+import {
+    renderStockLogs as viewStockLogs,
+    renderStockAdjustModal as viewStockAdjustModal,
+    submitStockAdjustment as postStockAdjustment
+} from './views/stock_logs.js';
+import {
+    renderReports as viewReports,
+    exportStockReport as printStockReport,
+    exportStockCSV as downloadStockCSV
+} from './views/reports.js';
+import { renderStaffPanel as viewStaffPanel } from './views/staff.js';
 import { 
     renderDashboard as viewDashboard, 
     renderBulkOrderModal as viewBulkOrderModal, 
@@ -40,6 +54,8 @@ import { renderBrands } from './views/brands.js';
 import { renderCategories } from './views/categories.js';
 import { renderSupport } from './views/support.js';
 import { renderHome } from './views/home.js';
+import { renderProfile as viewProfile } from './views/profile.js';
+import { state } from './state.js';
 import viewShipping from './views/shipping.js';
 import viewWarranty from './views/warranty.js';
 
@@ -82,6 +98,9 @@ const app = {
     renderAdmin(container) { return viewAdmin(container, this); },
     loadAdminStats() { return fetchAdminStats(this); },
     loadAdminQuotations() { return fetchAdminQuotations(this); },
+    loadAdminInvoices() { return fetchAdminInvoices(this); },
+    renderDispatchModal(id, status, tracking) { return viewDispatchModal(id, status, tracking, this); },
+    updateOrderStatus(id, status) { return patchOrderStatus(id, status, this); },
     renderAdminInventory(container) { return viewAdminInventory(container, this); },
     filterInventory() { return searchInventory(); },
     renderAdminUsers(container) { return viewAdminUsers(container, this); },
@@ -96,8 +115,16 @@ const app = {
     renderAddProductForm() { return viewAddProductForm(this); },
     renderEditProductForm(id) { return viewEditProductForm(id, this); },
     deleteProduct(id) { return removeProduct(id, this); },
+    renderStockLogs(container) { return viewStockLogs(container, this); },
+    renderStockAdjustModal(partId) { return viewStockAdjustModal(partId || null, this); },
+    submitStockAdjustment() { return postStockAdjustment(this); },
+    renderReports(container) { return viewReports(container, this); },
+    exportStockReport() { return printStockReport(); },
+    exportStockCSV() { return downloadStockCSV(); },
+    renderStaffPanel(container) { return viewStaffPanel(container, this); },
 
     renderDashboard(container) { return viewDashboard(container, this); },
+    renderProfile(container) { return viewProfile(container, this); },
     loadDashboardStats() { return fetchDashboardStats(this); },
     renderBulkOrderModal() { return viewBulkOrderModal(this); },
     renderSupport(container) { return renderSupport(container, this); },
@@ -110,6 +137,139 @@ const app = {
     renderRegister(container) { return renderRegister(container, this); },
 
     renderCart(container) { return renderCart(container, this); },
+
+    updateCartBadge() {
+        const badge = document.getElementById('cart-badge');
+        if (!badge) return;
+        const count = this.state.cart.length;
+        if (count > 0) {
+            badge.textContent = count;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    },
+
+    addToCart(productOrId) {
+        let product = productOrId;
+        if (typeof productOrId === 'number' || typeof productOrId === 'string') {
+            product = state.products.find(p => p.id == productOrId);
+        }
+        
+        if (!product) {
+            console.error('Product not found for cart', productOrId);
+            return;
+        }
+
+        const exists = this.state.cart.find(item => item.id === product.id);
+        if (exists) {
+            exists.quantity = (parseInt(exists.quantity) || 0) + 1;
+        } else {
+            this.state.cart.push({
+                id: product.id,
+                part_name: product.part_name,
+                brand: product.brand || product.brand_name,
+                machine_model: product.machine_model || product.model_name,
+                quantity: 1
+            });
+        }
+        localStorage.setItem('cart', JSON.stringify(this.state.cart));
+        this.updateCartBadge();
+        this.showToast('Item added to quotation cart');
+    },
+
+    updateCartQty(id, qty) {
+        const item = this.state.cart.find(i => i.id === id);
+        if (item) {
+            item.quantity = parseInt(qty) || 1;
+            localStorage.setItem('cart', JSON.stringify(this.state.cart));
+            this.updateCartBadge();
+        }
+    },
+
+    removeFromCart(id) {
+        this.state.cart = this.state.cart.filter(item => item.id !== id);
+        localStorage.setItem('cart', JSON.stringify(this.state.cart));
+        this.updateCartBadge();
+        // Re-render cart view if we are on it
+        if (window.location.pathname.endsWith('/cart')) {
+            this.renderCart(document.getElementById('view-container'));
+        }
+    },
+
+    async submitQuotation() {
+        if (!this.state.user) {
+            this.showToast('Please login to submit quotation', 'error');
+            history.pushState(null, null, this.basePath + '/login');
+            this.handleRouting();
+            return;
+        }
+
+        const btn = document.querySelector('button[onclick="app.submitQuotation()"]');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<span class="animate-pulse">Submitting Request...</span>';
+        }
+
+        try {
+            const res = await fetch(this.api('api/quotations.php'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'create',
+                    items: this.state.cart.map(i => ({
+                        part_id: i.id,
+                        quantity: i.quantity
+                    }))
+                })
+            });
+            const result = await res.json();
+            if (result.success) {
+                this.showToast('Quotation request submitted successfully!');
+                this.state.cart = [];
+                localStorage.removeItem('cart');
+                this.updateCartBadge();
+                history.pushState(null, null, this.basePath + '/quotations');
+                this.handleRouting();
+            } else {
+                this.showToast(result.error || 'Submission failed', 'error');
+            }
+        } catch (e) {
+            this.showToast('Network error, please try again', 'error');
+        } finally {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = 'Submit RFQ Request';
+            }
+        }
+    },
+
+    async editQuotation(id) {
+        if (!confirm('Move items back to cart for editing? (Current pending request will be removed)')) return;
+        try {
+            const res = await fetch(this.api(`api/quotations.php?id=${id}`));
+            const data = await res.json();
+            if (data.items) {
+                this.state.cart = data.items.map(i => ({
+                    id: i.part_id,
+                    part_name: i.part_name,
+                    brand: i.brand,
+                    machine_model: i.machine_model,
+                    quantity: i.quantity
+                }));
+                localStorage.setItem('cart', JSON.stringify(this.state.cart));
+                this.updateCartBadge();
+                await fetch(this.api('api/quotations.php'), {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: id })
+                });
+                this.showToast('Items moved to cart');
+                history.pushState(null, null, this.basePath + '/cart');
+                this.handleRouting();
+            }
+        } catch (e) { this.showToast('Error', 'error'); }
+    },
 
     getStatusClass(status) {
         switch(status) {
@@ -214,6 +374,11 @@ const app = {
                                 <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
                                 Admin Panel
                             </a>
+                        ` : this.state.user?.role?.toLowerCase() === 'staff' ? `
+                            <a href="/staff" data-link class="px-10 py-4 rounded-2xl bg-amber-600 text-white text-[11px] font-black uppercase tracking-widest hover:bg-amber-700 transition-all shadow-xl shadow-amber-600/20 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+                                Staff Panel
+                            </a>
                         ` : `
                             <a href="/dashboard" data-link class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center hover:scale-110 transition-all shadow-xl shadow-slate-900/20 group">
                                 <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -245,10 +410,18 @@ const app = {
             this.renderCatalog(container);
         } else if (path === '/dashboard') {
             this.renderDashboard(container);
+        } else if (path === '/profile') {
+            this.renderProfile(container);
         } else if (path === '/admin') {
             this.renderAdmin(container);
+        } else if (path === '/staff') {
+            this.renderStaffPanel(container);
         } else if (path === '/admin/inventory') {
             this.renderAdminInventory(container);
+        } else if (path === '/admin/stock-logs') {
+            this.renderStockLogs(container);
+        } else if (path === '/admin/reports') {
+            this.renderReports(container);
         } else if (path === '/admin/partners') {
             this.renderAdminUsers(container);
         } else if (path === '/quotations') {
@@ -352,6 +525,7 @@ const app = {
         }
 
         await this.loadSettings();
+        this.updateCartBadge();
         this.updateAuthUI();
         this.handleRouting();
 

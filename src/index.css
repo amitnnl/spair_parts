@@ -1,69 +1,115 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* ── Base ───────────────────────────────────────────────── */
-@layer base {
-    body {
-        font-family: 'Inter', sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        @apply text-slate-900 bg-slate-50;
-    }
-    .font-poppins { font-family: 'Poppins', sans-serif; }
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #0f172a; /* text-slate-900 */
+    background-color: #f8fafc; /* bg-slate-50 */
 }
+.font-poppins { font-family: 'Poppins', sans-serif; }
 
 /* ── Components ─────────────────────────────────────────── */
-@layer components {
 
-    /* Navigation links */
-    .nav-link {
-        @apply px-4 py-2 text-sm font-bold text-slate-600 rounded-xl
-               hover:bg-slate-50 hover:text-slate-900 transition-all duration-200;
-    }
-    .nav-link.active {
-        @apply text-primary bg-blue-50;
-    }
+/* Navigation links */
+.nav-link {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #475569; /* text-slate-600 */
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+}
+.nav-link:hover {
+    background-color: #f8fafc;
+    color: #0f172a;
+}
+.nav-link.active {
+    color: #0056B3; /* text-primary */
+    background-color: #eff6ff; /* blue-50 */
+}
 
-    /* Mobile nav items */
-    .mobile-nav-item span {
-        @apply text-[9px] font-bold uppercase;
-    }
-    .mobile-nav-item.active {
-        @apply text-primary;
-    }
+/* Mobile nav items */
+.mobile-nav-item span {
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+.mobile-nav-item.active {
+    color: #0056B3;
+}
 
-    /* Buttons */
-    .btn {
-        @apply inline-flex items-center justify-center px-6 py-3 rounded-2xl
-               font-black text-[11px] uppercase tracking-widest transition-all duration-200;
-    }
-    .btn-primary {
-        @apply bg-primary text-white shadow-lg shadow-primary/20
-               hover:bg-primary-dark hover:-translate-y-0.5;
-    }
-    .btn-secondary {
-        @apply bg-slate-100 text-slate-700
-               hover:bg-slate-200;
-    }
+/* Buttons */
+.btn {
+    display: inline-flex;
+    items-center: center;
+    justify-content: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-radius: 1rem;
+    font-weight: 900;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.2s;
+}
+.btn-primary {
+    background-color: #0056B3;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 86, 179, 0.2);
+}
+.btn-primary:hover {
+    background-color: #004494;
+    transform: translateY(-2px);
+}
+.btn-secondary {
+    background-color: #f1f5f9;
+    color: #334155;
+}
+.btn-secondary:hover {
+    background-color: #e2e8f0;
+}
 
-    /* Toast notifications */
-    .toast {
-        @apply flex items-center gap-3 bg-white border border-slate-100
-               rounded-2xl px-5 py-4 shadow-xl text-sm font-semibold text-slate-700
-               min-w-[280px] max-w-sm;
-    }
+/* Toast notifications */
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: white;
+    border: 1px solid #f1f5f9;
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    min-width: 280px;
+    max-width: 24rem;
+}
 
-    /* Table */
-    .table-auto thead th {
-        @apply text-[10px] font-black uppercase tracking-widest text-slate-400
-               pb-4 text-left;
-    }
-    .table-auto tbody td {
-        @apply py-4 text-sm font-semibold text-slate-600 border-t border-slate-50;
-    }
+/* Table */
+.table-auto thead th {
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+    padding-bottom: 1rem;
+    text-align: left;
+}
+.table-auto tbody td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    border-top: 1px solid #f8fafc;
 }
 
 /* ── Animations ──────────────────────────────────────────── */
@@ -82,8 +128,16 @@
 ::-webkit-scrollbar-thumb  { background: #e2e8f0; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+}
 
 /* ── Print ───────────────────────────────────────────────── */
 @media print {
@@ -93,8 +147,8 @@
 /* ── WhatsApp Widget ─────────────────────────────────────── */
 .whatsapp-widget {
     position: fixed;
-    bottom: 2rem; /* 32px */
-    right: 2rem; /* 32px */
+    bottom: 2rem;
+    right: 2rem;
     z-index: 90;
     display: flex;
     align-items: center;
@@ -157,7 +211,7 @@
 
 @media (max-width: 768px) {
     .whatsapp-widget {
-        bottom: 6rem; /* 96px - Stays above mobile bottom nav */
+        bottom: 6rem;
         right: 1.5rem;
     }
 }
@@ -200,6 +254,7 @@
 .logo-text-gradient {
     background: linear-gradient(to bottom, #003e64, #001a2c);
     -webkit-background-clip: text;
+    background-clip: text; /* standard property */
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
