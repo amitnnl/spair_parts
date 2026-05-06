@@ -67,105 +67,120 @@ export async function renderInvoiceDocument(invoiceId, app) {
     try {
         const res = await fetch(app.api(`api/invoices.php?id=${invoiceId}`));
         const inv = await res.json();
-        
         modal.innerHTML = `
-            <div class="bg-white text-slate-900 w-full max-w-4xl min-h-[11in] p-16 shadow-2xl relative animate-in slide-in-from-bottom-8 duration-500 rounded-sm">
-                <!-- Premium Header Ribbon -->
-                <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900"></div>
+            <div id="invoice-printable-area" class="bg-white text-slate-900 w-full max-w-4xl min-h-[11in] p-12 md:p-16 shadow-2xl relative animate-in slide-in-from-bottom-8 duration-500 rounded-xl overflow-hidden mx-auto print:shadow-none print:p-0">
                 
-                <div class="flex justify-between items-start border-b-[3px] border-slate-900 pb-12 mt-4">
+                <!-- Print-only watermark -->
+                <div class="hidden print:flex absolute inset-0 items-center justify-center opacity-[0.03] pointer-events-none z-0">
+                    <h1 class="text-[150px] font-black tracking-tighter uppercase transform -rotate-45">PARTSPRO</h1>
+                </div>
+
+                <!-- Premium Header Ribbon -->
+                <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 print:h-2"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-start border-b-[3px] border-slate-900 pb-10 mt-6 print:mt-4 print:pb-8">
                     <div class="space-y-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-slate-900 text-white rounded-lg flex items-center justify-center font-black text-2xl shadow-lg">P</div>
-                            <h1 class="text-4xl font-black tracking-tighter uppercase">PARTS<span class="text-blue-600">PRO</span></h1>
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-slate-900 text-white rounded-xl flex items-center justify-center font-black text-3xl shadow-lg print:shadow-none">P</div>
+                            <h1 class="text-4xl font-black tracking-tighter uppercase text-slate-900">PARTS<span class="text-blue-600">PRO</span></h1>
                         </div>
-                        <div class="text-[11px] font-black text-slate-500 space-y-1.5 uppercase tracking-[0.15em]">
+                        <div class="text-[10px] md:text-[11px] font-black text-slate-500 space-y-1.5 uppercase tracking-[0.15em] leading-relaxed">
                             <p>Industrial Area, Phase 2</p>
-                            <p>New Delhi, 110020</p>
-                            <p class="text-slate-900 mt-2">GSTIN: 07AAACT0000A1Z5</p>
+                            <p>New Delhi, 110020, India</p>
+                            <p>Support: +91 70277 51544</p>
+                            <p class="text-slate-900 mt-2">GSTIN: <span class="font-bold">07AAACT0000A1Z5</span></p>
                         </div>
                     </div>
-                    <div class="text-right space-y-1">
-                        <h2 class="text-6xl font-black text-slate-200 tracking-tighter uppercase opacity-50">Invoice</h2>
-                        <p class="text-sm font-black text-slate-900">NO: ${inv.invoice_number}</p>
-                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest pt-2">Date: ${new Date(inv.created_at).toLocaleDateString()}</p>
+                    <div class="text-right space-y-2 mt-8 md:mt-0">
+                        <h2 class="text-5xl md:text-6xl font-black text-slate-100 tracking-tighter uppercase print:text-slate-200">TAX INVOICE</h2>
+                        <div class="inline-block bg-slate-50 border border-slate-200 rounded-lg p-4 mt-2 print:border-none print:bg-transparent print:p-0">
+                            <p class="text-sm font-black text-slate-900">INV #: <span class="text-blue-600">${inv.invoice_number}</span></p>
+                            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest pt-1">Date: ${new Date(inv.created_at).toLocaleDateString()}</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-16 py-16">
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 py-10 print:py-8">
                     <div>
-                        <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-4">Billed To:</p>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-2">Billed To:</p>
                         <div class="space-y-1">
                             <h3 class="text-xl font-black text-slate-900">${inv.user_name}</h3>
-                            <p class="text-sm font-medium text-slate-500">${inv.user_email}</p>
+                            <p class="text-sm font-bold text-slate-500">${inv.user_email}</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-4">Payment Status:</p>
-                        <span class="px-4 py-1.5 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-200">Payment on Delivery</span>
+                    <div class="md:text-right">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-2">Payment Info:</p>
+                        <div class="space-y-2">
+                            <span class="inline-block px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-200 print:bg-transparent print:border-slate-300 print:text-slate-800">Payment on Delivery</span>
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest pt-1">Status: <span class="${inv.status === 'delivered' ? 'text-emerald-600' : 'text-amber-600'}">${inv.status}</span></p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="border-[1.5px] border-slate-900 rounded-xl overflow-hidden mb-12">
+                <div class="relative z-10 border-[1.5px] border-slate-900 rounded-xl overflow-hidden mb-10 print:border-slate-300">
                     <table class="w-full text-left">
-                        <thead class="bg-slate-900 text-white">
+                        <thead class="bg-slate-900 text-white print:bg-slate-100 print:text-slate-900 print:border-b-2 print:border-slate-900">
                             <tr>
-                                <th class="p-5 text-[10px] font-black uppercase tracking-widest">Description</th>
-                                <th class="p-5 text-[10px] font-black uppercase tracking-widest">Qty</th>
-                                <th class="p-5 text-[10px] font-black uppercase tracking-widest text-right">Unit Price</th>
-                                <th class="p-5 text-[10px] font-black uppercase tracking-widest text-right">Total</th>
+                                <th class="p-4 md:p-5 text-[10px] font-black uppercase tracking-widest">Description</th>
+                                <th class="p-4 md:p-5 text-[10px] font-black uppercase tracking-widest text-center">Qty</th>
+                                <th class="p-4 md:p-5 text-[10px] font-black uppercase tracking-widest text-right">Unit Price</th>
+                                <th class="p-4 md:p-5 text-[10px] font-black uppercase tracking-widest text-right bg-slate-800 print:bg-slate-200">Total</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100">
+                        <tbody class="divide-y divide-slate-200 print:divide-slate-300">
                             ${inv.items.map(item => `
-                                <tr>
-                                    <td class="p-6">
-                                        <p class="font-black text-slate-900 text-sm">${item.part_name}</p>
-                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tight">${item.brand} • ${item.machine_model}</p>
+                                <tr class="hover:bg-slate-50 print:hover:bg-transparent">
+                                    <td class="p-4 md:p-6">
+                                        <p class="font-black text-slate-900 text-sm md:text-base">${item.part_name}</p>
+                                        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-1">${item.brand} • ${item.machine_model}</p>
                                     </td>
-                                    <td class="p-6 text-sm font-bold text-slate-600">${item.quantity}</td>
-                                    <td class="p-6 text-sm font-bold text-slate-900 text-right">₹${parseFloat(item.unit_price).toLocaleString()}</td>
-                                    <td class="p-6 text-sm font-black text-slate-900 text-right">₹${(item.quantity * item.unit_price).toLocaleString()}</td>
+                                    <td class="p-4 md:p-6 text-sm font-bold text-slate-700 text-center">${item.quantity}</td>
+                                    <td class="p-4 md:p-6 text-sm font-bold text-slate-700 text-right">₹${parseFloat(item.unit_price).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                                    <td class="p-4 md:p-6 text-sm font-black text-slate-900 text-right bg-slate-50/50 print:bg-transparent">₹${(item.quantity * item.unit_price).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
                     </table>
                 </div>
 
-                <div class="flex justify-end border-t-[3px] border-slate-900 pt-8">
-                    <div class="w-72 space-y-4">
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-start border-t-[3px] border-slate-900 pt-8 mt-auto print:border-slate-300">
+                    <div class="mb-8 md:mb-0 max-w-xs space-y-2">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Terms & Conditions:</p>
+                        <p class="text-[9px] font-bold text-slate-500 leading-relaxed text-justify">All spare parts are subject to standard warranty conditions. Returns are accepted within 7 days of delivery if parts are unused and in original packaging. This is a computer generated invoice.</p>
+                    </div>
+                    <div class="w-full md:w-80 space-y-3 bg-slate-50 p-6 rounded-xl border border-slate-200 print:border-none print:bg-transparent print:p-0">
                         <div class="flex justify-between items-center text-sm font-bold text-slate-500 uppercase tracking-widest">
                             <span>Subtotal</span>
-                            <span>₹${parseFloat(inv.total_amount).toLocaleString()}</span>
+                            <span class="text-slate-700">₹${parseFloat(inv.total_amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
                         </div>
                         <div class="flex justify-between items-center text-sm font-bold text-slate-500 uppercase tracking-widest">
-                            <span>GST (0%)</span>
-                            <span>₹0.00</span>
+                            <span>GST Included</span>
+                            <span class="text-slate-700">₹0.00</span>
                         </div>
-                        <div class="flex justify-between items-center pt-4 border-t border-slate-100">
-                            <span class="text-xs font-black text-slate-900 uppercase tracking-widest">Total Payable</span>
-                            <span class="text-3xl font-black text-slate-900">₹${parseFloat(inv.total_amount).toLocaleString()}</span>
+                        <div class="flex justify-between items-center pt-4 border-t-2 border-slate-200 print:border-slate-900">
+                            <span class="text-sm font-black text-slate-900 uppercase tracking-widest">Total Payable</span>
+                            <span class="text-3xl font-black text-blue-600">₹${parseFloat(inv.total_amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-24 pt-12 border-t border-slate-100 flex justify-between items-end no-print">
-                    <div class="space-y-4">
-                        <h4 class="text-xs font-black text-slate-900 uppercase tracking-widest">Authorised Signatory</h4>
-                        <div class="w-48 h-px bg-slate-300"></div>
-                        <p class="text-[10px] font-bold text-slate-400">PARTSPRO B2B Procurement Division</p>
+                <div class="relative z-10 mt-16 pt-10 border-t border-slate-200 flex flex-col md:flex-row justify-between items-end print:mt-12">
+                    <div class="space-y-4 mb-8 md:mb-0">
+                        <h4 class="text-[10px] font-black text-slate-900 uppercase tracking-widest">Authorised Signatory</h4>
+                        <div class="w-48 h-12 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNTAiPjxwYXRoIGQ9Ik0xMCAzMGMxMC01IDIwLTEwIDMwLTggMTAgMiAyMCAxMCAzMCA4IDEwLTIgMjAtMTAgMzAtMTAgMTAtMCAyMCA4IDMwIDggMTAgMCAyMC0xMCAzMC0xMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==')] bg-no-repeat bg-contain opacity-60"></div>
+                        <div class="w-48 h-[2px] bg-slate-800"></div>
+                        <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">PARTSPRO B2B Procurement</p>
                     </div>
-                    <div class="flex gap-4">
-                        <button onclick="window.print()" class="px-8 py-3 bg-slate-900 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2">
+                    <div class="flex gap-4 no-print w-full md:w-auto">
+                        <button onclick="document.getElementById('invoice-doc-modal').remove()" class="flex-1 md:flex-none px-6 py-3.5 bg-slate-100 text-slate-500 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all text-center">Close</button>
+                        <button onclick="window.print()" class="flex-1 md:flex-none px-8 py-3.5 bg-blue-600 text-white rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 hover:shadow-lg transition-all flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                             Print Document
                         </button>
-                        <button onclick="document.getElementById('invoice-doc-modal').remove()" class="px-8 py-3 bg-slate-50 text-slate-400 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-100 transition-all">Close Viewer</button>
                     </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
     
     document.body.appendChild(modal);
     } catch (e) {
