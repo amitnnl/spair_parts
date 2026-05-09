@@ -83,10 +83,16 @@ export function renderHome(container, app) {
                                     </div>
                                 </div>
                                 <div class="relative flex-grow">
-                                    <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-white/5 border border-white/10 rounded-2xl px-14 text-sm font-bold text-white placeholder:text-slate-500 focus:outline-none focus:border-primary transition-all">
+                                    <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-14 text-sm font-bold text-slate-800 focus:outline-none focus:border-primary transition-all">
                                     <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                     </div>
+                                    <!-- Barcode Scan Placeholder -->
+                                    <button onclick="app.showToast('Barcode scanner integration coming soon!', 'info')" class="absolute right-5 top-1/2 -translate-y-1/2 p-2 text-primary hover:bg-primary/5 rounded-xl transition-all" title="Scan Barcode">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                            <path d="M3 7V5a2 2 0 012-2h2m10 0h2a2 2 0 012 2v2M3 17v2a2 2 0 012 2h2m10 0h2a2 2 0 012-2v-2M7 12h10M7 8h10M7 16h10" />
+                                        </svg>
+                                    </button>
                                 </div>
                                 <button class="h-14 px-12 bg-primary text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-primary-dark transition-all shadow-xl shadow-primary/20">Find Parts</button>
                             </div>

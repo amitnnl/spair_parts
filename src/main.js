@@ -139,15 +139,22 @@ const app = {
     renderCart(container) { return renderCart(container, this); },
 
     updateCartBadge() {
-        const badge = document.getElementById('cart-badge');
-        if (!badge) return;
+        const badges = [
+            document.getElementById('cart-badge'),
+            document.getElementById('mobile-cart-badge')
+        ];
+        
         const count = this.state.cart.length;
-        if (count > 0) {
-            badge.textContent = count;
-            badge.classList.remove('hidden');
-        } else {
-            badge.classList.add('hidden');
-        }
+        
+        badges.forEach(badge => {
+            if (!badge) return;
+            if (count > 0) {
+                badge.textContent = count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        });
     },
 
     addToCart(productOrId) {

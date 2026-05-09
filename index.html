@@ -59,6 +59,21 @@
         }
     </script>
 
+    <!-- PWA & Mobile App Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0056B3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker Registered'))
+                    .catch(err => console.log('SW Registration Failed', err));
+            });
+        }
+    </script>
+
     <!-- Production Styles handled by Vite/PostCSS -->
     <link rel="stylesheet" href="src/index.css?v=1.0.1">
 
@@ -267,50 +282,41 @@
             </div>
         </footer>
 
-        <!-- ═══ MOBILE BOTTOM NAV ═══ -->
+        <!-- ═══ PREMIUM MOBILE BOTTOM NAV (App Style) ═══ -->
         <nav id="mobile-nav"
-            class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 flex justify-around items-center h-16 no-print">
-            <a href="/" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                <span class="text-[8px] font-bold uppercase">Home</span>
+            class="md:hidden fixed bottom-6 left-4 right-4 bg-white/80 backdrop-blur-xl border border-white/20 z-50 flex justify-around items-center h-18 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] no-print px-4 py-3">
+            <a href="/" data-link class="mobile-nav-item flex flex-col items-center gap-1.5 transition-all duration-300">
+                <div class="nav-icon-container p-2 rounded-xl transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </div>
+                <span class="text-[8px] font-black uppercase tracking-widest">Home</span>
             </a>
-            <a href="/catalog" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <span class="text-[8px] font-bold uppercase">Shop</span>
+            <a href="/catalog" data-link class="mobile-nav-item flex flex-col items-center gap-1.5 transition-all duration-300">
+                <div class="nav-icon-container p-2 rounded-xl transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <span class="text-[8px] font-black uppercase tracking-widest">Shop</span>
             </a>
-            <a href="/brands" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-                <span class="text-[8px] font-bold uppercase">Brands</span>
+            <a href="/cart" data-link class="mobile-nav-item flex flex-col items-center gap-1.5 transition-all duration-300 relative">
+                <div class="nav-icon-container p-2 rounded-xl transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                </div>
+                <span class="text-[8px] font-black uppercase tracking-widest">Cart</span>
+                <span id="mobile-cart-badge" class="absolute top-1 right-1 w-4 h-4 bg-rose-500 text-white text-[8px] flex items-center justify-center rounded-full border border-white font-black hidden">0</span>
             </a>
-            <a href="/categories" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                </svg>
-                <span class="text-[8px] font-bold uppercase">Categories</span>
-            </a>
-            <a href="/cart" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-                <span class="text-[8px] font-bold uppercase">Cart</span>
-            </a>
-            <a href="/support" data-link class="mobile-nav-item flex flex-col items-center gap-1 text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-                <span class="text-[8px] font-bold uppercase">Help</span>
+            <a href="/support" data-link class="mobile-nav-item flex flex-col items-center gap-1.5 transition-all duration-300">
+                <div class="nav-icon-container p-2 rounded-xl transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </div>
+                <span class="text-[8px] font-black uppercase tracking-widest">Help</span>
             </a>
         </nav>
 

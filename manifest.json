@@ -1,0 +1,18 @@
+{
+  "name": "PARTSPRO B2B Portal",
+  "short_name": "PARTSPRO",
+  "description": "Professional B2B portal for power tool spare parts procurement.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0056B3",
+  "icons": [
+    {
+      "src": "assets/app-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "portrait"
+}
