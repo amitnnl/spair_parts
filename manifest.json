@@ -1,10 +1,10 @@
 {
-  "name": "PARTSPRO B2B Portal",
-  "short_name": "PARTSPRO",
-  "description": "Professional B2B portal for power tool spare parts procurement.",
+  "name": "TORVO B2B Portal",
+  "short_name": "TORVO",
+  "description": "Professional B2B portal for power tool spare parts procurement by TORVO.",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#f8fafc",
+  "background_color": "#0f172a",
   "theme_color": "#0056B3",
   "icons": [
     {

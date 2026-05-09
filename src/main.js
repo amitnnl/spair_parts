@@ -313,6 +313,9 @@ const app = {
         if (s.site_name) {
             document.querySelectorAll('.logo-text').forEach(el => el.textContent = s.site_name);
             document.title = s.site_name;
+        } else {
+            document.querySelectorAll('.logo-text').forEach(el => el.textContent = 'TORVO');
+            document.title = 'TORVO';
         }
 
         // Update Site Logo
