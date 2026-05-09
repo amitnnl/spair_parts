@@ -3,7 +3,7 @@ export function renderHome(container, app) {
     container.innerHTML = `
         <div class="animate-fade-in">
             <!-- Hero Section (Reference Image 1) -->
-            <section class="relative bg-white pt-10 pb-16 overflow-hidden border-b border-slate-100">
+            <section class="relative bg-white pt-10 pb-32 overflow-hidden border-b border-slate-100">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div class="flex flex-col lg:flex-row items-center gap-20">
                         <div class="flex-1 text-center lg:text-left">
@@ -64,26 +64,26 @@ export function renderHome(container, app) {
                 <!-- Tabbed Search Module (Full Width Command Center) -->
                 <div class="relative z-20 mt-12 mb-12">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="bg-white rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,86,179,0.15)] border border-slate-100 p-2 overflow-hidden animate-slide-up">
+                        <div class="bg-slate-900 rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border border-white/5 p-2 overflow-hidden animate-slide-up">
                             <div class="flex p-1 gap-1">
-                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-primary bg-primary/5 rounded-2xl border border-primary/10">Search by Part</button>
-                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors">Search by Tool</button>
+                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-white bg-white/10 rounded-2xl border border-white/5">Search by Part</button>
+                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-200 transition-colors">Search by Tool</button>
                             </div>
                             <div class="p-6 flex flex-col md:flex-row gap-4">
                                 <div class="relative flex-shrink-0 w-full md:w-64">
-                                    <select class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-6 text-sm font-black text-slate-800 appearance-none focus:outline-none focus:border-primary transition-all">
-                                        <option>SELECT BRAND</option>
-                                        <option>BOSCH</option>
-                                        <option>MAKITA</option>
-                                        <option>DEWALT</option>
-                                        <option>HIKOKI</option>
+                                    <select class="w-full h-14 bg-white/5 border border-white/10 rounded-2xl px-6 text-sm font-black text-white appearance-none focus:outline-none focus:border-primary transition-all">
+                                        <option class="text-slate-900">SELECT BRAND</option>
+                                        <option class="text-slate-900">BOSCH</option>
+                                        <option class="text-slate-900">MAKITA</option>
+                                        <option class="text-slate-900">DEWALT</option>
+                                        <option class="text-slate-900">HIKOKI</option>
                                     </select>
                                     <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"/></svg>
                                     </div>
                                 </div>
                                 <div class="relative flex-grow">
-                                    <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-14 text-sm font-bold text-slate-800 focus:outline-none focus:border-primary transition-all">
+                                    <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-white/5 border border-white/10 rounded-2xl px-14 text-sm font-bold text-white placeholder:text-slate-500 focus:outline-none focus:border-primary transition-all">
                                     <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                     </div>
@@ -91,7 +91,7 @@ export function renderHome(container, app) {
                                 <button class="h-14 px-12 bg-primary text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-primary-dark transition-all shadow-xl shadow-primary/20">Find Parts</button>
                             </div>
                             <div class="px-8 pb-6 flex items-center gap-4">
-                                <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Hot Searches:</span>
+                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Hot Searches:</span>
                                 <div class="flex gap-4">
                                     <a href="#" class="text-[11px] font-bold text-primary hover:underline">Carbon Brush</a>
                                     <a href="#" class="text-[11px] font-bold text-primary hover:underline">Armature</a>
@@ -104,7 +104,7 @@ export function renderHome(container, app) {
             </section>
 
             <!-- Features Section (Reference Image 2) -->
-            <section class="pb-16 bg-slate-50">
+            <section class="pb-32 bg-slate-50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-24">
                         <h2 class="text-4xl font-black text-slate-900 mb-4 tracking-tight">Built for Professionals.</h2>
@@ -131,7 +131,7 @@ export function renderHome(container, app) {
             </section>
 
             <!-- Shop by Category - Dynamic Accordion -->
-            <section class="pb-16 bg-white relative overflow-hidden">
+            <section class="pb-32 bg-white relative overflow-hidden">
                 <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
                         <div class="max-w-3xl">
@@ -148,7 +148,7 @@ export function renderHome(container, app) {
                     
                     <div class="flex flex-col md:flex-row gap-4 h-[400px] md:h-[250px] lg:h-[300px] w-full">
                         ${[
-                              { t: s.cat1_title || 'Electrical Spares', d: s.cat1_desc || 'Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.', img: app.api(s.cat1_img) || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800', icon:'M13 10V3L4 14h7v7l9-11h-7z' },
+                               { t: s.cat1_title || 'Electrical Spares', d: s.cat1_desc || 'Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.', img: app.api(s.cat1_img) || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800', icon:'M13 10V3L4 14h7v7l9-11h-7z' },
                             { t: s.cat2_title || 'Mechanical Units', d: s.cat2_desc || 'Precision Gears, Bearings, Shafts & Housing Assemblies ensuring seamless kinetic transfer.', img: app.api(s.cat2_img) || 'https://images.unsplash.com/photo-1530124566582-a618bc2615ad?auto=format&fit=crop&q=80&w=800', icon:'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
                             { t: s.cat3_title || 'Power Attachments', d: s.cat3_desc || 'Chucks, SDS Adaptors, Cutting Discs & Drill Bits engineered for brutal workloads.', img: app.api(s.cat3_img) || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800', icon:'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5' },
                             { t: s.cat4_title || 'Maintenance Kits', d: s.cat4_desc || 'Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.', img: app.api(s.cat4_img) || 'https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800', icon:'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' }
