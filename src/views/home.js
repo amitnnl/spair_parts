@@ -55,58 +55,13 @@ export function renderHome(container, app) {
                 </div>
             </section>
 
-                <!-- Tabbed Search Module (Full Width Command Center) -->
-                <div class="relative z-20 mt-12 mb-12">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="bg-industrial-gray rounded-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border-l-4 border-bosch-blue p-2 overflow-hidden animate-slide-up">
-                            <div class="flex p-1 gap-1">
-                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-white bg-white/10 rounded-none border border-white/5">Search by Part</button>
-                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-200 transition-colors">Search by Tool</button>
-                            </div>
-                            <div class="p-6 flex flex-col md:flex-row gap-4">
-                                <div class="relative flex-shrink-0 w-full md:w-64">
-                                    <select class="w-full h-14 bg-white/5 border border-white/10 rounded-none px-6 text-sm font-black text-white appearance-none focus:outline-none focus:border-bosch-blue transition-all">
-                                        <option class="text-bosch-blue">SELECT BRAND</option>
-                                        <option class="text-bosch-blue">BOSCH</option>
-                                        <option class="text-bosch-blue">MAKITA</option>
-                                        <option class="text-bosch-blue">DEWALT</option>
-                                        <option class="text-bosch-blue">HIKOKI</option>
-                                    </select>
-                                    <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"/></svg>
-                                    </div>
-                                </div>
-                                <div class="relative flex-grow">
-                                    <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-slate-50 border border-slate-200 rounded-none px-14 text-sm font-bold text-slate-800 focus:outline-none focus:border-bosch-blue transition-all">
-                                    <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                    </div>
-                                    <!-- Barcode Scan Placeholder -->
-                                    <button onclick="app.showToast('Barcode scanner integration coming soon!', 'info')" class="absolute right-5 top-1/2 -translate-y-1/2 p-2 text-bosch-blue hover:bg-bosch-blue/5 rounded-none transition-all" title="Scan Barcode">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                                            <path d="M3 7V5a2 2 0 012-2h2m10 0h2a2 2 0 012 2v2M3 17v2a2 2 0 012 2h2m10 0h2a2 2 0 012-2v-2M7 12h10M7 8h10M7 16h10" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <button class="h-14 px-12 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-[0.2em] hover:bg-industrial-gray transition-all shadow-xl shadow-slate-900/20">Find Parts</button>
-                            </div>
-                            <div class="px-8 pb-6 flex items-center gap-4">
-                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Hot Searches:</span>
-                                <div class="flex gap-4">
-                                    <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Carbon Brush</a>
-                                    <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Armature</a>
-                                    <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Field Coil</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </section>
 
             <!-- Features Section (Reference Image 2) -->
-            <section class="pb-32 bg-slate-50">
+            <section class="py-12 bg-slate-50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center mb-24">
+                    <div class="text-center mb-12">
                         <h2 class="text-4xl font-black text-bosch-blue mb-4 tracking-tight">Built for Professionals.</h2>
                         <p class="text-slate-500 font-bold text-lg">Streamlining industrial spare parts procurement across India.</p>
                         <div class="w-24 h-1.5 bg-bosch-red mx-auto rounded-none mt-8"></div>
@@ -131,7 +86,7 @@ export function renderHome(container, app) {
             </section>
 
             <!-- Shop by Category - Dynamic Accordion -->
-            <section class="pb-32 bg-white relative overflow-hidden">
+            <section class="py-12 bg-white relative overflow-hidden">
                 <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
                         <div class="max-w-3xl">

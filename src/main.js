@@ -556,6 +556,18 @@ const app = {
         this.handleRouting();
 
         document.addEventListener('click', e => {
+            const searchToggle = e.target.closest('#search-toggle');
+            if (searchToggle) {
+                const searchContainer = document.getElementById('global-search-container');
+                if (searchContainer) {
+                    searchContainer.classList.toggle('hidden');
+                    if (!searchContainer.classList.contains('hidden')) {
+                        searchContainer.querySelector('input')?.focus();
+                    }
+                }
+                return;
+            }
+
             const link = e.target.closest('[data-link]');
             if (link) {
                 e.preventDefault();
