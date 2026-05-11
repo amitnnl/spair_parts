@@ -36,9 +36,9 @@ export function renderBrands(container, app) {
             <!-- Page Header -->
             <section class="bg-white border-b border-slate-100 py-24">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div class="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-6">Authorized Partners</div>
-                    <h1 class="text-6xl font-black text-slate-900 tracking-tight mb-6">
-                        ${s.brands_title || 'Our Trusted <span class="text-primary">Brands</span>'}
+                    <div class="text-[10px] font-black uppercase tracking-[0.4em] text-bosch-red mb-6">Authorized Partners</div>
+                    <h1 class="text-6xl font-black text-slate-900 tracking-tight mb-6 uppercase">
+                        ${s.brands_title || 'Our Trusted <span class="text-bosch-red">Brands</span>'}
                     </h1>
                     <p class="text-slate-500 font-bold text-lg max-w-2xl mx-auto">
                         ${s.brands_subtitle || "We partner exclusively with the world's most trusted power tool manufacturers to ensure every spare part meets strict industrial standards."}
@@ -50,16 +50,16 @@ export function renderBrands(container, app) {
             <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     ${brands.map(b => `
-                        <div class="bg-white rounded-[40px] p-10 border border-slate-100 shadow-premium hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group text-center flex flex-col items-center">
+                        <div class="bg-white rounded-none p-10 border-2 border-slate-100 hover:border-bosch-blue shadow-premium hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group text-center flex flex-col items-center">
                             <div class="h-20 flex items-center justify-center mb-8 transition-all duration-500 transform group-hover:scale-110">
                                 ${b.logo
                                     ? `<img src="${app.api(b.logo)}" alt="${b.name}" class="h-16 w-auto object-contain">`
                                     : `<div class="grayscale group-hover:grayscale-0 transition-all duration-500">${b.svg}</div>`}
                             </div>
-                            <span class="px-3 py-1 rounded-full bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest mb-4">${b.tag}</span>
-                            <h4 class="text-2xl font-black text-slate-900 mb-4">${b.name}</h4>
+                            <span class="px-3 py-1 rounded-none bg-industrial-gray text-white text-[10px] font-black uppercase tracking-widest mb-4">${b.tag}</span>
+                            <h4 class="text-2xl font-black text-slate-900 mb-4 uppercase tracking-widest">${b.name}</h4>
                             <p class="text-sm text-slate-500 font-medium leading-relaxed mb-8 flex-1">${b.desc}</p>
-                            <a href="/catalog" data-link class="px-8 py-4 bg-slate-50 text-slate-900 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-primary hover:text-white transition-all shadow-sm w-full text-center">Explore Spares</a>
+                            <a href="/catalog" data-link class="px-8 py-4 bg-slate-50 text-slate-900 rounded-none font-black text-[10px] uppercase tracking-widest hover:bg-bosch-blue hover:text-white transition-all shadow-sm w-full text-center">Explore Spares</a>
                         </div>
                     `).join('')}
                 </div>

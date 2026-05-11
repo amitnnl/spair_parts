@@ -6,7 +6,7 @@ export async function renderQuotations(container, appInstance) {
     const isAdmin = userRole === 'admin';
     
     console.log('Quotation View Access - Role:', userRole, 'IsAdmin:', isAdmin);
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>`;
     
     try {
         const apiUrl = isAdmin ? 'api/admin_quotations.php' : 'api/quotations.php';
@@ -20,12 +20,12 @@ export async function renderQuotations(container, appInstance) {
                     <div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                             <div>
-                                <div class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">${isAdmin ? 'Global Transaction Monitor' : 'Procurement History'}</div>
-                                <h2 class="text-4xl font-black tracking-tight text-slate-900">${isAdmin ? 'All <span class="text-blue-600">Quotations</span>' : 'Your <span class="text-blue-600">Quotations</span>'}</h2>
+                                <div class="text-[10px] font-black uppercase tracking-[0.3em] text-bosch-blue">${isAdmin ? 'Global Transaction Monitor' : 'Procurement History'}</div>
+                                <h2 class="text-4xl font-black tracking-tight text-slate-900 uppercase">${isAdmin ? 'All <span class="text-bosch-blue">Quotations</span>' : 'Your <span class="text-bosch-blue">Quotations</span>'}</h2>
                                 <p class="text-slate-500 font-medium mt-2 text-lg">${isAdmin ? 'Manage and price all incoming partner requests.' : 'Track your request for quotes and approval statuses.'}</p>
                             </div>
                             ${!isAdmin ? `
-                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="btn btn-secondary flex items-center gap-2">
+                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="btn btn-secondary rounded-none hover:border-bosch-blue hover:text-bosch-blue flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                                 New Request
                             </button>
@@ -61,11 +61,11 @@ export async function renderQuotations(container, appInstance) {
                                             </td>
                                             <td class="p-6 text-right">
                                                 <div class="flex justify-end gap-3">
-                                                    <button onclick="${isAdmin ? `app.renderProcessQuotation(${q.id})` : `app.viewQuotationDetails(${q.id})`}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">
+                                                    <button onclick="${isAdmin ? `app.renderProcessQuotation(${q.id})` : `app.viewQuotationDetails(${q.id})`}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">
                                                         ${isAdmin && q.status === 'pending' ? 'Process' : 'View'}
                                                     </button>
-                                                    ${!isAdmin && q.status === 'pending' ? `<button onclick="app.editQuotation(${q.id})" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>` : ''}
-                                                    ${!isAdmin && q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20">Approve</button>` : ''}
+                                                    ${!isAdmin && q.status === 'pending' ? `<button onclick="app.editQuotation(${q.id})" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>` : ''}
+                                                    ${!isAdmin && q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-blue-900/20">Approve</button>` : ''}
                                                 </div>
                                             </td>
                                         </tr>
@@ -96,19 +96,19 @@ export async function viewQuotationDetails(id, appInstance) {
         const data = await res.json();
         
         modal.innerHTML = `
-            <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative animate-in zoom-in duration-300 my-8">
-                <div class="p-10 border-b border-slate-100 flex justify-between items-center">
+            <div class="bg-white w-full max-w-4xl rounded-none border-2 border-slate-100 shadow-premium overflow-hidden relative animate-in zoom-in duration-300 my-8">
+                <div class="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                     <div>
-                        <h2 class="text-2xl font-black text-slate-900">Quotation Details</h2>
+                        <h2 class="text-2xl font-black text-slate-900 uppercase">Quotation Details</h2>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">#Q-${String(id).padStart(4, '0')} • Requested on ${new Date(data.created_at).toLocaleDateString()}</p>
                     </div>
-                    <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-900 flex items-center justify-center transition-all">
+                    <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-none border border-slate-200 bg-white text-slate-400 hover:bg-slate-100 hover:text-slate-900 flex items-center justify-center transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
                 
                 <div class="p-10 space-y-10">
-                    <div class="overflow-hidden border border-slate-200 rounded-2xl">
+                    <div class="overflow-hidden border border-slate-200 rounded-none">
                         <table class="w-full text-left">
                             <thead class="bg-slate-50">
                                 <tr>
@@ -143,8 +143,8 @@ export async function viewQuotationDetails(id, appInstance) {
                     </div>
                     
                     <div class="flex justify-end gap-4">
-                        <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-2xl border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all">Close Details</button>
-                        ${data.status === 'priced' ? `<button onclick="app.approveQuotation(${id})" class="px-10 py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 transition-all">Approve & Order</button>` : ''}
+                        <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-none border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 hover:text-slate-900 transition-all">Close Details</button>
+                        ${data.status === 'priced' ? `<button onclick="app.approveQuotation(${id})" class="px-10 py-4 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-900/20 hover:bg-industrial-gray transition-all">Approve & Order</button>` : ''}
                     </div>
                 </div>
             </div>

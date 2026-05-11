@@ -14,8 +14,8 @@ export default {
                     </div>
                     
                     <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
-                        <span class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-blue-500/20">Logistics & Delivery</span>
-                        <h1 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">Shipping <span class="text-blue-500">Information</span></h1>
+                        <span class="inline-block px-4 py-1.5 rounded-none bg-bosch-blue/20 text-bosch-blue text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-bosch-blue/30">Logistics & Delivery</span>
+                        <h1 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight uppercase tracking-tight">Shipping <span class="text-bosch-red">Information</span></h1>
                         <p class="text-slate-400 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
                             Everything you need to know about how we deliver genuine spare parts to your doorstep across India.
                         </p>
@@ -29,8 +29,8 @@ export default {
                             <!-- Shipping Methods -->
                             <div class="space-y-8">
                                 <div>
-                                    <h2 class="text-2xl font-black text-slate-900 mb-4 flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                                    <h2 class="text-2xl font-black text-slate-900 mb-4 flex items-center gap-3 uppercase tracking-widest">
+                                        <div class="w-10 h-10 rounded-none bg-industrial-gray text-white flex items-center justify-center">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                                         </div>
                                         Fast Delivery
@@ -40,9 +40,9 @@ export default {
                                     </p>
                                 </div>
 
-                                <div class="p-6 bg-slate-50 rounded-[32px] border border-slate-100 space-y-4">
-                                    <h3 class="font-black text-slate-900 flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <div class="p-6 bg-slate-50 rounded-none border border-slate-100 border-l-8 border-l-bosch-blue space-y-4">
+                                    <h3 class="font-black text-slate-900 flex items-center gap-2 uppercase tracking-widest">
+                                        <svg class="w-4 h-4 text-bosch-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                         Delivery Timelines
                                     </h3>
                                     <ul class="space-y-3">
@@ -65,8 +65,8 @@ export default {
                             <!-- Shipping Costs -->
                             <div class="space-y-8">
                                 <div>
-                                    <h2 class="text-2xl font-black text-slate-900 mb-4 flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-xl bg-green-50 text-green-600 flex items-center justify-center">
+                                    <h2 class="text-2xl font-black text-slate-900 mb-4 flex items-center gap-3 uppercase tracking-widest">
+                                        <div class="w-10 h-10 rounded-none bg-industrial-gray text-white flex items-center justify-center">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                         </div>
                                         Shipping Costs
@@ -77,7 +77,7 @@ export default {
                                 </div>
 
                                 <div class="space-y-4">
-                                    <div class="p-6 bg-blue-600 rounded-[32px] text-white shadow-xl shadow-blue-600/20">
+                                    <div class="p-6 bg-bosch-blue rounded-none text-white shadow-xl shadow-blue-900/20">
                                         <h4 class="font-black text-sm uppercase tracking-widest mb-1 opacity-80">Bulk Order Perk</h4>
                                         <div class="text-2xl font-black mb-3">Free Shipping</div>
                                         <p class="text-xs font-bold text-blue-100">On all orders above ₹15,000 across India. For smaller orders, a flat rate of ₹150 applies.</p>
@@ -86,12 +86,12 @@ export default {
                             </div>
                         </div>
 
-                        <div class="mt-20 p-10 bg-slate-900 rounded-[48px] text-center relative overflow-hidden">
-                            <div class="absolute inset-0 bg-blue-600/10 mix-blend-overlay"></div>
+                        <div class="mt-20 p-10 bg-slate-900 rounded-none border-t-4 border-t-bosch-blue text-center relative overflow-hidden shadow-premium">
+                            <div class="absolute inset-0 bg-bosch-blue/10 mix-blend-overlay"></div>
                             <div class="relative z-10">
-                                <h3 class="text-2xl font-black text-white mb-4">Track Your Order</h3>
+                                <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-widest">Track Your Order</h3>
                                 <p class="text-slate-400 font-medium mb-8">Once your order is shipped, we will send you a tracking link via SMS and Email.</p>
-                                <a href="/support" data-link class="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all duration-300">
+                                <a href="/support" data-link class="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-none font-black text-xs uppercase tracking-widest hover:bg-bosch-blue hover:text-white transition-all duration-300">
                                     Need Help? Contact Support
                                 </a>
                             </div>

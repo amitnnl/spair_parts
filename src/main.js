@@ -369,41 +369,47 @@ const app = {
 
     updateAuthUI() {
         const authContainer = document.getElementById('auth-nav');
+        const cartBtn = document.getElementById('header-cart-btn');
+        const mobileCartBtn = document.getElementById('mobile-cart-btn');
         if (this.state.user) {
+            if (cartBtn) cartBtn.classList.remove('hidden');
+            if (mobileCartBtn) mobileCartBtn.classList.remove('hidden');
             localStorage.setItem('user', JSON.stringify(this.state.user));
             const isAdmin = this.state.user.role && this.state.user.role.toLowerCase() === 'admin';
             
             authContainer.innerHTML = `
                 <div class="flex items-center gap-6">
                     <div class="hidden md:block text-right">
-                        <p class="text-xs font-black text-slate-900">${this.state.user.name}</p>
+                        <p class="text-xs font-black text-slate-900 uppercase tracking-widest">${this.state.user.name}</p>
                     </div>
                     <div class="flex gap-2">
                         ${isAdmin ? `
-                            <a href="/admin" data-link class="px-10 py-4 rounded-2xl bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20 flex items-center gap-2">
-                                <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
+                            <a href="/admin" data-link class="px-10 py-4 rounded-none bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-bosch-blue transition-all shadow-xl shadow-slate-900/20 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-bosch-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
                                 Admin Panel
                             </a>
                         ` : this.state.user?.role?.toLowerCase() === 'staff' ? `
-                            <a href="/staff" data-link class="px-10 py-4 rounded-2xl bg-amber-600 text-white text-[11px] font-black uppercase tracking-widest hover:bg-amber-700 transition-all shadow-xl shadow-amber-600/20 flex items-center gap-2">
+                            <a href="/staff" data-link class="px-10 py-4 rounded-none bg-amber-600 text-white text-[11px] font-black uppercase tracking-widest hover:bg-amber-700 transition-all shadow-xl shadow-amber-600/20 flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                                 Staff Panel
                             </a>
                         ` : `
-                            <a href="/dashboard" data-link class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center hover:scale-110 transition-all shadow-xl shadow-slate-900/20 group">
+                            <a href="/dashboard" data-link class="w-12 h-12 rounded-none bg-slate-900 text-white flex items-center justify-center hover:scale-110 transition-all shadow-xl shadow-slate-900/20 group">
                                 <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             </a>
                         `}
-                        <a href="/logout" data-link class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all border border-rose-100 group" title="Logout">
+                        <a href="/logout" data-link class="w-12 h-12 rounded-none bg-rose-50 text-rose-500 flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all border border-rose-100 group" title="Logout">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                         </a>
                     </div>
                 </div>
             `;
         } else {
+            if (cartBtn) cartBtn.classList.add('hidden');
+            if (mobileCartBtn) mobileCartBtn.classList.add('hidden');
             localStorage.removeItem('user');
             authContainer.innerHTML = `
-                <a href="/login" data-link class="px-10 py-4 bg-blue-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20">Partner Login</a>
+                <a href="/login" data-link class="px-10 py-4 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-[0.2em] hover:bg-industrial-gray transition-all shadow-xl shadow-slate-900/10">Partner Login</a>
             `;
         }
     },

@@ -14,10 +14,10 @@ export async function renderAdmin(container, app) {
             <main class="flex-1 p-8 lg:p-12 space-y-12">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
-                        <h2 class="text-4xl font-black text-slate-900 tracking-tight">Executive <span class="text-blue-600">Dashboard</span></h2>
+                        <h2 class="text-4xl font-black text-slate-900 tracking-tight">Executive <span class="text-bosch-blue">Dashboard</span></h2>
                         <p class="text-slate-500 mt-2 font-bold text-lg">Platform status and procurement oversight.</p>
                     </div>
-                    <button onclick="app.printAdminReport()" class="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold text-sm hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
+                    <button onclick="app.printAdminReport()" class="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-none font-bold text-sm hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                         Generate Report
                     </button>
@@ -30,10 +30,10 @@ export async function renderAdmin(container, app) {
             { l: 'Inventory SKUs', v: '--', id: 'stat-total-skus', c: 'emerald' },
             { l: 'Monthly Revenue', v: '₹0', id: 'stat-revenue', c: 'rose' }
         ].map(s => `
-                        <div class="bg-white border border-slate-200 rounded-3xl p-8 space-y-4 hover:shadow-2xl hover:shadow-blue-900/5 transition-all">
+                        <div class="bg-white border-2 border-slate-100 rounded-none p-8 space-y-4 hover:border-bosch-blue transition-all">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${s.l}</p>
                             <h3 class="text-3xl font-black text-slate-900" id="${s.id}">${s.v}</h3>
-                            <div class="w-full h-1 bg-${s.c}-100 rounded-full overflow-hidden">
+                            <div class="w-full h-1 bg-${s.c}-100 rounded-none overflow-hidden">
                                 <div class="w-1/3 h-full bg-${s.c}-600"></div>
                             </div>
                         </div>
@@ -42,21 +42,21 @@ export async function renderAdmin(container, app) {
 
                 <div class="space-y-8">
                     <div class="flex items-center gap-4">
-                        <div class="w-2 h-8 bg-blue-600 rounded-full"></div>
-                        <h3 class="text-xl font-black text-slate-900 tracking-tight">Pending Procurements</h3>
+                        <div class="w-2 h-8 bg-bosch-blue rounded-none"></div>
+                        <h3 class="text-xl font-black text-slate-900 tracking-tight uppercase">Pending Procurements</h3>
                     </div>
                     <div id="admin-quotation-list" class="grid grid-cols-1 gap-4">
-                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>
+                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-full"></div></div>
                     </div>
                 </div>
 
                 <div class="space-y-8">
                     <div class="flex items-center gap-4">
-                        <div class="w-2 h-8 bg-emerald-600 rounded-full"></div>
-                        <h3 class="text-xl font-black text-slate-900 tracking-tight">Order Fulfillment & Logistics</h3>
+                        <div class="w-2 h-8 bg-bosch-red rounded-none"></div>
+                        <h3 class="text-xl font-black text-slate-900 tracking-tight uppercase">Order Fulfillment & Logistics</h3>
                     </div>
                     <div id="admin-invoice-list" class="grid grid-cols-1 gap-4">
-                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full"></div></div>
+                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-red border-t-transparent rounded-full"></div></div>
                     </div>
                 </div>
             </main>
@@ -76,29 +76,29 @@ export async function loadAdminInvoices(app) {
         const invoices = await res.json();
 
         list.innerHTML = invoices.length ? invoices.map(inv => `
-            <div class="bg-white border border-slate-200 rounded-3xl p-6 flex justify-between items-center hover:shadow-xl hover:shadow-emerald-900/5 transition-all">
+            <div class="bg-white border-2 border-slate-100 rounded-none p-6 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div class="flex items-center gap-6">
-                    <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400">
+                    <div class="w-12 h-12 rounded-none bg-slate-50 flex items-center justify-center text-slate-400">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
                     <div>
-                        <div class="font-black text-slate-900">${inv.invoice_number} • ${inv.user_name}</div>
+                        <div class="font-black text-slate-900 uppercase tracking-widest">${inv.invoice_number} • ${inv.user_name}</div>
                         <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">
                             ${new Date(inv.created_at).toLocaleDateString()} • ₹${parseFloat(inv.total_amount).toLocaleString()}
-                            ${inv.tracking_number ? ` • Tracking: <span class="text-blue-600 font-bold">${inv.tracking_number}</span>` : ''}
+                            ${inv.tracking_number ? ` • Tracking: <span class="text-bosch-blue font-bold">${inv.tracking_number}</span>` : ''}
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${getInvoiceStatusClass(inv.status)}">
+                    <span class="px-3 py-1 rounded-none border border-slate-200 text-[10px] font-black uppercase tracking-wider ${getInvoiceStatusClass(inv.status)}">
                         ${inv.status}
                     </span>
-                    <button onclick="app.renderDispatchModal(${inv.id}, '${inv.status}', '${inv.tracking_number || ''}')" class="px-5 py-2 rounded-xl bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all">Manage</button>
+                    <button onclick="app.renderDispatchModal(${inv.id}, '${inv.status}', '${inv.tracking_number || ''}')" class="px-5 py-2 rounded-none bg-industrial-gray text-white text-[11px] font-black uppercase tracking-widest hover:bg-bosch-blue transition-all">Manage</button>
                 </div>
             </div>
-        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-3xl p-12 text-center text-slate-400 font-bold">No active orders in fulfillment</div>';
+        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No active orders in fulfillment</div>';
     } catch (e) {
-        list.innerHTML = '<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load orders</div>';
+        list.innerHTML = '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load orders</div>';
     }
 }
 
@@ -123,27 +123,27 @@ export async function loadAdminQuotations(app) {
         const quotations = await res.json();
 
         list.innerHTML = quotations.length ? quotations.map(q => `
-            <div class="bg-white border border-slate-200 rounded-3xl p-6 flex justify-between items-center hover:shadow-xl hover:shadow-blue-900/5 transition-all">
+            <div class="bg-white border-2 border-slate-100 rounded-none p-6 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div>
-                    <div class="font-black text-slate-900">${q.user_name}</div>
-                    <div class="text-[11px] text-slate-500 font-medium mt-1">${q.user_email} • ${new Date(q.created_at).toLocaleString()}</div>
+                    <div class="font-black text-slate-900 uppercase tracking-widest">${q.user_name}</div>
+                    <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">${q.user_email} • ${new Date(q.created_at).toLocaleString()}</div>
                 </div>
                 <div class="flex items-center gap-6">
-                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${app.getStatusClass(q.status)}">
+                    <span class="px-3 py-1 rounded-none border border-slate-200 text-[10px] font-black uppercase tracking-wider ${app.getStatusClass(q.status)}">
                         ${q.status}
                     </span>
-                    ${q.status === 'pending' ? `<button onclick="app.renderProcessQuotation(${q.id})" class="px-5 py-2 rounded-xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition-all">Process</button>` : ''}
-                    ${q.status === 'approved' ? `<button onclick="app.generateInvoice(${q.id})" class="px-5 py-2 rounded-xl bg-emerald-600 text-white text-[11px] font-black uppercase tracking-widest shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition-all">Generate Invoice</button>` : ''}
+                    ${q.status === 'pending' ? `<button onclick="app.renderProcessQuotation(${q.id})" class="px-5 py-2 rounded-none bg-bosch-blue text-white text-[11px] font-black uppercase tracking-widest hover:bg-industrial-gray transition-all">Process</button>` : ''}
+                    ${q.status === 'approved' ? `<button onclick="app.generateInvoice(${q.id})" class="px-5 py-2 rounded-none bg-bosch-red text-white text-[11px] font-black uppercase tracking-widest hover:bg-red-700 transition-all">Generate Invoice</button>` : ''}
                 </div>
             </div>
-        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-3xl p-12 text-center text-slate-400 font-bold">No pending requests</div>';
+        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No pending requests</div>';
     } catch (e) {
-        list.innerHTML = '<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load requests</div>';
+        list.innerHTML = '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load requests</div>';
     }
 }
 
 export async function renderAdminInventory(container, app) {
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>`;
 
     try {
         const res = await fetch(app.api('api/products.php'));
@@ -157,29 +157,29 @@ export async function renderAdminInventory(container, app) {
                 <main class="flex-1 p-8 lg:p-12 space-y-12">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
-                            <h2 class="text-4xl font-black text-slate-900 tracking-tight">Inventory <span class="text-blue-600">Warehouse</span></h2>
+                            <h2 class="text-4xl font-black text-slate-900 tracking-tight uppercase">Inventory <span class="text-bosch-blue">Warehouse</span></h2>
                             <p class="text-slate-500 mt-2 font-bold text-lg">Real-time stock monitoring and fitment management.</p>
                         </div>
                         <div class="flex gap-4 no-print">
-                            <button onclick="app.renderImportModal()" class="px-6 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+                            <button onclick="app.renderImportModal()" class="px-6 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
                                 <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                 Bulk Import
                             </button>
-                            <button onclick="app.renderAddProductForm()" class="px-6 py-3.5 bg-blue-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2 hover:-translate-y-1">
+                            <button onclick="app.renderAddProductForm()" class="px-6 py-3.5 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-xl shadow-blue-900/20 flex items-center gap-2 hover:-translate-y-1">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                                 Add Product
                             </button>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-[32px] border border-slate-200 p-4 flex gap-4 shadow-sm">
+                    <div class="bg-white rounded-none border-2 border-slate-100 p-4 flex gap-4 shadow-sm">
                         <div class="relative flex-grow">
-                            <input type="text" id="inventory-search" oninput="app.filterInventory()" class="w-full h-14 bg-slate-50 border border-slate-100 rounded-2xl px-14 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all" placeholder="Search by Part Name, Brand, or Machine Model...">
+                            <input type="text" id="inventory-search" oninput="app.filterInventory()" class="w-full h-14 bg-slate-50 border border-slate-100 rounded-none px-14 text-sm font-bold text-slate-700 focus:outline-none focus:border-bosch-blue focus:ring-4 focus:ring-bosch-blue/10 transition-all" placeholder="Search by Part Name, Brand, or Machine Model...">
                             <svg class="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-[32px] border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40">
+                    <div class="bg-white rounded-none border-2 border-slate-100 overflow-hidden shadow-2xl shadow-slate-200/40">
                         <table class="w-full text-left border-collapse">
                             <thead class="bg-slate-50/80 border-b border-slate-200">
                                 <tr>
@@ -215,37 +215,37 @@ export function filterInventory() {
 function createInventoryRow(p, app) {
     const isLowStock = (p.stock_quantity || 0) < 5;
     return `
-        <tr class="hover:bg-slate-50/80 transition-all group">
+        <tr class="hover:bg-slate-50/80 transition-all group border-b border-slate-100">
             <td class="p-6 pl-8">
                 <div class="flex items-center gap-5">
                     <div class="relative">
-                        <img src="${app.cleanImageUrl(p.photo, p.part_name)}" class="w-14 h-14 rounded-2xl object-cover border-2 border-slate-100 shadow-sm group-hover:scale-105 transition-transform">
-                        ${isLowStock ? '<span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-rose-500 rounded-full border-2 border-white animate-bounce"></span>' : ''}
+                        <img src="${app.cleanImageUrl(p.photo, p.part_name)}" class="w-14 h-14 rounded-none object-cover border-2 border-slate-100 shadow-sm group-hover:scale-105 transition-transform">
+                        ${isLowStock ? '<span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-bosch-red rounded-none border border-white animate-pulse"></span>' : ''}
                     </div>
                     <div>
-                        <span class="font-black block text-slate-900 text-sm mb-0.5">${p.part_name}</span>
-                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-slate-100 px-2 py-0.5 rounded-md inline-block">${p.machine_model || 'Universal'}</span>
+                        <span class="font-black block text-slate-900 text-sm mb-0.5 uppercase tracking-widest">${p.part_name}</span>
+                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-slate-100 px-2 py-0.5 rounded-none inline-block">${p.machine_model || 'Universal'}</span>
                     </div>
                 </div>
             </td>
             <td class="p-6">
-                <span class="px-3.5 py-1.5 rounded-xl bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest border border-blue-100">${p.brand}</span>
+                <span class="px-3.5 py-1.5 rounded-none bg-industrial-gray text-white text-[9px] font-black uppercase tracking-widest border border-slate-700">${p.brand}</span>
             </td>
             <td class="p-6">
                 <div class="space-y-2">
-                    <span class="text-[11px] font-black uppercase tracking-widest ${isLowStock ? 'text-rose-600' : 'text-emerald-600'}">${p.stock_quantity || 0} Units in Reserve</span>
-                    <div class="w-28 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="h-full rounded-full ${isLowStock ? 'bg-gradient-to-r from-rose-500 to-rose-400' : 'bg-gradient-to-r from-emerald-500 to-emerald-400'}" style="width: ${Math.min((p.stock_quantity || 0) * 5, 100)}%"></div>
+                    <span class="text-[11px] font-black uppercase tracking-widest ${isLowStock ? 'text-bosch-red' : 'text-bosch-blue'}">${p.stock_quantity || 0} Units in Reserve</span>
+                    <div class="w-28 h-1.5 bg-slate-100 rounded-none overflow-hidden border border-slate-200">
+                        <div class="h-full rounded-none ${isLowStock ? 'bg-bosch-red' : 'bg-bosch-blue'}" style="width: ${Math.min((p.stock_quantity || 0) * 5, 100)}%"></div>
                     </div>
                 </div>
             </td>
             <td class="p-6 font-black text-slate-900 text-sm">₹${p.cost || '0.00'}</td>
             <td class="p-6 pr-8 text-right">
                 <div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 hover:shadow-lg transition-all">
+                    <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-none bg-white border border-slate-200 text-slate-400 hover:text-white hover:border-bosch-blue hover:bg-bosch-blue transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                     </button>
-                    <button onclick="app.deleteProduct(${p.id})" class="p-3 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 hover:shadow-lg transition-all">
+                    <button onclick="app.deleteProduct(${p.id})" class="p-3 rounded-none bg-white border border-slate-200 text-slate-400 hover:text-white hover:border-bosch-red hover:bg-bosch-red transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                     </button>
                 </div>
@@ -270,7 +270,7 @@ export async function renderAdminUsers(container, app) {
                 <main class="flex-1 p-8 lg:p-12 space-y-12">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
-                            <h2 class="text-4xl font-black text-slate-900 tracking-tight">Partner <span class="text-blue-600">Management</span></h2>
+                            <h2 class="text-4xl font-black text-slate-900 tracking-tight">Partner <span class="text-bosch-blue">Management</span></h2>
                             <p class="text-slate-500 mt-2 font-bold text-lg">Manage B2B client access and custom discount tiers.</p>
                         </div>
                     </div>
@@ -291,7 +291,7 @@ export async function renderAdminUsers(container, app) {
                                     <tr class="hover:bg-slate-50/80 transition-all group">
                                         <td class="p-6 pl-8">
                                             <div class="flex items-center gap-4">
-                                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-xl shadow-sm border border-blue-100">${u.name.charAt(0).toUpperCase()}</div>
+                                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-blue-100">${u.name.charAt(0).toUpperCase()}</div>
                                                 <div>
                                                     <span class="font-black block text-slate-900 text-sm mb-0.5">${u.name}</span>
                                                     <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${u.email}</span>
@@ -313,7 +313,7 @@ export async function renderAdminUsers(container, app) {
                                         </td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" step="0.1" value="${u.discount_tier || 0}" id="discount_${u.id}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-blue-600 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                                <input type="number" step="0.1" value="${u.discount_tier || 0}" id="discount_${u.id}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-bosch-blue focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                                                 <span class="text-slate-400 font-bold text-sm">%</span>
                                             </div>
                                         </td>
@@ -368,7 +368,7 @@ export async function renderProcessQuotation(quotationId, app) {
             <div class="p-8 space-y-8">
                 <div class="flex flex-wrap gap-4">
                     <div class="flex-1 min-w-[200px] p-6 bg-blue-50 border border-blue-100 rounded-2xl">
-                        <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Partner Tier</p>
+                        <p class="text-[10px] font-black text-bosch-blue uppercase tracking-widest mb-1">Partner Tier</p>
                         <h4 class="text-xl font-black text-slate-900">${discountTier}% Automatic Discount</h4>
                     </div>
                     <div class="flex-1 min-w-[200px] p-6 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -400,13 +400,13 @@ export async function renderProcessQuotation(quotationId, app) {
                                         <td class="p-6 text-slate-400 font-bold text-sm">₹${item.cost || '0.00'}</td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" name="price_${item.id}" data-item-id="${item.id}" data-qty="${item.quantity}" data-msrp="${item.cost || 0}" step="0.01" value="${item.unit_price || ''}" required class="w-28 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-black text-blue-600 focus:outline-none focus:border-blue-500 transition-all unit-price-input">
-                                                <button type="button" onclick="app.applyDiscountToItem(this, ${discountTier})" class="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                                                <input type="number" name="price_${item.id}" data-item-id="${item.id}" data-qty="${item.quantity}" data-msrp="${item.cost || 0}" step="0.01" value="${item.unit_price || ''}" required class="w-28 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-black text-bosch-blue focus:outline-none focus:border-blue-500 transition-all unit-price-input">
+                                                <button type="button" onclick="app.applyDiscountToItem(this, ${discountTier})" class="p-2 bg-blue-50 text-bosch-blue rounded-lg hover:bg-bosch-blue hover:text-white transition-all shadow-sm">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td class="p-6 text-right font-black text-blue-600 subtotal-cell">₹${(item.quantity * (item.unit_price || 0)).toFixed(2)}</td>
+                                        <td class="p-6 text-right font-black text-bosch-blue subtotal-cell">₹${(item.quantity * (item.unit_price || 0)).toFixed(2)}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -420,7 +420,7 @@ export async function renderProcessQuotation(quotationId, app) {
                     </div>
                     
                     <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-4">
-                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 transition-all font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20">
+                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-bosch-blue text-white hover:bg-blue-700 transition-all font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             Apply Partner Discount to All
                         </button>
@@ -591,7 +591,7 @@ export async function renderSystemSettings(container, app) {
                 <main class="flex-1 p-6 lg:p-10 overflow-x-hidden">
                     <div class="max-w-5xl mx-auto">
                         <div class="mb-8">
-                            <h2 class="text-3xl font-black text-slate-900">Website <span class="text-blue-600">Control Center</span></h2>
+                            <h2 class="text-3xl font-black text-slate-900">Website <span class="text-bosch-blue">Control Center</span></h2>
                             <p class="text-slate-500 font-medium mt-1">Edit every page, image, and text on your live website from here.</p>
                         </div>
 
@@ -599,7 +599,7 @@ export async function renderSystemSettings(container, app) {
                         <div class="flex gap-2 mb-8 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm overflow-x-auto no-scrollbar">
                             ${tabs.map((tab, i) => `
                                 <button type="button" onclick="window.switchCMSTab('${tab.id}')" id="tab-btn-${tab.id}"
-                                    class="cms-tab-btn flex-shrink-0 px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${i === 0 ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}">
+                                    class="cms-tab-btn flex-shrink-0 px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${i === 0 ? 'bg-bosch-blue text-white shadow-lg shadow-blue-600/30' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}">
                                     ${tab.label}
                                 </button>
                             `).join('')}
@@ -755,21 +755,21 @@ export async function renderSystemSettings(container, app) {
                                     </div>
                                     <div class="space-y-3 font-mono text-xs overflow-x-auto">
                                         <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all" onclick="switchCMSTab('general')">
-                                            <span class="text-blue-600 font-bold">whatsapp_number</span>
+                                            <span class="text-bosch-blue font-bold">whatsapp_number</span>
                                             <div class="flex items-center gap-2">
                                                 <span class="text-slate-600">${s.whatsapp_number || '<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
                                                 <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                                             </div>
                                         </div>
                                         <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="switchCMSTab('general')">
-                                            <span class="text-blue-600 font-bold">site_name</span>
+                                            <span class="text-bosch-blue font-bold">site_name</span>
                                             <div class="flex items-center gap-2">
                                                 <span class="text-slate-600">${s.site_name}</span>
                                                 <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                                             </div>
                                         </div>
                                         <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="switchCMSTab('general')">
-                                            <span class="text-blue-600 font-bold">contact_email</span>
+                                            <span class="text-bosch-blue font-bold">contact_email</span>
                                             <div class="flex items-center gap-2">
                                                 <span class="text-slate-600">${s.contact_email}</span>
                                                 <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
@@ -790,7 +790,7 @@ export async function renderSystemSettings(container, app) {
                                     Cancel
                                 </button>
                                 <button type="submit" id="cms-save-btn"
-                                    class="px-10 py-4 rounded-2xl bg-blue-600 text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:-translate-y-0.5 hover:bg-blue-700 transition-all flex items-center gap-2">
+                                    class="px-10 py-4 rounded-2xl bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:-translate-y-0.5 hover:bg-blue-700 transition-all flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                                     Save All Changes
                                 </button>
@@ -804,12 +804,12 @@ export async function renderSystemSettings(container, app) {
         window.switchCMSTab = (tabId) => {
             document.querySelectorAll('.cms-tab-panel').forEach(p => p.classList.add('hidden'));
             document.querySelectorAll('.cms-tab-btn').forEach(b => {
-                b.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
+                b.classList.remove('bg-bosch-blue', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
                 b.classList.add('text-slate-500');
             });
             document.getElementById('cms-tab-' + tabId)?.classList.remove('hidden');
             const ab = document.getElementById('tab-btn-' + tabId);
-            if (ab) { ab.classList.add('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30'); ab.classList.remove('text-slate-500'); }
+            if (ab) { ab.classList.add('bg-bosch-blue', 'text-white', 'shadow-lg', 'shadow-blue-600/30'); ab.classList.remove('text-slate-500'); }
         };
 
         document.getElementById('cms-form').onsubmit = async (e) => {
@@ -896,7 +896,7 @@ export function renderImportModal(app) {
     modal.innerHTML = `
         <div class="bg-white rounded-[32px] w-full max-w-xl p-10 space-y-8 shadow-2xl animate-in zoom-in duration-300">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900">Bulk <span class="text-blue-600">Import</span></h2>
+                <h2 class="text-3xl font-black text-slate-900">Bulk <span class="text-bosch-blue">Import</span></h2>
                 <button onclick="document.getElementById('import-modal').remove()" class="text-slate-400 hover:text-slate-900 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
@@ -904,10 +904,10 @@ export function renderImportModal(app) {
             <form id="import-form" class="space-y-6">
                 <div class="border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center hover:border-blue-500 transition-all cursor-pointer relative group">
                     <input type="file" name="import_csv" accept=".csv" required class="absolute inset-0 opacity-0 cursor-pointer">
-                    <p class="text-slate-500 font-bold">Drop CSV file here or <span class="text-blue-600">browse</span></p>
+                    <p class="text-slate-500 font-bold">Drop CSV file here or <span class="text-bosch-blue">browse</span></p>
                     <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest font-black">Headers: Part Name, Machine Model, Brand, Cost, Stock</p>
                 </div>
-                <button type="submit" class="w-full py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 transition-all">Process Import</button>
+                <button type="submit" class="w-full py-4 rounded-2xl bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 transition-all">Process Import</button>
             </form>
         </div>
     `;
@@ -961,7 +961,7 @@ async function renderProductForm(product, app) {
     modal.innerHTML = `
         <div class="bg-white rounded-[32px] w-full max-w-3xl p-6 md:p-10 space-y-6 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900">${isEdit ? 'Edit' : 'Add New'} <span class="text-blue-600">Product</span></h2>
+                <h2 class="text-3xl font-black text-slate-900">${isEdit ? 'Edit' : 'Add New'} <span class="text-bosch-blue">Product</span></h2>
                 <button onclick="document.getElementById('product-modal').remove()" class="text-slate-400 hover:text-slate-900 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
@@ -977,7 +977,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-partname" name="part_name_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Part Name...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('part_name')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all" title="Add new part name">+</button>
+                        <button type="button" onclick="window._pfAddLookup('part_name')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all" title="Add new part name">+</button>
                     </div>
                 </div>
 
@@ -985,8 +985,8 @@ async function renderProductForm(product, app) {
                 <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2 flex justify-between items-center">
                     <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
                     <label class="flex items-center gap-2 cursor-pointer group">
-                        <input type="checkbox" onchange="window._pfToggleUnknownMachine(this.checked)" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
-                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-all">Suitable machine abhi pata nahi hai</span>
+                        <input type="checkbox" onchange="window._pfToggleUnknownMachine(this.checked)" class="w-4 h-4 rounded border-slate-300 text-bosch-blue focus:ring-blue-500">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-bosch-blue transition-all">Suitable machine abhi pata nahi hai</span>
                     </label>
                 </div>
 
@@ -997,7 +997,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-brand" name="brand_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Brand...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('brand')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('brand')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
                     </div>
                 </div>
 
@@ -1008,7 +1008,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-machine" name="machine_name_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Machine...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
                     </div>
                 </div>
 
@@ -1019,7 +1019,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-model" name="model_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Model...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('model')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('model')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
                     </div>
                 </div>
 
@@ -1030,7 +1030,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-size" name="machine_size_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Size...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
                     </div>
                 </div>
 
@@ -1038,7 +1038,7 @@ async function renderProductForm(product, app) {
                 <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
                     <div class="flex justify-between items-center">
                         <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Other Suitable Machines</h3>
-                        <button type="button" onclick="window._pfAddMachineRow()" class="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:underline">+ Add More Machine</button>
+                        <button type="button" onclick="window._pfAddMachineRow()" class="text-[10px] font-black text-bosch-blue uppercase tracking-widest hover:underline">+ Add More Machine</button>
                     </div>
                     <div id="additional-machines-container" class="space-y-4 mt-4">
                         <!-- Dynamic rows here -->
@@ -1075,12 +1075,12 @@ async function renderProductForm(product, app) {
                 <div class="col-span-2 space-y-2 pt-2">
                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Product Photo</label>
                     <input type="file" name="photo" accept="image/*"
-                        class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
+                        class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-blue-50 file:text-bosch-blue hover:file:bg-blue-100">
                 </div>
 
                 <div class="col-span-2 pt-4">
                     <button type="submit" id="pf-submit-btn"
-                        class="w-full py-4 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:scale-[1.02] transition-all">
+                        class="w-full py-4 rounded-2xl bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:scale-[1.02] transition-all">
                         Save Complete Product
                     </button>
                 </div>
@@ -1252,7 +1252,7 @@ export async function deleteProduct(id, app) {
 export function getInvoiceStatusClass(status) {
     switch (status) {
         case 'processing': return 'bg-amber-50 text-amber-600 border border-amber-200';
-        case 'dispatched': return 'bg-blue-50 text-blue-600 border border-blue-200';
+        case 'dispatched': return 'bg-blue-50 text-bosch-blue border border-blue-200';
         case 'delivered': return 'bg-emerald-50 text-emerald-600 border border-emerald-200';
         default: return 'bg-slate-50 text-slate-400 border border-slate-100';
     }

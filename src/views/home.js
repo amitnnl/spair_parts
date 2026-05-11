@@ -2,76 +2,70 @@ export function renderHome(container, app) {
     const s = app.state.settings || {};
     container.innerHTML = `
         <div class="animate-fade-in">
-            <!-- Hero Section (Reference Image 1) -->
-            <section class="relative bg-white pt-10 pb-32 overflow-hidden border-b border-slate-100">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div class="flex flex-col lg:flex-row items-center gap-20">
-                        <div class="flex-1 text-center lg:text-left">
-                            <h1 class="text-6xl lg:text-[84px] font-black text-slate-900 leading-[1.05] tracking-tight mb-8">
-                                 ${(s.hero_title || 'THE RIGHT PART. EVERY TIME.').split('.').join('.<br/>')}
-                            </h1>
-                            <p class="text-xl text-slate-600 mb-12 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                                ${s.hero_subtitle || 'Premium B2B procurement portal for genuine power tool spare parts.'}
-                            </p>
-                            
-                            <div class="flex flex-wrap justify-center lg:justify-start gap-10 mb-16">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
-                                    <span class="text-sm font-black text-slate-800 uppercase tracking-wider">Genuine Parts</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
-                                    <span class="text-sm font-black text-slate-800 uppercase tracking-wider">B2B Pricing</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
-                                    <span class="text-sm font-black text-slate-800 uppercase tracking-wider">Pan India</span>
-                                </div>
-                            </div>
-
+            <!-- Hero Section (Full Width Slider) -->
+            <section class="relative bg-industrial-gray overflow-hidden border-b-4 border-bosch-red h-[600px] lg:h-[750px] flex items-center">
+                
+                <!-- Full Width Slider Container -->
+                <div id="hero-slider" class="absolute inset-0 z-0">
+                    ${[s.hero_image, s.hero_image_2, s.hero_image_3].map((img, i) => `
+                        <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}" data-index="${i}">
+                            <img src="${app.api(img) || 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2000'}" 
+                                 class="w-full h-full object-cover">
+                            <!-- Gradient Overlay to ensure text readability -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-industrial-gray via-industrial-gray/80 to-transparent"></div>
                         </div>
+                    `).join('')}
+                </div>
+
+                <!-- Overlay Content -->
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mt-20 lg:mt-0">
+                    <div class="max-w-3xl text-center lg:text-left">
+                        <h1 class="text-6xl lg:text-[84px] font-black text-white leading-[1.05] tracking-tight mb-8 uppercase">
+                             ${(s.hero_title || 'THE RIGHT PART. EVERY TIME.').split('.').join('.<br/>')}
+                        </h1>
+                        <p class="text-xl text-white/80 mb-12 max-w-xl mx-auto lg:mx-0 font-bold leading-relaxed">
+                            ${s.hero_subtitle || 'Premium B2B procurement portal for genuine power tool spare parts.'}
+                        </p>
                         
-                        <!-- Hero Slider -->
-                        <div class="flex-1 relative hidden lg:block h-[650px]">
-                            <div class="absolute -inset-10 bg-primary/10 rounded-full blur-[100px] opacity-40 animate-pulse"></div>
-                            
-                            <!-- Slider Container -->
-                            <div id="hero-slider" class="relative w-full h-full rounded-[48px] overflow-hidden shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-all duration-700">
-                                ${[s.hero_image, s.hero_image_2, s.hero_image_3].map((img, i) => `
-                                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}" data-index="${i}">
-                                        <img src="${app.api(img) || 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000'}" 
-                                             class="w-full h-full object-cover">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
-                                    </div>
-                                `).join('')}
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-10 mb-8">
+                            <div class="flex items-center gap-3">
+                                <div class="w-7 h-7 rounded-none bg-bosch-blue text-white flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+                                <span class="text-sm font-black text-white uppercase tracking-wider">Genuine Parts</span>
                             </div>
-
-                            <!-- Floating Badge -->
-                            <div class="absolute -bottom-8 -left-8 bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 flex items-center gap-6 animate-bounce z-20">
-                                <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Partners</p>
-                                    <p class="text-2xl font-black text-slate-900">5,000+</p>
-                                </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-7 h-7 rounded-none bg-bosch-blue text-white flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+                                <span class="text-sm font-black text-white uppercase tracking-wider">B2B Pricing</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-7 h-7 rounded-none bg-bosch-blue text-white flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+                                <span class="text-sm font-black text-white uppercase tracking-wider">Pan India</span>
                             </div>
                         </div>
 
+                        <!-- Call to Action -->
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-4 mt-12">
+                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-10 py-5 bg-bosch-blue text-white rounded-none font-black text-xs uppercase tracking-[0.2em] hover:bg-industrial-gray transition-all shadow-xl shadow-slate-900/40 border border-transparent hover:border-bosch-blue">
+                                Browse Catalog
+                            </button>
+                            <button onclick="app.renderSupport(document.getElementById('view-container'))" class="px-10 py-5 bg-transparent text-white rounded-none font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all border-2 border-white shadow-xl">
+                                Contact Sales
+                            </button>
+                        </div>
                     </div>
                 </div>
+            </section>
 
                 <!-- Tabbed Search Module (Full Width Command Center) -->
                 <div class="relative z-20 mt-12 mb-12">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="bg-slate-900 rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border border-white/5 p-2 overflow-hidden animate-slide-up">
+                        <div class="bg-industrial-gray rounded-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border-l-4 border-bosch-blue p-2 overflow-hidden animate-slide-up">
                             <div class="flex p-1 gap-1">
-                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-white bg-white/10 rounded-2xl border border-white/5">Search by Part</button>
+                                <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-white bg-white/10 rounded-none border border-white/5">Search by Part</button>
                                 <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-200 transition-colors">Search by Tool</button>
                             </div>
                             <div class="p-6 flex flex-col md:flex-row gap-4">
                                 <div class="relative flex-shrink-0 w-full md:w-64">
-                                    <select class="w-full h-14 bg-white/5 border border-white/10 rounded-2xl px-6 text-sm font-black text-white appearance-none focus:outline-none focus:border-primary transition-all">
+                                    <select class="w-full h-14 bg-white/5 border border-white/10 rounded-none px-6 text-sm font-black text-white appearance-none focus:outline-none focus:border-bosch-blue transition-all">
                                         <option class="text-slate-900">SELECT BRAND</option>
                                         <option class="text-slate-900">BOSCH</option>
                                         <option class="text-slate-900">MAKITA</option>
@@ -83,25 +77,25 @@ export function renderHome(container, app) {
                                     </div>
                                 </div>
                                 <div class="relative flex-grow">
-                                    <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl px-14 text-sm font-bold text-slate-800 focus:outline-none focus:border-primary transition-all">
+                                    <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-slate-50 border border-slate-200 rounded-none px-14 text-sm font-bold text-slate-800 focus:outline-none focus:border-bosch-blue transition-all">
                                     <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                     </div>
                                     <!-- Barcode Scan Placeholder -->
-                                    <button onclick="app.showToast('Barcode scanner integration coming soon!', 'info')" class="absolute right-5 top-1/2 -translate-y-1/2 p-2 text-primary hover:bg-primary/5 rounded-xl transition-all" title="Scan Barcode">
+                                    <button onclick="app.showToast('Barcode scanner integration coming soon!', 'info')" class="absolute right-5 top-1/2 -translate-y-1/2 p-2 text-bosch-blue hover:bg-bosch-blue/5 rounded-none transition-all" title="Scan Barcode">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                             <path d="M3 7V5a2 2 0 012-2h2m10 0h2a2 2 0 012 2v2M3 17v2a2 2 0 012 2h2m10 0h2a2 2 0 012-2v-2M7 12h10M7 8h10M7 16h10" />
                                         </svg>
                                     </button>
                                 </div>
-                                <button class="h-14 px-12 bg-primary text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-primary-dark transition-all shadow-xl shadow-primary/20">Find Parts</button>
+                                <button class="h-14 px-12 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-[0.2em] hover:bg-industrial-gray transition-all shadow-xl shadow-slate-900/20">Find Parts</button>
                             </div>
                             <div class="px-8 pb-6 flex items-center gap-4">
                                 <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Hot Searches:</span>
                                 <div class="flex gap-4">
-                                    <a href="#" class="text-[11px] font-bold text-primary hover:underline">Carbon Brush</a>
-                                    <a href="#" class="text-[11px] font-bold text-primary hover:underline">Armature</a>
-                                    <a href="#" class="text-[11px] font-bold text-primary hover:underline">Field Coil</a>
+                                    <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Carbon Brush</a>
+                                    <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Armature</a>
+                                    <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Field Coil</a>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +109,7 @@ export function renderHome(container, app) {
                     <div class="text-center mb-24">
                         <h2 class="text-4xl font-black text-slate-900 mb-4 tracking-tight">Built for Professionals.</h2>
                         <p class="text-slate-500 font-bold text-lg">Streamlining industrial spare parts procurement across India.</p>
-                        <div class="w-24 h-1.5 bg-primary mx-auto rounded-full mt-8"></div>
+                        <div class="w-24 h-1.5 bg-bosch-red mx-auto rounded-none mt-8"></div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                         ${[
@@ -125,10 +119,10 @@ export function renderHome(container, app) {
                             { icon:'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', t:'B2B Benefits', d:'Special contract pricing, credit facility, and priority support.' }
                         ].map(f => `
                             <div class="flex flex-col items-center text-center group">
-                                <div class="w-20 h-20 rounded-[28px] bg-white shadow-premium border border-slate-100 flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500 transform group-hover:-translate-y-2">
+                                <div class="w-20 h-20 rounded-none bg-white shadow-premium border-2 border-slate-100 flex items-center justify-center text-bosch-blue mb-8 group-hover:bg-bosch-blue group-hover:text-white transition-all duration-500 transform group-hover:-translate-y-2 group-hover:border-bosch-blue">
                                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="${f.icon}"/></svg>
                                 </div>
-                                <h4 class="text-lg font-black text-slate-900 mb-3">${f.t}</h4>
+                                <h4 class="text-lg font-black text-slate-900 mb-3 uppercase tracking-widest">${f.t}</h4>
                                 <p class="text-sm text-slate-500 font-medium leading-relaxed px-2">${f.d}</p>
                             </div>
                         `).join('')}
@@ -144,9 +138,9 @@ export function renderHome(container, app) {
                             <h2 class="text-5xl lg:text-6xl font-black text-slate-900 tracking-tight mb-4">Shop by Core Categories.</h2>
                             <p class="text-slate-500 font-bold text-lg leading-relaxed max-w-xl">Precision-engineered spares for every industrial tool in your fleet. Hover to explore.</p>
                         </div>
-                        <a href="/catalog" data-link class="inline-flex items-center gap-3 px-8 h-14 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-900 uppercase tracking-widest text-[10px] font-black group transition-all border border-slate-200">
+                        <a href="/catalog" data-link class="inline-flex items-center gap-3 px-8 h-14 rounded-none bg-industrial-gray hover:bg-bosch-blue text-white uppercase tracking-widest text-[10px] font-black group transition-all border border-slate-200">
                             View Entire Catalog 
-                            <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-primary/20 text-white">
+                            <div class="w-6 h-6 rounded-none bg-bosch-red flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-red-900/20 text-white">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </div>
                         </a>
@@ -159,24 +153,24 @@ export function renderHome(container, app) {
                             { t: s.cat3_title || 'Power Attachments', d: s.cat3_desc || 'Chucks, SDS Adaptors, Cutting Discs & Drill Bits engineered for brutal workloads.', img: app.api(s.cat3_img) || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800', icon:'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5' },
                             { t: s.cat4_title || 'Maintenance Kits', d: s.cat4_desc || 'Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.', img: app.api(s.cat4_img) || 'https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800', icon:'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' }
                         ].map((c) => `
-                            <a href="/catalog" data-link class="group relative rounded-[40px] overflow-hidden bg-slate-800 flex-1 hover:flex-[3] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-end p-6 md:p-10 shadow-2xl hover:shadow-primary/20 cursor-pointer">
+                            <a href="/catalog" data-link class="group relative rounded-none border-2 border-transparent hover:border-bosch-blue overflow-hidden bg-industrial-gray flex-1 hover:flex-[3] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-end p-6 md:p-10 shadow-2xl hover:shadow-slate-900/20 cursor-pointer">
                                 <div class="absolute inset-0">
                                     <img src="${c.img}" alt="${c.t}" class="w-full h-full object-cover opacity-50 mix-blend-overlay group-hover:scale-110 group-hover:opacity-100 transition-all duration-[1200ms] ease-out">
                                 </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-90 group-hover:opacity-70 transition-all duration-700"></div>
-                                <div class="absolute inset-0 bg-gradient-to-r from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-industrial-gray via-industrial-gray/40 to-transparent opacity-90 group-hover:opacity-70 transition-all duration-700"></div>
+                                <div class="absolute inset-0 bg-gradient-to-r from-industrial-gray/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
                                 
                                 <div class="relative z-10 w-full flex flex-col justify-end">
-                                    <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-6 group-hover:bg-primary group-hover:text-white group-hover:-translate-y-2 transition-all duration-500 border border-white/10 shrink-0 shadow-lg">
+                                    <div class="w-14 h-14 rounded-none bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-6 group-hover:bg-bosch-blue group-hover:text-white group-hover:-translate-y-2 transition-all duration-500 border border-white/10 shrink-0 shadow-lg">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${c.icon}"/></svg>
                                     </div>
                                     <div class="overflow-hidden">
-                                        <h4 class="text-2xl md:text-3xl font-black text-white mb-2 whitespace-nowrap transform group-hover:translate-x-2 transition-transform duration-500">${c.t}</h4>
+                                        <h4 class="text-2xl md:text-3xl font-black text-white mb-2 whitespace-nowrap transform group-hover:translate-x-2 transition-transform duration-500 uppercase tracking-widest">${c.t}</h4>
                                         <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                             <div class="overflow-hidden">
                                                 <div class="transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
                                                     <p class="text-sm md:text-base text-slate-300 font-bold leading-relaxed pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 whitespace-normal min-w-[200px] max-w-sm">${c.d}</p>
-                                                    <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200 bg-primary/10 px-4 py-2 rounded-xl">
+                                                    <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-bosch-blue mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200 bg-bosch-blue/10 px-4 py-2 rounded-none border border-bosch-blue/30">
                                                         Explore Collection <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                                                     </span>
                                                 </div>

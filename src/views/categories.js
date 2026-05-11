@@ -10,23 +10,23 @@ export function renderCategories(container, app) {
         <div class="animate-fade-in py-20 bg-slate-50 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-24">
-                    <h2 class="text-5xl font-black text-slate-900 tracking-tight mb-4">Core <span class="text-primary">Categories</span></h2>
+                    <h2 class="text-5xl font-black text-slate-900 tracking-tight mb-4 uppercase">Core <span class="text-bosch-red">Categories</span></h2>
                     <p class="text-slate-500 font-bold text-lg max-w-2xl mx-auto">Explore our extensive inventory organized by functional systems to find the exact part you need faster.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     ${categories.map(c => `
-                        <div onclick="app.renderCatalog(document.getElementById('view-container'))" class="group relative h-[400px] rounded-[48px] overflow-hidden cursor-pointer shadow-premium hover:shadow-2xl transition-all duration-700">
+                        <div onclick="app.renderCatalog(document.getElementById('view-container'))" class="group relative h-[400px] rounded-none border-2 border-transparent hover:border-bosch-blue overflow-hidden cursor-pointer shadow-premium hover:shadow-2xl transition-all duration-700">
                             <img src="${app.api(c.img)}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2000ms]">
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
                             
                             <div class="absolute bottom-10 left-10 right-10 flex flex-col items-start gap-4">
-                                <div class="w-16 h-16 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white mb-2 group-hover:bg-primary transition-all duration-500 shadow-xl">
+                                <div class="w-16 h-16 rounded-none bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white mb-2 group-hover:bg-bosch-blue transition-all duration-500 shadow-xl">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="${c.icon}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </div>
-                                <h4 class="text-3xl font-black text-white leading-tight">${c.t}</h4>
+                                <h4 class="text-3xl font-black text-white leading-tight uppercase tracking-widest">${c.t}</h4>
                                 <p class="text-slate-200 font-medium text-sm leading-relaxed max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500">${c.d}</p>
-                                <div class="mt-4 inline-flex items-center gap-3 text-xs font-black text-primary bg-white px-6 py-3 rounded-2xl uppercase tracking-widest shadow-xl transform translate-y-10 group-hover:translate-y-0 transition-transform duration-500">
+                                <div class="mt-4 inline-flex items-center gap-3 text-xs font-black text-white bg-bosch-blue hover:bg-industrial-gray px-6 py-3 rounded-none uppercase tracking-widest shadow-xl transform translate-y-10 group-hover:translate-y-0 transition-all duration-500">
                                     View Parts <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                                 </div>
                             </div>

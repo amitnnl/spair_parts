@@ -12,20 +12,20 @@ export async function renderInvoices(container, appInstance) {
                 <main class="flex-1 p-8 lg:p-12">
                     <div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
                         <div>
-                            <div class="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600">Financial Records</div>
-                            <h2 class="text-4xl font-black tracking-tight text-slate-900">Your <span class="text-emerald-600">Invoices</span></h2>
+                            <div class="text-[10px] font-black uppercase tracking-[0.3em] text-bosch-blue">Financial Records</div>
+                            <h2 class="text-4xl font-black tracking-tight text-slate-900 uppercase">Your <span class="text-bosch-blue">Invoices</span></h2>
                             <p class="text-slate-500 font-medium mt-2">Official tax invoices for your approved procurement requests.</p>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             ${invoices.length ? invoices.map(inv => `
-                                <div class="bg-white border border-slate-200 rounded-3xl p-8 space-y-6 hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500 group">
+                                <div class="bg-white border-2 border-slate-100 rounded-none p-8 space-y-6 hover:border-bosch-blue transition-all duration-500 group">
                                     <div class="flex justify-between items-start">
-                                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                                        <div class="w-14 h-14 rounded-none bg-industrial-gray text-white flex items-center justify-center group-hover:bg-bosch-blue transition-all">
                                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                         </div>
                                         <div class="text-right space-y-2">
-                                            <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider ${inv.status === 'processing' ? 'bg-amber-50 text-amber-600' : inv.status === 'dispatched' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}">
+                                            <span class="px-3 py-1 rounded-none border border-slate-200 text-[9px] font-black uppercase tracking-wider ${inv.status === 'processing' ? 'bg-amber-50 text-amber-600' : inv.status === 'dispatched' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}">
                                                 ${inv.status || 'processing'}
                                             </span>
                                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${new Date(inv.created_at).toLocaleDateString()}</p>
@@ -34,7 +34,7 @@ export async function renderInvoices(container, appInstance) {
                                     </div>
                                     <div class="space-y-4 pt-6 border-t border-slate-100">
                                         ${inv.tracking_number ? `
-                                            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                            <div class="p-4 bg-slate-50 rounded-none border border-slate-100">
                                                 <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Tracking Number</p>
                                                 <p class="text-xs font-black text-slate-900">${inv.tracking_number}</p>
                                             </div>
@@ -43,11 +43,11 @@ export async function renderInvoices(container, appInstance) {
                                             <span class="text-xs font-bold text-slate-400">Total Amount</span>
                                             <span class="text-xl font-black text-slate-900">₹${parseFloat(inv.total_amount).toLocaleString()}</span>
                                         </div>
-                                        <button onclick="app.renderInvoiceDocument(${inv.id})" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20">View & Download</button>
+                                        <button onclick="app.renderInvoiceDocument(${inv.id})" class="w-full py-4 bg-industrial-gray text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-bosch-blue transition-all shadow-xl shadow-slate-900/20">View & Download</button>
                                     </div>
                                 </div>
                             `).join('') : `
-                                <div class="col-span-full bg-slate-50 border border-slate-100 rounded-3xl p-20 text-center text-slate-400 font-bold">No invoices generated yet.</div>
+                                <div class="col-span-full bg-slate-50 border border-slate-100 rounded-none p-20 text-center text-slate-400 font-bold uppercase tracking-widest">No invoices generated yet.</div>
                             `}
                         </div>
                     </div>
@@ -68,7 +68,7 @@ export async function renderInvoiceDocument(invoiceId, app) {
         const res = await fetch(app.api(`api/invoices.php?id=${invoiceId}`));
         const inv = await res.json();
         modal.innerHTML = `
-            <div id="invoice-printable-area" class="bg-white text-slate-900 w-full max-w-4xl min-h-[11in] p-12 md:p-16 shadow-2xl relative animate-in slide-in-from-bottom-8 duration-500 rounded-xl overflow-hidden mx-auto print:shadow-none print:p-0">
+            <div id="invoice-printable-area" class="bg-white text-slate-900 w-full max-w-4xl min-h-[11in] p-12 md:p-16 shadow-2xl relative animate-in slide-in-from-bottom-8 duration-500 rounded-none overflow-hidden mx-auto print:shadow-none print:p-0">
                 
                 <!-- Print-only watermark -->
                 <div class="hidden print:flex absolute inset-0 items-center justify-center opacity-[0.03] pointer-events-none z-0">
@@ -76,13 +76,13 @@ export async function renderInvoiceDocument(invoiceId, app) {
                 </div>
 
                 <!-- Premium Header Ribbon -->
-                <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 print:h-2"></div>
+                <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-industrial-gray via-bosch-blue to-bosch-red print:h-2"></div>
                 
                 <div class="relative z-10 flex flex-col md:flex-row justify-between items-start border-b-[3px] border-slate-900 pb-10 mt-6 print:mt-4 print:pb-8">
                     <div class="space-y-4">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-slate-900 text-white rounded-xl flex items-center justify-center font-black text-3xl shadow-lg print:shadow-none">P</div>
-                            <h1 class="text-4xl font-black tracking-tighter uppercase text-slate-900">PARTS<span class="text-blue-600">PRO</span></h1>
+                            <div class="w-14 h-14 bg-bosch-blue text-white rounded-none flex items-center justify-center font-black text-3xl shadow-lg print:shadow-none">P</div>
+                            <h1 class="text-4xl font-black tracking-tighter uppercase text-slate-900">PARTS<span class="text-bosch-red">PRO</span></h1>
                         </div>
                         <div class="text-[10px] md:text-[11px] font-black text-slate-500 space-y-1.5 uppercase tracking-[0.15em] leading-relaxed">
                             <p>Industrial Area, Phase 2</p>
@@ -93,8 +93,8 @@ export async function renderInvoiceDocument(invoiceId, app) {
                     </div>
                     <div class="text-right space-y-2 mt-8 md:mt-0">
                         <h2 class="text-5xl md:text-6xl font-black text-slate-100 tracking-tighter uppercase print:text-slate-200">TAX INVOICE</h2>
-                        <div class="inline-block bg-slate-50 border border-slate-200 rounded-lg p-4 mt-2 print:border-none print:bg-transparent print:p-0">
-                            <p class="text-sm font-black text-slate-900">INV #: <span class="text-blue-600">${inv.invoice_number}</span></p>
+                        <div class="inline-block bg-slate-50 border border-slate-200 rounded-none p-4 mt-2 print:border-none print:bg-transparent print:p-0">
+                            <p class="text-sm font-black text-slate-900">INV #: <span class="text-bosch-blue">${inv.invoice_number}</span></p>
                             <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest pt-1">Date: ${new Date(inv.created_at).toLocaleDateString()}</p>
                         </div>
                     </div>
@@ -111,13 +111,13 @@ export async function renderInvoiceDocument(invoiceId, app) {
                     <div class="md:text-right">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-2">Payment Info:</p>
                         <div class="space-y-2">
-                            <span class="inline-block px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-200 print:bg-transparent print:border-slate-300 print:text-slate-800">Payment on Delivery</span>
-                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest pt-1">Status: <span class="${inv.status === 'delivered' ? 'text-emerald-600' : 'text-amber-600'}">${inv.status}</span></p>
+                            <span class="inline-block px-4 py-1.5 bg-industrial-gray text-white rounded-none text-[10px] font-black uppercase tracking-widest border border-bosch-blue print:bg-transparent print:border-slate-300 print:text-slate-800">Payment on Delivery</span>
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest pt-1">Status: <span class="${inv.status === 'delivered' ? 'text-bosch-blue' : 'text-amber-600'}">${inv.status}</span></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="relative z-10 border-[1.5px] border-slate-900 rounded-xl overflow-hidden mb-10 print:border-slate-300">
+                <div class="relative z-10 border-[1.5px] border-slate-900 rounded-none overflow-hidden mb-10 print:border-slate-300">
                     <table class="w-full text-left">
                         <thead class="bg-slate-900 text-white print:bg-slate-100 print:text-slate-900 print:border-b-2 print:border-slate-900">
                             <tr>
@@ -148,7 +148,7 @@ export async function renderInvoiceDocument(invoiceId, app) {
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Terms & Conditions:</p>
                         <p class="text-[9px] font-bold text-slate-500 leading-relaxed text-justify">All spare parts are subject to standard warranty conditions. Returns are accepted within 7 days of delivery if parts are unused and in original packaging. This is a computer generated invoice.</p>
                     </div>
-                    <div class="w-full md:w-80 space-y-3 bg-slate-50 p-6 rounded-xl border border-slate-200 print:border-none print:bg-transparent print:p-0">
+                    <div class="w-full md:w-80 space-y-3 bg-slate-50 p-6 rounded-none border border-slate-200 print:border-none print:bg-transparent print:p-0">
                         <div class="flex justify-between items-center text-sm font-bold text-slate-500 uppercase tracking-widest">
                             <span>Subtotal</span>
                             <span class="text-slate-700">₹${parseFloat(inv.total_amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
@@ -159,7 +159,7 @@ export async function renderInvoiceDocument(invoiceId, app) {
                         </div>
                         <div class="flex justify-between items-center pt-4 border-t-2 border-slate-200 print:border-slate-900">
                             <span class="text-sm font-black text-slate-900 uppercase tracking-widest">Total Payable</span>
-                            <span class="text-3xl font-black text-blue-600">₹${parseFloat(inv.total_amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                            <span class="text-3xl font-black text-bosch-blue">₹${parseFloat(inv.total_amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
                         </div>
                     </div>
                 </div>
@@ -172,8 +172,8 @@ export async function renderInvoiceDocument(invoiceId, app) {
                         <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">PARTSPRO B2B Procurement</p>
                     </div>
                     <div class="flex gap-4 no-print w-full md:w-auto">
-                        <button onclick="document.getElementById('invoice-doc-modal').remove()" class="flex-1 md:flex-none px-6 py-3.5 bg-slate-100 text-slate-500 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all text-center">Close</button>
-                        <button onclick="window.print()" class="flex-1 md:flex-none px-8 py-3.5 bg-blue-600 text-white rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                        <button onclick="document.getElementById('invoice-doc-modal').remove()" class="flex-1 md:flex-none px-6 py-3.5 bg-slate-100 text-slate-500 rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all text-center">Close</button>
+                        <button onclick="window.print()" class="flex-1 md:flex-none px-8 py-3.5 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray hover:shadow-lg transition-all flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                             Print Document
                         </button>
