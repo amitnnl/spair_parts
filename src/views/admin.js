@@ -291,7 +291,7 @@ export async function renderAdminUsers(container, app) {
                                     <tr class="hover:bg-slate-50/80 transition-all group">
                                         <td class="p-6 pl-8">
                                             <div class="flex items-center gap-4">
-                                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-blue-100">${u.name.charAt(0).toUpperCase()}</div>
+                                                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-emerald-100">${u.name.charAt(0).toUpperCase()}</div>
                                                 <div>
                                                     <span class="font-black block text-slate-900 text-sm mb-0.5">${u.name}</span>
                                                     <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${u.email}</span>
@@ -367,7 +367,7 @@ export async function renderProcessQuotation(quotationId, app) {
             
             <div class="p-8 space-y-8">
                 <div class="flex flex-wrap gap-4">
-                    <div class="flex-1 min-w-[200px] p-6 bg-blue-50 border border-blue-100 rounded-2xl">
+                    <div class="flex-1 min-w-[200px] p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
                         <p class="text-[10px] font-black text-bosch-blue uppercase tracking-widest mb-1">Partner Tier</p>
                         <h4 class="text-xl font-black text-slate-900">${discountTier}% Automatic Discount</h4>
                     </div>
@@ -401,7 +401,7 @@ export async function renderProcessQuotation(quotationId, app) {
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
                                                 <input type="number" name="price_${item.id}" data-item-id="${item.id}" data-qty="${item.quantity}" data-msrp="${item.cost || 0}" step="0.01" value="${item.unit_price || ''}" required class="w-28 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-black text-bosch-blue focus:outline-none focus:border-blue-500 transition-all unit-price-input">
-                                                <button type="button" onclick="app.applyDiscountToItem(this, ${discountTier})" class="p-2 bg-blue-50 text-bosch-blue rounded-lg hover:bg-bosch-blue hover:text-white transition-all shadow-sm">
+                                                <button type="button" onclick="app.applyDiscountToItem(this, ${discountTier})" class="p-2 bg-emerald-50 text-bosch-blue rounded-lg hover:bg-bosch-blue hover:text-white transition-all shadow-sm">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                                 </button>
                                             </div>
@@ -420,7 +420,7 @@ export async function renderProcessQuotation(quotationId, app) {
                     </div>
                     
                     <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-4">
-                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-bosch-blue text-white hover:bg-blue-700 transition-all font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20">
+                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-bosch-blue text-white hover:bg-industrial-gray transition-all font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             Apply Partner Discount to All
                         </button>
@@ -599,7 +599,7 @@ export async function renderSystemSettings(container, app) {
                         <div class="flex gap-2 mb-8 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm overflow-x-auto no-scrollbar">
                             ${tabs.map((tab, i) => `
                                 <button type="button" onclick="window.switchCMSTab('${tab.id}')" id="tab-btn-${tab.id}"
-                                    class="cms-tab-btn flex-shrink-0 px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${i === 0 ? 'bg-bosch-blue text-white shadow-lg shadow-blue-600/30' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}">
+                                    class="cms-tab-btn flex-shrink-0 px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${i === 0 ? 'bg-bosch-blue text-white shadow-lg shadow-slate-900/30' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}">
                                     ${tab.label}
                                 </button>
                             `).join('')}
@@ -777,9 +777,9 @@ export async function renderSystemSettings(container, app) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                                    <h4 class="text-sm font-black text-blue-900 mb-2">Troubleshooting Tip</h4>
-                                    <p class="text-xs text-blue-700 leading-relaxed font-medium">If "whatsapp_number" shows as <span class="text-rose-500 font-bold">NOT FOUND</span> on your live site, please click "Save All Changes" at the bottom of this page to force-sync the database registry.</p>
+                                <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                    <h4 class="text-sm font-black text-emerald-900 mb-2">Troubleshooting Tip</h4>
+                                    <p class="text-xs text-emerald-700 leading-relaxed font-medium">If "whatsapp_number" shows as <span class="text-rose-500 font-bold">NOT FOUND</span> on your live site, please click "Save All Changes" at the bottom of this page to force-sync the database registry.</p>
                                 </div>
                             </div>
 
@@ -790,7 +790,7 @@ export async function renderSystemSettings(container, app) {
                                     Cancel
                                 </button>
                                 <button type="submit" id="cms-save-btn"
-                                    class="px-10 py-4 rounded-2xl bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:-translate-y-0.5 hover:bg-blue-700 transition-all flex items-center gap-2">
+                                    class="px-10 py-4 rounded-2xl bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:-translate-y-0.5 hover:bg-industrial-gray transition-all flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                                     Save All Changes
                                 </button>
@@ -804,12 +804,12 @@ export async function renderSystemSettings(container, app) {
         window.switchCMSTab = (tabId) => {
             document.querySelectorAll('.cms-tab-panel').forEach(p => p.classList.add('hidden'));
             document.querySelectorAll('.cms-tab-btn').forEach(b => {
-                b.classList.remove('bg-bosch-blue', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
+                b.classList.remove('bg-bosch-blue', 'text-white', 'shadow-lg', 'shadow-slate-900/30');
                 b.classList.add('text-slate-500');
             });
             document.getElementById('cms-tab-' + tabId)?.classList.remove('hidden');
             const ab = document.getElementById('tab-btn-' + tabId);
-            if (ab) { ab.classList.add('bg-bosch-blue', 'text-white', 'shadow-lg', 'shadow-blue-600/30'); ab.classList.remove('text-slate-500'); }
+            if (ab) { ab.classList.add('bg-bosch-blue', 'text-white', 'shadow-lg', 'shadow-slate-900/30'); ab.classList.remove('text-slate-500'); }
         };
 
         document.getElementById('cms-form').onsubmit = async (e) => {
@@ -907,7 +907,7 @@ export function renderImportModal(app) {
                     <p class="text-slate-500 font-bold">Drop CSV file here or <span class="text-bosch-blue">browse</span></p>
                     <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest font-black">Headers: Part Name, Machine Model, Brand, Cost, Stock</p>
                 </div>
-                <button type="submit" class="w-full py-4 rounded-2xl bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 transition-all">Process Import</button>
+                <button type="submit" class="w-full py-4 rounded-2xl bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray transition-all">Process Import</button>
             </form>
         </div>
     `;
@@ -977,7 +977,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-partname" name="part_name_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Part Name...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('part_name')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all" title="Add new part name">+</button>
+                        <button type="button" onclick="window._pfAddLookup('part_name')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all" title="Add new part name">+</button>
                     </div>
                 </div>
 
@@ -997,7 +997,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-brand" name="brand_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Brand...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('brand')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('brand')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
                     </div>
                 </div>
 
@@ -1008,7 +1008,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-machine" name="machine_name_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Machine...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
                     </div>
                 </div>
 
@@ -1019,7 +1019,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-model" name="model_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Model...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('model')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('model')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
                     </div>
                 </div>
 
@@ -1030,7 +1030,7 @@ async function renderProductForm(product, app) {
                         <select id="pf-size" name="machine_size_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                             <option value="">Select Size...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="px-4 py-2 rounded-xl bg-blue-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
                     </div>
                 </div>
 
@@ -1075,12 +1075,12 @@ async function renderProductForm(product, app) {
                 <div class="col-span-2 space-y-2 pt-2">
                     <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Product Photo</label>
                     <input type="file" name="photo" accept="image/*"
-                        class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-blue-50 file:text-bosch-blue hover:file:bg-blue-100">
+                        class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-emerald-50 file:text-bosch-blue hover:file:bg-blue-100">
                 </div>
 
                 <div class="col-span-2 pt-4">
                     <button type="submit" id="pf-submit-btn"
-                        class="w-full py-4 rounded-2xl bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:bg-blue-700 hover:scale-[1.02] transition-all">
+                        class="w-full py-4 rounded-2xl bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray hover:scale-[1.02] transition-all">
                         Save Complete Product
                     </button>
                 </div>
@@ -1252,7 +1252,7 @@ export async function deleteProduct(id, app) {
 export function getInvoiceStatusClass(status) {
     switch (status) {
         case 'processing': return 'bg-amber-50 text-amber-600 border border-amber-200';
-        case 'dispatched': return 'bg-blue-50 text-bosch-blue border border-blue-200';
+        case 'dispatched': return 'bg-emerald-50 text-bosch-blue border border-blue-200';
         case 'delivered': return 'bg-emerald-50 text-emerald-600 border border-emerald-200';
         default: return 'bg-slate-50 text-slate-400 border border-slate-100';
     }
@@ -1276,7 +1276,7 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Update Order Status</label>
                     <div class="grid grid-cols-1 gap-3">
                         ${currentStatus === 'processing' ? `
-                            <button onclick="app.updateOrderStatus(${invoiceId}, 'dispatched')" class="flex items-center justify-between p-4 rounded-2xl border-2 border-blue-100 bg-blue-50 text-blue-700 hover:border-blue-600 transition-all group">
+                            <button onclick="app.updateOrderStatus(${invoiceId}, 'dispatched')" class="flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-blue-600 transition-all group">
                                 <span class="font-black text-xs uppercase tracking-widest">Mark as Dispatched</span>
                                 <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                             </button>

@@ -256,7 +256,7 @@ body {
 
 /* ── Premium Logo Effects ────────────────────────────────── */
 @keyframes logoPulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 62, 100, 0.4); }
+    0% { box-shadow: 0 0 0 0 rgba(34, 110, 84, 0.4); }
     70% { box-shadow: 0 0 0 15px rgba(0, 62, 100, 0); }
     100% { box-shadow: 0 0 0 0 rgba(0, 62, 100, 0); }
 }
@@ -269,7 +269,7 @@ body {
 
 .logo-container-premium {
     position: relative;
-    background: linear-gradient(135deg, #003e64 0%, #001a2c 100%);
+    background: linear-gradient(135deg, #1a4a39 0%, #0f2a20 100%);
     overflow: hidden;
 }
 
@@ -280,7 +280,7 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: conic-gradient(transparent, rgba(59, 130, 246, 0.3), transparent 30%);
+    background: conic-gradient(transparent, rgba(34, 110, 84, 0.3), transparent 30%);
     animation: rotate 4s linear infinite;
 }
 
@@ -290,7 +290,7 @@ body {
 }
 
 .logo-text-gradient {
-    background: linear-gradient(to bottom, #003e64, #001a2c);
+    background: linear-gradient(to bottom, #1a4a39, #0f2a20);
     -webkit-background-clip: text;
     background-clip: text; /* standard property */
     -webkit-text-fill-color: transparent;
@@ -298,6 +298,6 @@ body {
 }
 
 .logo-badge {
-    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    background: linear-gradient(90deg, #226E54, #1a4a39);
     box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
 }

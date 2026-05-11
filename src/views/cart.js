@@ -7,7 +7,7 @@ export function renderCart(container, app) {
                 </div>
                 <h2 class="text-2xl font-black text-slate-900 mb-2">Your cart is empty</h2>
                 <p class="text-slate-500 font-medium mb-8">Add spare parts to your cart to request a quotation.</p>
-                <a href="/catalog" data-link class="px-8 py-3 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-blue-900/20">Browse Catalogue</a>
+                <a href="/catalog" data-link class="px-8 py-3 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Browse Catalogue</a>
             </div>
         `;
         return;
@@ -61,7 +61,7 @@ export function renderCart(container, app) {
                         <p class="text-[11px] font-medium leading-tight">Our team will review your request and provide competitive B2B pricing via email.</p>
                     </div>
                 </div>
-                <button onclick="app.submitQuotation()" class="w-full md:w-auto h-14 px-12 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-blue-900/30 hover:bg-industrial-gray transition-all">
+                <button onclick="app.submitQuotation()" class="w-full md:w-auto h-14 px-12 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-slate-900/30 hover:bg-industrial-gray transition-all">
                     Submit RFQ Request
                 </button>
             </div>

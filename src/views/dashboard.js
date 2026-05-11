@@ -48,7 +48,7 @@ export async function renderDashboard(container, app) {
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                 Upload CSV Order
                             </button>
-                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-8 py-4 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-900/30 hover:bg-slate-700 transition-colors">Browse Catalog Manually</button>
+                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-8 py-4 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/30 hover:bg-slate-700 transition-colors">Browse Catalog Manually</button>
                         </div>
                     </div>
                 </div>
@@ -145,7 +145,7 @@ export function renderBulkOrderModal(app) {
 
 export async function renderMyPartsList(container, app) {
     if (!app.state.user) { history.pushState(null, null, app.basePath + '/login'); app.handleRouting(); return; }
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full"></div></div>`;
     
     try {
         container.innerHTML = `

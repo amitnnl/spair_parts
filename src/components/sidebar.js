@@ -7,7 +7,7 @@ export function getSidebar(active, app) {
             <!-- User Status Card -->
             <div class="p-5 border-b border-slate-100 bg-slate-50/30">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-none bg-bosch-blue text-white flex items-center justify-center font-black text-base shadow-lg shadow-blue-900/20 shrink-0">
+                    <div class="w-10 h-10 rounded-none bg-bosch-blue text-white flex items-center justify-center font-black text-base shadow-lg shadow-slate-900/20 shrink-0">
                         ${userName.charAt(0)}
                     </div>
                     <div>

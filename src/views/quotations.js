@@ -65,7 +65,7 @@ export async function renderQuotations(container, appInstance) {
                                                         ${isAdmin && q.status === 'pending' ? 'Process' : 'View'}
                                                     </button>
                                                     ${!isAdmin && q.status === 'pending' ? `<button onclick="app.editQuotation(${q.id})" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>` : ''}
-                                                    ${!isAdmin && q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-blue-900/20">Approve</button>` : ''}
+                                                    ${!isAdmin && q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Approve</button>` : ''}
                                                 </div>
                                             </td>
                                         </tr>
@@ -144,7 +144,7 @@ export async function viewQuotationDetails(id, appInstance) {
                     
                     <div class="flex justify-end gap-4">
                         <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-none border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 hover:text-slate-900 transition-all">Close Details</button>
-                        ${data.status === 'priced' ? `<button onclick="app.approveQuotation(${id})" class="px-10 py-4 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-900/20 hover:bg-industrial-gray transition-all">Approve & Order</button>` : ''}
+                        ${data.status === 'priced' ? `<button onclick="app.approveQuotation(${id})" class="px-10 py-4 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray transition-all">Approve & Order</button>` : ''}
                     </div>
                 </div>
             </div>
