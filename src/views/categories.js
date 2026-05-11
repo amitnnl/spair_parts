@@ -10,7 +10,7 @@ export function renderCategories(container, app) {
         <div class="animate-fade-in py-20 bg-slate-50 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-24">
-                    <h2 class="text-5xl font-black text-slate-900 tracking-tight mb-4 uppercase">Core <span class="text-bosch-red">Categories</span></h2>
+                    <h2 class="text-5xl font-black text-bosch-blue tracking-tight mb-4 uppercase">Core <span class="text-bosch-red">Categories</span></h2>
                     <p class="text-slate-500 font-bold text-lg max-w-2xl mx-auto">Explore our extensive inventory organized by functional systems to find the exact part you need faster.</p>
                 </div>
 

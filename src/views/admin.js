@@ -14,7 +14,7 @@ export async function renderAdmin(container, app) {
             <main class="flex-1 p-8 lg:p-12 space-y-12">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
-                        <h2 class="text-4xl font-black text-slate-900 tracking-tight">Executive <span class="text-bosch-blue">Dashboard</span></h2>
+                        <h2 class="text-4xl font-black text-bosch-blue tracking-tight">Executive <span class="text-bosch-blue">Dashboard</span></h2>
                         <p class="text-slate-500 mt-2 font-bold text-lg">Platform status and procurement oversight.</p>
                     </div>
                     <button onclick="app.printAdminReport()" class="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-none font-bold text-sm hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
@@ -32,7 +32,7 @@ export async function renderAdmin(container, app) {
         ].map(s => `
                         <div class="bg-white border-2 border-slate-100 rounded-none p-8 space-y-4 hover:border-bosch-blue transition-all">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${s.l}</p>
-                            <h3 class="text-3xl font-black text-slate-900" id="${s.id}">${s.v}</h3>
+                            <h3 class="text-3xl font-black text-bosch-blue" id="${s.id}">${s.v}</h3>
                             <div class="w-full h-1 bg-${s.c}-100 rounded-none overflow-hidden">
                                 <div class="w-1/3 h-full bg-${s.c}-600"></div>
                             </div>
@@ -43,7 +43,7 @@ export async function renderAdmin(container, app) {
                 <div class="space-y-8">
                     <div class="flex items-center gap-4">
                         <div class="w-2 h-8 bg-bosch-blue rounded-none"></div>
-                        <h3 class="text-xl font-black text-slate-900 tracking-tight uppercase">Pending Procurements</h3>
+                        <h3 class="text-xl font-black text-bosch-blue tracking-tight uppercase">Pending Procurements</h3>
                     </div>
                     <div id="admin-quotation-list" class="grid grid-cols-1 gap-4">
                         <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-full"></div></div>
@@ -53,7 +53,7 @@ export async function renderAdmin(container, app) {
                 <div class="space-y-8">
                     <div class="flex items-center gap-4">
                         <div class="w-2 h-8 bg-bosch-red rounded-none"></div>
-                        <h3 class="text-xl font-black text-slate-900 tracking-tight uppercase">Order Fulfillment & Logistics</h3>
+                        <h3 class="text-xl font-black text-bosch-blue tracking-tight uppercase">Order Fulfillment & Logistics</h3>
                     </div>
                     <div id="admin-invoice-list" class="grid grid-cols-1 gap-4">
                         <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-red border-t-transparent rounded-full"></div></div>
@@ -82,7 +82,7 @@ export async function loadAdminInvoices(app) {
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
                     <div>
-                        <div class="font-black text-slate-900 uppercase tracking-widest">${inv.invoice_number} • ${inv.user_name}</div>
+                        <div class="font-black text-bosch-blue uppercase tracking-widest">${inv.invoice_number} • ${inv.user_name}</div>
                         <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">
                             ${new Date(inv.created_at).toLocaleDateString()} • ₹${parseFloat(inv.total_amount).toLocaleString()}
                             ${inv.tracking_number ? ` • Tracking: <span class="text-bosch-blue font-bold">${inv.tracking_number}</span>` : ''}
@@ -125,7 +125,7 @@ export async function loadAdminQuotations(app) {
         list.innerHTML = quotations.length ? quotations.map(q => `
             <div class="bg-white border-2 border-slate-100 rounded-none p-6 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div>
-                    <div class="font-black text-slate-900 uppercase tracking-widest">${q.user_name}</div>
+                    <div class="font-black text-bosch-blue uppercase tracking-widest">${q.user_name}</div>
                     <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">${q.user_email} • ${new Date(q.created_at).toLocaleString()}</div>
                 </div>
                 <div class="flex items-center gap-6">
@@ -157,7 +157,7 @@ export async function renderAdminInventory(container, app) {
                 <main class="flex-1 p-8 lg:p-12 space-y-12">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
-                            <h2 class="text-4xl font-black text-slate-900 tracking-tight uppercase">Inventory <span class="text-bosch-blue">Warehouse</span></h2>
+                            <h2 class="text-4xl font-black text-bosch-blue tracking-tight uppercase">Inventory <span class="text-bosch-blue">Warehouse</span></h2>
                             <p class="text-slate-500 mt-2 font-bold text-lg">Real-time stock monitoring and fitment management.</p>
                         </div>
                         <div class="flex gap-4 no-print">
@@ -223,7 +223,7 @@ function createInventoryRow(p, app) {
                         ${isLowStock ? '<span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-bosch-red rounded-none border border-white animate-pulse"></span>' : ''}
                     </div>
                     <div>
-                        <span class="font-black block text-slate-900 text-sm mb-0.5 uppercase tracking-widest">${p.part_name}</span>
+                        <span class="font-black block text-bosch-blue text-sm mb-0.5 uppercase tracking-widest">${p.part_name}</span>
                         <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-slate-100 px-2 py-0.5 rounded-none inline-block">${p.machine_model || 'Universal'}</span>
                     </div>
                 </div>
@@ -239,7 +239,7 @@ function createInventoryRow(p, app) {
                     </div>
                 </div>
             </td>
-            <td class="p-6 font-black text-slate-900 text-sm">₹${p.cost || '0.00'}</td>
+            <td class="p-6 font-black text-bosch-blue text-sm">₹${p.cost || '0.00'}</td>
             <td class="p-6 pr-8 text-right">
                 <div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-none bg-white border border-slate-200 text-slate-400 hover:text-white hover:border-bosch-blue hover:bg-bosch-blue transition-all">
@@ -270,7 +270,7 @@ export async function renderAdminUsers(container, app) {
                 <main class="flex-1 p-8 lg:p-12 space-y-12">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
-                            <h2 class="text-4xl font-black text-slate-900 tracking-tight">Partner <span class="text-bosch-blue">Management</span></h2>
+                            <h2 class="text-4xl font-black text-bosch-blue tracking-tight">Partner <span class="text-bosch-blue">Management</span></h2>
                             <p class="text-slate-500 mt-2 font-bold text-lg">Manage B2B client access and custom discount tiers.</p>
                         </div>
                     </div>
@@ -293,7 +293,7 @@ export async function renderAdminUsers(container, app) {
                                             <div class="flex items-center gap-4">
                                                 <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-emerald-100">${u.name.charAt(0).toUpperCase()}</div>
                                                 <div>
-                                                    <span class="font-black block text-slate-900 text-sm mb-0.5">${u.name}</span>
+                                                    <span class="font-black block text-bosch-blue text-sm mb-0.5">${u.name}</span>
                                                     <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${u.email}</span>
                                                 </div>
                                             </div>
@@ -369,7 +369,7 @@ export async function renderProcessQuotation(quotationId, app) {
                 <div class="flex flex-wrap gap-4">
                     <div class="flex-1 min-w-[200px] p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
                         <p class="text-[10px] font-black text-bosch-blue uppercase tracking-widest mb-1">Partner Tier</p>
-                        <h4 class="text-xl font-black text-slate-900">${discountTier}% Automatic Discount</h4>
+                        <h4 class="text-xl font-black text-bosch-blue">${discountTier}% Automatic Discount</h4>
                     </div>
                     <div class="flex-1 min-w-[200px] p-6 bg-slate-50 border border-slate-200 rounded-2xl">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Status</p>
@@ -393,7 +393,7 @@ export async function renderProcessQuotation(quotationId, app) {
                                 ${details.map(item => `
                                     <tr class="group">
                                         <td class="p-6">
-                                            <div class="font-bold text-slate-900">${item.part_name}</div>
+                                            <div class="font-bold text-bosch-blue">${item.part_name}</div>
                                             <div class="text-[10px] text-slate-500 uppercase font-black tracking-tighter mt-0.5">${item.brand} • ${item.machine_model}</div>
                                         </td>
                                         <td class="p-6 text-slate-600 font-black">${item.quantity}</td>
@@ -413,7 +413,7 @@ export async function renderProcessQuotation(quotationId, app) {
                             <tfoot class="bg-slate-50 border-t border-slate-200">
                                 <tr>
                                     <td colspan="4" class="p-8 text-right font-black text-slate-400 uppercase tracking-widest text-xs">Total Quotation Value:</td>
-                                    <td class="p-8 text-right font-black text-3xl text-slate-900" id="quotation-total-display">₹0.00</td>
+                                    <td class="p-8 text-right font-black text-3xl text-bosch-blue" id="quotation-total-display">₹0.00</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -591,7 +591,7 @@ export async function renderSystemSettings(container, app) {
                 <main class="flex-1 p-6 lg:p-10 overflow-x-hidden">
                     <div class="max-w-5xl mx-auto">
                         <div class="mb-8">
-                            <h2 class="text-3xl font-black text-slate-900">Website <span class="text-bosch-blue">Control Center</span></h2>
+                            <h2 class="text-3xl font-black text-bosch-blue">Website <span class="text-bosch-blue">Control Center</span></h2>
                             <p class="text-slate-500 font-medium mt-1">Edit every page, image, and text on your live website from here.</p>
                         </div>
 
@@ -610,7 +610,7 @@ export async function renderSystemSettings(container, app) {
                             <!-- GENERAL -->
                             <div id="cms-tab-general" class="cms-tab-panel space-y-6 bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm">
                                 <div class="pb-6 border-b border-slate-100 mb-6">
-                                    <h3 class="text-xl font-black text-slate-900">General Settings</h3>
+                                    <h3 class="text-xl font-black text-bosch-blue">General Settings</h3>
                                     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Site identity, pricing & contact info</p>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -631,7 +631,7 @@ export async function renderSystemSettings(container, app) {
                             <div id="cms-tab-home" class="cms-tab-panel space-y-6 hidden">
                                 <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
-                                        <h3 class="text-xl font-black text-slate-900">Hero Section</h3>
+                                        <h3 class="text-xl font-black text-bosch-blue">Hero Section</h3>
                                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Main banner headline, subtitle, background image</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-5">
@@ -653,7 +653,7 @@ export async function renderSystemSettings(container, app) {
                             <div id="cms-tab-brands" class="cms-tab-panel space-y-6 hidden">
                                 <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
-                                        <h3 class="text-xl font-black text-slate-900">Brands Page</h3>
+                                        <h3 class="text-xl font-black text-bosch-blue">Brands Page</h3>
                                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading and 6 brand cards</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
@@ -680,7 +680,7 @@ export async function renderSystemSettings(container, app) {
                             <div id="cms-tab-categories" class="cms-tab-panel space-y-6 hidden">
                                 <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
-                                        <h3 class="text-xl font-black text-slate-900">Categories Page</h3>
+                                        <h3 class="text-xl font-black text-bosch-blue">Categories Page</h3>
                                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading and 4 category cards</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
@@ -707,7 +707,7 @@ export async function renderSystemSettings(container, app) {
                             <div id="cms-tab-support" class="cms-tab-panel space-y-6 hidden">
                                 <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
-                                        <h3 class="text-xl font-black text-slate-900">Support Page</h3>
+                                        <h3 class="text-xl font-black text-bosch-blue">Support Page</h3>
                                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading, description and contact info cards</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
@@ -730,7 +730,7 @@ export async function renderSystemSettings(container, app) {
                             <div id="cms-tab-footer" class="cms-tab-panel space-y-6 hidden">
                                 <div class="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
-                                        <h3 class="text-xl font-black text-slate-900">Footer Content</h3>
+                                        <h3 class="text-xl font-black text-bosch-blue">Footer Content</h3>
                                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Tagline, address, email and copyright text</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
@@ -745,7 +745,7 @@ export async function renderSystemSettings(container, app) {
                             <!-- SYSTEM STATUS -->
                             <div id="cms-tab-system" class="cms-tab-panel space-y-6 hidden bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm">
                                 <div class="pb-6 border-b border-slate-100">
-                                    <h3 class="text-xl font-black text-slate-900">Platform Diagnostics</h3>
+                                    <h3 class="text-xl font-black text-bosch-blue">Platform Diagnostics</h3>
                                     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Verify live database values and system integrity</p>
                                 </div>
                                 <div class="bg-slate-50 rounded-2xl p-6 space-y-4">
@@ -896,8 +896,8 @@ export function renderImportModal(app) {
     modal.innerHTML = `
         <div class="bg-white rounded-[32px] w-full max-w-xl p-10 space-y-8 shadow-2xl animate-in zoom-in duration-300">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900">Bulk <span class="text-bosch-blue">Import</span></h2>
-                <button onclick="document.getElementById('import-modal').remove()" class="text-slate-400 hover:text-slate-900 transition-all">
+                <h2 class="text-3xl font-black text-bosch-blue">Bulk <span class="text-bosch-blue">Import</span></h2>
+                <button onclick="document.getElementById('import-modal').remove()" class="text-slate-400 hover:text-bosch-blue transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -961,8 +961,8 @@ async function renderProductForm(product, app) {
     modal.innerHTML = `
         <div class="bg-white rounded-[32px] w-full max-w-3xl p-6 md:p-10 space-y-6 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900">${isEdit ? 'Edit' : 'Add New'} <span class="text-bosch-blue">Product</span></h2>
-                <button onclick="document.getElementById('product-modal').remove()" class="text-slate-400 hover:text-slate-900 transition-all">
+                <h2 class="text-3xl font-black text-bosch-blue">${isEdit ? 'Edit' : 'Add New'} <span class="text-bosch-blue">Product</span></h2>
+                <button onclick="document.getElementById('product-modal').remove()" class="text-slate-400 hover:text-bosch-blue transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -983,7 +983,7 @@ async function renderProductForm(product, app) {
 
                 <!-- Primary Fitment Section -->
                 <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2 flex justify-between items-center">
-                    <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
+                    <h3 class="text-[11px] font-black text-bosch-blue uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
                     <label class="flex items-center gap-2 cursor-pointer group">
                         <input type="checkbox" onchange="window._pfToggleUnknownMachine(this.checked)" class="w-4 h-4 rounded border-slate-300 text-bosch-blue focus:ring-blue-500">
                         <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-bosch-blue transition-all">Suitable machine abhi pata nahi hai</span>
@@ -1037,7 +1037,7 @@ async function renderProductForm(product, app) {
                 <!-- Additional Machines Section -->
                 <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Other Suitable Machines</h3>
+                        <h3 class="text-[11px] font-black text-bosch-blue uppercase tracking-[0.2em]">Other Suitable Machines</h3>
                         <button type="button" onclick="window._pfAddMachineRow()" class="text-[10px] font-black text-bosch-blue uppercase tracking-widest hover:underline">+ Add More Machine</button>
                     </div>
                     <div id="additional-machines-container" class="space-y-4 mt-4">
@@ -1047,7 +1047,7 @@ async function renderProductForm(product, app) {
 
                 <!-- Product Details -->
                 <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
-                    <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Product Details</h3>
+                    <h3 class="text-[11px] font-black text-bosch-blue uppercase tracking-[0.2em]">Product Details</h3>
                 </div>
 
                 <!-- Cost -->
@@ -1266,8 +1266,8 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
     modal.innerHTML = `
         <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-300">
             <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight">Fulfillment Status</h2>
-                <button onclick="document.getElementById('dispatch-modal').remove()" class="text-slate-400 hover:text-slate-900 transition-all">
+                <h2 class="text-xl font-black text-bosch-blue uppercase tracking-tight">Fulfillment Status</h2>
+                <button onclick="document.getElementById('dispatch-modal').remove()" class="text-slate-400 hover:text-bosch-blue transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -1289,7 +1289,7 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
                         ` : ''}
                         ${currentStatus === 'delivered' ? `
                             <div class="p-6 text-center bg-slate-50 border border-slate-200 rounded-2xl">
-                                <p class="text-xs font-black text-slate-900 uppercase tracking-widest">Order Successfully Delivered</p>
+                                <p class="text-xs font-black text-bosch-blue uppercase tracking-widest">Order Successfully Delivered</p>
                             </div>
                         ` : ''}
                     </div>
@@ -1303,7 +1303,7 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
                 ` : tracking ? `
                     <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Tracking ID</p>
-                        <p class="font-black text-slate-900">${tracking}</p>
+                        <p class="font-black text-bosch-blue">${tracking}</p>
                     </div>
                 ` : ''}
             </div>

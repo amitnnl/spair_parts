@@ -5,7 +5,7 @@ body {
     font-family: 'Outfit', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #1f1f1f; /* industrial-gray */
+    color: #226E54; /* industrial-gray */
     background-color: #f8fafc; /* bg-slate-50 */
 }
 .font-poppins { font-family: 'Outfit', sans-serif; }
@@ -86,7 +86,7 @@ body {
     box-shadow: 0 10px 15px -3px rgba(34, 110, 84, 0.2);
 }
 .btn-primary:hover {
-    background-color: #1f1f1f;
+    background-color: #226E54;
     transform: translateY(-2px);
 }
 .btn-secondary {
@@ -103,13 +103,13 @@ body {
     align-items: center;
     gap: 0.75rem;
     background-color: white;
-    border: 1px solid #1f1f1f;
+    border: 1px solid #226E54;
     border-radius: 0;
     padding: 1rem 1.25rem;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
     font-size: 0.875rem;
     font-weight: 600;
-    color: #1f1f1f;
+    color: #226E54;
     min-width: 280px;
     max-width: 24rem;
 }
@@ -143,10 +143,49 @@ body {
     to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Lightning & Glow Effects */
+@keyframes lightning-pulse {
+    0%, 100% { opacity: 0.15; transform: scale(1); filter: blur(80px); }
+    50% { opacity: 0.3; transform: scale(1.1); filter: blur(100px); }
+}
+
+@keyframes lightning-strike {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.lightning-glow {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, #226E54 0%, transparent 70%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 0;
+    animation: lightning-pulse 8s infinite ease-in-out;
+}
+
+.lightning-bg {
+    position: relative;
+    overflow: hidden;
+}
+
+.lightning-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(34, 110, 84, 0.05) 180deg, transparent 360deg);
+    animation: lightning-strike 15s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
 /* ── Custom Scrollbar ────────────────────────────────────── */
 ::-webkit-scrollbar        { width: 12px; height: 12px; }
 ::-webkit-scrollbar-track  { background: #f8fafc; border-left: 1px solid #e2e8f0; }
-::-webkit-scrollbar-thumb  { background: #1f1f1f; border-radius: 0; border: 2px solid #f8fafc; }
+::-webkit-scrollbar-thumb  { background: #226E54; border-radius: 0; border: 2px solid #f8fafc; }
 ::-webkit-scrollbar-thumb:hover { background: #226E54; }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -224,13 +263,13 @@ body {
 
 .whatsapp-tooltip {
     background: white;
-    border: 2px solid #1f1f1f;
+    border: 2px solid #226E54;
     border-radius: 0;
     padding: 0.75rem 1.25rem;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
     font-size: 0.875rem;
     font-weight: 700;
-    color: #1f1f1f;
+    color: #226E54;
     opacity: 0;
     transform: translateX(1rem);
     pointer-events: none;

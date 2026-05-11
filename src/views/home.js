@@ -66,11 +66,11 @@ export function renderHome(container, app) {
                             <div class="p-6 flex flex-col md:flex-row gap-4">
                                 <div class="relative flex-shrink-0 w-full md:w-64">
                                     <select class="w-full h-14 bg-white/5 border border-white/10 rounded-none px-6 text-sm font-black text-white appearance-none focus:outline-none focus:border-bosch-blue transition-all">
-                                        <option class="text-slate-900">SELECT BRAND</option>
-                                        <option class="text-slate-900">BOSCH</option>
-                                        <option class="text-slate-900">MAKITA</option>
-                                        <option class="text-slate-900">DEWALT</option>
-                                        <option class="text-slate-900">HIKOKI</option>
+                                        <option class="text-bosch-blue">SELECT BRAND</option>
+                                        <option class="text-bosch-blue">BOSCH</option>
+                                        <option class="text-bosch-blue">MAKITA</option>
+                                        <option class="text-bosch-blue">DEWALT</option>
+                                        <option class="text-bosch-blue">HIKOKI</option>
                                     </select>
                                     <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"/></svg>
@@ -107,7 +107,7 @@ export function renderHome(container, app) {
             <section class="pb-32 bg-slate-50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-24">
-                        <h2 class="text-4xl font-black text-slate-900 mb-4 tracking-tight">Built for Professionals.</h2>
+                        <h2 class="text-4xl font-black text-bosch-blue mb-4 tracking-tight">Built for Professionals.</h2>
                         <p class="text-slate-500 font-bold text-lg">Streamlining industrial spare parts procurement across India.</p>
                         <div class="w-24 h-1.5 bg-bosch-red mx-auto rounded-none mt-8"></div>
                     </div>
@@ -122,7 +122,7 @@ export function renderHome(container, app) {
                                 <div class="w-20 h-20 rounded-none bg-white shadow-premium border-2 border-slate-100 flex items-center justify-center text-bosch-blue mb-8 group-hover:bg-bosch-blue group-hover:text-white transition-all duration-500 transform group-hover:-translate-y-2 group-hover:border-bosch-blue">
                                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="${f.icon}"/></svg>
                                 </div>
-                                <h4 class="text-lg font-black text-slate-900 mb-3 uppercase tracking-widest">${f.t}</h4>
+                                <h4 class="text-lg font-black text-bosch-blue mb-3 uppercase tracking-widest">${f.t}</h4>
                                 <p class="text-sm text-slate-500 font-medium leading-relaxed px-2">${f.d}</p>
                             </div>
                         `).join('')}
@@ -135,7 +135,7 @@ export function renderHome(container, app) {
                 <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
                         <div class="max-w-3xl">
-                            <h2 class="text-5xl lg:text-6xl font-black text-slate-900 tracking-tight mb-4">Shop by Core Categories.</h2>
+                            <h2 class="text-5xl lg:text-6xl font-black text-bosch-blue tracking-tight mb-4">Shop by Core Categories.</h2>
                             <p class="text-slate-500 font-bold text-lg leading-relaxed max-w-xl">Precision-engineered spares for every industrial tool in your fleet. Hover to explore.</p>
                         </div>
                         <a href="/catalog" data-link class="inline-flex items-center gap-3 px-8 h-14 rounded-none bg-industrial-gray hover:bg-bosch-blue text-white uppercase tracking-widest text-[10px] font-black group transition-all border border-slate-200">

@@ -1,15 +1,15 @@
 export function renderLogin(container, app) {
     container.innerHTML = `
-        <div class="min-h-[calc(100vh-80px)] flex items-center justify-center py-12 px-4 relative overflow-hidden bg-white">
-            <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
-                <div class="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-bosch-blue rounded-none blur-[120px]"></div>
-                <div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-bosch-blue rounded-none blur-[120px]"></div>
-            </div>
+        <div class="min-h-[calc(100vh-80px)] flex items-center justify-center py-12 px-4 relative overflow-hidden bg-bosch-blue lightning-bg">
+            <!-- Lightning Glow Elements -->
+            <div class="lightning-glow w-[600px] h-[600px] -top-48 -right-48 opacity-20"></div>
+            <div class="lightning-glow w-[400px] h-[400px] -bottom-24 -left-24 opacity-10" style="animation-delay: -2s;"></div>
+            <div class="lightning-glow w-[300px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5" style="animation-delay: -4s;"></div>
 
             <div class="w-full max-w-md relative z-10 animate-fade-in">
                 <div class="bg-white rounded-none shadow-premium border-t-8 border-bosch-blue p-12 space-y-12">
                     <div class="text-center">
-                        <h2 class="text-4xl font-black text-slate-900 tracking-tight uppercase">Partner Login</h2>
+                        <h2 class="text-4xl font-black text-bosch-blue tracking-tight uppercase">Partner Login</h2>
                         <p class="text-slate-500 mt-2 font-bold text-lg">Secure access to the B2B portal.</p>
                         <div class="w-16 h-1 bg-bosch-red mx-auto mt-6"></div>
                     </div>
@@ -42,7 +42,7 @@ export function renderLogin(container, app) {
                         <div class="flex items-center justify-between">
                             <label class="flex items-center gap-3 cursor-pointer group">
                                 <input type="checkbox" class="w-5 h-5 border-2 border-slate-200 rounded-none text-bosch-blue focus:ring-bosch-blue transition-all">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-slate-900 transition-colors">Keep me active</span>
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-bosch-blue transition-colors">Keep me active</span>
                             </label>
                             <a href="#" class="text-[10px] font-black text-bosch-blue uppercase tracking-widest hover:underline">Reset Password</a>
                         </div>
@@ -101,12 +101,18 @@ export function renderLogin(container, app) {
 
 export function renderRegister(container, app) {
     container.innerHTML = `
-        <div class="min-h-[calc(100vh-80px)] flex items-center justify-center py-12 px-4 bg-slate-50">
-            <div class="w-full max-w-2xl animate-fade-in">
-                <div class="bg-white rounded-none shadow-premium border-t-4 border-bosch-blue p-12 lg:p-16 space-y-12">
+        <div class="min-h-[calc(100vh-80px)] flex items-center justify-center py-12 px-4 bg-bosch-blue relative overflow-hidden lightning-bg">
+            <!-- Lightning Glow Elements -->
+            <div class="lightning-glow w-[500px] h-[500px] -top-32 -left-32 opacity-15"></div>
+            <div class="lightning-glow w-[400px] h-[400px] -bottom-20 -right-20 opacity-10" style="animation-delay: -3s;"></div>
+            
+            <div class="w-full max-w-2xl relative z-10 animate-fade-in">
+                <div class="bg-white rounded-none shadow-premium border-t-8 border-bosch-blue p-12 lg:p-16 space-y-12 relative overflow-hidden">
+                    <!-- Subtle Interior Glow -->
+                    <div class="absolute -top-24 -right-24 w-48 h-48 bg-bosch-blue/5 rounded-full blur-3xl"></div>
                     <div class="flex flex-col md:flex-row gap-12 items-center">
                         <div class="flex-1 space-y-6">
-                            <h2 class="text-4xl font-black text-slate-900 tracking-tight uppercase">Partner <span class="text-bosch-blue">Onboarding</span></h2>
+                            <h2 class="text-4xl font-black text-bosch-blue tracking-tight uppercase">Partner <span class="text-bosch-blue">Onboarding</span></h2>
                             <p class="text-slate-500 font-bold text-lg leading-relaxed">Apply for a specialized B2B account to unlock wholesale pricing and credit facilities.</p>
                             <div class="space-y-4 pt-4">
                                 <div class="flex items-center gap-3">

@@ -311,11 +311,21 @@ const app = {
 
         // Update Site Name
         if (s.site_name) {
-            document.querySelectorAll('.logo-text').forEach(el => el.textContent = s.site_name);
+            const words = s.site_name.split(' ');
+            let formattedName = s.site_name;
+            if (words.length > 1) {
+                const lastWord = words.pop();
+                formattedName = `${words.join(' ')} <span class="text-bosch-red">${lastWord}</span>`;
+            }
+            
+            document.querySelectorAll('.logo-text').forEach(el => el.innerHTML = formattedName);
+            const footerSiteName = document.getElementById('footer-site-name');
+            if (footerSiteName) footerSiteName.innerHTML = formattedName;
             document.title = s.site_name;
         } else {
-            document.querySelectorAll('.logo-text').forEach(el => el.textContent = 'TORVO');
-            document.title = 'TORVO';
+            const defaultName = 'TORVO <span class="text-bosch-red">TOOLS</span>';
+            document.querySelectorAll('.logo-text').forEach(el => el.innerHTML = defaultName);
+            document.title = 'TORVO TOOLS';
         }
 
         // Update Site Logo
@@ -384,7 +394,7 @@ const app = {
                     </div>
                     <div class="flex gap-2">
                         ${isAdmin ? `
-                            <a href="/admin" data-link class="px-10 py-4 rounded-none bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-bosch-blue transition-all shadow-xl shadow-slate-900/20 flex items-center gap-2">
+                            <a href="/admin" data-link class="px-10 py-4 rounded-none bg-bosch-blue text-white text-[11px] font-black uppercase tracking-widest hover:bg-bosch-blue transition-all shadow-xl shadow-bosch-blue/20 flex items-center gap-2">
                                 <svg class="w-4 h-4 text-bosch-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
                                 Admin Panel
                             </a>
@@ -394,7 +404,7 @@ const app = {
                                 Staff Panel
                             </a>
                         ` : `
-                            <a href="/dashboard" data-link class="w-12 h-12 rounded-none bg-slate-900 text-white flex items-center justify-center hover:scale-110 transition-all shadow-xl shadow-slate-900/20 group">
+                            <a href="/dashboard" data-link class="w-12 h-12 rounded-none bg-bosch-blue text-white flex items-center justify-center hover:scale-110 transition-all shadow-xl shadow-bosch-blue/20 group">
                                 <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             </a>
                         `}

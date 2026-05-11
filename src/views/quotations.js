@@ -21,7 +21,7 @@ export async function renderQuotations(container, appInstance) {
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                             <div>
                                 <div class="text-[10px] font-black uppercase tracking-[0.3em] text-bosch-blue">${isAdmin ? 'Global Transaction Monitor' : 'Procurement History'}</div>
-                                <h2 class="text-4xl font-black tracking-tight text-slate-900 uppercase">${isAdmin ? 'All <span class="text-bosch-blue">Quotations</span>' : 'Your <span class="text-bosch-blue">Quotations</span>'}</h2>
+                                <h2 class="text-4xl font-black tracking-tight text-bosch-blue uppercase">${isAdmin ? 'All <span class="text-bosch-blue">Quotations</span>' : 'Your <span class="text-bosch-blue">Quotations</span>'}</h2>
                                 <p class="text-slate-500 font-medium mt-2 text-lg">${isAdmin ? 'Manage and price all incoming partner requests.' : 'Track your request for quotes and approval statuses.'}</p>
                             </div>
                             ${!isAdmin ? `
@@ -47,7 +47,7 @@ export async function renderQuotations(container, appInstance) {
                                     ${quotations.length ? quotations.map(q => `
                                         <tr class="hover:bg-slate-50 transition-all">
                                             <td class="p-6">
-                                                <div class="font-bold text-slate-900">${isAdmin ? q.user_name : `#Q-${String(q.id).padStart(4, '0')}`}</div>
+                                                <div class="font-bold text-bosch-blue">${isAdmin ? q.user_name : `#Q-${String(q.id).padStart(4, '0')}`}</div>
                                                 <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(q.created_at).toLocaleDateString()} ${isAdmin ? `• #Q-${String(q.id).padStart(4, '0')}` : ''}</div>
                                             </td>
                                             <td class="p-6 font-bold text-slate-600">${q.item_count || 0} Products</td>
@@ -56,7 +56,7 @@ export async function renderQuotations(container, appInstance) {
                                                     ${q.status}
                                                 </span>
                                             </td>
-                                            <td class="p-6 font-black text-slate-900">
+                                            <td class="p-6 font-black text-bosch-blue">
                                                 ${q.status === 'pending' ? '<span class="text-slate-400 font-bold italic">Awaiting Pricing</span>' : `₹${parseFloat(q.total_amount || 0).toLocaleString()}`}
                                             </td>
                                             <td class="p-6 text-right">
@@ -99,10 +99,10 @@ export async function viewQuotationDetails(id, appInstance) {
             <div class="bg-white w-full max-w-4xl rounded-none border-2 border-slate-100 shadow-premium overflow-hidden relative animate-in zoom-in duration-300 my-8">
                 <div class="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                     <div>
-                        <h2 class="text-2xl font-black text-slate-900 uppercase">Quotation Details</h2>
+                        <h2 class="text-2xl font-black text-bosch-blue uppercase">Quotation Details</h2>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">#Q-${String(id).padStart(4, '0')} • Requested on ${new Date(data.created_at).toLocaleDateString()}</p>
                     </div>
-                    <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-none border border-slate-200 bg-white text-slate-400 hover:bg-slate-100 hover:text-slate-900 flex items-center justify-center transition-all">
+                    <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-none border border-slate-200 bg-white text-slate-400 hover:bg-slate-100 hover:text-bosch-blue flex items-center justify-center transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
@@ -122,12 +122,12 @@ export async function viewQuotationDetails(id, appInstance) {
                                 ${data.items.map(item => `
                                     <tr>
                                         <td class="p-6">
-                                            <div class="font-bold text-slate-900">${item.part_name}</div>
+                                            <div class="font-bold text-bosch-blue">${item.part_name}</div>
                                             <div class="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-0.5">${item.brand} • ${item.machine_model}</div>
                                         </td>
                                         <td class="p-6 text-sm font-bold text-slate-600">${item.quantity}</td>
-                                        <td class="p-6 text-sm font-black text-slate-900 text-right">${item.unit_price ? `₹${parseFloat(item.unit_price).toLocaleString()}` : '<span class="text-slate-400 italic">Pending</span>'}</td>
-                                        <td class="p-6 text-sm font-black text-slate-900 text-right">${item.unit_price ? `₹${(item.quantity * item.unit_price).toLocaleString()}` : '---'}</td>
+                                        <td class="p-6 text-sm font-black text-bosch-blue text-right">${item.unit_price ? `₹${parseFloat(item.unit_price).toLocaleString()}` : '<span class="text-slate-400 italic">Pending</span>'}</td>
+                                        <td class="p-6 text-sm font-black text-bosch-blue text-right">${item.unit_price ? `₹${(item.quantity * item.unit_price).toLocaleString()}` : '---'}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -135,7 +135,7 @@ export async function viewQuotationDetails(id, appInstance) {
                                 <tfoot class="bg-slate-50 font-black">
                                     <tr>
                                         <td colspan="3" class="p-6 text-right text-slate-400 uppercase tracking-widest text-xs">Total Amount</td>
-                                        <td class="p-6 text-right text-2xl text-slate-900">₹${parseFloat(data.total_amount).toLocaleString()}</td>
+                                        <td class="p-6 text-right text-2xl text-bosch-blue">₹${parseFloat(data.total_amount).toLocaleString()}</td>
                                     </tr>
                                 </tfoot>
                             ` : ''}
@@ -143,7 +143,7 @@ export async function viewQuotationDetails(id, appInstance) {
                     </div>
                     
                     <div class="flex justify-end gap-4">
-                        <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-none border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 hover:text-slate-900 transition-all">Close Details</button>
+                        <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-none border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 hover:text-bosch-blue transition-all">Close Details</button>
                         ${data.status === 'priced' ? `<button onclick="app.approveQuotation(${id})" class="px-10 py-4 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray transition-all">Approve & Order</button>` : ''}
                     </div>
                 </div>

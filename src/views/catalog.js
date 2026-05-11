@@ -15,7 +15,7 @@ export async function renderCatalog(container, appInstance) {
                 <!-- Custom Catalog Filter Sidebar -->
                 <aside class="w-full lg:w-72 bg-[#fdfdfd] border-b lg:border-b-0 lg:border-r border-slate-200 flex-col lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)] print:hidden">
                     <div class="p-5 border-b border-slate-100 bg-slate-50/30">
-                        <h3 class="text-xs font-black uppercase tracking-widest text-slate-900">Inventory Filters</h3>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-bosch-blue">Inventory Filters</h3>
                     </div>
                     <div class="p-6 space-y-6 flex-1 overflow-y-auto no-scrollbar">
                         <!-- Search -->
@@ -59,7 +59,7 @@ export async function renderCatalog(container, appInstance) {
                     <div class="max-w-[100rem] mx-auto space-y-12 animate-fade-in">
                         <div>
                             <div class="text-[10px] font-black uppercase tracking-[0.3em] text-bosch-blue mb-2">Inventory Explorer</div>
-                            <h2 class="text-4xl font-black tracking-tight text-slate-900 uppercase">Genuine <span class="text-bosch-red">Parts Catalog</span></h2>
+                            <h2 class="text-4xl font-black tracking-tight text-bosch-blue uppercase">Genuine <span class="text-bosch-red">Parts Catalog</span></h2>
                             <p class="text-slate-500 font-medium mt-2 text-lg">Browse through our extensive collection of industrial spare parts.</p>
                         </div>
                         
@@ -131,7 +131,7 @@ export function filterAndRenderProducts() {
             </div>
             <div class="p-6">
                 <div class="mb-6">
-                    <h4 class="font-black text-lg text-slate-900 leading-tight mb-1 uppercase tracking-widest">${p.part_name}</h4>
+                    <h4 class="font-black text-lg text-bosch-blue leading-tight mb-1 uppercase tracking-widest">${p.part_name}</h4>
                     <div class="flex items-center gap-2">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Fits: ${p.machine_model || 'Universal'}</span>
                     </div>
@@ -140,7 +140,7 @@ export function filterAndRenderProducts() {
                 <div class="flex items-center justify-between pt-6 border-t border-slate-100">
                     <div>
                         <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">B2B Pricing</span>
-                        <span class="text-sm font-black text-slate-900 uppercase">RFQ Required</span>
+                        <span class="text-sm font-black text-bosch-blue uppercase">RFQ Required</span>
                     </div>
                     <button onclick="app.addToCart(${p.id})" class="p-3 bg-bosch-blue text-white rounded-none hover:bg-industrial-gray transition-all shadow-sm">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>

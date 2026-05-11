@@ -41,7 +41,7 @@
                     colors: {
                         'bosch-blue': '#226E54',
                         'bosch-red': '#ed1c24',
-                        'industrial-gray': '#1f1f1f',
+                        'industrial-gray': '#226E54',
                         primary: { DEFAULT: '#226E54', dark: '#164a39', light: '#2f9371' }
                     },
                     fontFamily: {
@@ -59,7 +59,15 @@
 
     <!-- PWA & Mobile App Support -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#226E54">
+    <link rel="apple-touch-icon" href="src/assets/logo.png">
+    <script>
+        // Inject theme-color dynamically to avoid static analysis warnings for unsupported browsers
+        const meta = document.createElement('meta');
+        meta.name = 'theme-color';
+        meta.content = '#226E54';
+        document.head.appendChild(meta);
+    </script>
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <script>
@@ -193,7 +201,7 @@
 
                         <div id="auth-nav" class="flex items-center">
                             <a href="/login" data-link id="desktop-login-btn"
-                                class="px-10 py-4 rounded-none bg-bosch-blue text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-industrial-gray transition-all duration-300 whitespace-nowrap">Partner
+                                class="px-10 py-4 rounded-none bg-bosch-blue text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-bosch-blue transition-all duration-300 whitespace-nowrap">Partner
                                 Login</a>
                         </div>
                     </div>
@@ -205,19 +213,15 @@
         <main id="view-container" class="flex-1"></main>
 
         <!-- ═══ FOOTER ═══ -->
-        <footer id="main-footer" class="bg-industrial-gray text-white py-16 no-print border-t-8 border-bosch-blue">
-            <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <footer id="main-footer" class="bg-slate-950 text-white py-24 no-print border-t-8 border-bosch-blue relative overflow-hidden lightning-bg">
+            <!-- Lightning Glow Elements in Footer -->
+            <div class="lightning-glow w-[500px] h-[500px] -top-64 -right-32 opacity-10"></div>
+            <div class="lightning-glow w-[300px] h-[300px] -bottom-32 -left-16 opacity-5 [animation-delay:-4s]"></div>
+            
+            <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 border-b border-white/10 pb-12">
                     <div class="space-y-6">
-                        <div class="flex items-center gap-3">
-                            <div class="w-16 h-8 bg-bosch-blue rounded-none flex items-center justify-center logo-container">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                </svg>
-                            </div>
-                            <span class="text-xl font-black tracking-tighter logo-text">PARTSPRO</span>
-                        </div>
+                        <h4 id="footer-site-name" class="text-xl font-black tracking-tighter text-white uppercase">TORVO <span class="text-bosch-red">TOOLS</span></h4>
                         <p id="footer-desc" class="text-slate-400 text-xs font-bold leading-relaxed uppercase tracking-widest">The premium B2B platform for
                             genuine power tool spare parts procurement and industrial maintenance solutions.</p>
                     </div>
@@ -255,7 +259,7 @@
                 </div>
                 <div
                     class="flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
-                    <p>&copy; 2026 PARTSPRO B2B DIVISION. ALL RIGHTS RESERVED.</p>
+                    <p>&copy; 2026 TORVO TOOLS B2B DIVISION. ALL RIGHTS RESERVED.</p>
                     <div class="flex gap-8">
                         <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
                         <a href="#" class="hover:text-white transition-colors">Terms of Service</a>

@@ -14,7 +14,7 @@ export async function renderDashboard(container, app) {
                     <div>
                         <div class="flex items-center gap-3 mb-2">
                             <div class="w-2 h-8 bg-bosch-blue rounded-none"></div>
-                            <h2 class="text-4xl font-black text-slate-900 tracking-tight uppercase">Partner <span class="text-bosch-blue">Portal</span></h2>
+                            <h2 class="text-4xl font-black text-bosch-blue tracking-tight uppercase">Partner <span class="text-bosch-blue">Portal</span></h2>
                         </div>
                         <p class="text-slate-500 font-bold text-lg">Exclusive procurement overview for ${app.state.user.name}.</p>
                     </div>
@@ -31,7 +31,7 @@ export async function renderDashboard(container, app) {
                             <div class="absolute -right-4 -top-4 w-24 h-24 bg-${s.c}-50 rounded-none blur-xl group-hover:scale-150 transition-transform duration-500"></div>
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 relative z-10">${s.l}</p>
                             <div class="flex items-end justify-between relative z-10">
-                                <h3 class="text-4xl font-black text-slate-900">${s.v}</h3>
+                                <h3 class="text-4xl font-black text-bosch-blue">${s.v}</h3>
                                 <span class="text-[10px] font-black text-${s.c}-600 bg-${s.c}-50 px-3 py-1.5 rounded-none border border-${s.c}-100 shadow-sm">${s.s}</span>
                             </div>
                         </div>
@@ -44,7 +44,7 @@ export async function renderDashboard(container, app) {
                         <h3 class="text-3xl font-black tracking-tight mb-4 uppercase">Express Bulk Ordering</h3>
                         <p class="text-slate-400 font-medium mb-8 leading-relaxed">Skip the catalog. Upload a CSV file with SKUs (Models) and Quantities to instantly generate a massive quotation cart using your exclusive tier pricing.</p>
                         <div class="flex flex-wrap gap-4">
-                            <button onclick="app.renderBulkOrderModal()" class="px-8 py-4 bg-white text-slate-900 rounded-none font-black text-[11px] uppercase tracking-widest shadow-xl hover:scale-105 transition-transform flex items-center gap-2">
+                            <button onclick="app.renderBulkOrderModal()" class="px-8 py-4 bg-white text-bosch-blue rounded-none font-black text-[11px] uppercase tracking-widest shadow-xl hover:scale-105 transition-transform flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                 Upload CSV Order
                             </button>
@@ -83,12 +83,12 @@ export function renderBulkOrderModal(app) {
     
     modal.innerHTML = `
         <div class="bg-white rounded-none w-full max-w-xl p-10 space-y-8 shadow-2xl border border-slate-200 relative animate-in zoom-in-95 duration-300">
-            <button onclick="document.getElementById('bulk-order-modal').remove()" class="absolute top-6 right-6 w-10 h-10 rounded-none bg-slate-50 hover:bg-slate-100 flex items-center justify-center transition-all text-slate-400 hover:text-slate-900">
+            <button onclick="document.getElementById('bulk-order-modal').remove()" class="absolute top-6 right-6 w-10 h-10 rounded-none bg-slate-50 hover:bg-slate-100 flex items-center justify-center transition-all text-slate-400 hover:text-bosch-blue">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
             <div>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Express <span class="text-bosch-blue">Bulk Order</span></h2>
+                <h2 class="text-3xl font-black text-bosch-blue tracking-tight uppercase">Express <span class="text-bosch-blue">Bulk Order</span></h2>
                 <p class="text-slate-500 font-bold mt-2">Upload your inventory request instantly.</p>
             </div>
             
@@ -157,7 +157,7 @@ export async function renderMyPartsList(container, app) {
                         <div class="flex justify-between items-end">
                             <div>
                                 <div class="text-[10px] font-black uppercase tracking-[0.3em] text-bosch-blue">Personal Collection</div>
-                                <h2 class="text-4xl font-black tracking-tight text-slate-900 uppercase">My <span class="text-bosch-blue">Parts List</span></h2>
+                                <h2 class="text-4xl font-black tracking-tight text-bosch-blue uppercase">My <span class="text-bosch-blue">Parts List</span></h2>
                                 <p class="text-slate-500 font-medium mt-2 text-lg">Your curated selection of essential spares for quick procurement.</p>
                             </div>
                             <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-8 py-3.5 bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest rounded-none hover:bg-industrial-gray transition-all shadow-lg shadow-blue-900/20">Add More Spares</button>
@@ -168,7 +168,7 @@ export async function renderMyPartsList(container, app) {
                                 <div class="w-full h-48 bg-slate-50 rounded-none mb-6 overflow-hidden border border-slate-100 flex items-center justify-center">
                                     <svg class="w-20 h-20 text-slate-200 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                 </div>
-                                <h4 class="text-lg font-black text-slate-900 mb-1 uppercase tracking-widest">Carbon Brush GWS 600</h4>
+                                <h4 class="text-lg font-black text-bosch-blue mb-1 uppercase tracking-widest">Carbon Brush GWS 600</h4>
                                 <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-6">SKU: CB-GWS600</p>
                                 <div class="flex gap-3">
                                     <button class="flex-1 h-12 rounded-none bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest hover:bg-industrial-gray transition-colors">Add to Cart</button>
