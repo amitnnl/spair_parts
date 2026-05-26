@@ -141,6 +141,19 @@ const app = {
     renderSupport(container) { return renderSupport(container, this); },
     renderHome(container) { return renderHome(container, this); },
     renderCategories(container) { return renderCategories(container, this); },
+    toggleMobileFooter() {
+        const footer = document.getElementById('main-footer');
+        const toggleBtn = document.getElementById('mobile-footer-toggle');
+        if (!footer || !toggleBtn) return;
+        
+        if (footer.classList.contains('hidden')) {
+            footer.classList.remove('hidden');
+            toggleBtn.innerHTML = 'Hide Footer & Site Map';
+        } else {
+            footer.classList.add('hidden');
+            toggleBtn.innerHTML = 'Show Footer & Site Map';
+        }
+    },
     renderBrands(container) { return renderBrands(container, this); },
     renderShipping(container) { return viewShipping.render(container); },
     renderWarranty(container) { return viewWarranty.render(container); },
