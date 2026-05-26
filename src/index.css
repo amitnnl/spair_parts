@@ -420,3 +420,10 @@ body {
 .mb-12 {
     margin-bottom: 1.5rem !important;
 }
+
+@media (min-width: 1024px) {
+    .lg\:py-16 {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+}
