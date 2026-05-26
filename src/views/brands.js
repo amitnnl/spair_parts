@@ -25,11 +25,51 @@ export function renderBrands(container, app) {
             <text x="52" y="27" text-anchor="middle" fill="white" font-size="17" font-weight="900" font-family="Arial" letter-spacing="3">HILTI</text></svg>`,
     ];
 
+    const getBrandVal = (n, prop) => {
+        if (n === 1) {
+            if (prop === 'name') return s.brand1_name;
+            if (prop === 'tag') return s.brand1_tag;
+            if (prop === 'desc') return s.brand1_desc;
+            if (prop === 'logo') return s.brand1_logo;
+        }
+        if (n === 2) {
+            if (prop === 'name') return s.brand2_name;
+            if (prop === 'tag') return s.brand2_tag;
+            if (prop === 'desc') return s.brand2_desc;
+            if (prop === 'logo') return s.brand2_logo;
+        }
+        if (n === 3) {
+            if (prop === 'name') return s.brand3_name;
+            if (prop === 'tag') return s.brand3_tag;
+            if (prop === 'desc') return s.brand3_desc;
+            if (prop === 'logo') return s.brand3_logo;
+        }
+        if (n === 4) {
+            if (prop === 'name') return s.brand4_name;
+            if (prop === 'tag') return s.brand4_tag;
+            if (prop === 'desc') return s.brand4_desc;
+            if (prop === 'logo') return s.brand4_logo;
+        }
+        if (n === 5) {
+            if (prop === 'name') return s.brand5_name;
+            if (prop === 'tag') return s.brand5_tag;
+            if (prop === 'desc') return s.brand5_desc;
+            if (prop === 'logo') return s.brand5_logo;
+        }
+        if (n === 6) {
+            if (prop === 'name') return s.brand6_name;
+            if (prop === 'tag') return s.brand6_tag;
+            if (prop === 'desc') return s.brand6_desc;
+            if (prop === 'logo') return s.brand6_logo;
+        }
+        return '';
+    };
+
     const brands = [1,2,3,4,5,6].map((n, i) => ({
-        name: s['brand' + n + '_name'] || ['BOSCH','MAKITA','DEWALT','HIKOKI','MILWAUKEE','HILTI'][i],
-        tag:  s['brand' + n + '_tag']  || 'Power Tools',
-        desc: s['brand' + n + '_desc'] || '',
-        logo: s['brand' + n + '_logo'] || '',
+        name: getBrandVal(n, 'name') || ['BOSCH','MAKITA','DEWALT','HIKOKI','MILWAUKEE','HILTI'][i],
+        tag:  getBrandVal(n, 'tag')  || 'Power Tools',
+        desc: getBrandVal(n, 'desc') || '',
+        logo: getBrandVal(n, 'logo') || '',
         svg:  defaultSvgs[i]
     }));
 
