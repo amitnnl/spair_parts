@@ -65,12 +65,32 @@ export function renderBrands(container, app) {
         return '';
     };
 
+    const getDefaultBrandName = (idx) => {
+        if (idx === 0) return 'BOSCH';
+        if (idx === 1) return 'MAKITA';
+        if (idx === 2) return 'DEWALT';
+        if (idx === 3) return 'HIKOKI';
+        if (idx === 4) return 'MILWAUKEE';
+        if (idx === 5) return 'HILTI';
+        return '';
+    };
+
+    const getDefaultSvg = (idx) => {
+        if (idx === 0) return defaultSvgs[0];
+        if (idx === 1) return defaultSvgs[1];
+        if (idx === 2) return defaultSvgs[2];
+        if (idx === 3) return defaultSvgs[3];
+        if (idx === 4) return defaultSvgs[4];
+        if (idx === 5) return defaultSvgs[5];
+        return '';
+    };
+
     const brands = [1,2,3,4,5,6].map((n, i) => ({
-        name: getBrandVal(n, 'name') || ['BOSCH','MAKITA','DEWALT','HIKOKI','MILWAUKEE','HILTI'][i],
+        name: getBrandVal(n, 'name') || getDefaultBrandName(i),
         tag:  getBrandVal(n, 'tag')  || 'Power Tools',
         desc: getBrandVal(n, 'desc') || '',
         logo: getBrandVal(n, 'logo') || '',
-        svg:  defaultSvgs[i]
+        svg:  getDefaultSvg(i)
     }));
 
     // Support customized rich markup for admin-defined titles by preserving structural theme accents safely
