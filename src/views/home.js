@@ -269,7 +269,7 @@ export function renderHome(container, app) {
                         <!-- 5. Tool Components (Mockup Collection) -->
                         <div onclick="clickCategorySearch('Tool Components')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
                             <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="${app.api('uploads/2-26-small-tool-holder.jpg')}" 
+                                <img src="${app.api('assets/uploads/2-26-small-tool-holder.jpg')}" 
                                      alt="Tool Components" 
                                      class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
                             </div>
