@@ -8,6 +8,11 @@ export default defineConfig(({ mode }) => {
     // LIVE:   base = '/'  so dist/index.html loads assets from root
     base: './',
     root: './',
+    esbuild: {
+      supported: {
+        'template-literal': false
+      }
+    },
     server: {
       proxy: {
         '/spairparts/api': {
