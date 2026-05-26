@@ -235,46 +235,78 @@ body {
 }
 
 .whatsapp-btn {
-    width: 4rem;
-    height: 4rem;
-    background-color: #25D366;
+    width: 3.75rem;
+    height: 3.75rem;
+    background-color: #111111;
+    border: 2px solid #25D366;
     border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    box-shadow: 4px 4px 0 rgba(37, 211, 102, 0.4);
-    transition: all 0.3s;
+    color: #25D366;
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4), 
+                inset 0 0 12px rgba(37, 211, 102, 0.1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
+    overflow: visible;
 }
 
-.whatsapp-btn::after {
-    content: '';
+/* Pulsing background ring */
+.whatsapp-btn-pulse {
     position: absolute;
-    inset: 0;
-    border-radius: 0;
-    border: 4px solid #25D366;
-    opacity: 0;
-    animation: whatsappPulse 2s infinite;
+    inset: -6px;
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    opacity: 1;
+    animation: whatsappNeonPulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    pointer-events: none;
+}
+
+/* Live green online dot indicator */
+.whatsapp-online-dot {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    background-color: #25D366;
+    border: 2px solid #111111;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #25D366;
+    animation: onlineStatusPulse 1.5s ease-in-out infinite;
 }
 
 .whatsapp-btn:hover {
-    transform: scale(1.1);
+    background-color: #25D366;
+    color: #111111;
+    border-color: #25D366;
+    box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+    transform: translateY(-5px);
 }
 
-.whatsapp-tooltip {
-    background: white;
-    border: 2px solid #ed1c24;
-    border-radius: 0;
-    padding: 0.75rem 1.25rem;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: #ed1c24;
+.whatsapp-btn:hover .whatsapp-btn-pulse {
+    animation-play-state: paused;
     opacity: 0;
-    transform: translateX(1rem);
+}
+
+/* Modern terminal/tech tooltip style */
+.whatsapp-tooltip {
+    background: #111111;
+    border: 1px solid #25D366;
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateX(1.5rem);
     pointer-events: none;
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
 }
 
 .whatsapp-widget:hover .whatsapp-tooltip {
@@ -282,9 +314,35 @@ body {
     transform: translateX(0);
 }
 
-@keyframes whatsappPulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    100% { transform: scale(1.6); opacity: 0; }
+/* Flashing operator dot inside tooltip */
+.whatsapp-tooltip .status-indicator {
+    width: 6px;
+    height: 6px;
+    background-color: #25D366;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px #25D366;
+    animation: onlineStatusPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes whatsappNeonPulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.25);
+        opacity: 0;
+    }
+}
+
+@keyframes onlineStatusPulse {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 @media (max-width: 768px) {
