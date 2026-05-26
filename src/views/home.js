@@ -52,14 +52,14 @@ export function renderHome(container, app) {
                             </div>
                             
                             <h1 class="leading-none tracking-tighter">
-                                <span class="block text-[40px] sm:text-[56px] font-black text-black leading-[0.95] tracking-tight uppercase font-poppins">${mainTitle}</span>
+                                <span class="block text-[40px] sm:text-[56px] font-black text-black leading-[0.95] tracking-tight uppercase font-poppins">` + escapeHTML(mainTitle) + `</span>
                                 <span class="relative mt-3.5 inline-block bg-[#ed1c24] text-white text-xl sm:text-2xl font-black py-2 px-9 uppercase italic transform -skew-x-12 tracking-widest">
-                                    ${lastWord}
+                                    ` + escapeHTML(lastWord) + `
                                 </span>
                             </h1>
 
                             <p class="text-[10px] font-black tracking-[0.2em] text-zinc-500 uppercase flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                                ${subtitleHTML}
+                                ` + subtitleHTML + `
                             </p>
 
                             <!-- Minimalist Outlined Badges -->
@@ -203,64 +203,64 @@ export function renderHome(container, app) {
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                         
                         <!-- 1. Electrical Parts (Dynamic) -->
-                        <div onclick="clickCategorySearch('${s.cat1_title || 'Electrical Parts'}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                        <div onclick="clickCategorySearch('` + escapeHTML(s.cat1_title || 'Electrical Parts').replace(/'/g, "\\'") + `')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
                             <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="${app.api(s.cat1_img) || 'uploads/setting_cat1_img_69f49cd304f29.jpg'}" 
-                                     alt="${s.cat1_title || 'Electrical Parts'}" 
+                                <img src="` + escapeHTML(app.api(s.cat1_img) || 'uploads/setting_cat1_img_69f49cd304f29.jpg') + `" 
+                                     alt="` + escapeHTML(s.cat1_title || 'Electrical Parts') + `" 
                                      class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
                             </div>
                             <div class="flex items-end justify-between w-full pt-3">
                                 <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${s.cat1_title || 'Electrical Parts'}</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${s.cat1_desc || 'Switches, Cables, Carbon Brushes & more'}</p>
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">` + escapeHTML(s.cat1_title || 'Electrical Parts') + `</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">` + escapeHTML(s.cat1_desc || 'Switches, Cables, Carbon Brushes & more') + `</p>
                                 </div>
                                 <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
                             </div>
                         </div>
 
                         <!-- 2. Mechanical Parts (Dynamic) -->
-                        <div onclick="clickCategorySearch('${s.cat2_title || 'Mechanical Parts'}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                        <div onclick="clickCategorySearch('` + escapeHTML(s.cat2_title || 'Mechanical Parts').replace(/'/g, "\\'") + `')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
                             <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="${app.api(s.cat2_img) || 'uploads/setting_cat2_img_69f49cd3068d3.jpg'}" 
-                                     alt="${s.cat2_title || 'Mechanical Parts'}" 
+                                <img src="` + escapeHTML(app.api(s.cat2_img) || 'uploads/setting_cat2_img_69f49cd3068d3.jpg') + `" 
+                                     alt="` + escapeHTML(s.cat2_title || 'Mechanical Parts') + `" 
                                      class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
                             </div>
                             <div class="flex items-end justify-between w-full pt-3">
                                 <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${s.cat2_title || 'Mechanical Parts'}</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${s.cat2_desc || 'Gears, Bearings, Shafts & more'}</p>
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">` + escapeHTML(s.cat2_title || 'Mechanical Parts') + `</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">` + escapeHTML(s.cat2_desc || 'Gears, Bearings, Shafts & more') + `</p>
                                 </div>
                                 <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
                             </div>
                         </div>
 
                         <!-- 3. Accessories (Dynamic) -->
-                        <div onclick="clickCategorySearch('${s.cat3_title || 'Accessories'}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                        <div onclick="clickCategorySearch('` + escapeHTML(s.cat3_title || 'Accessories').replace(/'/g, "\\'") + `')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
                             <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="${app.api(s.cat3_img) || 'uploads/setting_cat3_img_69f49cd3083d3.jpg'}" 
-                                     alt="${s.cat3_title || 'Accessories'}" 
+                                <img src="` + escapeHTML(app.api(s.cat3_img) || 'uploads/setting_cat3_img_69f49cd3083d3.jpg') + `" 
+                                     alt="` + escapeHTML(s.cat3_title || 'Accessories') + `" 
                                      class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
                             </div>
                             <div class="flex items-end justify-between w-full pt-3">
                                 <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${s.cat3_title || 'Accessories'}</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${s.cat3_desc || 'Chucks, Blades, Drill Bits & more'}</p>
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">` + escapeHTML(s.cat3_title || 'Accessories') + `</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">` + escapeHTML(s.cat3_desc || 'Chucks, Blades, Drill Bits & more') + `</p>
                                 </div>
                                 <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
                             </div>
                         </div>
 
                         <!-- 4. Replacement Kits (Dynamic) -->
-                        <div onclick="clickCategorySearch('${s.cat4_title || 'Replacement Kits'}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                        <div onclick="clickCategorySearch('` + escapeHTML(s.cat4_title || 'Replacement Kits').replace(/'/g, "\\'") + `')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
                             <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="${app.api(s.cat4_img) || 'uploads/setting_cat4_img_69f49cd308822.jpg'}" 
-                                     alt="${s.cat4_title || 'Replacement Kits'}" 
+                                <img src="` + escapeHTML(app.api(s.cat4_img) || 'uploads/setting_cat4_img_69f49cd308822.jpg') + `" 
+                                     alt="` + escapeHTML(s.cat4_title || 'Replacement Kits') + `" 
                                      class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
                             </div>
                             <div class="flex items-end justify-between w-full pt-3">
                                 <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${s.cat4_title || 'Replacement Kits'}</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${s.cat4_desc || 'Kits for Maintenance & Repair'}</p>
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">` + escapeHTML(s.cat4_title || 'Replacement Kits') + `</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">` + escapeHTML(s.cat4_desc || 'Kits for Maintenance & Repair') + `</p>
                                 </div>
                                 <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
                             </div>
@@ -269,9 +269,12 @@ export function renderHome(container, app) {
                         <!-- 5. Tool Components (Mockup Collection) -->
                         <div onclick="clickCategorySearch('Tool Components')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
                             <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="${app.api('assets/uploads/2-26-small-tool-holder.jpg')}" 
-                                     alt="Tool Components" 
-                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
+                                <div class="w-16 h-16 rounded-none bg-rose-50 flex items-center justify-center text-[#ed1c24] group-hover:bg-[#ed1c24] group-hover:text-white transition-all duration-300">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </div>
                             </div>
                             <div class="flex items-end justify-between w-full pt-3">
                                 <div class="space-y-0.5 min-w-0 flex-1">

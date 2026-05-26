@@ -29,6 +29,14 @@
                 if (args[0] && typeof args[0] === 'string' && noiseFilters.some(f => args[0].includes(f))) return;
                 originalError(...args);
             };
+
+            // Suppress browser extension unhandled promise rejections
+            window.addEventListener('unhandledrejection', function(e) {
+                var msg = (e.reason && e.reason.message) ? e.reason.message : String(e.reason || '');
+                if (noiseFilters.some(function(f) { return msg.indexOf(f) !== -1; })) {
+                    e.preventDefault();
+                }
+            });
         })();
     </script>
 

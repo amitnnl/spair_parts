@@ -414,7 +414,7 @@ const app = {
             const el = document.getElementById('footer-email');
             if (el) {
                 el.textContent = s.contact_email;
-                el.href = `mailto:${s.contact_email}`;
+                el.href = 'mailto:' + s.contact_email;
             }
         }
 
