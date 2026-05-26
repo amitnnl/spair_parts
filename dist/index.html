@@ -195,7 +195,7 @@
                         </div>
                     </a>
 
-                    <!-- Nav Links - Centered (Mockup: Products, Brands, Catalogues, Categories, Resources, Support) -->
+                    <!-- Nav Links - Centered (Products, Brands, Categories, Support) -->
                     <div class="hidden md:flex flex-1 justify-center px-6">
                         <div class="flex items-center gap-1 lg:gap-4">
                             <div class="relative group/menu">
@@ -209,18 +209,8 @@
                                 </a>
                             </div>
                             <div class="relative group/menu">
-                                <a href="/catalog" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
-                                    Catalogues <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
-                                </a>
-                            </div>
-                            <div class="relative group/menu">
                                 <a href="/categories" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
                                     Categories <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
-                                </a>
-                            </div>
-                            <div class="relative group/menu">
-                                <a href="/catalog" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
-                                    Resources <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
                                 </a>
                             </div>
                             <div class="relative group/menu">
@@ -233,9 +223,16 @@
 
                     <!-- Auth & Cart & Mobile Hamburger -->
                     <div class="flex items-center gap-3 md:gap-5 flex-shrink-0">
+                        <!-- Search Icon Toggle Button -->
+                        <button id="search-toggle" class="relative p-2.5 text-zinc-700 hover:text-[#ed1c24] transition-colors focus:outline-none" title="Search Inventory">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+
                         <!-- Shopping Cart Button (Mockup: Simple wireframe cart with red count circle) -->
-                        <a href="/cart" data-link id="header-cart-btn" class="relative p-2.5 text-zinc-700 hover:text-rose-600 transition-colors group">
-                            <svg class="w-6.5 h-6.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <a href="/cart" data-link id="header-cart-btn" class="relative p-2.5 text-zinc-700 hover:text-[#ed1c24] transition-colors group">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                 <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
                             <span id="cart-badge" class="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-[#ed1c24] text-white text-[9px] font-extrabold rounded-full border-2 border-white shadow-sm">0</span>
@@ -249,8 +246,9 @@
                     </div>
                 </div>
 
-                <!-- ═══ INTEGRATED SUB-NAV SEARCH BAR (Directly under navbar, 100% working!) ═══ -->
-                <div class="py-4 border-t border-zinc-100 no-print grid md:hidden grid-cols-2 gap-3">
+                <!-- ═══ INTEGRATED SEARCH BAR CONTAINER (Toggled by Search Icon!) ═══ -->
+                <div id="global-search-container" class="hidden border-t border-zinc-100 no-print bg-slate-50/95 backdrop-blur-md">
+                    <div class="w-full px-6 lg:px-10 py-4 grid grid-cols-2 md:grid-cols-4 gap-3">
                     <!-- Search by Brand selector -->
                     <div class="relative flex-1 min-w-[150px]">
                         <select id="global-brand-select" title="Select Brand" class="w-full h-11 bg-white border border-zinc-200 hover:border-zinc-300 rounded-none px-4 text-xs font-bold text-[#111111] appearance-none focus:outline-none focus:border-[#ed1c24] transition-all cursor-pointer uppercase tracking-wider">
@@ -332,9 +330,7 @@
                 <div class="flex-1 py-8 flex flex-col gap-6 overflow-y-auto uppercase text-xs font-black tracking-widest text-zinc-700">
                     <a href="/catalog" data-link class="mobile-side-link hover:text-rose-600">Products</a>
                     <a href="/brands" data-link class="mobile-side-link hover:text-rose-600">Brands</a>
-                    <a href="/catalog" data-link class="mobile-side-link hover:text-rose-600">Catalogues</a>
                     <a href="/categories" data-link class="mobile-side-link hover:text-rose-600">Categories</a>
-                    <a href="/catalog" data-link class="mobile-side-link hover:text-rose-600">Resources</a>
                     <a href="/support" data-link class="mobile-side-link hover:text-rose-600">Support</a>
                 </div>
                 <div class="pt-6 border-t border-zinc-100 flex flex-col gap-3">
