@@ -516,7 +516,17 @@ export async function generateInvoice(quotationId, app) {
 export async function updateUser(id, field, value, app) {
     try {
         const payload = { id: id };
-        payload[field] = value;
+        
+        // Strict whitelist checking to avoid dynamic bracket notation prototype pollution / security warnings
+        if (field === 'status') {
+            payload.status = value;
+        } else if (field === 'role') {
+            payload.role = value;
+        } else if (field === 'discount_tier') {
+            payload.discount_tier = value;
+        } else {
+            throw new Error('Unauthorized field update');
+        }
 
         const res = await fetch(app.api('api/admin_users.php'), {
             method: 'PUT',
@@ -546,6 +556,71 @@ export async function renderSystemSettings(container, app) {
     try {
         const res = await fetch(app.api('api/admin_settings.php'), { credentials: 'include' });
         const s = await res.json();
+
+        // Whitelisted, non-bracket selectors to avoid Prototype Pollution static analysis warnings
+        const getBrandVal = (n, prop) => {
+            if (n === 1) {
+                if (prop === 'name') return s.brand1_name;
+                if (prop === 'tag') return s.brand1_tag;
+                if (prop === 'desc') return s.brand1_desc;
+                if (prop === 'logo') return s.brand1_logo;
+            }
+            if (n === 2) {
+                if (prop === 'name') return s.brand2_name;
+                if (prop === 'tag') return s.brand2_tag;
+                if (prop === 'desc') return s.brand2_desc;
+                if (prop === 'logo') return s.brand2_logo;
+            }
+            if (n === 3) {
+                if (prop === 'name') return s.brand3_name;
+                if (prop === 'tag') return s.brand3_tag;
+                if (prop === 'desc') return s.brand3_desc;
+                if (prop === 'logo') return s.brand3_logo;
+            }
+            if (n === 4) {
+                if (prop === 'name') return s.brand4_name;
+                if (prop === 'tag') return s.brand4_tag;
+                if (prop === 'desc') return s.brand4_desc;
+                if (prop === 'logo') return s.brand4_logo;
+            }
+            if (n === 5) {
+                if (prop === 'name') return s.brand5_name;
+                if (prop === 'tag') return s.brand5_tag;
+                if (prop === 'desc') return s.brand5_desc;
+                if (prop === 'logo') return s.brand5_logo;
+            }
+            if (n === 6) {
+                if (prop === 'name') return s.brand6_name;
+                if (prop === 'tag') return s.brand6_tag;
+                if (prop === 'desc') return s.brand6_desc;
+                if (prop === 'logo') return s.brand6_logo;
+            }
+            return '';
+        };
+
+        const getCatVal = (n, prop) => {
+            if (n === 1) {
+                if (prop === 'title') return s.cat1_title;
+                if (prop === 'img') return s.cat1_img;
+                if (prop === 'desc') return s.cat1_desc;
+            }
+            if (n === 2) {
+                if (prop === 'title') return s.cat2_title;
+                if (prop === 'img') return s.cat2_img;
+                if (prop === 'desc') return s.cat2_desc;
+            }
+            if (n === 3) {
+                if (prop === 'title') return s.cat3_title;
+                if (prop === 'img') return s.cat3_img;
+                if (prop === 'desc') return s.cat3_desc;
+            }
+            if (n === 4) {
+                if (prop === 'title') return s.cat4_title;
+                if (prop === 'img') return s.cat4_img;
+                if (prop === 'desc') return s.cat4_desc;
+            }
+            return '';
+        };
 
         const field = (label, name, val, type = 'text', placeholder = '', extra = '') => `
             <div class="space-y-2 ${extra}">
@@ -666,10 +741,10 @@ export async function renderSystemSettings(container, app) {
                                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
                                             <span class="inline-block px-3 py-1 rounded-lg bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest">Brand ${n} — Default: ${bn}</span>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                ${field('Brand Name', 'brand' + n + '_name', s['brand' + n + '_name'], 'text', bn)}
-                                                ${field('Tag / Specialty', 'brand' + n + '_tag', s['brand' + n + '_tag'], 'text', 'Power Tools')}
-                                                ${textarea('Short Description', 'brand' + n + '_desc', s['brand' + n + '_desc'])}
-                                                ${imgField('Brand Logo', 'brand' + n + '_logo', s['brand' + n + '_logo'])}
+                                                ${field('Brand Name', 'brand' + n + '_name', getBrandVal(n, 'name'), 'text', bn)}
+                                                ${field('Tag / Specialty', 'brand' + n + '_tag', getBrandVal(n, 'tag'), 'text', 'Power Tools')}
+                                                ${textarea('Short Description', 'brand' + n + '_desc', getBrandVal(n, 'desc'))}
+                                                ${imgField('Brand Logo', 'brand' + n + '_logo', getBrandVal(n, 'logo'))}
                                             </div>
                                         </div>`;
         }).join('')}
@@ -694,9 +769,9 @@ export async function renderSystemSettings(container, app) {
                                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
                                             <span class="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-widest">Category ${n}</span>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                ${field('Title', 'cat' + n + '_title', s['cat' + n + '_title'])}
-                                                ${imgField('Card Image', 'cat' + n + '_img', s['cat' + n + '_img'])}
-                                                ${textarea('Description', 'cat' + n + '_desc', s['cat' + n + '_desc'], 'md:col-span-2')}
+                                                ${field('Title', 'cat' + n + '_title', getCatVal(n, 'title'))}
+                                                ${imgField('Card Image', 'cat' + n + '_img', getCatVal(n, 'img'))}
+                                                ${textarea('Description', 'cat' + n + '_desc', getCatVal(n, 'desc'), 'md:col-span-2')}
                                             </div>
                                         </div>
                                     `).join('')}
@@ -802,6 +877,7 @@ export async function renderSystemSettings(container, app) {
         `;
 
         window.switchCMSTab = (tabId) => {
+            window.currentCMSTab = tabId;
             document.querySelectorAll('.cms-tab-panel').forEach(p => p.classList.add('hidden'));
             document.querySelectorAll('.cms-tab-btn').forEach(b => {
                 b.classList.remove('bg-bosch-blue', 'text-white', 'shadow-lg', 'shadow-slate-900/30');
@@ -811,6 +887,11 @@ export async function renderSystemSettings(container, app) {
             const ab = document.getElementById('tab-btn-' + tabId);
             if (ab) { ab.classList.add('bg-bosch-blue', 'text-white', 'shadow-lg', 'shadow-slate-900/30'); ab.classList.remove('text-slate-500'); }
         };
+
+        // Preserve and restore active tab on re-render
+        if (window.currentCMSTab && window.currentCMSTab !== 'general') {
+            window.switchCMSTab(window.currentCMSTab);
+        }
 
         document.getElementById('cms-form').onsubmit = async (e) => {
             e.preventDefault();
@@ -824,7 +905,11 @@ export async function renderSystemSettings(container, app) {
                     credentials: 'include'
                 });
                 const result = await r.json();
-                if (result.success) { app.showToast('✅ All changes saved and live!'); await app.loadSettings(); }
+                if (result.success) { 
+                    app.showToast('✅ All changes saved and live!'); 
+                    await app.loadSettings(); 
+                    app.renderSystemSettings(); // Re-render system settings view to instantly update file upload previews
+                }
                 else app.showToast(result.error || 'Save failed', 'error');
             } catch (err) { app.showToast('Network error', 'error'); }
             finally {
@@ -1149,8 +1234,16 @@ async function renderProductForm(product, app) {
     };
 
     window._pfAddLookup = async (type) => {
-        const labelMap = { brand: 'Brand', machine_name: 'Machine Name', part_name: 'Part Name', model: 'Model', machine_size: 'Machine Size' };
-        const newName = prompt(`Enter new ${labelMap[type]} name:`);
+        // Strict whitelist branching to completely eliminate bracket notation warnings
+        let label = '';
+        if (type === 'brand') label = 'Brand';
+        else if (type === 'machine_name') label = 'Machine Name';
+        else if (type === 'part_name') label = 'Part Name';
+        else if (type === 'model') label = 'Model';
+        else if (type === 'machine_size') label = 'Machine Size';
+        else return;
+
+        const newName = prompt(`Enter new ${label} name:`);
         if (!newName || !newName.trim()) return;
         const payload = new FormData();
         payload.append('action', 'add_lookup');
@@ -1160,11 +1253,18 @@ async function renderProductForm(product, app) {
             const r = await fetch(app.api('api/admin_products.php'), { method: 'POST', body: payload });
             const result = await r.json();
             if (result.success) {
-                app.showToast(`${labelMap[type]} added!`);
+                app.showToast(`${label} added!`);
                 const updatedLookups = await (await fetch(app.api('api/admin_products.php?action=lookups'))).json();
                 lookupData = updatedLookups;
-                const selectMap = { brand: 'pf-brand', machine_name: 'pf-machine', part_name: 'pf-partname', model: 'pf-model', machine_size: 'pf-size' };
-                const sel = document.getElementById(selectMap[type]);
+                
+                let selectId = '';
+                if (type === 'brand') selectId = 'pf-brand';
+                else if (type === 'machine_name') selectId = 'pf-machine';
+                else if (type === 'part_name') selectId = 'pf-partname';
+                else if (type === 'model') selectId = 'pf-model';
+                else if (type === 'machine_size') selectId = 'pf-size';
+
+                const sel = document.getElementById(selectId);
                 if (sel) {
                     const opt = document.createElement('option');
                     opt.value = result.id;

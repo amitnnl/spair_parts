@@ -19,6 +19,12 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'dist',
+      assetsInlineLimit: (file) => {
+        if (file.endsWith('.webmanifest') || file.endsWith('.json')) {
+          return false;
+        }
+        return 4096; // default 4KB limit for other assets
+      }
     },
   };
 });

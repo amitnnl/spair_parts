@@ -39,17 +39,17 @@
             theme: {
                 extend: {
                     colors: {
-                        'bosch-blue': '#226E54',
+                        'bosch-blue': '#ed1c24',
                         'bosch-red': '#ed1c24',
-                        'industrial-gray': '#226E54',
-                        primary: { DEFAULT: '#226E54', dark: '#164a39', light: '#2f9371' }
+                        'industrial-gray': '#111111',
+                        primary: { DEFAULT: '#ed1c24', dark: '#c1121f', light: '#ef233c' }
                     },
                     fontFamily: {
                         sans: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
                         poppins: ['Outfit', 'sans-serif'],
                     },
                     boxShadow: {
-                        'premium': '0 10px 30px -10px rgba(34, 110, 84, 0.10), 0 4px 6px -4px rgba(34, 110, 84, 0.05)',
+                        'premium': '0 10px 30px -10px rgba(237, 28, 36, 0.08), 0 4px 6px -4px rgba(237, 28, 36, 0.03)',
                         'premium-hover': '0 20px 50px -12px rgba(0, 0, 0, 0.08)',
                     }
                 }
@@ -58,13 +58,13 @@
     </script>
 
     <!-- PWA & Mobile App Support -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="src/assets/logo.png">
     <script>
         // Inject theme-color dynamically to avoid static analysis warnings for unsupported browsers
         const meta = document.createElement('meta');
         meta.name = 'theme-color';
-        meta.content = '#226E54';
+        meta.content = '#ed1c24';
         document.head.appendChild(meta);
     </script>
     <meta name="mobile-web-app-capable" content="yes">
@@ -84,7 +84,7 @@
     <link rel="stylesheet" href="src/index.css?v=1.0.1">
 
     <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23226E54'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ed1c24'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
 
     <!-- Chart.js (loaded on-demand in reports.js) -->
     <style>
@@ -119,150 +119,228 @@
 
     <div id="app" class="min-h-screen flex flex-col">
 
-        <!-- ═══ TOP BAR ═══ -->
-        <div id="top-bar" class="bg-bosch-blue text-white py-2 px-6 lg:px-10 no-print hidden md:block">
-            <div class="flex justify-between items-center text-[11px] font-bold uppercase tracking-wider">
-                <div class="flex gap-6 opacity-70">
-                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg> B2B Only Portal</span>
-                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path d="M5 13l4 4L19 7" />
-                        </svg> Genuine Parts</span>
-                    <span class="flex items-center gap-1.5"><svg class="w-3 h-3" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg> Pan India Delivery</span>
+        <!-- ═══ TOP BAR (Mockup: Black Bar with menu & icons) ═══ -->
+        <div id="top-bar" class="bg-black text-slate-300 py-2.5 px-6 lg:px-10 no-print hidden md:block border-b border-zinc-800">
+            <div class="flex justify-between items-center text-[10px] font-semibold uppercase tracking-wider">
+                <div class="flex gap-6">
+                    <a href="/catalog" data-link class="flex items-center gap-2 hover:text-white transition-colors">
+                        <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                        </svg> Bulk Order
+                    </a>
+                    <a href="/catalog" data-link class="flex items-center gap-2 hover:text-white transition-colors">
+                        <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg> Quick Order
+                    </a>
+                    <a href="/support" data-link class="flex items-center gap-2 hover:text-white transition-colors">
+                        <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg> Download Center
+                    </a>
+                    <a href="/support" data-link class="flex items-center gap-2 hover:text-white transition-colors">
+                        <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg> Support
+                    </a>
                 </div>
                 <div class="flex gap-6 items-center">
-
-                    <a href="/register" data-link
-                        class="hover:text-primary-light transition-colors flex items-center gap-1.5"><svg
-                            class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                        </svg> Register Partner</a>
+                    <a href="/quotations" data-link class="flex items-center gap-2 hover:text-white transition-colors">
+                        <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg> Track Order
+                    </a>
+                    <span class="flex items-center gap-1 hover:text-white cursor-pointer select-none transition-colors">
+                        <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg> English <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3"/></svg>
+                    </span>
                 </div>
             </div>
         </div>
 
-        <!-- ═══ MAIN NAVBAR ═══ -->
-        <nav id="main-nav"
-            class="bg-white/80 backdrop-blur-xl border-b border-slate-100 sticky top-0 z-50 no-print transition-all duration-500 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_4px_6px_-2px_rgba(0,0,0,0.05)]">
+        <!-- ═══ MAIN NAVBAR (Mockup: White, red text-buttons, premium cog TORVO logo) ═══ -->
+        <nav id="main-nav" class="bg-white border-b border-zinc-100 sticky top-0 z-50 no-print shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
             <div class="w-full px-6 lg:px-10">
                 <div class="flex justify-between items-center h-20">
-                    <!-- Logo & Title -->
-                    <!-- Premium Branding: Large Logo + Title -->
-                    <a href="/" data-link aria-label="Home"
-                        class="flex items-center gap-6 group transition-all duration-300 hover:scale-[1.01] flex-shrink-0">
-                        <!-- Extra Large Transparent Logo -->
-                        <div
-                            class="relative w-32 h-16 flex items-center justify-center transition-transform duration-700 group-hover:rotate-[360deg] logo-container">
-                            <div
-                                class="absolute inset-0 bg-bosch-blue/5 rounded-full scale-0 group-hover:scale-125 transition-transform duration-500 blur-xl">
-                            </div>
-                            <svg class="w-12 h-12 text-slate-900 transition-all duration-500 group-hover:text-bosch-blue drop-shadow-xl"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
-                            </svg>
-                        </div>
+                    <!-- Hamburger / Mobile Toggle (Left in mobile, hidden in desktop) -->
+                    <button id="mobile-menu-toggle" class="md:hidden p-2 text-zinc-800 hover:text-rose-600 transition-colors focus:outline-none" aria-label="Toggle Menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
 
+                        <!-- Logo: TORVO with custom gear cogwheel -->
+                    <a href="/" data-link aria-label="Home" class="logo-container flex items-center gap-2 group transition-all duration-300 hover:scale-[1.02]">
+                        <div class="flex items-center">
+                            <span class="text-3xl font-extrabold text-[#111111] tracking-tight font-poppins italic">TORV</span>
+                            <!-- SVG cogwheel as 'O' -->
+                            <div class="w-8 h-8 ml-0.5 flex items-center justify-center animate-[spin_10s_linear_infinite] group-hover:animate-[spin_2s_linear_infinite]">
+                                <svg viewBox="0 0 100 100" fill="none" class="w-full h-full text-[#ed1c24] drop-shadow-[0_2px_4px_rgba(237,28,36,0.3)]">
+                                    <circle cx="50" cy="50" r="22" stroke="currentColor" stroke-width="12" fill="none"/>
+                                    <!-- Teeth -->
+                                    <path d="M50 5 L50 20" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M50 80 L50 95" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M5 50 L20 50" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M80 50 L95 50" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M18 18 L29 29" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M71 71 L82 82" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M18 82 L29 71" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M71 29 L82 18" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                        </div>
                     </a>
 
-                    <!-- Nav Links - Centered & Expanded -->
-                    <div class="hidden md:flex flex-1 justify-center px-12">
-                        <div class="flex items-center bg-transparent w-full max-w-2xl justify-between border-b-2 border-transparent hover:border-slate-100 transition-all">
-                            <a href="/catalog" data-link
-                                class="px-6 py-4 rounded-none text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 hover:text-bosch-blue hover:bg-slate-50 border-b-2 border-transparent hover:border-bosch-blue transition-all duration-300">Products</a>
-                            <a href="/brands" data-link
-                                class="px-6 py-4 rounded-none text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 hover:text-bosch-blue hover:bg-slate-50 border-b-2 border-transparent hover:border-bosch-blue transition-all duration-300">Brands</a>
-                            <a href="/categories" data-link
-                                class="px-6 py-4 rounded-none text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 hover:text-bosch-blue hover:bg-slate-50 border-b-2 border-transparent hover:border-bosch-blue transition-all duration-300">Categories</a>
-                            <a href="/support" data-link
-                                class="px-6 py-4 rounded-none text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 hover:text-bosch-blue hover:bg-slate-50 border-b-2 border-transparent hover:border-bosch-blue transition-all duration-300">Support</a>
+                    <!-- Nav Links - Centered (Mockup: Products, Brands, Catalogues, Categories, Resources, Support) -->
+                    <div class="hidden md:flex flex-1 justify-center px-6">
+                        <div class="flex items-center gap-1 lg:gap-4">
+                            <div class="relative group/menu">
+                                <a href="/catalog" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
+                                    Products <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
+                                </a>
+                            </div>
+                            <div class="relative group/menu">
+                                <a href="/brands" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
+                                    Brands <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
+                                </a>
+                            </div>
+                            <div class="relative group/menu">
+                                <a href="/catalog" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
+                                    Catalogues <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
+                                </a>
+                            </div>
+                            <div class="relative group/menu">
+                                <a href="/categories" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
+                                    Categories <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
+                                </a>
+                            </div>
+                            <div class="relative group/menu">
+                                <a href="/catalog" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
+                                    Resources <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
+                                </a>
+                            </div>
+                            <div class="relative group/menu">
+                                <a href="/support" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
+                                    Support <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Auth & Cart & Search -->
-                    <div class="flex items-center gap-4 flex-shrink-0">
-                        <!-- Global Search Toggle -->
-                        <button id="search-toggle" title="Search Inventory" class="p-4 rounded-none bg-slate-50 border-2 border-slate-100 text-slate-500 hover:text-bosch-blue hover:border-bosch-blue transition-all group">
-                            <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    <!-- Auth & Cart & Mobile Hamburger -->
+                    <div class="flex items-center gap-3 md:gap-5 flex-shrink-0">
+                        <!-- Shopping Cart Button (Mockup: Simple wireframe cart with red count circle) -->
+                        <a href="/cart" data-link id="header-cart-btn" class="relative p-2.5 text-zinc-700 hover:text-rose-600 transition-colors group">
+                            <svg class="w-6.5 h-6.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                        </button>
-
-                        <!-- Shopping Cart Button -->
-                        <a href="/cart" data-link id="header-cart-btn"
-                            class="relative p-4 rounded-none bg-slate-50 border-2 border-slate-100 text-slate-500 hover:text-bosch-blue hover:border-bosch-blue transition-all group hidden">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                            <span id="cart-badge"
-                                class="absolute -top-2 -right-2 min-w-[20px] h-5 px-1.5 flex items-center justify-center bg-bosch-red text-white text-[10px] font-black rounded-none border border-white hidden">0</span>
+                            <span id="cart-badge" class="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-[#ed1c24] text-white text-[9px] font-extrabold rounded-full border-2 border-white shadow-sm">0</span>
                         </a>
 
-                        <div id="auth-nav" class="flex items-center">
-                            <a href="/login" data-link id="desktop-login-btn"
-                                class="px-10 py-4 rounded-none bg-bosch-blue text-white text-[11px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-bosch-blue transition-all duration-300 whitespace-nowrap">Partner
-                                Login</a>
+                        <!-- Auth Nav (Log In and Sign Up buttons) -->
+                        <div id="auth-nav" class="flex items-center gap-3">
+                            <a href="/login" data-link id="desktop-login-btn" class="hidden md:inline-flex px-6 py-2.5 text-xs font-bold text-[#ed1c24] border border-[#ed1c24] hover:bg-[#ed1c24] hover:text-white rounded-none transition-all uppercase tracking-wider">Log In</a>
+                            <a href="/register" data-link id="desktop-signup-btn" class="hidden md:inline-flex px-6 py-2.5 text-xs font-bold text-white bg-[#ed1c24] hover:bg-[#111111] rounded-none transition-all uppercase tracking-wider shadow-sm">Sign Up</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Hidden Global Search Command Center -->
-                <div id="global-search-container" class="hidden animate-in slide-in-from-top-4 duration-300 border-t border-slate-100">
-                    <div class="py-8 bg-white">
-                        <div class="max-w-5xl mx-auto px-4">
-                            <div class="bg-industrial-gray rounded-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border-l-4 border-bosch-blue p-2 overflow-hidden">
-                                <div class="flex p-1 gap-1">
-                                    <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-white bg-white/10 rounded-none border border-white/5">Search by Part</button>
-                                    <button class="flex-1 py-4 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-200 transition-colors">Search by Tool</button>
-                                </div>
-                                <div class="p-6 flex flex-col md:flex-row gap-4">
-                                    <div class="relative flex-shrink-0 w-full md:w-64">
-                                        <select title="Select Brand" class="w-full h-14 bg-white/5 border border-white/10 rounded-none px-6 text-sm font-black text-white appearance-none focus:outline-none focus:border-bosch-blue transition-all">
-                                            <option class="text-bosch-blue">SELECT BRAND</option>
-                                            <option class="text-bosch-blue">BOSCH</option>
-                                            <option class="text-bosch-blue">MAKITA</option>
-                                            <option class="text-bosch-blue">DEWALT</option>
-                                            <option class="text-bosch-blue">HIKOKI</option>
-                                        </select>
-                                        <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"></path></svg>
-                                        </div>
-                                    </div>
-                                    <div class="relative flex-grow">
-                                        <input type="text" placeholder="Enter Part Name, No. or Model..." class="w-full h-14 bg-slate-50 border border-slate-200 rounded-none px-14 text-sm font-bold text-slate-800 focus:outline-none focus:border-bosch-blue transition-all">
-                                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                        </div>
-                                        <button onclick="app.showToast('Barcode scanner integration coming soon!', 'info')" class="absolute right-5 top-1/2 -translate-y-1/2 p-2 text-bosch-blue hover:bg-bosch-blue/5 rounded-none transition-all" title="Scan Barcode">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                                                <path d="M3 7V5a2 2 0 012-2h2m10 0h2a2 2 0 012 2v2M3 17v2a2 2 0 012 2h2m10 0h2a2 2 0 012-2v-2M7 12h10M7 8h10M7 16h10"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <button class="h-14 px-12 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-[0.2em] hover:bg-industrial-gray transition-all">Find Parts</button>
-                                </div>
-                                <div class="px-8 pb-6 flex items-center gap-4">
-                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Hot Searches:</span>
-                                    <div class="flex gap-4">
-                                        <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Carbon Brush</a>
-                                        <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Armature</a>
-                                        <a href="#" class="text-[11px] font-bold text-bosch-blue hover:underline">Field Coil</a>
-                                    </div>
-                                </div>
+                <!-- ═══ INTEGRATED SUB-NAV SEARCH BAR (Directly under navbar, 100% working!) ═══ -->
+                <div class="py-4 border-t border-zinc-100 no-print flex flex-col md:flex-row gap-3">
+                    <!-- Search by Brand selector -->
+                    <div class="relative flex-1 min-w-[150px]">
+                        <select id="global-brand-select" title="Select Brand" class="w-full h-11 bg-white border border-zinc-200 hover:border-zinc-300 rounded-none px-4 text-xs font-bold text-[#111111] appearance-none focus:outline-none focus:border-[#ed1c24] transition-all cursor-pointer uppercase tracking-wider">
+                            <option value="">Search by Brand</option>
+                            <option value="BOSCH">BOSCH</option>
+                            <option value="MAKITA">MAKITA</option>
+                            <option value="DEWALT">DEWALT</option>
+                            <option value="METABO">METABO</option>
+                            <option value="HITACHI">HITACHI</option>
+                            <option value="MILWAUKEE">MILWAUKEE</option>
+                            <option value="RYOBI">RYOBI</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </div>
+                    <!-- Search by Category selector -->
+                    <div class="relative flex-1 min-w-[150px]">
+                        <select id="global-category-select" title="Select Category" class="w-full h-11 bg-white border border-zinc-200 hover:border-zinc-300 rounded-none px-4 text-xs font-bold text-[#111111] appearance-none focus:outline-none focus:border-[#ed1c24] transition-all cursor-pointer uppercase tracking-wider">
+                            <option value="">Search by Category</option>
+                            <option value="Electrical Parts">Electrical Parts</option>
+                            <option value="Mechanical Parts">Mechanical Parts</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Replacement Kits">Replacement Kits</option>
+                            <option value="Tool Components">Tool Components</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </div>
+                    <!-- Search by Item selector -->
+                    <div class="relative flex-1 min-w-[150px]">
+                        <select id="global-item-select" title="Select Item" class="w-full h-11 bg-white border border-zinc-200 hover:border-zinc-300 rounded-none px-4 text-xs font-bold text-[#111111] appearance-none focus:outline-none focus:border-[#ed1c24] transition-all cursor-pointer uppercase tracking-wider">
+                            <option value="">Search by Item</option>
+                            <option value="Carbon Brush">Carbon Brush</option>
+                            <option value="Armature">Armature</option>
+                            <option value="Bearing">Bearing</option>
+                            <option value="Switch">Switch</option>
+                            <option value="Chuck">Chuck</option>
+                            <option value="Gear">Gear</option>
+                            <option value="Field Coil">Field Coil</option>
+                            <option value="Spindle">Spindle</option>
+                            <option value="Rotor">Rotor</option>
+                            <option value="Stator">Stator</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </div>
+                    <!-- Text Search input and Red Action Button -->
+                    <div class="relative flex-[2.5] flex gap-2">
+                        <div class="relative flex-1">
+                            <input type="text" id="global-text-search" placeholder="Enter part name, number or model" class="w-full h-11 bg-white border border-zinc-200 rounded-none px-4 pr-10 text-xs font-bold text-[#111111] focus:outline-none focus:border-[#ed1c24] focus:bg-white transition-all">
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                             </div>
                         </div>
+                        <button id="global-search-btn" class="w-12 h-11 bg-[#ed1c24] hover:bg-[#111111] rounded-none flex items-center justify-center text-white transition-all shadow-sm focus:outline-none group" title="Search Inventory">
+                            <svg class="w-4.5 h-4.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
         </nav>
+
+        <!-- Mobile Sidebar Menu Overlay (Hidden by default, slides in) -->
+        <div id="mobile-sidebar-menu" class="fixed inset-0 bg-black/60 z-[100] hidden opacity-0 transition-opacity duration-300 no-print">
+            <div class="w-72 bg-white h-full shadow-2xl flex flex-col p-6 transform -translate-x-full transition-transform duration-300 max-w-[85vw]">
+                <div class="flex items-center justify-between pb-6 border-b border-zinc-100">
+                    <a href="/" data-link class="logo-container flex items-center group">
+                        <span class="text-xl font-black text-[#ed1c24] italic tracking-tight font-poppins">TORVO</span>
+                    </a>
+                    <button id="mobile-menu-close" title="Close mobile menu" aria-label="Close mobile menu" class="p-2 text-zinc-400 hover:text-rose-600 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div class="flex-1 py-8 flex flex-col gap-6 overflow-y-auto uppercase text-xs font-black tracking-widest text-zinc-700">
+                    <a href="/catalog" data-link class="mobile-side-link hover:text-rose-600">Products</a>
+                    <a href="/brands" data-link class="mobile-side-link hover:text-rose-600">Brands</a>
+                    <a href="/catalog" data-link class="mobile-side-link hover:text-rose-600">Catalogues</a>
+                    <a href="/categories" data-link class="mobile-side-link hover:text-rose-600">Categories</a>
+                    <a href="/catalog" data-link class="mobile-side-link hover:text-rose-600">Resources</a>
+                    <a href="/support" data-link class="mobile-side-link hover:text-rose-600">Support</a>
+                </div>
+                <div class="pt-6 border-t border-zinc-100 flex flex-col gap-3">
+                    <a href="/login" data-link class="w-full py-3.5 text-center text-xs font-black text-[#ed1c24] border border-[#ed1c24] rounded-none uppercase tracking-widest hover:bg-[#ed1c24] hover:text-white transition-all">Partner Login</a>
+                    <a href="/register" data-link class="w-full py-3.5 text-center text-xs font-black text-white bg-[#ed1c24] rounded-none uppercase tracking-widest hover:bg-[#111111] transition-all shadow-sm">Partner Sign Up</a>
+                </div>
+            </div>
+        </div>
 
         <!-- ═══ MAIN CONTENT ═══ -->
         <main id="view-container" class="flex-1"></main>
@@ -323,41 +401,48 @@
             </div>
         </footer>
 
-        <!-- ═══ PREMIUM MOBILE BOTTOM NAV (App Style) ═══ -->
-        <nav id="mobile-nav"
-            class="md:hidden fixed bottom-6 left-4 right-4 bg-white/80 backdrop-blur-xl border border-white/20 z-50 flex justify-around items-center h-18 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] no-print px-4 py-3">
-            <a href="/" data-link class="mobile-nav-item flex flex-col items-center gap-1.5 transition-all duration-300">
-                <div class="nav-icon-container p-2 rounded-xl transition-all">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        <!-- ═══ PREMIUM MOBILE BOTTOM NAV (Mockup: App Style Red/Black) ═══ -->
+        <nav id="mobile-nav" class="md:hidden fixed bottom-6 left-4 right-4 bg-white/95 backdrop-blur-xl border border-zinc-100 z-50 flex justify-around items-center h-20 rounded-[1.25rem] shadow-[0_16px_40px_rgba(0,0,0,0.08)] no-print px-4 py-3">
+            <a href="/" data-link class="mobile-nav-item flex flex-col items-center gap-1 transition-all duration-300">
+                <div class="nav-icon-container p-2 rounded-lg transition-all text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                 </div>
-                <span class="text-[8px] font-black uppercase tracking-widest">Home</span>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-slate-400">Home</span>
             </a>
-            <a href="/catalog" data-link class="mobile-nav-item flex flex-col items-center gap-1.5 transition-all duration-300">
-                <div class="nav-icon-container p-2 rounded-xl transition-all">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <a href="/categories" data-link class="mobile-nav-item flex flex-col items-center gap-1 transition-all duration-300">
+                <div class="nav-icon-container p-2 rounded-lg transition-all text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
                 </div>
-                <span class="text-[8px] font-black uppercase tracking-widest">Shop</span>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-slate-400">Categories</span>
             </a>
-            <a href="/cart" data-link id="mobile-cart-btn" class="mobile-nav-item flex flex-col items-center gap-1.5 transition-all duration-300 relative hidden">
-                <div class="nav-icon-container p-2 rounded-xl transition-all">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            <a href="/catalog" data-link class="mobile-nav-item flex flex-col items-center gap-1 transition-all duration-300">
+                <div class="nav-icon-container p-2 rounded-lg transition-all text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                 </div>
-                <span class="text-[8px] font-black uppercase tracking-widest">Cart</span>
-                <span id="mobile-cart-badge" class="absolute top-1 right-1 w-4 h-4 bg-rose-500 text-white text-[8px] flex items-center justify-center rounded-full border border-white font-black hidden">0</span>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-slate-400">Quick Order</span>
             </a>
-            <a href="/support" data-link class="mobile-nav-item flex flex-col items-center gap-1.5 transition-all duration-300">
-                <div class="nav-icon-container p-2 rounded-xl transition-all">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+            <a href="/quotations" data-link class="mobile-nav-item flex flex-col items-center gap-1 transition-all duration-300">
+                <div class="nav-icon-container p-2 rounded-lg transition-all text-slate-400 relative">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span id="mobile-cart-badge" class="absolute top-1 right-1 w-4 h-4 bg-rose-600 text-white text-[8px] flex items-center justify-center rounded-full border border-white font-extrabold hidden">0</span>
+                </div>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-slate-400">My Orders</span>
+            </a>
+            <a href="/profile" data-link class="mobile-nav-item flex flex-col items-center gap-1 transition-all duration-300">
+                <div class="nav-icon-container p-2 rounded-lg transition-all text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
-                <span class="text-[8px] font-black uppercase tracking-widest">Help</span>
+                <span class="text-[8px] font-bold uppercase tracking-wider text-slate-400">Account</span>
             </a>
         </nav>
 

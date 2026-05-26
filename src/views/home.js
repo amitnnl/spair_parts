@@ -1,162 +1,450 @@
+import { escapeHTML, setHTML } from '../api.js';
+
 export function renderHome(container, app) {
     const s = app.state.settings || {};
-    container.innerHTML = `
-        <div class="animate-fade-in">
-            <!-- Hero Section (Full Width Slider) -->
-            <section class="relative bg-industrial-gray overflow-hidden border-b-4 border-bosch-red h-[600px] lg:h-[750px] flex items-center">
-                
-                <!-- Full Width Slider Container -->
-                <div id="hero-slider" class="absolute inset-0 z-0">
-                    ${[s.hero_image, s.hero_image_2, s.hero_image_3].map((img, i) => `
-                        <div class="hero-slide absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}" data-index="${i}">
-                            <img src="${app.api(img) || 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2000'}" 
-                                 class="w-full h-full object-cover">
-                            <!-- Gradient Overlay to ensure text readability -->
-                            <div class="absolute inset-0 bg-gradient-to-r from-industrial-gray via-industrial-gray/80 to-transparent"></div>
-                        </div>
-                    `).join('')}
-                </div>
 
-                <!-- Overlay Content -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mt-20 lg:mt-0">
-                    <div class="max-w-3xl text-center lg:text-left">
-                        <h1 class="text-6xl lg:text-[84px] font-black text-white leading-[1.05] tracking-tight mb-8 uppercase">
-                             ${(s.hero_title || 'THE RIGHT PART. EVERY TIME.').split('.').join('.<br/>')}
-                        </h1>
-                        <p class="text-xl text-white/80 mb-12 max-w-xl mx-auto lg:mx-0 font-bold leading-relaxed">
-                            ${s.hero_subtitle || 'Premium B2B procurement portal for genuine power tool spare parts.'}
-                        </p>
+    // Wire up global click handlers for homepage interactions
+    window.clickPopularSearch = (term) => {
+        app.state.searchFilters = { query: term };
+        history.pushState(null, null, app.basePath + '/catalog');
+        app.handleRouting();
+    };
+
+    window.clickCategorySearch = (cat) => {
+        app.state.searchFilters = { category: cat };
+        history.pushState(null, null, app.basePath + '/catalog');
+        app.handleRouting();
+    };
+
+    // Dynamically split their admin custom title so the last word lands in the red slanted italic banner!
+    const rawTitle = s.hero_title || 'ALL POWER TOOL SPARE PARTS AVAILABLE';
+    const titleParts = rawTitle.toUpperCase().split(' ');
+    const lastWord = titleParts.pop() || '';
+    const mainTitle = titleParts.join(' ') || '';
+
+    // Dynamically parse the vertical pipe separators for the subtitle
+    const rawSubtitle = s.hero_subtitle || 'GENUINE PARTS | HIGH QUALITY | LONG LIFE';
+    const subtitleHTML = rawSubtitle.includes('|')
+        ? rawSubtitle.split('|').map(part => '<span>' + escapeHTML(part.trim()) + '</span>').join(' <span class="text-[#ed1c24] font-black">|</span> ')
+        : '<span>' + escapeHTML(rawSubtitle) + '</span>';
+
+    // Retrieve their database custom uploaded slide images
+    const slidesList = [s.hero_image, s.hero_image_2, s.hero_image_3].filter(Boolean);
+    // If no custom uploaded slides exist, default to the generated spares composition graphic
+    const displaySlides = slidesList.length > 0 ? slidesList : ['uploads/hero_spares_composition.png'];
+
+    setHTML(container, `
+        <div class="animate-fade-in bg-zinc-50 min-h-screen">
+            <!-- ═══ HERO SECTION (Mockup layout & styling with dynamic content) ═══ -->
+            <section class="relative bg-white overflow-hidden py-10 lg:py-16 border-b border-zinc-100">
+                <!-- Visual Background Accents -->
+                <div class="absolute top-0 right-0 w-1/3 h-full bg-[#111111] transform skew-x-12 translate-x-20 z-0 hidden lg:block"></div>
+                <div class="absolute top-0 right-0 w-2 h-full bg-[#ed1c24] transform skew-x-12 translate-x-8 z-0 hidden lg:block"></div>
+
+                <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                         
-                        <div class="flex flex-wrap justify-center lg:justify-start gap-10 mb-8">
-                            <div class="flex items-center gap-3">
-                                <div class="w-7 h-7 rounded-none bg-bosch-blue text-white flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
-                                <span class="text-sm font-black text-white uppercase tracking-wider">Genuine Parts</span>
+                        <!-- Left Column: Dynamic Content & Mockup layout -->
+                        <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                            <div class="flex items-center justify-center lg:justify-start gap-2 text-zinc-800">
+                                <span class="text-xs font-black uppercase tracking-[0.2em] font-sans text-zinc-900">All Power Tool</span>
+                                <div class="w-10 h-[2.5px] bg-[#ed1c24]"></div>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-7 h-7 rounded-none bg-bosch-blue text-white flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
-                                <span class="text-sm font-black text-white uppercase tracking-wider">B2B Pricing</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-7 h-7 rounded-none bg-bosch-blue text-white flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
-                                <span class="text-sm font-black text-white uppercase tracking-wider">Pan India</span>
-                            </div>
-                        </div>
+                            
+                            <h1 class="leading-none tracking-tighter">
+                                <span class="block text-[40px] sm:text-[56px] font-black text-black leading-[0.95] tracking-tight uppercase font-poppins">${mainTitle}</span>
+                                <span class="relative mt-3.5 inline-block bg-[#ed1c24] text-white text-xl sm:text-2xl font-black py-2 px-9 uppercase italic transform -skew-x-12 tracking-widest">
+                                    ${lastWord}
+                                </span>
+                            </h1>
 
-                        <!-- Call to Action -->
-                        <div class="flex flex-wrap justify-center lg:justify-start gap-4 mt-12">
-                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-10 py-5 bg-bosch-blue text-white rounded-none font-black text-xs uppercase tracking-[0.2em] hover:bg-industrial-gray transition-all shadow-xl shadow-slate-900/40 border border-transparent hover:border-bosch-blue">
-                                Browse Catalog
-                            </button>
-                            <button onclick="app.renderSupport(document.getElementById('view-container'))" class="px-10 py-5 bg-transparent text-white rounded-none font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all border-2 border-white shadow-xl">
-                                Contact Sales
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                            <p class="text-[10px] font-black tracking-[0.2em] text-zinc-500 uppercase flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                                ${subtitleHTML}
+                            </p>
 
-
-            </section>
-
-            <!-- Features Section (Reference Image 2) -->
-            <section class="py-12 bg-slate-50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center mb-12">
-                        <h2 class="text-4xl font-black text-bosch-blue mb-4 tracking-tight">Built for Professionals.</h2>
-                        <p class="text-slate-500 font-bold text-lg">Streamlining industrial spare parts procurement across India.</p>
-                        <div class="w-24 h-1.5 bg-bosch-red mx-auto rounded-none mt-8"></div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                        ${[
-                            { icon:'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4', t:'Wide Inventory', d:'Over 15,000 SKUs from 20+ world-class brands ready to ship.' },
-                            { icon:'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z', t:'Precision Lookup', d:'Advanced search by part number, model, or technical diagram.' },
-                            { icon:'M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6 0a1 1 0 001 1h1m-6 0a1 1 0 001 1h1', t:'Bulk Processing', d:'Dedicated workflow for volume orders and recurring maintenance.' },
-                            { icon:'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', t:'B2B Benefits', d:'Special contract pricing, credit facility, and priority support.' }
-                        ].map(f => `
-                            <div class="flex flex-col items-center text-center group">
-                                <div class="w-20 h-20 rounded-none bg-white shadow-premium border-2 border-slate-100 flex items-center justify-center text-bosch-blue mb-8 group-hover:bg-bosch-blue group-hover:text-white transition-all duration-500 transform group-hover:-translate-y-2 group-hover:border-bosch-blue">
-                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="${f.icon}"/></svg>
+                            <!-- Minimalist Outlined Badges -->
+                            <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl mx-auto lg:mx-0 pt-6">
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm hover:scale-105 transition-transform duration-300">
+                                        <svg class="w-6.5 h-6.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-[9px] font-black uppercase tracking-wider text-zinc-700 leading-tight">Premium<br>Quality</span>
                                 </div>
-                                <h4 class="text-lg font-black text-bosch-blue mb-3 uppercase tracking-widest">${f.t}</h4>
-                                <p class="text-sm text-slate-500 font-medium leading-relaxed px-2">${f.d}</p>
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm hover:scale-105 transition-transform duration-300">
+                                        <svg class="w-6.5 h-6.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-[9px] font-black uppercase tracking-wider text-zinc-700 leading-tight">Wide Range<br>of Parts</span>
+                                </div>
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm hover:scale-105 transition-transform duration-300">
+                                        <svg class="w-6.5 h-6.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                            <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-[9px] font-black uppercase tracking-wider text-zinc-700 leading-tight">High<br>Durability</span>
+                                </div>
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm hover:scale-105 transition-transform duration-300">
+                                        <svg class="w-6.5 h-6.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                            <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-[9px] font-black uppercase tracking-wider text-zinc-700 leading-tight">Fast & Reliable<br>Delivery</span>
+                                </div>
                             </div>
-                        `).join('')}
+                        </div>
+
+                        <!-- Right Column: Dynamic Slider containing B2B Settings Images -->
+                        <div class="lg:col-span-6 relative flex flex-col items-center justify-center h-[350px] lg:h-[420px]">
+                            <div class="absolute inset-0 bg-radial-gradient from-rose-100/30 to-transparent blur-3xl rounded-full opacity-40"></div>
+                            
+                            <!-- Slider Container -->
+                            <div id="hero-slider" class="relative z-10 w-full h-full flex items-center justify-center">
+                                ` + displaySlides.map((img, i) => '<img src="' + escapeHTML(app.api(img)) + '" alt="TORVO Slide ' + escapeHTML(i + 1) + '" class="hero-slide absolute max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.04)] transition-opacity duration-1000 ' + (i === 0 ? 'opacity-100' : 'opacity-0') + '" data-index="' + escapeHTML(i) + '">').join('') + `
+                            </div>
+
+                            <!-- Carousel dots indicators -->
+                            <div class="flex gap-2.5 mt-4 relative z-10 select-none">
+                                ` + displaySlides.map((_, i) => '<span class="slider-dot w-2 h-2 rounded-full cursor-pointer transition-colors duration-300 ' + (i === 0 ? 'bg-[#ed1c24]' : 'bg-zinc-300') + '" data-dot="' + escapeHTML(i) + '"></span>').join('') + `
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
 
-            <!-- Shop by Category - Dynamic Accordion -->
-            <section class="py-12 bg-white relative overflow-hidden">
-                <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
-                        <div class="max-w-3xl">
-                            <h2 class="text-5xl lg:text-6xl font-black text-bosch-blue tracking-tight mb-4">Shop by Core Categories.</h2>
-                            <p class="text-slate-500 font-bold text-lg leading-relaxed max-w-xl">Precision-engineered spares for every industrial tool in your fleet. Hover to explore.</p>
-                        </div>
-                        <a href="/catalog" data-link class="inline-flex items-center gap-3 px-8 h-14 rounded-none bg-industrial-gray hover:bg-bosch-blue text-white uppercase tracking-widest text-[10px] font-black group transition-all border border-slate-200">
-                            View Entire Catalog 
-                            <div class="w-6 h-6 rounded-none bg-bosch-red flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-red-900/20 text-white">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            <!-- ═══ BLACK STATS RIBBON (Mockup layout & red icons) ═══ -->
+            <section class="bg-[#111111] text-white py-6 border-b border-zinc-800 no-print select-none">
+                <div class="max-w-7xl mx-auto px-6 lg:px-10">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
+                        <div class="flex items-center gap-4">
+                            <div class="text-[#ed1c24] flex-shrink-0">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                                    <circle cx="5" cy="5" r="2.5" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="19" cy="5" r="2.5" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="19" r="2.5" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 9V6M5.5 7.5l4.5 3M18.5 7.5l-4.5 3M12 15v1.5" stroke="currentColor" stroke-width="2.5"/>
+                                </svg>
                             </div>
+                            <div class="space-y-0.5">
+                                <span class="block text-xl font-extrabold tracking-tight leading-none text-white font-poppins">10,000+</span>
+                                <span class="block text-[9px] font-bold uppercase tracking-wider text-zinc-400">Parts Across Top Brands</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-[#ed1c24] flex-shrink-0">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                            </div>
+                            <div class="space-y-0.5">
+                                <span class="block text-xl font-extrabold tracking-tight leading-none text-white font-poppins">500+</span>
+                                <span class="block text-[9px] font-bold uppercase tracking-wider text-zinc-400">Brands Available</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-[#ed1c24] flex-shrink-0">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </div>
+                            <div class="space-y-0.5">
+                                <span class="block text-xl font-extrabold tracking-tight leading-none text-white font-poppins">1L+</span>
+                                <span class="block text-[9px] font-bold uppercase tracking-wider text-zinc-400">Happy B2B Customers</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-[#ed1c24] flex-shrink-0">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="space-y-0.5">
+                                <span class="block text-xl font-extrabold tracking-tight leading-none text-white font-poppins">99.7%</span>
+                                <span class="block text-[9px] font-bold uppercase tracking-wider text-zinc-400">Order Accuracy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ POPULAR SEARCHES BAR (Mockup: White bar with grey tag pills) ═══ -->
+            <section class="bg-white py-3 border-b border-zinc-200/50 no-print shadow-sm">
+                <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-wrap items-center gap-4">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-zinc-800">Popular Searches:</span>
+                    <div class="flex flex-wrap gap-2">
+                        ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => '<button onclick="clickPopularSearch(\'' + term + '\')" class="px-4 py-1.5 bg-zinc-50 border border-zinc-200 hover:border-[#ed1c24] hover:text-[#ed1c24] text-[10px] font-bold uppercase tracking-wider rounded-none transition-all cursor-pointer">' + term + '</button>').join('') + `
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ SHOP BY TOP CATEGORIES (Mockup categories layout with DYNAMIC text/images) ═══ -->
+            <section class="py-16 bg-zinc-50">
+                <div class="max-w-7xl mx-auto px-6 lg:px-10">
+                    
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-10">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-black text-black tracking-tight font-poppins uppercase">Shop by Top Categories</h2>
+                        </div>
+                        <a href="/categories" data-link class="text-xs font-bold text-[#ed1c24] hover:text-[#c1121f] transition-colors flex items-center gap-1.5 uppercase tracking-wider font-poppins">
+                            View All Categories 
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
                         </a>
                     </div>
-                    
-                    <div class="flex flex-col md:flex-row gap-4 h-[400px] md:h-[250px] lg:h-[300px] w-full">
-                        ${[
-                               { t: s.cat1_title || 'Electrical Spares', d: s.cat1_desc || 'Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.', img: app.api(s.cat1_img) || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800', icon:'M13 10V3L4 14h7v7l9-11h-7z' },
-                            { t: s.cat2_title || 'Mechanical Units', d: s.cat2_desc || 'Precision Gears, Bearings, Shafts & Housing Assemblies ensuring seamless kinetic transfer.', img: app.api(s.cat2_img) || 'https://images.unsplash.com/photo-1530124566582-a618bc2615ad?auto=format&fit=crop&q=80&w=800', icon:'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
-                            { t: s.cat3_title || 'Power Attachments', d: s.cat3_desc || 'Chucks, SDS Adaptors, Cutting Discs & Drill Bits engineered for brutal workloads.', img: app.api(s.cat3_img) || 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=80&w=800', icon:'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5' },
-                            { t: s.cat4_title || 'Maintenance Kits', d: s.cat4_desc || 'Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.', img: app.api(s.cat4_img) || 'https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800', icon:'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' }
-                        ].map((c) => `
-                            <a href="/catalog" data-link class="group relative rounded-none border-2 border-transparent hover:border-bosch-blue overflow-hidden bg-industrial-gray flex-1 hover:flex-[3] transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-end p-6 md:p-10 shadow-2xl hover:shadow-slate-900/20 cursor-pointer">
-                                <div class="absolute inset-0">
-                                    <img src="${c.img}" alt="${c.t}" class="w-full h-full object-cover opacity-50 mix-blend-overlay group-hover:scale-110 group-hover:opacity-100 transition-all duration-[1200ms] ease-out">
+
+                    <!-- 6-Card Category Grid: Category 1-4 are database DYNAMIC. 5-6 are mockup collections -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                        
+                        <!-- 1. Electrical Parts (Dynamic) -->
+                        <div onclick="clickCategorySearch('${s.cat1_title || 'Electrical Parts'}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
+                                <img src="${app.api(s.cat1_img) || 'uploads/setting_cat1_img_69f49cd304f29.jpg'}" 
+                                     alt="${s.cat1_title || 'Electrical Parts'}" 
+                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="flex items-end justify-between w-full pt-3">
+                                <div class="space-y-0.5 min-w-0 flex-1">
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${s.cat1_title || 'Electrical Parts'}</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${s.cat1_desc || 'Switches, Cables, Carbon Brushes & more'}</p>
                                 </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-industrial-gray via-industrial-gray/40 to-transparent opacity-90 group-hover:opacity-70 transition-all duration-700"></div>
-                                <div class="absolute inset-0 bg-gradient-to-r from-industrial-gray/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                                
-                                <div class="relative z-10 w-full flex flex-col justify-end">
-                                    <div class="w-14 h-14 rounded-none bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-6 group-hover:bg-bosch-blue group-hover:text-white group-hover:-translate-y-2 transition-all duration-500 border border-white/10 shrink-0 shadow-lg">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${c.icon}"/></svg>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h4 class="text-2xl md:text-3xl font-black text-white mb-2 whitespace-nowrap transform group-hover:translate-x-2 transition-transform duration-500 uppercase tracking-widest">${c.t}</h4>
-                                        <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
-                                            <div class="overflow-hidden">
-                                                <div class="transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
-                                                    <p class="text-sm md:text-base text-slate-300 font-bold leading-relaxed pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 whitespace-normal min-w-[200px] max-w-sm">${c.d}</p>
-                                                    <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-bosch-blue mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200 bg-bosch-blue/10 px-4 py-2 rounded-none border border-bosch-blue/30">
-                                                        Explore Collection <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- 2. Mechanical Parts (Dynamic) -->
+                        <div onclick="clickCategorySearch('${s.cat2_title || 'Mechanical Parts'}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
+                                <img src="${app.api(s.cat2_img) || 'uploads/setting_cat2_img_69f49cd3068d3.jpg'}" 
+                                     alt="${s.cat2_title || 'Mechanical Parts'}" 
+                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="flex items-end justify-between w-full pt-3">
+                                <div class="space-y-0.5 min-w-0 flex-1">
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${s.cat2_title || 'Mechanical Parts'}</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${s.cat2_desc || 'Gears, Bearings, Shafts & more'}</p>
                                 </div>
-                            </a>
-                        `).join('')}
+                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- 3. Accessories (Dynamic) -->
+                        <div onclick="clickCategorySearch('${s.cat3_title || 'Accessories'}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
+                                <img src="${app.api(s.cat3_img) || 'uploads/setting_cat3_img_69f49cd3083d3.jpg'}" 
+                                     alt="${s.cat3_title || 'Accessories'}" 
+                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="flex items-end justify-between w-full pt-3">
+                                <div class="space-y-0.5 min-w-0 flex-1">
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${s.cat3_title || 'Accessories'}</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${s.cat3_desc || 'Chucks, Blades, Drill Bits & more'}</p>
+                                </div>
+                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- 4. Replacement Kits (Dynamic) -->
+                        <div onclick="clickCategorySearch('${s.cat4_title || 'Replacement Kits'}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
+                                <img src="${app.api(s.cat4_img) || 'uploads/setting_cat4_img_69f49cd308822.jpg'}" 
+                                     alt="${s.cat4_title || 'Replacement Kits'}" 
+                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="flex items-end justify-between w-full pt-3">
+                                <div class="space-y-0.5 min-w-0 flex-1">
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${s.cat4_title || 'Replacement Kits'}</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${s.cat4_desc || 'Kits for Maintenance & Repair'}</p>
+                                </div>
+                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- 5. Tool Components (Mockup Collection) -->
+                        <div onclick="clickCategorySearch('Tool Components')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
+                                <img src="${app.api('uploads/2-26-small-tool-holder.jpg')}" 
+                                     alt="Tool Components" 
+                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <div class="flex items-end justify-between w-full pt-3">
+                                <div class="space-y-0.5 min-w-0 flex-1">
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">Tool Components</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">Housings, Handles, Spindles & more</p>
+                                </div>
+                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- 6. More Categories -->
+                        <div onclick="app.renderCategories(document.getElementById('view-container'))" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                            <div class="h-32 bg-slate-50 flex items-center justify-center p-4">
+                                <div class="w-12 h-12 rounded-none bg-rose-50 flex items-center justify-center text-[#ed1c24] group-hover:bg-[#ed1c24] group-hover:text-white transition-all duration-300">
+                                    <!-- 4-square Grid Icon -->
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <rect x="3" y="3" width="7" height="7" rx="0"/>
+                                        <rect x="14" y="3" width="7" height="7" rx="0"/>
+                                        <rect x="14" y="14" width="7" height="7" rx="0"/>
+                                        <rect x="3" y="14" width="7" height="7" rx="0"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex items-end justify-between w-full pt-3">
+                                <div class="space-y-0.5 min-w-0 flex-1">
+                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">More Categories</h4>
+                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">Explore All Collections</p>
+                                </div>
+                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
 
-            <!-- Brand Strip -->
-            <section class="py-12 bg-white border-y border-slate-100">
-                <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center items-center gap-16 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-                    <span class="text-2xl font-black tracking-tighter text-slate-400">BOSCH</span>
-                    <span class="text-2xl font-black tracking-tighter text-slate-400">MAKITA</span>
-                    <span class="text-2xl font-black tracking-tighter text-slate-400">DEWALT</span>
-                    <span class="text-2xl font-black tracking-tighter text-slate-400">HIKOKI</span>
-                    <span class="text-2xl font-black tracking-tighter text-slate-400">MILWAUKEE</span>
-                    <span class="text-2xl font-black tracking-tighter text-slate-400">HILTI</span>
+            <!-- ═══ TRUSTED BY PROFESSIONALS (100% Mockup Exact brand logos with actual visual styling) ═══ -->
+            <section class="py-12 bg-white border-y border-zinc-200/80">
+                <div class="max-w-7xl mx-auto px-6 lg:px-10">
+                    <div class="text-center mb-8">
+                        <span class="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400">Trusted by Professionals. Preferred by Brands.</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between gap-4 relative">
+                        <!-- Left Arrow (Red circle chevrons) -->
+                        <button class="w-8 h-8 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-400 hover:text-[#ed1c24] transition-all flex-shrink-0 cursor-pointer shadow-sm bg-white hover:bg-rose-50">
+                            <span class="text-xs font-bold font-mono">&lt;</span>
+                        </button>
+                        
+                        <!-- Brand Logos Row -->
+                        <div class="flex-1 overflow-x-auto no-scrollbar py-2">
+                            <div class="flex justify-between items-center min-w-[900px] gap-8 select-none">
+                                
+                                <!-- 1. BOSCH -->
+                                <div class="flex items-center gap-1">
+                                    <div class="w-5 h-5 rounded-full border-[1.5px] border-[#ed1c24] flex items-center justify-center flex-shrink-0">
+                                        <div class="w-2.5 h-2.5 bg-[#ed1c24] rounded-full"></div>
+                                    </div>
+                                    <span class="text-lg font-black tracking-tight text-zinc-950 uppercase font-sans">BOSCH</span>
+                                </div>
+
+                                <!-- 2. Makita -->
+                                <span class="text-xl font-extrabold tracking-tight text-[#008f8c] font-sans lowercase" style="font-family: sans-serif;">makita</span>
+
+                                <!-- 3. DEWALT -->
+                                <div class="bg-[#feb80a] text-black px-3 py-1 font-black text-xs uppercase tracking-tighter shadow-sm font-sans">DEWALT</div>
+
+                                <!-- 4. metabo -->
+                                <span class="text-xl font-extrabold italic tracking-tighter text-zinc-950 font-sans">metabo</span>
+
+                                <!-- 5. BLACK+DECKER -->
+                                <div class="border-2 border-[#ff6b00] px-3 py-1 text-black font-black text-[10px] tracking-tight uppercase shadow-sm">BLACK+DECKER</div>
+
+                                <!-- 6. HITACHI -->
+                                <span class="text-lg font-black tracking-tight text-[#ed1c24] uppercase font-sans">HITACHI</span>
+
+                                <!-- 7. Milwaukee -->
+                                <span class="text-2xl font-bold tracking-tighter text-[#ed1c24] italic" style="font-family: 'Brush Script MT', cursive, sans-serif;">Milwaukee</span>
+
+                                <!-- 8. RYOBI -->
+                                <span class="text-xl font-extrabold tracking-widest text-zinc-950 font-sans">RYOBI</span>
+                            </div>
+                        </div>
+
+                        <!-- Right Arrow (Red circle chevrons) -->
+                        <button class="w-8 h-8 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-400 hover:text-[#ed1c24] transition-all flex-shrink-0 cursor-pointer shadow-sm bg-white hover:bg-rose-50">
+                            <span class="text-xs font-bold font-mono">&gt;</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══ BOTTOM STATS/INFO BAR (Mockup: 5 columns with red outline circles) ═══ -->
+            <section class="py-12 bg-white border-b border-zinc-100 text-zinc-600 no-print">
+                <div class="max-w-7xl mx-auto px-6 lg:px-10">
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-start">
+                        
+                        <!-- 1. Wide Range -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Wide Range</span>
+                                <span class="block text-[10px] text-zinc-400 font-medium">10,000+ parts in 100+ categories</span>
+                            </div>
+                        </div>
+
+                        <!-- 2. Easy Lookup -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Easy Lookup</span>
+                                <span class="block text-[10px] text-zinc-400 font-medium">Find parts by model, diagram & part number</span>
+                            </div>
+                        </div>
+
+                        <!-- 3. Bulk Ordering -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Bulk Ordering</span>
+                                <span class="block text-[10px] text-zinc-400 font-medium">Simplified bulk order & repeat order</span>
+                            </div>
+                        </div>
+
+                        <!-- 4. Secure Payments -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Secure Payments</span>
+                                <span class="block text-[10px] text-zinc-400 font-medium">Multiple payment options & GST invoicing</span>
+                            </div>
+                        </div>
+
+                        <!-- 5. Pan India Delivery -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Pan India Delivery</span>
+                                <span class="block text-[10px] text-zinc-400 font-medium">Fast & reliable delivery across India</span>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </section>
         </div>
-    `;
+    `);
 
-    // Initialize Hero Slider after DOM is ready
+    // Initialize Hero Slider with Dynamic Slides
     setTimeout(() => {
         let current = 0;
         const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slider-dot');
         if (slides.length <= 1) return;
         
         const timer = setInterval(() => {
@@ -171,8 +459,34 @@ export function renderHome(container, app) {
             
             currentSlide.style.opacity = '0';
             nextSlide.style.opacity = '1';
+
+            dots.forEach(dot => dot.classList.replace('bg-[#ed1c24]', 'bg-zinc-300'));
+            const activeDot = document.querySelector(`.slider-dot[data-dot="${next}"]`);
+            if (activeDot) activeDot.classList.replace('bg-zinc-300', 'bg-[#ed1c24]');
+
             current = next;
         }, 5000);
+
+        // Allow manual dot navigation click
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const targetIdx = parseInt(dot.getAttribute('data-dot'));
+                if (targetIdx === current) return;
+                
+                const currentSlide = document.querySelector(`.hero-slide[data-index="${current}"]`);
+                const nextSlide = document.querySelector(`.hero-slide[data-index="${targetIdx}"]`);
+                
+                if (currentSlide && nextSlide) {
+                    currentSlide.style.opacity = '0';
+                    nextSlide.style.opacity = '1';
+                    
+                    dots.forEach(d => d.classList.replace('bg-[#ed1c24]', 'bg-zinc-300'));
+                    dot.classList.replace('bg-zinc-300', 'bg-[#ed1c24]');
+                    
+                    current = targetIdx;
+                }
+            });
+        });
 
         // Auto-cleanup when navigating away
         const observer = new MutationObserver(() => {

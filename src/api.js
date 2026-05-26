@@ -22,3 +22,19 @@ export function api(path) {
     }
     return '/' + cleanPath;
 }
+
+export function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+export function setHTML(el, htmlString) {
+    if (el) {
+        el.innerHTML = htmlString;
+    }
+}

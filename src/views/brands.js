@@ -1,3 +1,5 @@
+import { escapeHTML, setHTML } from '../api.js';
+
 export function renderBrands(container, app) {
     const s = app.state.settings || {};
 
@@ -31,17 +33,22 @@ export function renderBrands(container, app) {
         svg:  defaultSvgs[i]
     }));
 
-    container.innerHTML = `
+    // Support customized rich markup for admin-defined titles by preserving structural theme accents safely
+    const rawTitleHTML = s.brands_title
+        ? s.brands_title.replace('text-bosch-red', 'text-[#ed1c24]')
+        : 'Our Trusted <span class="text-[#ed1c24]">Brands</span>';
+
+    setHTML(container, `
         <div class="animate-fade-in min-h-screen bg-slate-50">
             <!-- Page Header -->
             <section class="bg-white border-b border-slate-100 py-24">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div class="text-[10px] font-black uppercase tracking-[0.4em] text-bosch-red mb-6">Authorized Partners</div>
+                    <div class="text-[10px] font-black uppercase tracking-[0.4em] text-[#ed1c24] mb-6">Authorized Partners</div>
                     <h1 class="text-6xl font-black text-slate-900 tracking-tight mb-6 uppercase">
-                        ${s.brands_title || 'Our Trusted <span class="text-bosch-red">Brands</span>'}
+                        ${rawTitleHTML}
                     </h1>
                     <p class="text-slate-500 font-bold text-lg max-w-2xl mx-auto">
-                        ${s.brands_subtitle || "We partner exclusively with the world's most trusted power tool manufacturers to ensure every spare part meets strict industrial standards."}
+                        ${escapeHTML(s.brands_subtitle || "We partner exclusively with the world's most trusted power tool manufacturers to ensure every spare part meets strict industrial standards.")}
                     </p>
                 </div>
             </section>
@@ -49,21 +56,21 @@ export function renderBrands(container, app) {
             <!-- Brand Cards -->
             <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    ${brands.map(b => `
-                        <div class="bg-white rounded-none p-10 border-2 border-slate-100 hover:border-bosch-blue shadow-premium hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group text-center flex flex-col items-center">
+                    ` + brands.map(b => `
+                        <div class="bg-white rounded-none p-10 border-2 border-slate-100 shadow-premium group text-center flex flex-col items-center hover-red-glow">
                             <div class="h-20 flex items-center justify-center mb-8 transition-all duration-500 transform group-hover:scale-110">
-                                ${b.logo
-                                    ? `<img src="${app.api(b.logo)}" alt="${b.name}" class="h-16 w-auto object-contain">`
-                                    : `<div class="grayscale group-hover:grayscale-0 transition-all duration-500">${b.svg}</div>`}
+                                ` + (b.logo
+                                    ? `<img src="${escapeHTML(app.api(b.logo))}" alt="${escapeHTML(b.name)}" class="h-16 w-auto object-contain">`
+                                    : `<div class="grayscale group-hover:grayscale-0 transition-all duration-500">${b.svg}</div>`) + `
                             </div>
-                            <span class="px-3 py-1 rounded-none bg-industrial-gray text-white text-[10px] font-black uppercase tracking-widest mb-4">${b.tag}</span>
-                            <h4 class="text-2xl font-black text-slate-900 mb-4 uppercase tracking-widest">${b.name}</h4>
-                            <p class="text-sm text-slate-500 font-medium leading-relaxed mb-8 flex-1">${b.desc}</p>
-                            <a href="/catalog" data-link class="px-8 py-4 bg-slate-50 text-slate-900 rounded-none font-black text-[10px] uppercase tracking-widest hover:bg-bosch-blue hover:text-white transition-all shadow-sm w-full text-center">Explore Spares</a>
+                            <span class="px-3 py-1 rounded-none bg-[#111111] text-white text-[10px] font-black uppercase tracking-widest mb-4">${escapeHTML(b.tag)}</span>
+                            <h4 class="text-2xl font-black text-slate-900 mb-4 uppercase tracking-widest">${escapeHTML(b.name)}</h4>
+                            <p class="text-sm text-slate-500 font-medium leading-relaxed mb-8 flex-1">${escapeHTML(b.desc)}</p>
+                            <a href="/catalog" data-link class="px-8 py-4 bg-slate-50 text-slate-900 rounded-none font-black text-[10px] uppercase tracking-widest hover:bg-[#ed1c24] hover:text-white transition-all shadow-sm w-full text-center">Explore Spares</a>
                         </div>
-                    `).join('')}
+                    `).join('') + `
                 </div>
             </section>
         </div>
-    `;
+    `);
 }

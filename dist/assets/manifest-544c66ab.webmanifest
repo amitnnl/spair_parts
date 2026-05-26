@@ -1,0 +1,18 @@
+{
+  "name": "TORVO B2B Portal",
+  "short_name": "TORVO",
+  "description": "Professional B2B portal for power tool spare parts procurement by TORVO.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#ed1c24",
+  "icons": [
+    {
+      "src": "assets/app-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "portrait"
+}

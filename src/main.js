@@ -56,6 +56,7 @@ import { renderSupport } from './views/support.js';
 import { renderHome } from './views/home.js';
 import { renderProfile as viewProfile } from './views/profile.js';
 import { state } from './state.js';
+import { setHTML } from './api.js';
 import viewShipping from './views/shipping.js';
 import viewWarranty from './views/warranty.js';
 
@@ -72,6 +73,16 @@ const api = (endpoint) => {
     if (endpoint.startsWith('http')) return endpoint;
     // Build URL relative to the detected base path
     return BASE_PATH + (endpoint.startsWith('/') ? '' : '/') + endpoint;
+};
+
+const escapeHTML = (str) => {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 };
 
 const app = {
@@ -129,6 +140,8 @@ const app = {
     renderBulkOrderModal() { return viewBulkOrderModal(this); },
     renderSupport(container) { return renderSupport(container, this); },
     renderHome(container) { return renderHome(container, this); },
+    renderCategories(container) { return renderCategories(container, this); },
+    renderBrands(container) { return renderBrands(container, this); },
     renderShipping(container) { return viewShipping.render(container); },
     renderWarranty(container) { return viewWarranty.render(container); },
     renderMyPartsList(container) { return viewMyPartsList(container, this); },
@@ -305,35 +318,74 @@ const app = {
         }
     },
 
+    getLogoHTML(settings) {
+        if (settings.site_logo) {
+            return '<img src="' + escapeHTML(this.api(settings.site_logo)) + '" class="h-10 w-auto object-contain p-0.5" alt="' + escapeHTML(settings.site_name || 'Logo') + '">';
+        }
+        
+        const siteName = settings.site_name || 'TORVO TOOLS';
+        const uppercaseName = siteName.toUpperCase();
+        
+        if (uppercaseName.includes('TORVO')) {
+            const rest = uppercaseName.replace('TORVO', '').trim();
+            const restHTML = rest ? ' <span class="text-slate-800">' + escapeHTML(rest) + '</span>' : '';
+            return `
+                <div class="flex items-center select-none font-sans">
+                    <span class="text-3xl font-extrabold text-[#ed1c24] tracking-tight font-poppins italic">TORV</span>
+                    <div class="w-8 h-8 ml-0.5 flex items-center justify-center animate-[spin_10s_linear_infinite] group-hover:animate-[spin_2s_linear_infinite]">
+                        <svg viewBox="0 0 100 100" fill="none" class="w-full h-full text-[#ed1c24] drop-shadow-[0_2px_4px_rgba(237,28,36,0.3)]">
+                            <circle cx="50" cy="50" r="22" stroke="currentColor" stroke-width="12" fill="none"/>
+                            <path d="M50 5 L50 20" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                            <path d="M50 80 L50 95" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                            <path d="M5 50 L20 50" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                            <path d="M80 50 L95 50" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                            <path d="M18 18 L29 29" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                            <path d="M71 71 L82 82" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                            <path d="M18 82 L29 71" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                            <path d="M71 29 L82 18" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    ` + (restHTML ? '<span class="text-3xl font-extrabold tracking-tight font-poppins uppercase ml-2 text-slate-800">' + restHTML + '</span>' : '') + `
+                </div>
+            `;
+        } else {
+            const words = siteName.split(' ');
+            if (words.length > 1) {
+                const last = words.pop();
+                return '<span class="text-3xl font-extrabold tracking-tight font-poppins uppercase text-slate-900">' + escapeHTML(words.join(' ')) + ' <span class="text-[#ed1c24]">' + escapeHTML(last) + '</span></span>';
+            }
+            return '<span class="text-3xl font-extrabold tracking-tight font-poppins uppercase text-[#ed1c24]">' + escapeHTML(siteName) + '</span>';
+        }
+    },
+
     applySettings() {
         const s = this.state.settings;
         if (!s) return;
 
-        // Update Site Name
+        // Dynamic branding update in headers/drawers
+        const logoHTML = this.getLogoHTML(s);
+        document.querySelectorAll('.logo-container').forEach(el => {
+            setHTML(el, logoHTML);
+        });
+
         if (s.site_name) {
-            const words = s.site_name.split(' ');
-            let formattedName = s.site_name;
-            if (words.length > 1) {
-                const lastWord = words.pop();
-                formattedName = `${words.join(' ')} <span class="text-bosch-red">${lastWord}</span>`;
-            }
-            
-            document.querySelectorAll('.logo-text').forEach(el => el.innerHTML = formattedName);
-            const footerSiteName = document.getElementById('footer-site-name');
-            if (footerSiteName) footerSiteName.innerHTML = formattedName;
             document.title = s.site_name;
-        } else {
-            const defaultName = 'TORVO <span class="text-bosch-red">TOOLS</span>';
-            document.querySelectorAll('.logo-text').forEach(el => el.innerHTML = defaultName);
-            document.title = 'TORVO TOOLS';
         }
 
-        // Update Site Logo
-        if (s.site_logo) {
-            document.querySelectorAll('.logo-container').forEach(el => {
-                el.innerHTML = `<img src="${this.api(s.site_logo)}" class="w-full h-full object-contain p-1">`;
-                el.classList.remove('bg-primary'); // Remove default background if it's a full logo
-            });
+        // Update Footer branding dynamically
+        const footerSiteName = document.getElementById('footer-site-name');
+        if (footerSiteName) {
+            if (s.site_logo) {
+                setHTML(footerSiteName, '<img src="' + escapeHTML(this.api(s.site_logo)) + '" class="h-10 w-auto object-contain p-0.5">');
+            } else {
+                const words = (s.site_name || 'TORVO TOOLS').split(' ');
+                if (words.length > 1) {
+                    const lastWord = words.pop();
+                    setHTML(footerSiteName, escapeHTML(words.join(' ')) + ' <span class="text-[#ed1c24]">' + escapeHTML(lastWord) + '</span>');
+                } else {
+                    setHTML(footerSiteName, '<span class="text-[#ed1c24]">' + escapeHTML(s.site_name || 'TORVO') + '</span>');
+                }
+            }
         }
 
         // Update Footer Info
@@ -343,7 +395,7 @@ const app = {
         }
         if (s.contact_address) {
             const el = document.getElementById('footer-address');
-            if (el) el.innerHTML = s.contact_address.replace(/\n/g, '<br>');
+            if (el) setHTML(el, escapeHTML(s.contact_address).replace(/\n/g, '<br>'));
         }
         if (s.contact_email) {
             const el = document.getElementById('footer-email');
@@ -364,14 +416,14 @@ const app = {
                 document.body.appendChild(widget);
             }
             const cleanNum = s.whatsapp_number.replace(/\D/g, '');
-            widget.innerHTML = `
+            setHTML(widget, `
                 <div class="whatsapp-tooltip">
                     Order via WhatsApp
                 </div>
-                <div class="whatsapp-btn" onclick="window.open('https://wa.me/${cleanNum}?text=Hello! I am interested in ordering spare parts.', '_blank')">
+                <div class="whatsapp-btn" onclick="window.open('https://wa.me/` + cleanNum + `?text=Hello! I am interested in ordering spare parts.', '_blank')">
                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.393 0 12.03c0 2.116.554 4.183 1.604 5.999L0 24l6.162-1.616a11.803 11.803 0 005.883 1.554h.005c6.634 0 12.032-5.391 12.035-12.029a11.785 11.785 0 00-3.51-8.514z"/></svg>
                 </div>
-            `;
+            `);
         } else {
             console.warn('WhatsApp Widget skipped: whatsapp_number is missing in settings.');
         }
@@ -387,40 +439,41 @@ const app = {
             localStorage.setItem('user', JSON.stringify(this.state.user));
             const isAdmin = this.state.user.role && this.state.user.role.toLowerCase() === 'admin';
             
-            authContainer.innerHTML = `
-                <div class="flex items-center gap-6">
-                    <div class="hidden md:block text-right">
-                        <p class="text-xs font-black text-slate-900 uppercase tracking-widest">${this.state.user.name}</p>
+            setHTML(authContainer, `
+                <div class="flex items-center gap-4">
+                    <div class="hidden lg:block text-right">
+                        <p class="text-xs font-bold text-slate-800 uppercase tracking-widest">` + escapeHTML(this.state.user.name) + `</p>
                     </div>
                     <div class="flex gap-2">
-                        ${isAdmin ? `
-                            <a href="/admin" data-link class="px-10 py-4 rounded-none bg-bosch-blue text-white text-[11px] font-black uppercase tracking-widest hover:bg-bosch-blue transition-all shadow-xl shadow-bosch-blue/20 flex items-center gap-2">
-                                <svg class="w-4 h-4 text-bosch-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
-                                Admin Panel
+                        ` + (isAdmin ? `
+                            <a href="/admin" data-link class="px-5 py-2.5 rounded-none bg-[#ed1c24] text-white text-[11px] font-bold uppercase tracking-wider hover:bg-[#111111] transition-all shadow-sm flex items-center gap-1.5">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
+                                Admin
                             </a>
                         ` : this.state.user?.role?.toLowerCase() === 'staff' ? `
-                            <a href="/staff" data-link class="px-10 py-4 rounded-none bg-amber-600 text-white text-[11px] font-black uppercase tracking-widest hover:bg-amber-700 transition-all shadow-xl shadow-amber-600/20 flex items-center gap-2">
+                            <a href="/staff" data-link class="px-5 py-2.5 rounded-none bg-amber-600 text-white text-[11px] font-bold uppercase tracking-wider hover:bg-amber-700 transition-all shadow-sm flex items-center gap-1.5">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-                                Staff Panel
+                                Staff
                             </a>
                         ` : `
-                            <a href="/dashboard" data-link class="w-12 h-12 rounded-none bg-bosch-blue text-white flex items-center justify-center hover:scale-110 transition-all shadow-xl shadow-bosch-blue/20 group">
+                            <a href="/dashboard" data-link class="w-10 h-10 rounded-none bg-[#ed1c24] text-white flex items-center justify-center hover:bg-[#111111] transition-all shadow-sm group">
                                 <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             </a>
-                        `}
-                        <a href="/logout" data-link class="w-12 h-12 rounded-none bg-rose-50 text-rose-500 flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all border border-rose-100 group" title="Logout">
+                        `) + `
+                        <a href="/logout" data-link class="w-10 h-10 rounded-none bg-rose-50 text-rose-500 flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all border border-rose-100 group" title="Logout">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                         </a>
                     </div>
                 </div>
-            `;
+            `);
         } else {
             if (cartBtn) cartBtn.classList.add('hidden');
             if (mobileCartBtn) mobileCartBtn.classList.add('hidden');
             localStorage.removeItem('user');
-            authContainer.innerHTML = `
-                <a href="/login" data-link class="px-10 py-4 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-[0.2em] hover:bg-industrial-gray transition-all shadow-xl shadow-slate-900/10">Partner Login</a>
-            `;
+            setHTML(authContainer, `
+                <a href="/login" data-link class="px-6 py-2.5 text-xs font-bold text-[#ed1c24] border border-[#ed1c24] hover:bg-[#ed1c24] hover:text-white rounded-none transition-all uppercase tracking-wider font-sans">Log In</a>
+                <a href="/register" data-link class="px-6 py-2.5 text-xs font-bold text-white bg-[#ed1c24] hover:bg-[#111111] rounded-none transition-all uppercase tracking-wider shadow-sm ml-2 font-sans">Sign Up</a>
+            `);
         }
     },
 
@@ -500,18 +553,44 @@ const app = {
     showToast(message, type = 'success') {
         const container = document.getElementById('toast-container');
         if (!container) return;
+        
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
-        const icon = type === 'error'
-            ? `<svg style="width:16px;height:16px;color:#ef4444;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`
-            : `<svg style="width:16px;height:16px;color:#10b981;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
-        toast.innerHTML = `${icon}<span>${message}</span><button onclick="this.parentElement.remove()" style="margin-left:auto;color:#64748b;background:none;border:none;cursor:pointer;font-size:16px">✕</button>`;
+        
+        // Dynamic icon container
+        const iconContainer = document.createElement('div');
+        iconContainer.style.display = 'flex';
+        iconContainer.style.alignItems = 'center';
+        iconContainer.style.flexShrink = '0';
+        iconContainer.innerHTML = type === 'error'
+            ? `<svg style="width:16px;height:16px;color:#ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`
+            : `<svg style="width:16px;height:16px;color:#10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+        toast.appendChild(iconContainer);
+
+        // Safe message span
+        const textSpan = document.createElement('span');
+        textSpan.style.marginLeft = '8px';
+        textSpan.textContent = message;
+        toast.appendChild(textSpan);
+
+        // Safe close button
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '✕';
+        closeBtn.style.marginLeft = 'auto';
+        closeBtn.style.color = '#64748b';
+        closeBtn.style.background = 'none';
+        closeBtn.style.border = 'none';
+        closeBtn.style.cursor = 'pointer';
+        closeBtn.style.fontSize = '16px';
+        closeBtn.onclick = () => toast.remove();
+        toast.appendChild(closeBtn);
+
         container.appendChild(toast);
         setTimeout(() => { 
-            toast.style.opacity='0'; 
-            toast.style.transform='translateX(20px)'; 
-            toast.style.transition='all 0.3s ease'; 
-            setTimeout(()=>toast.remove(), 300); 
+            toast.style.opacity = '0'; 
+            toast.style.transform = 'translateX(20px)'; 
+            toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease'; 
+            setTimeout(() => toast.remove(), 300); 
         }, 4000);
     },
 
@@ -550,12 +629,82 @@ const app = {
             console.error('Session check failed', e);
         }
 
+        this.state.searchFilters = { brand: '', category: '', item: '', query: '' };
+
         await this.loadSettings();
         this.updateCartBadge();
         this.updateAuthUI();
         this.handleRouting();
 
+        // Keydown Enter listener for search input
+        document.addEventListener('keydown', e => {
+            if (e.target && e.target.id === 'global-text-search' && e.key === 'Enter') {
+                e.preventDefault();
+                const brand = document.getElementById('global-brand-select')?.value || '';
+                const category = document.getElementById('global-category-select')?.value || '';
+                const item = document.getElementById('global-item-select')?.value || '';
+                const query = document.getElementById('global-text-search')?.value || '';
+
+                this.state.searchFilters = { brand, category, item, query };
+                
+                history.pushState(null, null, this.basePath + '/catalog');
+                this.handleRouting();
+            }
+        });
+
         document.addEventListener('click', e => {
+            // Hamburger mobile drawer toggle
+            const menuToggle = e.target.closest('#mobile-menu-toggle');
+            if (menuToggle) {
+                const sidebar = document.getElementById('mobile-sidebar-menu');
+                if (sidebar) {
+                    sidebar.classList.remove('hidden');
+                    setTimeout(() => {
+                        sidebar.classList.remove('opacity-0');
+                        sidebar.classList.add('opacity-100');
+                        const innerDrawer = sidebar.querySelector('div');
+                        if (innerDrawer) {
+                            innerDrawer.classList.remove('-translate-x-full');
+                            innerDrawer.classList.add('transform-none');
+                        }
+                    }, 50);
+                }
+                return;
+            }
+
+            const sidebar = document.getElementById('mobile-sidebar-menu');
+            const menuClose = e.target.closest('#mobile-menu-close') || 
+                              (sidebar && !sidebar.classList.contains('hidden') && !e.target.closest('#mobile-sidebar-menu > div') && e.target.closest('#mobile-sidebar-menu'));
+            if (menuClose && sidebar) {
+                sidebar.classList.remove('opacity-100');
+                sidebar.classList.add('opacity-0');
+                const innerDrawer = sidebar.querySelector('div');
+                if (innerDrawer) {
+                    innerDrawer.classList.remove('transform-none');
+                    innerDrawer.classList.add('-translate-x-full');
+                }
+                setTimeout(() => {
+                    sidebar.classList.add('hidden');
+                }, 300);
+                return;
+            }
+
+            // Global search trigger
+            const searchBtn = e.target.closest('#global-search-btn');
+            if (searchBtn) {
+                e.preventDefault();
+                const brand = document.getElementById('global-brand-select')?.value || '';
+                const category = document.getElementById('global-category-select')?.value || '';
+                const item = document.getElementById('global-item-select')?.value || '';
+                const query = document.getElementById('global-text-search')?.value || '';
+
+                this.state.searchFilters = { brand, category, item, query };
+                
+                history.pushState(null, null, this.basePath + '/catalog');
+                this.handleRouting();
+                return;
+            }
+
             const searchToggle = e.target.closest('#search-toggle');
             if (searchToggle) {
                 const searchContainer = document.getElementById('global-search-container');
@@ -571,6 +720,18 @@ const app = {
             const link = e.target.closest('[data-link]');
             if (link) {
                 e.preventDefault();
+                // Auto-close mobile sidebar menu if it was open
+                const sidebarMenu = document.getElementById('mobile-sidebar-menu');
+                if (sidebarMenu && !sidebarMenu.classList.contains('hidden')) {
+                    sidebarMenu.classList.remove('opacity-100');
+                    sidebarMenu.classList.add('opacity-0');
+                    const innerDrawer = sidebarMenu.querySelector('div');
+                    if (innerDrawer) {
+                        innerDrawer.classList.remove('transform-none');
+                        innerDrawer.classList.add('-translate-x-full');
+                    }
+                    sidebarMenu.classList.add('hidden');
+                }
                 const href = link.getAttribute('href');
                 history.pushState(null, null, this.basePath + href);
                 this.handleRouting();

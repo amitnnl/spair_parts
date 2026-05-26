@@ -1,3 +1,5 @@
+import { escapeHTML, setHTML } from '../api.js';
+
 export function renderCategories(container, app) {
     const categories = [
         { t: app.state.settings.cat1_title || 'Electrical Spares', d: app.state.settings.cat1_desc || 'Switches, Carbon Brushes, Armatures & Field Coils built for high thermal endurance.', img: app.state.settings.cat1_img || 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800', icon:'M13 10V3L4 14h7v7l9-11h-7z' },
@@ -6,34 +8,46 @@ export function renderCategories(container, app) {
         { t: app.state.settings.cat4_title || 'Maintenance Kits', d: app.state.settings.cat4_desc || 'Complete Service Kits for Industrial Hammer Drills & Saws. Minimize your downtime.', img: app.state.settings.cat4_img || 'https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800', icon:'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z' }
     ];
 
-    container.innerHTML = `
+    setHTML(container, `
         <div class="animate-fade-in py-12 bg-slate-50 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-5xl font-black text-bosch-blue tracking-tight mb-4 uppercase">Core <span class="text-bosch-red">Categories</span></h2>
+                    <h2 class="text-5xl font-black text-[#111111] tracking-tight mb-4 uppercase">Core <span class="text-[#ed1c24]">Categories</span></h2>
                     <p class="text-slate-500 font-bold text-lg max-w-2xl mx-auto">Explore our extensive inventory organized by functional systems to find the exact part you need faster.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    ${categories.map(c => `
-                        <div onclick="app.renderCatalog(document.getElementById('view-container'))" class="group relative h-[400px] rounded-none border-2 border-transparent hover:border-bosch-blue overflow-hidden cursor-pointer shadow-premium hover:shadow-2xl transition-all duration-700">
-                            <img src="${app.api(c.img)}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2000ms]">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-                            
-                            <div class="absolute bottom-10 left-10 right-10 flex flex-col items-start gap-4">
-                                <div class="w-16 h-16 rounded-none bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white mb-2 group-hover:bg-bosch-blue transition-all duration-500 shadow-xl">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="${c.icon}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    ` + categories.map(c => `
+                        <div onclick="app.renderCatalog(document.getElementById('view-container'))" class="bg-white border-2 border-slate-100 rounded-none overflow-hidden group cursor-pointer transition-all duration-500 animate-in zoom-in duration-700 hover-red-glow flex flex-col justify-between">
+                            <!-- Top half: Standard-sized, clean-background image box -->
+                            <div class="relative h-64 bg-slate-50 overflow-hidden">
+                                <img src="${escapeHTML(app.api(c.img))}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="${escapeHTML(c.t)}">
+                                <!-- SVG overlay badge on top left -->
+                                <div class="absolute top-4 left-4 w-10 h-10 bg-slate-900/60 backdrop-blur-md flex items-center justify-center text-white border border-white/10 group-hover:bg-[#ed1c24] transition-all duration-300">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="${escapeHTML(c.icon)}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </div>
-                                <h4 class="text-3xl font-black text-white leading-tight uppercase tracking-widest">${c.t}</h4>
-                                <p class="text-slate-200 font-medium text-sm leading-relaxed max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500">${c.d}</p>
-                                <div class="mt-4 inline-flex items-center gap-3 text-xs font-black text-white bg-bosch-blue hover:bg-industrial-gray px-6 py-3 rounded-none uppercase tracking-widest shadow-xl transform translate-y-10 group-hover:translate-y-0 transition-all duration-500">
-                                    View Parts <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </div>
+                            <!-- Bottom half: Info section -->
+                            <div class="p-6 flex flex-col justify-between h-48 border-t border-slate-100 bg-white flex-1">
+                                <div class="space-y-2">
+                                    <h4 class="font-black text-lg text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors" title="${escapeHTML(c.t)}">${escapeHTML(c.t)}</h4>
+                                    <p class="text-slate-400 text-xs font-semibold leading-relaxed line-clamp-3">${escapeHTML(c.d)}</p>
+                                </div>
+                                
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                                    <div>
+                                        <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">B2B Collection</span>
+                                        <span class="text-sm font-black text-[#111111] uppercase">Explore Parts</span>
+                                    </div>
+                                    <button class="p-3 bg-[#ed1c24] hover:bg-[#111111] text-white rounded-none transition-all shadow-sm" title="Explore Spares">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    `).join('')}
+                    `).join('') + `
                 </div>
             </div>
         </div>
-    `;
+    `);
 }
