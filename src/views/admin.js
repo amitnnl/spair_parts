@@ -400,8 +400,8 @@ export async function renderProcessQuotation(quotationId, app) {
                                         <td class="p-6 text-slate-400 font-bold text-sm">₹${item.cost || '0.00'}</td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" name="price_${item.id}" data-item-id="${item.id}" data-qty="${item.quantity}" data-msrp="${item.cost || 0}" step="0.01" value="${item.unit_price || ''}" required class="w-28 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-black text-bosch-blue focus:outline-none focus:border-blue-500 transition-all unit-price-input">
-                                                <button type="button" onclick="app.applyDiscountToItem(this, ${discountTier})" class="p-2 bg-emerald-50 text-bosch-blue rounded-lg hover:bg-bosch-blue hover:text-white transition-all shadow-sm">
+                                                <input type="number" name="price_${item.id}" data-item-id="${item.id}" data-qty="${item.quantity}" data-msrp="${item.cost || 0}" step="0.01" value="${item.unit_price || ''}" required class="w-28 bg-slate-50 border-2 border-slate-100 rounded-none px-3 h-10 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-4 focus:bg-white transition-all unit-price-input">
+                                                <button type="button" onclick="app.applyDiscountToItem(this, ${discountTier})" class="w-10 h-10 bg-emerald-50 text-bosch-blue rounded-none hover:bg-bosch-blue hover:text-white transition-all flex items-center justify-center shadow-sm">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                                 </button>
                                             </div>
@@ -412,21 +412,21 @@ export async function renderProcessQuotation(quotationId, app) {
                             </tbody>
                             <tfoot class="bg-slate-50 border-t border-slate-200">
                                 <tr>
-                                    <td colspan="4" class="p-8 text-right font-black text-slate-400 uppercase tracking-widest text-xs">Total Quotation Value:</td>
-                                    <td class="p-8 text-right font-black text-3xl text-bosch-blue" id="quotation-total-display">₹0.00</td>
+                                    <td colspan="4" class="p-6 text-right font-black text-slate-400 uppercase tracking-widest text-xs">Total Quotation Value:</td>
+                                    <td class="p-6 text-right font-black text-2xl text-bosch-blue" id="quotation-total-display">₹0.00</td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                     
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-4">
-                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-bosch-blue text-white hover:bg-industrial-gray transition-all font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-2">
+                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-2 h-11 px-5 rounded-none bg-bosch-blue text-white hover:bg-industrial-gray transition-all font-black text-[10px] uppercase tracking-widest shadow-lg">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             Apply Partner Discount to All
                         </button>
                         <div class="flex gap-4 w-full md:w-auto">
-                            <button type="button" onclick="document.getElementById('process-modal').remove()" class="px-8 py-3.5 rounded-2xl border border-slate-200 text-slate-400 hover:bg-slate-50 transition-all font-black text-[11px] uppercase tracking-widest">Cancel</button>
-                            <button type="submit" class="px-10 py-3.5 rounded-2xl bg-slate-900 text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:scale-[1.02] transition-all">Publish & Send</button>
+                            <button type="button" onclick="document.getElementById('process-modal').remove()" class="h-11 px-6 rounded-none border-2 border-slate-100 text-slate-400 hover:bg-slate-50 transition-all font-black text-[10px] uppercase tracking-widest">Cancel</button>
+                            <button type="submit" class="h-11 px-8 rounded-none bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Publish & Send</button>
                         </div>
                     </div>
                 </form>
@@ -623,29 +623,29 @@ export async function renderSystemSettings(container, app) {
         };
 
         const field = (label, name, val, type = 'text', placeholder = '', extra = '') => `
-            <div class="space-y-2 ${extra}">
-                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${label}</label>
+            <div class="space-y-1.5 ${extra}">
+                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${label}</label>
                 <input type="${type}" name="${name}" value="${val || ''}" placeholder="${placeholder}"
-                    class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                    class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
             </div>`;
 
         const textarea = (label, name, val, extra = '') => `
-            <div class="space-y-2 ${extra}">
-                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${label}</label>
+            <div class="space-y-1.5 ${extra}">
+                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${label}</label>
                 <textarea name="${name}" rows="3"
-                    class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all resize-none">${val || ''}</textarea>
+                    class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all resize-none h-24">${val || ''}</textarea>
             </div>`;
 
         const imgField = (label, name, current) => `
-            <div class="space-y-2">
-                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">${label}</label>
+            <div class="space-y-1.5">
+                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${label}</label>
                 <div class="flex items-center gap-4">
                     <input type="file" name="${name}" accept="image/*"
-                        class="flex-1 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl px-5 py-3 text-sm font-bold text-slate-500 focus:outline-none hover:border-blue-400 transition-all cursor-pointer">
+                        class="flex-1 bg-slate-50 border-2 border-dashed border-slate-200 rounded-none px-4 py-2 text-xs font-black text-slate-500 focus:outline-none hover:border-bosch-blue transition-all cursor-pointer">
                     ${current
-                ? `<img src="${app.api(current)}" class="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md flex-shrink-0">`
-                : `<div class="w-16 h-16 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                ? `<img src="${app.api(current)}" class="w-11 h-11 rounded-none object-cover border-2 border-white shadow-md flex-shrink-0">`
+                : `<div class="w-11 h-11 rounded-none bg-slate-100 border-2 border-dashed border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                            </div>`}
                 </div>
             </div>`;
@@ -859,13 +859,13 @@ export async function renderSystemSettings(container, app) {
                             </div>
 
                             <!-- Save -->
-                            <div class="mt-8 flex flex-col sm:flex-row justify-end gap-4">
+                            <div class="mt-8 flex flex-col sm:flex-row justify-end gap-3">
                                 <button type="button" onclick="app.renderAdmin(document.getElementById('view-container'))"
-                                    class="px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-500 hover:bg-white border border-slate-200 transition-all">
+                                    class="h-11 px-6 rounded-none font-black text-[10px] uppercase tracking-widest text-slate-500 hover:bg-white border-2 border-slate-100 transition-all">
                                     Cancel
                                 </button>
                                 <button type="submit" id="cms-save-btn"
-                                    class="px-10 py-4 rounded-2xl bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:-translate-y-0.5 hover:bg-industrial-gray transition-all flex items-center gap-2">
+                                    class="h-11 px-8 rounded-none bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                                     Save All Changes
                                 </button>
@@ -979,20 +979,20 @@ export function renderImportModal(app) {
     modal.id = 'import-modal';
     modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm';
     modal.innerHTML = `
-        <div class="bg-white rounded-[32px] w-full max-w-xl p-10 space-y-8 shadow-2xl animate-in zoom-in duration-300">
+        <div class="bg-white rounded-none w-full max-w-xl p-8 space-y-6 shadow-2xl animate-in zoom-in duration-300">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-bosch-blue">Bulk <span class="text-bosch-blue">Import</span></h2>
+                <h2 class="text-2xl font-black text-bosch-blue">Bulk <span class="text-bosch-blue">Import</span></h2>
                 <button onclick="document.getElementById('import-modal').remove()" class="text-slate-400 hover:text-bosch-blue transition-all">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-            <form id="import-form" class="space-y-6">
-                <div class="border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center hover:border-blue-500 transition-all cursor-pointer relative group">
+            <form id="import-form" class="space-y-4">
+                <div class="border-2 border-dashed border-slate-200 rounded-none p-6 text-center hover:border-bosch-blue transition-all cursor-pointer relative group">
                     <input type="file" name="import_csv" accept=".csv" required class="absolute inset-0 opacity-0 cursor-pointer">
-                    <p class="text-slate-500 font-bold">Drop CSV file here or <span class="text-bosch-blue">browse</span></p>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest font-black">Headers: Part Name, Machine Model, Brand, Cost, Stock</p>
+                    <p class="text-slate-500 font-bold text-xs">Drop CSV file here or <span class="text-bosch-blue underline">browse</span></p>
+                    <p class="text-[9px] text-slate-400 mt-2 uppercase tracking-widest font-black">Headers: Part Name, Machine Model, Brand, Cost, Stock</p>
                 </div>
-                <button type="submit" class="w-full py-4 rounded-2xl bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray transition-all">Process Import</button>
+                <button type="submit" class="w-full h-11 rounded-none bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Process Import</button>
             </form>
         </div>
     `;
@@ -1044,128 +1044,128 @@ async function renderProductForm(product, app) {
     modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto';
 
     modal.innerHTML = `
-        <div class="bg-white rounded-[32px] w-full max-w-3xl p-6 md:p-10 space-y-6 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
+        <div class="bg-white rounded-none w-full max-w-3xl p-6 md:p-8 space-y-4 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-bosch-blue">${isEdit ? 'Edit' : 'Add New'} <span class="text-bosch-blue">Product</span></h2>
+                <h2 class="text-2xl font-black text-bosch-blue">${isEdit ? 'Edit' : 'Add New'} <span class="text-bosch-blue">Product</span></h2>
                 <button onclick="document.getElementById('product-modal').remove()" class="text-slate-400 hover:text-bosch-blue transition-all">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-            <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+            <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                 ${isEdit ? `<input type="hidden" name="id" value="${product.id}">` : ''}
                 <input type="hidden" name="action" value="${isEdit ? 'update_product' : 'add_product'}">
 
                 <!-- Spare Part Name -->
-                <div class="col-span-2 space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Spare Part Name</label>
+                <div class="col-span-2 space-y-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Spare Part Name</label>
                     <div class="flex gap-2">
-                        <select id="pf-partname" name="part_name_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                        <select id="pf-partname" name="part_name_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Part Name...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('part_name')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all" title="Add new part name">+</button>
+                        <button type="button" onclick="window._pfAddLookup('part_name')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center" title="Add new part name">+</button>
                     </div>
                 </div>
 
                 <!-- Primary Fitment Section -->
-                <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2 flex justify-between items-center">
-                    <h3 class="text-[11px] font-black text-bosch-blue uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
+                <div class="col-span-2 pt-4 pb-1 border-t border-slate-100 mt-1 flex justify-between items-center">
+                    <h3 class="text-[10px] font-black text-bosch-blue uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
                     <label class="flex items-center gap-2 cursor-pointer group">
                         <input type="checkbox" onchange="window._pfToggleUnknownMachine(this.checked)" class="w-4 h-4 rounded border-slate-300 text-bosch-blue focus:ring-blue-500">
-                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-bosch-blue transition-all">Suitable machine abhi pata nahi hai</span>
+                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest group-hover:text-bosch-blue transition-all">Suitable machine abhi pata nahi hai</span>
                     </label>
                 </div>
 
                 <!-- Machine Brand -->
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Machine Brand</label>
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Machine Brand</label>
                     <div class="flex gap-2">
-                        <select id="pf-brand" name="brand_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                        <select id="pf-brand" name="brand_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Brand...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('brand')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('brand')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
                     </div>
                 </div>
 
                 <!-- Machine Name -->
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Machine Name</label>
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Machine Name</label>
                     <div class="flex gap-2">
-                        <select id="pf-machine" name="machine_name_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                        <select id="pf-machine" name="machine_name_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Machine...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
                     </div>
                 </div>
 
                 <!-- Machine Model -->
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Machine Model</label>
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Machine Model</label>
                     <div class="flex gap-2">
-                        <select id="pf-model" name="model_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                        <select id="pf-model" name="model_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Model...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('model')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('model')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
                     </div>
                 </div>
 
                 <!-- Machine Size -->
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Machine Size</label>
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Machine Size</label>
                     <div class="flex gap-2">
-                        <select id="pf-size" name="machine_size_id" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                        <select id="pf-size" name="machine_size_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Size...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="px-4 py-2 rounded-xl bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all">+</button>
+                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
                     </div>
                 </div>
 
                 <!-- Additional Machines Section -->
-                <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
+                <div class="col-span-2 pt-4 pb-1 border-t border-slate-100 mt-1">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-[11px] font-black text-bosch-blue uppercase tracking-[0.2em]">Other Suitable Machines</h3>
-                        <button type="button" onclick="window._pfAddMachineRow()" class="text-[10px] font-black text-bosch-blue uppercase tracking-widest hover:underline">+ Add More Machine</button>
+                        <h3 class="text-[10px] font-black text-bosch-blue uppercase tracking-[0.2em]">Other Suitable Machines</h3>
+                        <button type="button" onclick="window._pfAddMachineRow()" class="text-[9px] font-black text-bosch-blue uppercase tracking-widest hover:underline">+ Add More Machine</button>
                     </div>
-                    <div id="additional-machines-container" class="space-y-4 mt-4">
+                    <div id="additional-machines-container" class="space-y-3 mt-3">
                         <!-- Dynamic rows here -->
                     </div>
                 </div>
 
                 <!-- Product Details -->
-                <div class="col-span-2 pt-6 pb-2 border-t border-slate-100 mt-2">
-                    <h3 class="text-[11px] font-black text-bosch-blue uppercase tracking-[0.2em]">Product Details</h3>
+                <div class="col-span-2 pt-4 pb-1 border-t border-slate-100 mt-1">
+                    <h3 class="text-[10px] font-black text-bosch-blue uppercase tracking-[0.2em]">Product Details</h3>
                 </div>
 
                 <!-- Cost -->
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Cost (₹)</label>
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Cost (₹)</label>
                     <input type="number" step="0.01" name="cost" value="${product?.cost || ''}" placeholder="Enter Cost"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
+                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Stock Quantity -->
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Stock Quantity</label>
+                <div class="space-y-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Stock Quantity</label>
                     <input type="number" name="stock_quantity" value="${product?.stock_quantity || ''}" placeholder="Enter Stock"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
+                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Note -->
-                <div class="col-span-2 space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Note</label>
+                <div class="col-span-2 space-y-1.5">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Note</label>
                     <input type="text" name="note" value="${product?.note || ''}" placeholder="Technical notes or descriptions"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-500 transition-all">
+                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Photo -->
-                <div class="col-span-2 space-y-2 pt-2">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Product Photo</label>
+                <div class="col-span-2 space-y-1.5 pt-1">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Product Photo</label>
                     <input type="file" name="photo" accept="image/*"
-                        class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-emerald-50 file:text-bosch-blue hover:file:bg-blue-100">
+                        class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-[9px] file:font-black file:uppercase file:tracking-widest file:bg-emerald-50 file:text-bosch-blue hover:file:bg-blue-100 cursor-pointer">
                 </div>
 
-                <div class="col-span-2 pt-4">
+                <div class="col-span-2 pt-2">
                     <button type="submit" id="pf-submit-btn"
-                        class="w-full py-4 rounded-2xl bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray hover:scale-[1.02] transition-all">
+                        class="w-full h-11 rounded-none bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">
                         Save Complete Product
                     </button>
                 </div>

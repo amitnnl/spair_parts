@@ -82,31 +82,31 @@ export function renderBulkOrderModal(app) {
     modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300';
     
     modal.innerHTML = `
-        <div class="bg-white rounded-none w-full max-w-xl p-10 space-y-8 shadow-2xl border border-slate-200 relative animate-in zoom-in-95 duration-300">
-            <button onclick="document.getElementById('bulk-order-modal').remove()" class="absolute top-6 right-6 w-10 h-10 rounded-none bg-slate-50 hover:bg-slate-100 flex items-center justify-center transition-all text-slate-400 hover:text-bosch-blue">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        <div class="bg-white rounded-none w-full max-w-xl p-8 space-y-6 shadow-2xl border border-slate-200 relative animate-in zoom-in-95 duration-300">
+            <button onclick="document.getElementById('bulk-order-modal').remove()" class="absolute top-6 right-6 w-8 h-8 rounded-none bg-slate-50 hover:bg-slate-100 flex items-center justify-center transition-all text-slate-400 hover:text-bosch-blue">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
             <div>
-                <h2 class="text-3xl font-black text-bosch-blue tracking-tight uppercase">Express <span class="text-bosch-blue">Bulk Order</span></h2>
-                <p class="text-slate-500 font-bold mt-2">Upload your inventory request instantly.</p>
+                <h2 class="text-2xl font-black text-bosch-blue tracking-tight uppercase">Express <span class="text-bosch-blue">Bulk Order</span></h2>
+                <p class="text-slate-500 font-bold mt-1 text-xs">Upload your inventory request instantly.</p>
             </div>
             
-            <div class="bg-industrial-gray text-white border-l-4 border-bosch-blue rounded-none p-6 space-y-3">
-                <p class="text-xs text-bosch-blue font-black uppercase tracking-widest">CSV Format Requirement:</p>
-                <p class="text-[11px] font-bold text-slate-300">Your CSV must contain these exact column headers:</p>
-                <code class="text-[10px] text-bosch-blue block bg-slate-900 p-4 rounded-none font-mono shadow-inner border border-bosch-blue/50">Model/SKU, Quantity</code>
+            <div class="bg-industrial-gray text-white border-l-4 border-bosch-blue rounded-none p-4 space-y-2">
+                <p class="text-[10px] text-bosch-blue font-black uppercase tracking-widest">CSV Format Requirement:</p>
+                <p class="text-[10px] font-bold text-slate-300">Your CSV must contain these exact column headers:</p>
+                <code class="text-[9px] text-bosch-blue block bg-slate-900 p-2.5 rounded-none font-mono shadow-inner border border-bosch-blue/50">Model/SKU, Quantity</code>
             </div>
 
-            <form id="bulk-order-form" class="space-y-6">
-                <div class="border-[3px] border-dashed border-slate-200 rounded-none p-12 text-center hover:border-bosch-blue hover:bg-bosch-blue/5 transition-all cursor-pointer relative group">
+            <form id="bulk-order-form" class="space-y-4">
+                <div class="border-[2px] border-dashed border-slate-200 rounded-none p-8 text-center hover:border-bosch-blue hover:bg-bosch-blue/5 transition-all cursor-pointer relative group">
                     <input type="file" name="order_csv" accept=".csv" required class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="document.getElementById('csv-filename').textContent = this.files[0] ? this.files[0].name : 'Drop your CSV file here or browse'">
-                    <div class="w-16 h-16 bg-bosch-blue/10 rounded-none flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-bosch-blue/20 transition-all text-bosch-blue">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <div class="w-12 h-12 bg-bosch-blue/10 rounded-none flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:bg-bosch-blue/20 transition-all text-bosch-blue">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
-                    <p id="csv-filename" class="text-sm text-slate-500 font-black">Drop your CSV file here or <span class="text-bosch-blue underline">browse</span></p>
+                    <p id="csv-filename" class="text-xs text-slate-500 font-black">Drop your CSV file here or <span class="text-bosch-blue underline">browse</span></p>
                 </div>
-                <button type="submit" class="w-full py-4 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-900/20 hover:bg-industrial-gray transition-colors">Generate Quotation Cart</button>
+                <button type="submit" class="w-full h-11 rounded-none bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-colors">Generate Quotation Cart</button>
             </form>
         </div>
     `;

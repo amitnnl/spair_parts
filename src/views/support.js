@@ -46,40 +46,40 @@ export function renderSupport(container, app) {
                     </div>
 
                     <!-- Contact Form -->
-                    <div class="lg:col-span-2 bg-white rounded-none p-16 shadow-premium border-2 border-slate-100 border-t-4 border-t-bosch-blue">
-                        <div class="mb-12">
-                            <h3 class="text-3xl font-black text-slate-900 tracking-tight">Send a Technical Inquiry</h3>
-                            <p class="text-slate-500 font-bold mt-2">Expect a response from our engineering team within 2 business hours.</p>
+                    <div class="lg:col-span-2 bg-white rounded-none p-10 shadow-premium border-2 border-slate-100 border-t-4 border-t-bosch-blue">
+                        <div class="mb-6">
+                            <h3 class="text-2xl font-black text-slate-900 tracking-tight">Send a Technical Inquiry</h3>
+                            <p class="text-slate-500 font-bold mt-1 text-xs">Expect a response from our engineering team within 2 business hours.</p>
                         </div>
-                        <form id="support-form" class="space-y-8">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="space-y-3">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Full Name</label>
-                                    <input type="text" required class="w-full bg-slate-50 border border-slate-200 rounded-none px-6 py-4 text-sm font-bold focus:outline-none focus:border-bosch-blue transition-all" placeholder="Enter your name">
+                        <form id="support-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-1.5">
+                                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</label>
+                                    <input type="text" required class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all" placeholder="Enter your name">
                                 </div>
-                                <div class="space-y-3">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Work Email</label>
-                                    <input type="email" required class="w-full bg-slate-50 border border-slate-200 rounded-none px-6 py-4 text-sm font-bold focus:outline-none focus:border-bosch-blue transition-all" placeholder="Enter work email">
+                                <div class="space-y-1.5">
+                                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Work Email</label>
+                                    <input type="email" required class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all" placeholder="Enter work email">
                                 </div>
-                                <div class="space-y-3">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Inquiry Subject</label>
-                                    <select class="w-full bg-slate-50 border border-slate-200 rounded-none px-6 py-4 text-sm font-bold focus:outline-none focus:border-bosch-blue transition-all">
+                                <div class="space-y-1.5">
+                                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Inquiry Subject</label>
+                                    <select class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         <option>Part Fitment Assistance</option>
                                         <option>Bulk Order Inquiry</option>
                                         <option>Technical Specification Request</option>
                                         <option>Warranty & Returns</option>
                                     </select>
                                 </div>
-                                <div class="space-y-3">
-                                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Part No. / Model (Optional)</label>
-                                    <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-none px-6 py-4 text-sm font-bold focus:outline-none focus:border-bosch-blue transition-all" placeholder="e.g. GWS 600">
+                                <div class="space-y-1.5">
+                                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Part No. / Model (Optional)</label>
+                                    <input type="text" class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all" placeholder="e.g. GWS 600">
                                 </div>
                             </div>
-                            <div class="space-y-3">
-                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Detailed Message</label>
-                                <textarea required class="w-full bg-slate-50 border border-slate-200 rounded-none px-6 py-4 text-sm font-bold focus:outline-none focus:border-bosch-blue transition-all h-40 resize-none" placeholder="Describe your technical requirement..."></textarea>
+                            <div class="space-y-1.5">
+                                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Detailed Message</label>
+                                <textarea required class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all h-28 resize-none" placeholder="Describe your technical requirement..."></textarea>
                             </div>
-                            <button type="submit" class="w-full py-5 bg-bosch-blue text-white rounded-none font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-900/30 hover:bg-industrial-gray transition-colors">${app.state.settings.support_form_cta || 'Submit Technical Ticket'}</button>
+                            <button type="submit" class="w-full h-11 bg-bosch-blue text-white rounded-none font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:bg-industrial-gray transition-colors">${app.state.settings.support_form_cta || 'Submit Technical Ticket'}</button>
                         </form>
                     </div>
                 </div>

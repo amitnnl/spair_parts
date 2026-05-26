@@ -26,40 +26,40 @@ export async function renderProfile(container, app) {
                         </div>
 
                         <div class="bg-white rounded-none shadow-2xl shadow-slate-200/50 border-2 border-slate-100 overflow-hidden">
-                            <div class="p-8 lg:p-12">
-                                <form id="profile-form" class="space-y-8">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                        <div class="space-y-3">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
+                            <div class="p-8">
+                                <form id="profile-form" class="space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="space-y-1.5">
+                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
                                             <input type="text" name="name" value="${user.name || ''}" required
-                                                class="w-full h-14 bg-slate-50 border border-slate-200 rounded-none px-6 text-sm font-bold text-slate-800 focus:outline-none focus:border-bosch-blue transition-all">
+                                                class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-none px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         </div>
-                                        <div class="space-y-3">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address (Primary)</label>
+                                        <div class="space-y-1.5">
+                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address (Primary)</label>
                                             <input type="email" value="${user.email || ''}" disabled
-                                                class="w-full h-14 bg-slate-100 border border-slate-200 rounded-none px-6 text-sm font-bold text-slate-400 cursor-not-allowed">
+                                                class="w-full h-11 bg-slate-100 border-2 border-slate-100 rounded-none px-4 text-xs font-black text-slate-400 cursor-not-allowed">
                                         </div>
-                                        <div class="space-y-3">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Mobile Number</label>
+                                        <div class="space-y-1.5">
+                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Mobile Number</label>
                                             <input type="text" name="phone" value="${user.phone || ''}" placeholder="+91 00000 00000"
-                                                class="w-full h-14 bg-slate-50 border border-slate-200 rounded-none px-6 text-sm font-bold text-slate-800 focus:outline-none focus:border-bosch-blue transition-all">
+                                                class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-none px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         </div>
-                                        <div class="space-y-3">
-                                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">WhatsApp Number</label>
+                                        <div class="space-y-1.5">
+                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">WhatsApp Number</label>
                                             <input type="text" name="whatsapp" value="${user.whatsapp || ''}" placeholder="+91 00000 00000"
-                                                class="w-full h-14 bg-slate-50 border border-slate-200 rounded-none px-6 text-sm font-bold text-slate-800 focus:outline-none focus:border-bosch-blue transition-all">
+                                                class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-none px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         </div>
                                     </div>
 
-                                    <div class="space-y-3">
-                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Business / Delivery Address</label>
-                                        <textarea name="address" rows="4" 
-                                            class="w-full bg-slate-50 border border-slate-200 rounded-none p-6 text-sm font-bold text-slate-800 focus:outline-none focus:border-bosch-blue transition-all resize-none">${user.address || ''}</textarea>
+                                    <div class="space-y-1.5">
+                                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Business / Delivery Address</label>
+                                        <textarea name="address" 
+                                            class="w-full bg-slate-50 border-2 border-slate-100 rounded-none p-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all h-24 resize-none">${user.address || ''}</textarea>
                                     </div>
 
-                                    <div class="pt-6 border-t border-slate-100 flex justify-end">
+                                    <div class="pt-4 border-t border-slate-100 flex justify-end">
                                         <button type="submit" id="save-profile-btn"
-                                            class="px-12 py-4 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-900/20 hover:bg-industrial-gray transition-all flex items-center gap-2">
+                                            class="h-11 px-8 rounded-none bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all flex items-center gap-2">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                                             Update Profile Info
                                         </button>
