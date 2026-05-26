@@ -388,16 +388,12 @@ const app = {
         // Update Footer branding dynamically
         const footerSiteName = document.getElementById('footer-site-name');
         if (footerSiteName) {
-            if (s.site_logo) {
-                setHTML(footerSiteName, '<img src="' + escapeHTML(this.api(s.site_logo)) + '" class="h-10 w-auto object-contain p-0.5">');
+            const words = (s.site_name || 'TORVO TOOLS').split(' ');
+            if (words.length > 1) {
+                const lastWord = words.pop();
+                setHTML(footerSiteName, escapeHTML(words.join(' ')) + ' <span class="text-[#ed1c24]">' + escapeHTML(lastWord) + '</span>');
             } else {
-                const words = (s.site_name || 'TORVO TOOLS').split(' ');
-                if (words.length > 1) {
-                    const lastWord = words.pop();
-                    setHTML(footerSiteName, escapeHTML(words.join(' ')) + ' <span class="text-[#ed1c24]">' + escapeHTML(lastWord) + '</span>');
-                } else {
-                    setHTML(footerSiteName, '<span class="text-[#ed1c24]">' + escapeHTML(s.site_name || 'TORVO') + '</span>');
-                }
+                setHTML(footerSiteName, '<span class="text-[#ed1c24]">' + escapeHTML(s.site_name || 'TORVO') + '</span>');
             }
         }
 
