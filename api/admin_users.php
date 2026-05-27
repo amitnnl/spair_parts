@@ -12,9 +12,13 @@ $db = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
-    // List users (pending first)
-    $stmt = $db->query("SELECT id, name, email, role, status, discount_tier, created_at FROM users WHERE LOWER(role) NOT IN ('admin', 'administrator') ORDER BY CASE WHEN status = 'pending' THEN 0 ELSE 1 END, created_at DESC");
-    echo json_encode($stmt->fetchAll());
+    try {
+        // List users (pending first)
+        $stmt = $db->query("SELECT id, name, email, role, status, discount_tier, created_at FROM users WHERE LOWER(role) NOT IN ('admin', 'administrator') ORDER BY CASE WHEN status = 'pending' THEN 0 ELSE 1 END, created_at DESC");
+        echo json_encode($stmt->fetchAll());
+    } catch (Exception $e) {
+        echo json_encode(['error' => 'DB_ERROR: ' . $e->getMessage()]);
+    }
 } elseif ($method === 'PUT') {
     // Update user status or discount tier
     $data = json_decode(file_get_contents('php://input'), true);

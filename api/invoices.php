@@ -20,6 +20,10 @@ try {
 } catch (Exception $e) { /* Columns likely exist */ }
 
 if ($method === 'POST') {
+    if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
+        echo json_encode(['error' => 'Unauthorized - Admin access required to generate invoices']);
+        exit;
+    }
     // Generate invoice from approved quotation
     $data = json_decode(file_get_contents('php://input'), true);
     $quotation_id = $data['quotation_id'];
@@ -78,15 +82,31 @@ if ($method === 'POST') {
     if (isset($_GET['id'])) {
         // Fetch detailed invoice with items
         $id = $_GET['id'];
-        $stmt = $db->prepare("
+        $isAdmin = isset($_SESSION['user_role']) && strtolower($_SESSION['user_role']) === 'admin';
+        
+        $sql = "
             SELECT i.*, u.name as user_name, u.email as user_email, q.id as q_id, q.created_at as q_date
             FROM invoices i 
             JOIN quotations q ON i.quotation_id = q.id 
             JOIN users u ON q.user_id = u.id 
             WHERE i.id = ?
-        ");
-        $stmt->execute([$id]);
+        ";
+        
+        if (!$isAdmin) {
+            $sql .= " AND u.id = ?";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$id, $_SESSION['user_id']]);
+        } else {
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$id]);
+        }
+        
         $invoice = $stmt->fetch();
+        
+        if (!$invoice) {
+            echo json_encode(['error' => 'Invoice not found or unauthorized']);
+            exit;
+        }
         
         $stmtItems = $db->prepare("
             SELECT qi.*, spn.name as part_name, b.name as brand, mm.name as machine_model 

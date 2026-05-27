@@ -1,3 +1,5 @@
+import { escapeHTML } from '../api.js';
+
 export async function renderQuotations(container, appInstance) {
     if (!appInstance.state.user) { history.pushState(null, null, appInstance.basePath + '/login'); appInstance.handleRouting(); return; }
     
@@ -47,13 +49,13 @@ export async function renderQuotations(container, appInstance) {
                                     ${quotations.length ? quotations.map(q => `
                                         <tr class="hover:bg-slate-50 transition-all">
                                             <td class="p-6">
-                                                <div class="font-bold text-bosch-blue">${isAdmin ? q.user_name : `#Q-${String(q.id).padStart(4, '0')}`}</div>
+                                                <div class="font-bold text-bosch-blue">${isAdmin ? escapeHTML(q.user_name) : `#Q-${String(q.id).padStart(4, '0')}`}</div>
                                                 <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(q.created_at).toLocaleDateString()} ${isAdmin ? `• #Q-${String(q.id).padStart(4, '0')}` : ''}</div>
                                             </td>
                                             <td class="p-6 font-bold text-slate-600">${q.item_count || 0} Products</td>
                                             <td class="p-6">
                                                 <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${appInstance.getStatusClass(q.status)}">
-                                                    ${q.status}
+                                                    ${escapeHTML(q.status)}
                                                 </span>
                                             </td>
                                             <td class="p-6 font-black text-bosch-blue">
@@ -122,8 +124,8 @@ export async function viewQuotationDetails(id, appInstance) {
                                 ${data.items.map(item => `
                                     <tr>
                                         <td class="p-6">
-                                            <div class="font-bold text-bosch-blue">${item.part_name}</div>
-                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-0.5">${item.brand} • ${item.machine_model}</div>
+                                            <div class="font-bold text-bosch-blue">${escapeHTML(item.part_name)}</div>
+                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-0.5">${escapeHTML(item.brand)} • ${escapeHTML(item.machine_model)}</div>
                                         </td>
                                         <td class="p-6 text-sm font-bold text-slate-600">${item.quantity}</td>
                                         <td class="p-6 text-sm font-black text-bosch-blue text-right">${item.unit_price ? `₹${parseFloat(item.unit_price).toLocaleString()}` : '<span class="text-slate-400 italic">Pending</span>'}</td>

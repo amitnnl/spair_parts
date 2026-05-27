@@ -1,6 +1,6 @@
 <?php
 // ============================================================================
-// PARTSPRO — Smart Database Configuration
+// TORVO — Smart Database Configuration
 // Works automatically on BOTH local XAMPP and live cPanel server.
 // No manual editing needed after deployment — credentials switch by hostname.
 // ============================================================================
@@ -62,7 +62,7 @@ if ($isLive) {
 }
 
 define('DB_CHARSET', 'utf8mb4');
-define('APP_NAME', 'PARTSPRO');
+define('APP_NAME', 'TORVO');
 
 // ── Dynamic APP_URL Detection ─────────────────────────────────────────────────
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';

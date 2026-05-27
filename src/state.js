@@ -7,7 +7,7 @@ export const state = {
     view: 'home',
     isLoading: false,
     settings: {
-        site_name: 'PARTSPRO',
+        site_name: 'TORVO',
         currency: '₹',
         tax_percent: '18'
     }

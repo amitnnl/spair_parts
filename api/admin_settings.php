@@ -18,7 +18,7 @@ if (!file_exists($jsonFile)) {
         'site_logo'         => '',
         'currency'          => '₹',
         'tax_percent'       => '18',
-        'contact_email'     => 'support@partspro.in',
+        'contact_email'     => 'support@torvotools.com',
         'contact_phone'     => '+91 70277 51544',
         'whatsapp_number'   => '+917027751544',
         'contact_address'   => 'Phase 2, Industrial Estate, New Delhi, IN 110020',
@@ -61,16 +61,24 @@ if (!file_exists($jsonFile)) {
     file_put_contents($jsonFile, json_encode($defaults, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 }
 
-// Read settings.json and synchronize it into the database
-if (file_exists($jsonFile)) {
+// Read settings.json and synchronize it into the database ONLY if the table is empty (fresh install)
+$count = $db->query("SELECT COUNT(*) FROM settings")->fetchColumn();
+if ($count == 0 && file_exists($jsonFile)) {
     $jsonSettings = json_decode(file_get_contents($jsonFile), true);
     if (is_array($jsonSettings)) {
-        foreach ($jsonSettings as $k => $v) {
-            $stmt = $db->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = ?");
-            $stmt->execute([$k, $v, $v]);
+        $db->beginTransaction();
+        try {
+            foreach ($jsonSettings as $k => $v) {
+                $stmt = $db->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = ?");
+                $stmt->execute([$k, $v, $v]);
+            }
+            $db->commit();
+        } catch (Exception $e) {
+            $db->rollBack();
         }
     }
 }
+
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -79,8 +87,23 @@ if ($method === 'GET') {
     echo json_encode($settings);
 } elseif ($method === 'POST') {
     // Only admin can update settings
-    if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
-        echo json_encode(['error' => 'Unauthorized']);
+    // Verify admin: check session role OR verify user_id against DB
+    $isAdmin = false;
+    if (isset($_SESSION['user_role']) && strtolower($_SESSION['user_role']) === 'admin') {
+        $isAdmin = true;
+    } elseif (isset($_SESSION['user_id'])) {
+        // Fallback: verify role from database using stored user_id
+        $authStmt = $db->prepare("SELECT role FROM users WHERE id = ? LIMIT 1");
+        $authStmt->execute([$_SESSION['user_id']]);
+        $authUser = $authStmt->fetch(PDO::FETCH_ASSOC);
+        if ($authUser && strtolower($authUser['role']) === 'admin') {
+            $isAdmin = true;
+            $_SESSION['user_role'] = $authUser['role']; // repair session
+        }
+    }
+    
+    if (!$isAdmin) {
+        echo json_encode(['error' => 'Unauthorized — admin session required. Please log out and log back in.']);
         exit;
     }
 
@@ -92,6 +115,16 @@ if ($method === 'GET') {
 
     foreach ($_FILES as $key => $file) {
         if ($file['error'] === UPLOAD_ERR_OK) {
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'];
+            $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($fileInfo, $file['tmp_name']);
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+            if (!in_array($ext, $allowedExtensions) || (strpos($mimeType, 'image/') !== 0 && $mimeType !== 'image/svg+xml')) {
+                echo json_encode(['error' => 'Invalid file format. Only images are allowed.']);
+                exit;
+            }
+
             // Delete old file if exists
             $stmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = ?");
             $stmt->execute([$key]);
@@ -101,7 +134,6 @@ if ($method === 'GET') {
                 if (file_exists($oldPath)) unlink($oldPath);
             }
 
-            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
             $filename = 'setting_' . $key . '_' . uniqid() . '.' . $ext;
             if (move_uploaded_file($file['tmp_name'], $uploadDir . $filename)) {
                 $data[$key] = 'uploads/' . $filename;
@@ -117,6 +149,8 @@ if ($method === 'GET') {
 
     $db->beginTransaction();
     try {
+        file_put_contents('../debug_log.txt', date('Y-m-d H:i:s') . " - Received POST: " . json_encode($data) . "\n", FILE_APPEND);
+
         foreach ($data as $key => $value) {
             $isImageField = (strpos($key, 'image') !== false || strpos($key, 'img') !== false || strpos($key, 'logo') !== false);
             if ($isImageField && empty($value)) {
@@ -135,6 +169,7 @@ if ($method === 'GET') {
         echo json_encode(['success' => true]);
     } catch (Exception $e) {
         $db->rollBack();
+        file_put_contents('../debug_log.txt', date('Y-m-d H:i:s') . " - DB Error: " . $e->getMessage() . "\n", FILE_APPEND);
         echo json_encode(['error' => $e->getMessage()]);
     }
 }

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'partspro-v1';
+const CACHE_NAME = 'torvo-v1';
 const ASSETS = [
   '/',
   '/index.html',

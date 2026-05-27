@@ -323,9 +323,15 @@ const app = {
 
     async loadSettings() {
         try {
-            const res = await fetch(this.api('api/admin_settings.php'));
+            const res = await fetch(this.api(`api/admin_settings.php?t=${Date.now()}`));
             this.state.settings = await res.json();
+            
+            const catRes = await fetch(this.api(`api/ui_categories.php?t=${Date.now()}`));
+            const catData = await catRes.json();
+            this.state.categories = catData.categories || [];
+            
             this.applySettings();
+
         } catch (e) {
             console.error('Failed to load settings', e);
         }
@@ -419,6 +425,19 @@ const app = {
             if (el) {
                 el.textContent = s.contact_email;
                 el.href = 'mailto:' + s.contact_email;
+            }
+        }
+        if (s.contact_phone) {
+            const topPhone = document.getElementById('topbar-phone');
+            const topPhoneText = document.getElementById('topbar-phone-text');
+            if (topPhone && topPhoneText) {
+                topPhoneText.textContent = s.contact_phone;
+                topPhone.href = 'tel:' + s.contact_phone.replace(/\s+/g, '');
+            }
+            const footerPhone = document.getElementById('footer-phone');
+            if (footerPhone) {
+                footerPhone.textContent = s.contact_phone;
+                footerPhone.href = 'tel:' + s.contact_phone.replace(/\s+/g, '');
             }
         }
 

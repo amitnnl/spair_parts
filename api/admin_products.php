@@ -42,24 +42,33 @@ if ($method === 'POST') {
         // Handle photo upload
         $photo = null;
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = '../uploads/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($fileInfo, $_FILES['photo']['tmp_name']);
+            $ext = strtolower(pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION));
 
-            // Delete old photo if updating
-            if ($action === 'update_product' && $id) {
-                $stmt = $db->prepare("SELECT photo FROM spare_parts WHERE id = ?");
-                $stmt->execute([$id]);
-                $oldPhoto = $stmt->fetchColumn();
-                if ($oldPhoto && !filter_var($oldPhoto, FILTER_VALIDATE_URL)) {
-                    $oldPath = '../' . $oldPhoto;
-                    if (file_exists($oldPath)) unlink($oldPath);
+            if (in_array($ext, $allowedExtensions) && strpos($mimeType, 'image/') === 0) {
+                $uploadDir = '../uploads/';
+                if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+                // Delete old photo if updating
+                if ($action === 'update_product' && $id) {
+                    $stmt = $db->prepare("SELECT photo FROM spare_parts WHERE id = ?");
+                    $stmt->execute([$id]);
+                    $oldPhoto = $stmt->fetchColumn();
+                    if ($oldPhoto && !filter_var($oldPhoto, FILTER_VALIDATE_URL)) {
+                        $oldPath = '../' . $oldPhoto;
+                        if (file_exists($oldPath)) unlink($oldPath);
+                    }
                 }
-            }
-            
-            $ext = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
-            $filename = uniqid() . '.' . $ext;
-            if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadDir . $filename)) {
-                $photo = 'uploads/' . $filename;
+                
+                $filename = uniqid() . '.' . $ext;
+                if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadDir . $filename)) {
+                    $photo = 'uploads/' . $filename;
+                }
+            } else {
+                echo json_encode(['error' => 'Invalid file type. Only JPG, PNG, WEBP, and GIF are allowed.']);
+                exit;
             }
         }
 

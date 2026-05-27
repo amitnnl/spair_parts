@@ -1,0 +1,46 @@
+name: Deploy to cPanel via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies and Build
+      run: |
+        npm install
+        npm run build
+
+    - name: Prepare deployment folder
+      run: |
+        mkdir deploy_pkg
+        cp -r dist/* deploy_pkg/
+        cp -r api deploy_pkg/
+        cp -r config deploy_pkg/
+        cp -r uploads deploy_pkg/
+        cp .htaccess deploy_pkg/
+
+    - name: Sync files to cPanel FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./deploy_pkg/
+        server-dir: ./public_html/
+        exclude: |
+          **/.git*
+          **/.git*/**

@@ -1,3 +1,5 @@
+import { escapeHTML } from '../api.js';
+
 export async function renderProfile(container, app) {
     if (!app.state.user) {
         history.pushState(null, null, app.basePath + '/login');
@@ -31,22 +33,22 @@ export async function renderProfile(container, app) {
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div class="space-y-1.5">
                                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
-                                            <input type="text" name="name" value="${user.name || ''}" required
+                                            <input type="text" name="name" value="${escapeHTML(user.name || '')}" required
                                                 class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-none px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         </div>
                                         <div class="space-y-1.5">
                                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address (Primary)</label>
-                                            <input type="email" value="${user.email || ''}" disabled
+                                            <input type="email" value="${escapeHTML(user.email || '')}" disabled
                                                 class="w-full h-11 bg-slate-100 border-2 border-slate-100 rounded-none px-4 text-xs font-black text-slate-400 cursor-not-allowed">
                                         </div>
                                         <div class="space-y-1.5">
                                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Mobile Number</label>
-                                            <input type="text" name="phone" value="${user.phone || ''}" placeholder="+91 00000 00000"
+                                            <input type="text" name="phone" value="${escapeHTML(user.phone || '')}" placeholder="+91 00000 00000"
                                                 class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-none px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         </div>
                                         <div class="space-y-1.5">
                                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">WhatsApp Number</label>
-                                            <input type="text" name="whatsapp" value="${user.whatsapp || ''}" placeholder="+91 00000 00000"
+                                            <input type="text" name="whatsapp" value="${escapeHTML(user.whatsapp || '')}" placeholder="+91 00000 00000"
                                                 class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-none px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         </div>
                                     </div>
@@ -54,7 +56,7 @@ export async function renderProfile(container, app) {
                                     <div class="space-y-1.5">
                                         <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Business / Delivery Address</label>
                                         <textarea name="address" 
-                                            class="w-full bg-slate-50 border-2 border-slate-100 rounded-none p-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all h-24 resize-none">${user.address || ''}</textarea>
+                                            class="w-full bg-slate-50 border-2 border-slate-100 rounded-none p-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all h-24 resize-none">${escapeHTML(user.address || '')}</textarea>
                                     </div>
 
                                     <div class="pt-4 border-t border-slate-100 flex justify-end">

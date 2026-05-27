@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">PARTSPRO</string>
-    <string name="title_activity_main">PARTSPRO</string>
-    <string name="package_name">com.partspro.app</string>
-    <string name="custom_url_scheme">com.partspro.app</string>
+    <string name="app_name">TORVO</string>
+    <string name="title_activity_main">TORVO</string>
+    <string name="package_name">com.torvo.app</string>
+    <string name="custom_url_scheme">com.torvo.app</string>
 </resources>

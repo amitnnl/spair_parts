@@ -199,114 +199,24 @@ export function renderHome(container, app) {
                         </a>
                     </div>
 
-                    <!-- 6-Card Category Grid: Category 1-4 are database DYNAMIC. 5-6 are mockup collections -->
+                    <!-- Dynamic Category Grid -->
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                        
-                        <!-- 1. Electrical Parts (Dynamic) -->
-                        <div onclick="clickCategorySearch('` + escapeHTML(s.cat1_title || 'Electrical Parts').replace(/'/g, "\\'") + `')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
-                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="` + escapeHTML(app.api(s.cat1_img) || 'uploads/setting_cat1_img_69f49cd304f29.jpg') + `" 
-                                     alt="` + escapeHTML(s.cat1_title || 'Electrical Parts') + `" 
-                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
-                            </div>
-                            <div class="flex items-end justify-between w-full pt-3">
-                                <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">` + escapeHTML(s.cat1_title || 'Electrical Parts') + `</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">` + escapeHTML(s.cat1_desc || 'Switches, Cables, Carbon Brushes & more') + `</p>
+                        ` + (app.state.categories || []).map(c => `
+                            <div onclick="clickCategorySearch('${escapeHTML(c.title).replace(/'/g, "\\'")}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
+                                <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4 relative">
+                                    ${c.image_url 
+                                        ? `<img src="${escapeHTML(app.api(c.image_url))}" alt="${escapeHTML(c.title)}" class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">` 
+                                        : `<div class="w-16 h-16 rounded-none bg-rose-50 flex items-center justify-center text-[#ed1c24] group-hover:bg-[#ed1c24] group-hover:text-white transition-all duration-300"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="${escapeHTML(c.icon_svg)}"/></svg></div>`}
                                 </div>
-                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
-                            </div>
-                        </div>
-
-                        <!-- 2. Mechanical Parts (Dynamic) -->
-                        <div onclick="clickCategorySearch('` + escapeHTML(s.cat2_title || 'Mechanical Parts').replace(/'/g, "\\'") + `')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
-                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="` + escapeHTML(app.api(s.cat2_img) || 'uploads/setting_cat2_img_69f49cd3068d3.jpg') + `" 
-                                     alt="` + escapeHTML(s.cat2_title || 'Mechanical Parts') + `" 
-                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
-                            </div>
-                            <div class="flex items-end justify-between w-full pt-3">
-                                <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">` + escapeHTML(s.cat2_title || 'Mechanical Parts') + `</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">` + escapeHTML(s.cat2_desc || 'Gears, Bearings, Shafts & more') + `</p>
-                                </div>
-                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
-                            </div>
-                        </div>
-
-                        <!-- 3. Accessories (Dynamic) -->
-                        <div onclick="clickCategorySearch('` + escapeHTML(s.cat3_title || 'Accessories').replace(/'/g, "\\'") + `')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
-                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="` + escapeHTML(app.api(s.cat3_img) || 'uploads/setting_cat3_img_69f49cd3083d3.jpg') + `" 
-                                     alt="` + escapeHTML(s.cat3_title || 'Accessories') + `" 
-                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
-                            </div>
-                            <div class="flex items-end justify-between w-full pt-3">
-                                <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">` + escapeHTML(s.cat3_title || 'Accessories') + `</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">` + escapeHTML(s.cat3_desc || 'Chucks, Blades, Drill Bits & more') + `</p>
-                                </div>
-                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
-                            </div>
-                        </div>
-
-                        <!-- 4. Replacement Kits (Dynamic) -->
-                        <div onclick="clickCategorySearch('` + escapeHTML(s.cat4_title || 'Replacement Kits').replace(/'/g, "\\'") + `')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
-                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <img src="` + escapeHTML(app.api(s.cat4_img) || 'uploads/setting_cat4_img_69f49cd308822.jpg') + `" 
-                                     alt="` + escapeHTML(s.cat4_title || 'Replacement Kits') + `" 
-                                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
-                            </div>
-                            <div class="flex items-end justify-between w-full pt-3">
-                                <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">` + escapeHTML(s.cat4_title || 'Replacement Kits') + `</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">` + escapeHTML(s.cat4_desc || 'Kits for Maintenance & Repair') + `</p>
-                                </div>
-                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
-                            </div>
-                        </div>
-
-                        <!-- 5. Tool Components (Mockup Collection) -->
-                        <div onclick="clickCategorySearch('Tool Components')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
-                            <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4">
-                                <div class="w-16 h-16 rounded-none bg-rose-50 flex items-center justify-center text-[#ed1c24] group-hover:bg-[#ed1c24] group-hover:text-white transition-all duration-300">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
+                                <div class="flex items-end justify-between w-full pt-3">
+                                    <div class="space-y-0.5 min-w-0 flex-1">
+                                        <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${escapeHTML(c.title)}</h4>
+                                        <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${escapeHTML(c.description || 'Explore Parts')}</p>
+                                    </div>
+                                    <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
                                 </div>
                             </div>
-                            <div class="flex items-end justify-between w-full pt-3">
-                                <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">Tool Components</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">Housings, Handles, Spindles & more</p>
-                                </div>
-                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
-                            </div>
-                        </div>
-
-                        <!-- 6. More Categories -->
-                        <div onclick="app.renderCategories(document.getElementById('view-container'))" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
-                            <div class="h-32 bg-slate-50 flex items-center justify-center p-4">
-                                <div class="w-12 h-12 rounded-none bg-rose-50 flex items-center justify-center text-[#ed1c24] group-hover:bg-[#ed1c24] group-hover:text-white transition-all duration-300">
-                                    <!-- 4-square Grid Icon -->
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <rect x="3" y="3" width="7" height="7" rx="0"/>
-                                        <rect x="14" y="3" width="7" height="7" rx="0"/>
-                                        <rect x="14" y="14" width="7" height="7" rx="0"/>
-                                        <rect x="3" y="14" width="7" height="7" rx="0"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="flex items-end justify-between w-full pt-3">
-                                <div class="space-y-0.5 min-w-0 flex-1">
-                                    <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">More Categories</h4>
-                                    <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">Explore All Collections</p>
-                                </div>
-                                <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
-                            </div>
-                        </div>
-
+                        `).join('') + `
                     </div>
                 </div>
             </section>

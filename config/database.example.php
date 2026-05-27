@@ -1,6 +1,6 @@
 <?php
 // ============================================
-// Database Configuration for PARTSPRO
+// Database Configuration for TORVO
 // ============================================
 // INSTRUCTIONS FOR DEPLOYMENT:
 // 1. Copy this file to config/database.php on your live server
@@ -56,7 +56,7 @@ define('DB_PASS', 'YOUR_DB_PASSWORD');   // Your cPanel DB password
 define('DB_NAME', 'YOUR_DB_NAME');       // e.g. hotelsunplaza_spairparts
 define('DB_CHARSET', 'utf8mb4');
 
-define('APP_NAME', 'PARTSPRO');
+define('APP_NAME', 'TORVO');
 
 // Dynamic APP_URL Detection
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";

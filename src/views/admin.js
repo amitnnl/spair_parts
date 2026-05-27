@@ -1,3 +1,5 @@
+import { escapeHTML, setHTML } from '../api.js';
+
 export async function renderAdmin(container, app) {
     const userRole = (app.state.user && app.state.user.role) ? app.state.user.role.toLowerCase() : '';
     if (userRole !== 'admin') {
@@ -7,7 +9,7 @@ export async function renderAdmin(container, app) {
         return;
     }
 
-    container.innerHTML = `
+    setHTML(container, `
         <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
             ${app.getSidebar('admin')}
 
@@ -31,10 +33,10 @@ export async function renderAdmin(container, app) {
             { l: 'Monthly Revenue', v: '₹0', id: 'stat-revenue', c: 'rose' }
         ].map(s => `
                         <div class="bg-white border-2 border-slate-100 rounded-none p-8 space-y-4 hover:border-bosch-blue transition-all">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${s.l}</p>
-                            <h3 class="text-3xl font-black text-bosch-blue" id="${s.id}">${s.v}</h3>
-                            <div class="w-full h-1 bg-${s.c}-100 rounded-none overflow-hidden">
-                                <div class="w-1/3 h-full bg-${s.c}-600"></div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${escapeHTML(s.l)}</p>
+                            <h3 class="text-3xl font-black text-bosch-blue" id="${escapeHTML(s.id)}">${escapeHTML(s.v)}</h3>
+                            <div class="w-full h-1 bg-${escapeHTML(s.c)}-100 rounded-none overflow-hidden">
+                                <div class="w-1/3 h-full bg-${escapeHTML(s.c)}-600"></div>
                             </div>
                         </div>
                     `).join('')}
@@ -61,7 +63,7 @@ export async function renderAdmin(container, app) {
                 </div>
             </main>
         </div>
-    `;
+    `);
 
     app.loadAdminStats();
     app.loadAdminQuotations();
@@ -75,30 +77,30 @@ export async function loadAdminInvoices(app) {
         const res = await fetch(app.api('api/invoices.php'));
         const invoices = await res.json();
 
-        list.innerHTML = invoices.length ? invoices.map(inv => `
+        setHTML(list, invoices.length ? invoices.map(inv => `
             <div class="bg-white border-2 border-slate-100 rounded-none p-6 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div class="flex items-center gap-6">
                     <div class="w-12 h-12 rounded-none bg-slate-50 flex items-center justify-center text-slate-400">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
                     <div>
-                        <div class="font-black text-bosch-blue uppercase tracking-widest">${inv.invoice_number} • ${inv.user_name}</div>
+                        <div class="font-black text-bosch-blue uppercase tracking-widest">${escapeHTML(inv.invoice_number)} • ${escapeHTML(inv.user_name)}</div>
                         <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">
                             ${new Date(inv.created_at).toLocaleDateString()} • ₹${parseFloat(inv.total_amount).toLocaleString()}
-                            ${inv.tracking_number ? ` • Tracking: <span class="text-bosch-blue font-bold">${inv.tracking_number}</span>` : ''}
+                            ${inv.tracking_number ? ` • Tracking: <span class="text-bosch-blue font-bold">${escapeHTML(inv.tracking_number)}</span>` : ''}
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
                     <span class="px-3 py-1 rounded-none border border-slate-200 text-[10px] font-black uppercase tracking-wider ${getInvoiceStatusClass(inv.status)}">
-                        ${inv.status}
+                        ${escapeHTML(inv.status)}
                     </span>
-                    <button onclick="app.renderDispatchModal(${inv.id}, '${inv.status}', '${inv.tracking_number || ''}')" class="px-5 py-2 rounded-none bg-industrial-gray text-white text-[11px] font-black uppercase tracking-widest hover:bg-bosch-blue transition-all">Manage</button>
+                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-5 py-2 rounded-none bg-industrial-gray text-white text-[11px] font-black uppercase tracking-widest hover:bg-bosch-blue transition-all">Manage</button>
                 </div>
             </div>
-        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No active orders in fulfillment</div>';
+        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No active orders in fulfillment</div>');
     } catch (e) {
-        list.innerHTML = '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load orders</div>';
+        setHTML(list, '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load orders</div>');
     }
 }
 
@@ -122,35 +124,35 @@ export async function loadAdminQuotations(app) {
         const res = await fetch(app.api('api/admin_quotations.php'));
         const quotations = await res.json();
 
-        list.innerHTML = quotations.length ? quotations.map(q => `
+        setHTML(list, quotations.length ? quotations.map(q => `
             <div class="bg-white border-2 border-slate-100 rounded-none p-6 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div>
-                    <div class="font-black text-bosch-blue uppercase tracking-widest">${q.user_name}</div>
-                    <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">${q.user_email} • ${new Date(q.created_at).toLocaleString()}</div>
+                    <div class="font-black text-bosch-blue uppercase tracking-widest">${escapeHTML(q.user_name)}</div>
+                    <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">${escapeHTML(q.user_email)} • ${new Date(q.created_at).toLocaleString()}</div>
                 </div>
                 <div class="flex items-center gap-6">
                     <span class="px-3 py-1 rounded-none border border-slate-200 text-[10px] font-black uppercase tracking-wider ${app.getStatusClass(q.status)}">
-                        ${q.status}
+                        ${escapeHTML(q.status)}
                     </span>
-                    ${q.status === 'pending' ? `<button onclick="app.renderProcessQuotation(${q.id})" class="px-5 py-2 rounded-none bg-bosch-blue text-white text-[11px] font-black uppercase tracking-widest hover:bg-industrial-gray transition-all">Process</button>` : ''}
-                    ${q.status === 'approved' ? `<button onclick="app.generateInvoice(${q.id})" class="px-5 py-2 rounded-none bg-bosch-red text-white text-[11px] font-black uppercase tracking-widest hover:bg-red-700 transition-all">Generate Invoice</button>` : ''}
+                    ${q.status === 'pending' ? `<button onclick="app.renderProcessQuotation(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-none bg-bosch-blue text-white text-[11px] font-black uppercase tracking-widest hover:bg-industrial-gray transition-all">Process</button>` : ''}
+                    ${q.status === 'approved' ? `<button onclick="app.generateInvoice(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-none bg-bosch-red text-white text-[11px] font-black uppercase tracking-widest hover:bg-red-700 transition-all">Generate Invoice</button>` : ''}
                 </div>
             </div>
-        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No pending requests</div>';
+        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No pending requests</div>');
     } catch (e) {
-        list.innerHTML = '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load requests</div>';
+        setHTML(list, '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load requests</div>');
     }
 }
 
 export async function renderAdminInventory(container, app) {
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>`;
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>`);
 
     try {
         const res = await fetch(app.api('api/products.php'));
         const { products } = await res.json();
         app.state.products = products;
 
-        container.innerHTML = `
+        setHTML(container, `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${app.getSidebar('inventory')}
 
@@ -197,9 +199,9 @@ export async function renderAdminInventory(container, app) {
                     </div>
                 </main>
             </div>
-        `;
+        `);
     } catch (e) {
-        container.innerHTML = `<div class="bg-rose-50 border border-rose-100 rounded-3xl p-20 text-center text-rose-500 font-bold">Error loading warehouse data.</div>`;
+        setHTML(container, `<div class="bg-rose-50 border border-rose-100 rounded-3xl p-20 text-center text-rose-500 font-bold">Error loading warehouse data.</div>`);
     }
 }
 
@@ -219,17 +221,17 @@ function createInventoryRow(p, app) {
             <td class="p-6 pl-8">
                 <div class="flex items-center gap-5">
                     <div class="relative">
-                        <img src="${app.cleanImageUrl(p.photo, p.part_name)}" class="w-14 h-14 rounded-none object-cover border-2 border-slate-100 shadow-sm group-hover:scale-105 transition-transform">
+                        <img src="${escapeHTML(app.cleanImageUrl(p.photo, p.part_name))}" class="w-14 h-14 rounded-none object-cover border-2 border-slate-100 shadow-sm group-hover:scale-105 transition-transform">
                         ${isLowStock ? '<span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-bosch-red rounded-none border border-white animate-pulse"></span>' : ''}
                     </div>
                     <div>
-                        <span class="font-black block text-bosch-blue text-sm mb-0.5 uppercase tracking-widest">${p.part_name}</span>
-                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-slate-100 px-2 py-0.5 rounded-none inline-block">${p.machine_model || 'Universal'}</span>
+                        <span class="font-black block text-bosch-blue text-sm mb-0.5 uppercase tracking-widest">${escapeHTML(p.part_name)}</span>
+                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-slate-100 px-2 py-0.5 rounded-none inline-block">${escapeHTML(p.machine_model || 'Universal')}</span>
                     </div>
                 </div>
             </td>
             <td class="p-6">
-                <span class="px-3.5 py-1.5 rounded-none bg-industrial-gray text-white text-[9px] font-black uppercase tracking-widest border border-slate-700">${p.brand}</span>
+                <span class="px-3.5 py-1.5 rounded-none bg-industrial-gray text-white text-[9px] font-black uppercase tracking-widest border border-slate-700">${escapeHTML(p.brand)}</span>
             </td>
             <td class="p-6">
                 <div class="space-y-2">
@@ -239,7 +241,7 @@ function createInventoryRow(p, app) {
                     </div>
                 </div>
             </td>
-            <td class="p-6 font-black text-bosch-blue text-sm">₹${p.cost || '0.00'}</td>
+            <td class="p-6 font-black text-bosch-blue text-sm">₹${escapeHTML(p.cost || '0.00')}</td>
             <td class="p-6 pr-8 text-right">
                 <div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-none bg-white border border-slate-200 text-slate-400 hover:text-white hover:border-bosch-blue hover:bg-bosch-blue transition-all">
@@ -257,13 +259,17 @@ function createInventoryRow(p, app) {
 export async function renderAdminUsers(container, app) {
     if (!app.state.user || app.state.user.role !== 'admin') return;
 
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`);
 
     try {
         const res = await fetch(app.api('api/admin_users.php'));
         const users = await res.json();
+        
+        if (users.error) {
+            throw new Error(users.error);
+        }
 
-        container.innerHTML = `
+        setHTML(container, `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${app.getSidebar('partners')}
 
@@ -291,34 +297,34 @@ export async function renderAdminUsers(container, app) {
                                     <tr class="hover:bg-slate-50/80 transition-all group">
                                         <td class="p-6 pl-8">
                                             <div class="flex items-center gap-4">
-                                                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-emerald-100">${u.name.charAt(0).toUpperCase()}</div>
+                                                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-emerald-100">${escapeHTML((u.name || '?').charAt(0).toUpperCase())}</div>
                                                 <div>
-                                                    <span class="font-black block text-bosch-blue text-sm mb-0.5">${u.name}</span>
-                                                    <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${u.email}</span>
+                                                    <span class="font-black block text-bosch-blue text-sm mb-0.5">${escapeHTML(u.name)}</span>
+                                                    <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${escapeHTML(u.email)}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="p-6">
-                                            <select onchange="app.updateUser(${u.id}, 'status', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest ${u.status === 'active' ? 'text-emerald-600 border-emerald-200' : (u.status === 'pending' ? 'text-amber-600 border-amber-200' : 'text-rose-600 border-rose-200')} focus:outline-none focus:ring-4 transition-all">
+                                            <select onchange="app.updateUser(${parseInt(u.id, 10)}, 'status', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest ${u.status === 'active' ? 'text-emerald-600 border-emerald-200' : (u.status === 'pending' ? 'text-amber-600 border-amber-200' : 'text-rose-600 border-rose-200')} focus:outline-none focus:ring-4 transition-all">
                                                 <option value="pending" ${u.status === 'pending' ? 'selected' : ''}>Pending</option>
                                                 <option value="active" ${u.status === 'active' ? 'selected' : ''}>Active</option>
                                                 <option value="suspended" ${u.status === 'suspended' ? 'selected' : ''}>Suspended</option>
                                             </select>
                                         </td>
                                         <td class="p-6">
-                                            <select onchange="app.updateUser(${u.id}, 'role', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest focus:outline-none focus:ring-4 transition-all">
+                                            <select onchange="app.updateUser(${parseInt(u.id, 10)}, 'role', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest focus:outline-none focus:ring-4 transition-all">
                                                 <option value="user" ${u.role?.toLowerCase() === 'user' || !u.role ? 'selected' : ''}>Partner</option>
                                                 <option value="staff" ${u.role?.toLowerCase() === 'staff' ? 'selected' : ''}>Staff</option>
                                             </select>
                                         </td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" step="0.1" value="${u.discount_tier || 0}" id="discount_${u.id}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-bosch-blue focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                                <input type="number" step="0.1" value="${escapeHTML(u.discount_tier || 0)}" id="discount_${parseInt(u.id, 10)}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-bosch-blue focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                                                 <span class="text-slate-400 font-bold text-sm">%</span>
                                             </div>
                                         </td>
                                         <td class="p-6 pr-8 text-right">
-                                            <button onclick="app.updateUser(${u.id}, 'discount_tier', document.getElementById('discount_${u.id}').value)" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save</button>
+                                            <button onclick="app.updateUser(${parseInt(u.id, 10)}, 'discount_tier', document.getElementById('discount_${parseInt(u.id, 10)}').value)" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save</button>
                                         </td>
                                     </tr>
                                 `).join('')}
@@ -328,9 +334,9 @@ export async function renderAdminUsers(container, app) {
                     </div>
                 </main>
             </div>
-        `;
+        `);
     } catch (e) {
-        container.innerHTML = `<div class="p-20 text-center text-rose-500 font-bold">Error loading partners.</div>`;
+        setHTML(container, `<div class="p-20 text-center text-rose-500 font-bold">Error loading partners: ${escapeHTML(e.message)}</div>`);
     }
 }
 
@@ -353,12 +359,12 @@ export async function renderProcessQuotation(quotationId, app) {
     const details = data.items;
     const discountTier = parseFloat(data.discount_tier || 0);
 
-    modal.innerHTML = `
+    setHTML(modal, `
         <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative animate-in zoom-in duration-300 my-8">
             <div class="bg-slate-900 p-8 text-white flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-black tracking-tight">Process Quotation</h2>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Request from ${q.user_name} (#Q-${String(q.id).padStart(4, '0')})</p>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Request from ${escapeHTML(q.user_name)} (#Q-${String(q.id).padStart(4, '0')})</p>
                 </div>
                 <button onclick="document.getElementById('process-modal').remove()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -373,7 +379,7 @@ export async function renderProcessQuotation(quotationId, app) {
                     </div>
                     <div class="flex-1 min-w-[200px] p-6 bg-slate-50 border border-slate-200 rounded-2xl">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Status</p>
-                        <h4 class="text-xl font-black text-amber-600 uppercase">${q.status}</h4>
+                        <h4 class="text-xl font-black text-amber-600 uppercase">${escapeHTML(q.status)}</h4>
                     </div>
                 </div>
                 
@@ -393,15 +399,15 @@ export async function renderProcessQuotation(quotationId, app) {
                                 ${details.map(item => `
                                     <tr class="group">
                                         <td class="p-6">
-                                            <div class="font-bold text-bosch-blue">${item.part_name}</div>
-                                            <div class="text-[10px] text-slate-500 uppercase font-black tracking-tighter mt-0.5">${item.brand} • ${item.machine_model}</div>
+                                            <div class="font-bold text-bosch-blue">${escapeHTML(item.part_name)}</div>
+                                            <div class="text-[10px] text-slate-500 uppercase font-black tracking-tighter mt-0.5">${escapeHTML(item.brand)} • ${escapeHTML(item.machine_model)}</div>
                                         </td>
-                                        <td class="p-6 text-slate-600 font-black">${item.quantity}</td>
-                                        <td class="p-6 text-slate-400 font-bold text-sm">₹${item.cost || '0.00'}</td>
+                                        <td class="p-6 text-slate-600 font-black">${parseInt(item.quantity, 10)}</td>
+                                        <td class="p-6 text-slate-400 font-bold text-sm">₹${escapeHTML(item.cost || '0.00')}</td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" name="price_${item.id}" data-item-id="${item.id}" data-qty="${item.quantity}" data-msrp="${item.cost || 0}" step="0.01" value="${item.unit_price || ''}" required class="w-28 bg-slate-50 border-2 border-slate-100 rounded-none px-3 h-10 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-4 focus:bg-white transition-all unit-price-input">
-                                                <button type="button" onclick="app.applyDiscountToItem(this, ${discountTier})" class="w-10 h-10 bg-emerald-50 text-bosch-blue rounded-none hover:bg-bosch-blue hover:text-white transition-all flex items-center justify-center shadow-sm">
+                                                <input type="number" name="price_${parseInt(item.id, 10)}" data-item-id="${parseInt(item.id, 10)}" data-qty="${parseInt(item.quantity, 10)}" data-msrp="${escapeHTML(item.cost || 0)}" step="0.01" value="${escapeHTML(item.unit_price || '')}" required class="w-28 bg-slate-50 border-2 border-slate-100 rounded-none px-3 h-10 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-4 focus:bg-white transition-all unit-price-input">
+                                                <button type="button" onclick="app.applyDiscountToItem(this, ${parseFloat(discountTier)})" class="w-10 h-10 bg-emerald-50 text-bosch-blue rounded-none hover:bg-bosch-blue hover:text-white transition-all flex items-center justify-center shadow-sm">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                                 </button>
                                             </div>
@@ -432,7 +438,7 @@ export async function renderProcessQuotation(quotationId, app) {
                 </form>
             </div>
         </div>
-    `;
+    `);
 
     document.body.appendChild(modal);
 
@@ -598,55 +604,32 @@ export async function renderSystemSettings(container, app) {
             return '';
         };
 
-        const getCatVal = (n, prop) => {
-            if (n === 1) {
-                if (prop === 'title') return s.cat1_title;
-                if (prop === 'img') return s.cat1_img;
-                if (prop === 'desc') return s.cat1_desc;
-            }
-            if (n === 2) {
-                if (prop === 'title') return s.cat2_title;
-                if (prop === 'img') return s.cat2_img;
-                if (prop === 'desc') return s.cat2_desc;
-            }
-            if (n === 3) {
-                if (prop === 'title') return s.cat3_title;
-                if (prop === 'img') return s.cat3_img;
-                if (prop === 'desc') return s.cat3_desc;
-            }
-            if (n === 4) {
-                if (prop === 'title') return s.cat4_title;
-                if (prop === 'img') return s.cat4_img;
-                if (prop === 'desc') return s.cat4_desc;
-            }
-            return '';
-        };
 
         const field = (label, name, val, type = 'text', placeholder = '', extra = '') => `
-            <div class="space-y-1.5 ${extra}">
-                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${label}</label>
-                <input type="${type}" name="${name}" value="${val || ''}" placeholder="${placeholder}"
+            <div class="space-y-1.5 ${escapeHTML(extra)}">
+                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${escapeHTML(label)}</label>
+                <input type="${escapeHTML(type)}" name="${escapeHTML(name)}" value="${escapeHTML(val || '')}" placeholder="${escapeHTML(placeholder)}"
                     class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
             </div>`;
 
         const textarea = (label, name, val, extra = '') => `
-            <div class="space-y-1.5 ${extra}">
-                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${label}</label>
-                <textarea name="${name}" rows="3"
-                    class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all resize-none h-24">${val || ''}</textarea>
+            <div class="space-y-1.5 ${escapeHTML(extra)}">
+                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${escapeHTML(label)}</label>
+                <textarea name="${escapeHTML(name)}" rows="3"
+                    class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all resize-none h-24">${escapeHTML(val || '')}</textarea>
             </div>`;
 
         const imgField = (label, name, current) => `
-            <div class="space-y-1.5">
-                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${label}</label>
-                <div class="flex items-center gap-4">
-                    <input type="file" name="${name}" accept="image/*"
-                        class="flex-1 bg-slate-50 border-2 border-dashed border-slate-200 rounded-none px-4 py-2 text-xs font-black text-slate-500 focus:outline-none hover:border-bosch-blue transition-all cursor-pointer">
+            <div class="space-y-1.5 flex flex-col min-w-0">
+                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${escapeHTML(label)}</label>
+                <div class="flex flex-row items-center gap-3 w-full bg-slate-50 border-2 border-dashed border-slate-200 rounded-none p-2 hover:border-bosch-blue transition-all min-w-0">
                     ${current
-                ? `<img src="${app.api(current)}" class="w-11 h-11 rounded-none object-cover border-2 border-white shadow-md flex-shrink-0">`
-                : `<div class="w-11 h-11 rounded-none bg-slate-100 border-2 border-dashed border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                ? `<img src="${escapeHTML(app.api(current))}" class="w-10 h-10 rounded-none object-cover border border-slate-200 shadow-sm flex-shrink-0">`
+                : `<div class="w-10 h-10 rounded-none bg-slate-100 border border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                            </div>`}
+                    <input type="file" name="${escapeHTML(name)}" accept="image/*"
+                        class="block w-full text-[10px] text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-none file:border-0 file:text-[9px] file:font-black file:uppercase file:tracking-widest file:bg-white file:text-slate-700 hover:file:bg-slate-100 cursor-pointer focus:outline-none min-w-0 overflow-hidden">
                 </div>
             </div>`;
 
@@ -660,7 +643,7 @@ export async function renderSystemSettings(container, app) {
             { id: 'system', label: '🔍 System Status' },
         ];
 
-        container.innerHTML = `
+        setHTML(container, `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${app.getSidebar('settings')}
                 <main class="flex-1 p-6 lg:p-10 overflow-x-hidden">
@@ -689,16 +672,16 @@ export async function renderSystemSettings(container, app) {
                                     <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Site identity, pricing & contact info</p>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    ${field('Platform / Site Name', 'site_name', s.site_name, 'text', 'PARTSPRO')}
+                                    ${field('Platform / Site Name', 'site_name', s.site_name, 'text', 'TORVO')}
                                     ${imgField('Platform Logo', 'site_logo', s.site_logo)}
                                     ${field('Currency Symbol', 'currency', s.currency, 'text', '₹')}
                                     ${field('Tax Rate (%)', 'tax_percent', s.tax_percent, 'number', '18')}
-                                    ${field('Support Email', 'contact_email', s.contact_email, 'email', 'support@partspro.in')}
+                                    ${field('Support Email', 'contact_email', s.contact_email, 'email', 'support@torvotools.com')}
                                     ${field('Contact Phone', 'contact_phone', s.contact_phone, 'text', '+91 70277 51544')}
                                     ${field('WhatsApp Number (with country code)', 'whatsapp_number', s.whatsapp_number, 'text', '+917027751544')}
                                     ${field('Footer Tagline', 'footer_desc', s.footer_desc, 'text', 'The premium B2B platform...')}
                                     ${textarea('Corporate Address', 'contact_address', s.contact_address, 'md:col-span-2')}
-                                    ${field('Copyright Text', 'footer_copyright', s.footer_copyright, 'text', '© 2026 PARTSPRO B2B Division.')}
+                                    ${field('Copyright Text', 'footer_copyright', s.footer_copyright, 'text', '© 2026 TORVO B2B Division.')}
                                 </div>
                             </div>
 
@@ -762,19 +745,15 @@ export async function renderSystemSettings(container, app) {
                                         ${field('Page Heading', 'cats_page_title', s.cats_page_title, 'text', 'Core Categories')}
                                         ${textarea('Page Subtitle', 'cats_page_subtitle', s.cats_page_subtitle)}
                                     </div>
-                                    <div class="p-4 bg-amber-50 border border-amber-100 rounded-2xl text-sm text-amber-700 font-bold">
-                                        ℹ️ Category cards below are shared with the Home Page panels — editing here updates both places.
+                                    <div class="flex items-center justify-between mt-8">
+                                        <h4 class="text-sm font-black text-slate-800 uppercase tracking-widest">Active Categories</h4>
+                                        <button type="button" onclick="window.openCategoryModal()" class="px-4 py-2 bg-bosch-blue hover:bg-blue-800 text-white text-[10px] font-black uppercase tracking-widest transition-all">
+                                            + Add New Category
+                                        </button>
                                     </div>
-                                    ${[1, 2, 3, 4].map(n => `
-                                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
-                                            <span class="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-widest">Category ${n}</span>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                ${field('Title', 'cat' + n + '_title', getCatVal(n, 'title'))}
-                                                ${imgField('Card Image', 'cat' + n + '_img', getCatVal(n, 'img'))}
-                                                ${textarea('Description', 'cat' + n + '_desc', getCatVal(n, 'desc'), 'md:col-span-2')}
-                                            </div>
-                                        </div>
-                                    `).join('')}
+                                    <div id="dynamic-categories-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- Rendered dynamically below -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -812,7 +791,7 @@ export async function renderSystemSettings(container, app) {
                                         ${field('Footer Brand Tagline', 'footer_desc', s.footer_desc, 'text', 'The premium B2B platform for genuine power tool spare parts.')}
                                         ${field('Footer Email', 'contact_email', s.contact_email, 'email')}
                                         ${textarea('Footer Address', 'contact_address', s.contact_address)}
-                                        ${field('Copyright Text', 'footer_copyright', s.footer_copyright, 'text', '© 2026 PARTSPRO B2B Division. All rights reserved.')}
+                                        ${field('Copyright Text', 'footer_copyright', s.footer_copyright, 'text', '© 2026 TORVO B2B Division. All rights reserved.')}
                                     </div>
                                 </div>
                             </div>
@@ -829,24 +808,24 @@ export async function renderSystemSettings(container, app) {
                                         <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Value</span>
                                     </div>
                                     <div class="space-y-3 font-mono text-xs overflow-x-auto">
-                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all" onclick="switchCMSTab('general')">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all" onclick="window.switchCMSTab('general')">
                                             <span class="text-bosch-blue font-bold">whatsapp_number</span>
                                             <div class="flex items-center gap-2">
-                                                <span class="text-slate-600">${s.whatsapp_number || '<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
+                                                <span class="text-slate-600">${escapeHTML(s.whatsapp_number) || '<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
                                                 <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                                             </div>
                                         </div>
-                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="switchCMSTab('general')">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="window.switchCMSTab('general')">
                                             <span class="text-bosch-blue font-bold">site_name</span>
                                             <div class="flex items-center gap-2">
-                                                <span class="text-slate-600">${s.site_name}</span>
+                                                <span class="text-slate-600">${escapeHTML(s.site_name)}</span>
                                                 <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                                             </div>
                                         </div>
-                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="switchCMSTab('general')">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="window.switchCMSTab('general')">
                                             <span class="text-bosch-blue font-bold">contact_email</span>
                                             <div class="flex items-center gap-2">
-                                                <span class="text-slate-600">${s.contact_email}</span>
+                                                <span class="text-slate-600">${escapeHTML(s.contact_email)}</span>
                                                 <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                                             </div>
                                         </div>
@@ -874,7 +853,161 @@ export async function renderSystemSettings(container, app) {
                     </div>
                 </main>
             </div>
-        `;
+            
+            <!-- Category Management Modal -->
+            <div id="uicat-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+                <div class="bg-white w-full max-w-lg rounded-none shadow-2xl p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 id="uicat-modal-title" class="text-xl font-black text-bosch-blue uppercase">Add Category</h3>
+                        <button type="button" onclick="window.closeCategoryModal()" class="text-slate-400 hover:text-rose-500 transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <form id="uicat-form" onsubmit="event.preventDefault(); window.saveCategory();" class="space-y-4">
+                        <input type="hidden" id="uicat-id" name="id" value="">
+                        <input type="hidden" id="uicat-action" name="action" value="create">
+                        
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Title</label>
+                            <input type="text" id="uicat-title" name="title" required class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
+                        </div>
+                        
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Description</label>
+                            <textarea id="uicat-desc" name="description" rows="3" class="w-full bg-slate-50 border-2 border-slate-100 px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all resize-none"></textarea>
+                        </div>
+                        
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Icon SVG Data</label>
+                            <input type="text" id="uicat-icon" name="icon_svg" placeholder="M13 10V3L4..." class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
+                        </div>
+                        
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Sort Order</label>
+                            <input type="number" id="uicat-sort" name="sort_order" value="0" class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Category Image</label>
+                            <input type="file" id="uicat-image" name="image" accept="image/*" class="block w-full text-[10px] text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:border-0 file:text-[9px] file:font-black file:uppercase file:tracking-widest file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
+                        </div>
+                        
+                        <div class="flex justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
+                            <button type="button" onclick="window.closeCategoryModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest transition-all">Cancel</button>
+                            <button type="submit" id="uicat-save-btn" class="px-5 py-2.5 bg-bosch-blue hover:bg-blue-800 text-white text-[10px] font-black uppercase tracking-widest transition-all shadow-md">Save Category</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `);
+
+        // Dynamic categories logic
+        window.renderDynamicCategories = () => {
+            const list = document.getElementById('dynamic-categories-list');
+            if (!list) return;
+            const cats = app.state.categories || [];
+            
+            if (cats.length === 0) {
+                list.innerHTML = `<div class="col-span-full p-6 text-center bg-slate-50 border-2 border-dashed border-slate-200 text-slate-400 text-xs font-black uppercase tracking-widest">No categories created yet.</div>`;
+                return;
+            }
+            
+            list.innerHTML = cats.map(c => `
+                <div class="p-4 bg-white border-2 border-slate-100 rounded-none flex items-start gap-4 group hover:border-bosch-blue transition-all">
+                    ${c.image_url ? `<img src="${escapeHTML(app.api(c.image_url))}" class="w-16 h-16 object-cover bg-slate-50 border border-slate-200">` : `<div class="w-16 h-16 bg-slate-100 flex items-center justify-center text-slate-300"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>`}
+                    <div class="flex-1 min-w-0">
+                        <h5 class="text-xs font-black text-slate-800 uppercase tracking-widest truncate">${escapeHTML(c.title)}</h5>
+                        <p class="text-[10px] text-slate-500 font-medium truncate mt-0.5">${escapeHTML(c.description || 'No description')}</p>
+                        <div class="mt-3 flex gap-2">
+                            <button type="button" onclick="window.editCategory(${c.id})" class="text-[9px] font-black uppercase tracking-widest text-bosch-blue hover:text-blue-800 transition-colors">Edit</button>
+                            <button type="button" onclick="window.deleteCategory(${c.id})" class="text-[9px] font-black uppercase tracking-widest text-rose-500 hover:text-rose-700 transition-colors">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        window.openCategoryModal = (cat = null) => {
+            const modal = document.getElementById('uicat-modal');
+            const form = document.getElementById('uicat-form');
+            form.reset();
+            
+            if (cat) {
+                document.getElementById('uicat-modal-title').textContent = 'Edit Category';
+                document.getElementById('uicat-action').value = 'update';
+                document.getElementById('uicat-id').value = cat.id;
+                document.getElementById('uicat-title').value = cat.title;
+                document.getElementById('uicat-desc').value = cat.description;
+                document.getElementById('uicat-icon').value = cat.icon_svg;
+                document.getElementById('uicat-sort').value = cat.sort_order;
+            } else {
+                document.getElementById('uicat-modal-title').textContent = 'Add Category';
+                document.getElementById('uicat-action').value = 'create';
+                document.getElementById('uicat-id').value = '';
+                document.getElementById('uicat-sort').value = (app.state.categories?.length || 0) * 10;
+            }
+            modal.classList.remove('hidden');
+        };
+
+        window.closeCategoryModal = () => {
+            document.getElementById('uicat-modal').classList.add('hidden');
+        };
+
+        window.editCategory = (id) => {
+            const cat = app.state.categories.find(c => c.id == id);
+            if (cat) window.openCategoryModal(cat);
+        };
+
+        window.deleteCategory = async (id) => {
+            if (!confirm('Are you sure you want to delete this category?')) return;
+            try {
+                const fd = new FormData();
+                fd.append('action', 'delete');
+                fd.append('id', id);
+                
+                const res = await fetch(app.api('api/ui_categories.php'), { method: 'POST', body: fd, credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    app.showToast('Category deleted successfully');
+                    await app.loadSettings(); // re-fetch categories
+                    window.renderDynamicCategories();
+                } else {
+                    app.showToast(data.error || 'Failed to delete', 'error');
+                }
+            } catch (e) {
+                app.showToast('Failed to delete category', 'error');
+            }
+        };
+
+        window.saveCategory = async () => {
+            const form = document.getElementById('uicat-form');
+            const btn = document.getElementById('uicat-save-btn');
+            const fd = new FormData(form);
+            
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+            
+            try {
+                const res = await fetch(app.api('api/ui_categories.php'), { method: 'POST', body: fd, credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    app.showToast('Category saved successfully');
+                    window.closeCategoryModal();
+                    await app.loadSettings();
+                    window.renderDynamicCategories();
+                } else {
+                    app.showToast(data.error || 'Failed to save', 'error');
+                }
+            } catch (e) {
+                app.showToast('Failed to save category', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Save Category';
+            }
+        };
+
+        // Render initially
+        window.renderDynamicCategories();
 
         window.switchCMSTab = (tabId) => {
             window.currentCMSTab = tabId;
@@ -893,9 +1026,20 @@ export async function renderSystemSettings(container, app) {
             window.switchCMSTab(window.currentCMSTab);
         }
 
+        // Sync fields with the same name across tabs (e.g. contact_email in General, Support, Footer)
+        document.getElementById('cms-form').addEventListener('input', (e) => {
+            if (e.target.name) {
+                const duplicates = document.querySelectorAll(`[name="${e.target.name}"]`);
+                duplicates.forEach(dup => {
+                    if (dup !== e.target) dup.value = e.target.value;
+                });
+            }
+        });
+
         document.getElementById('cms-form').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('cms-save-btn');
+            const savedTab = window.currentCMSTab || 'general';
             btn.textContent = 'Saving…';
             btn.disabled = true;
             try {
@@ -904,22 +1048,44 @@ export async function renderSystemSettings(container, app) {
                     body: new FormData(e.target),
                     credentials: 'include'
                 });
-                const result = await r.json();
-                if (result.success) { 
-                    app.showToast('✅ All changes saved and live!'); 
-                    await app.loadSettings(); 
-                    app.renderSystemSettings(); // Re-render system settings view to instantly update file upload previews
+
+                // Log HTTP status for debugging
+                console.log('[CMS Save] HTTP Status:', r.status);
+
+                let result;
+                try {
+                    result = await r.json();
+                } catch (parseErr) {
+                    app.showToast('Server returned invalid response. Check PHP errors.', 'error');
+                    return;
                 }
-                else app.showToast(result.error || 'Save failed', 'error');
-            } catch (err) { app.showToast('Network error', 'error'); }
-            finally {
+
+                console.log('[CMS Save] Response:', result);
+
+                if (result.success) {
+                    app.showToast('✅ All changes saved and live!');
+                    // Reload settings from DB into app state
+                    await app.loadSettings();
+                    // Re-render the Settings page so changes show immediately
+                    window.currentCMSTab = savedTab;
+                    await app.renderSystemSettings(document.getElementById('view-container'));
+                } else {
+                    // Show the real error from server
+                    const errMsg = result.error || 'Save failed — unknown error';
+                    app.showToast('❌ ' + errMsg, 'error');
+                    console.error('[CMS Save] Error from server:', errMsg);
+                }
+            } catch (err) {
+                app.showToast('❌ Network error — make sure XAMPP is running', 'error');
+                console.error('[CMS Save] Network error:', err);
+            } finally {
                 btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Save All Changes';
                 btn.disabled = false;
             }
         };
 
     } catch (e) {
-        container.innerHTML = `<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load CMS. ${e.message}</div>`;
+        setHTML(container, `<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load CMS. ${escapeHTML(e.message)}</div>`);
     }
 }
 
@@ -933,10 +1099,15 @@ export function printAdminReport() {
     };
 
     const printWindow = window.open('', '_blank');
+    const safeQuotes = escapeHTML(stats.quotes);
+    const safePartners = escapeHTML(stats.partners);
+    const safeSkus = escapeHTML(stats.skus);
+    const safeRevenue = escapeHTML(stats.revenue);
+    const safeDate = escapeHTML(new Date().toLocaleString());
     printWindow.document.write(`
         <html>
             <head>
-                <title>PARTSPRO - Executive Report</title>
+                <title>TORVO - Executive Report</title>
                 <style>
                     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
                     body { font-family: 'Outfit', sans-serif; padding: 40px; color: #1e293b; background: #f8fafc; }
@@ -953,21 +1124,21 @@ export function printAdminReport() {
             <body>
                 <div class="header">
                     <div>
-                        <h1>PARTSPRO</h1>
-                        <p>Executive Inventory & Revenue Report</p>
+                        <h1>TORVO</h1>
+                        <p>Executive Inventory &amp; Revenue Report</p>
                     </div>
-                    <p style="font-size:11px; color:#94a3b8;">Generated on: ${new Date().toLocaleString()}</p>
+                    <p style="font-size:11px; color:#94a3b8;">Generated on: ${safeDate}</p>
                 </div>
                 <div class="stats-grid">
-                    <div class="stat-item"><div class="stat-label">Active Quotations</div><div class="stat-value">${stats.quotes}</div></div>
-                    <div class="stat-item"><div class="stat-label">Total Partners</div><div class="stat-value">${stats.partners}</div></div>
-                    <div class="stat-item"><div class="stat-label">Inventory SKUs</div><div class="stat-value">${stats.skus}</div></div>
-                    <div class="stat-item"><div class="stat-label">Total Revenue</div><div class="stat-value">${stats.revenue}</div></div>
+                    <div class="stat-item"><div class="stat-label">Active Quotations</div><div class="stat-value">${safeQuotes}</div></div>
+                    <div class="stat-item"><div class="stat-label">Total Partners</div><div class="stat-value">${safePartners}</div></div>
+                    <div class="stat-item"><div class="stat-label">Inventory SKUs</div><div class="stat-value">${safeSkus}</div></div>
+                    <div class="stat-item"><div class="stat-label">Total Revenue</div><div class="stat-value">${safeRevenue}</div></div>
                 </div>
                 <div class="footer">
-                    &copy; 2026 PARTSPRO B2B Division. Confidential Internal Document.
+                    &copy; 2026 TORVO B2B Division. Confidential Internal Document.
                 </div>
-                <script>window.print(); setTimeout(() => window.close(), 1000);</script>
+                <script>window.print(); setTimeout(() => window.close(), 1000);<\/script>
             </body>
         </html>
     `);
@@ -978,7 +1149,7 @@ export function renderImportModal(app) {
     const modal = document.createElement('div');
     modal.id = 'import-modal';
     modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm';
-    modal.innerHTML = `
+    setHTML(modal, `
         <div class="bg-white rounded-none w-full max-w-xl p-8 space-y-6 shadow-2xl animate-in zoom-in duration-300">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-black text-bosch-blue">Bulk <span class="text-bosch-blue">Import</span></h2>
@@ -995,7 +1166,7 @@ export function renderImportModal(app) {
                 <button type="submit" class="w-full h-11 rounded-none bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Process Import</button>
             </form>
         </div>
-    `;
+    `);
     document.body.appendChild(modal);
     document.getElementById('import-form').onsubmit = (e) => importProducts(e, app);
 }
@@ -1043,7 +1214,7 @@ async function renderProductForm(product, app) {
     modal.id = 'product-modal';
     modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto';
 
-    modal.innerHTML = `
+    setHTML(modal, `
         <div class="bg-white rounded-none w-full max-w-3xl p-6 md:p-8 space-y-4 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-black text-bosch-blue">${isEdit ? 'Edit' : 'Add New'} <span class="text-bosch-blue">Product</span></h2>
@@ -1052,7 +1223,7 @@ async function renderProductForm(product, app) {
                 </button>
             </div>
             <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                ${isEdit ? `<input type="hidden" name="id" value="${product.id}">` : ''}
+                ${isEdit ? `<input type="hidden" name="id" value="${parseInt(product.id, 10)}">` : ''}
                 <input type="hidden" name="action" value="${isEdit ? 'update_product' : 'add_product'}">
 
                 <!-- Spare Part Name -->
@@ -1138,21 +1309,21 @@ async function renderProductForm(product, app) {
                 <!-- Cost -->
                 <div class="space-y-1.5">
                     <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Cost (₹)</label>
-                    <input type="number" step="0.01" name="cost" value="${product?.cost || ''}" placeholder="Enter Cost"
+                    <input type="number" step="0.01" name="cost" value="${escapeHTML(product?.cost || '')}" placeholder="Enter Cost"
                         class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Stock Quantity -->
                 <div class="space-y-1.5">
                     <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Stock Quantity</label>
-                    <input type="number" name="stock_quantity" value="${product?.stock_quantity || ''}" placeholder="Enter Stock"
+                    <input type="number" name="stock_quantity" value="${escapeHTML(product?.stock_quantity || '')}" placeholder="Enter Stock"
                         class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Note -->
                 <div class="col-span-2 space-y-1.5">
                     <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Note</label>
-                    <input type="text" name="note" value="${product?.note || ''}" placeholder="Technical notes or descriptions"
+                    <input type="text" name="note" value="${escapeHTML(product?.note || '')}" placeholder="Technical notes or descriptions"
                         class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
@@ -1171,7 +1342,7 @@ async function renderProductForm(product, app) {
                 </div>
             </form>
         </div>
-    `;
+    `);
     document.body.appendChild(modal);
 
     let lookupData = null;
@@ -1207,6 +1378,18 @@ async function renderProductForm(product, app) {
         })
         .catch(() => app.showToast('Could not load dropdown options', 'error'));
 
+    window._pfToggleUnknownMachine = (checked) => {
+        const brandSel = document.getElementById('pf-brand');
+        const machineSel = document.getElementById('pf-machine');
+        const modelSel = document.getElementById('pf-model');
+        const sizeSel = document.getElementById('pf-size');
+        
+        if (brandSel) { brandSel.disabled = checked; if (checked) brandSel.value = ''; }
+        if (machineSel) { machineSel.disabled = checked; if (checked) machineSel.value = ''; }
+        if (modelSel) { modelSel.disabled = checked; if (checked) modelSel.value = ''; }
+        if (sizeSel) { sizeSel.disabled = checked; if (checked) sizeSel.value = ''; }
+    };
+
     window._pfAddMachineRow = (existing = null) => {
         const container = document.getElementById('additional-machines-container');
         const row = document.createElement('div');
@@ -1214,14 +1397,14 @@ async function renderProductForm(product, app) {
 
         const genSelect = (name, items, selected) => `
             <div class="space-y-1">
-                <select name="${name}" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-[10px] font-bold text-slate-700 focus:outline-none focus:border-blue-500">
+                <select name="${escapeHTML(name)}" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-[10px] font-bold text-slate-700 focus:outline-none focus:border-blue-500">
                     <option value="">Select...</option>
-                    ${items.map(i => `<option value="${i.id}" ${i.id == selected ? 'selected' : ''}>${i.name}</option>`).join('')}
+                    ${items.map(i => `<option value="${parseInt(i.id, 10)}" ${i.id == selected ? 'selected' : ''}>${escapeHTML(i.name)}</option>`).join('')}
                 </select>
             </div>
         `;
 
-        row.innerHTML = `
+        setHTML(row, `
             <button type="button" onclick="this.parentElement.remove()" class="absolute -right-2 -top-2 w-6 h-6 bg-white border border-slate-200 text-rose-500 rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-50">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -1229,7 +1412,7 @@ async function renderProductForm(product, app) {
             ${genSelect('fit_machine_id', lookupData?.machine_names || [], existing?.machine_id)}
             ${genSelect('fit_model_id', lookupData?.models || [], existing?.machine_model_id)}
             ${genSelect('fit_size_id', lookupData?.sizes || [], existing?.machine_size_id)}
-        `;
+        `);
         container.appendChild(row);
     };
 
@@ -1363,7 +1546,7 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
     modal.id = 'dispatch-modal';
     modal.className = 'fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm';
 
-    modal.innerHTML = `
+    setHTML(modal, `
         <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-300">
             <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h2 class="text-xl font-black text-bosch-blue uppercase tracking-tight">Fulfillment Status</h2>
@@ -1376,13 +1559,13 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Update Order Status</label>
                     <div class="grid grid-cols-1 gap-3">
                         ${currentStatus === 'processing' ? `
-                            <button onclick="app.updateOrderStatus(${invoiceId}, 'dispatched')" class="flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-blue-600 transition-all group">
+                            <button onclick="app.updateOrderStatus(${parseInt(invoiceId, 10)}, 'dispatched')" class="flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-blue-600 transition-all group">
                                 <span class="font-black text-xs uppercase tracking-widest">Mark as Dispatched</span>
                                 <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                             </button>
                         ` : ''}
                         ${currentStatus === 'dispatched' ? `
-                            <button onclick="app.updateOrderStatus(${invoiceId}, 'delivered')" class="flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-emerald-600 transition-all group">
+                            <button onclick="app.updateOrderStatus(${parseInt(invoiceId, 10)}, 'delivered')" class="flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-emerald-600 transition-all group">
                                 <span class="font-black text-xs uppercase tracking-widest">Mark as Delivered</span>
                                 <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
                             </button>
@@ -1403,12 +1586,12 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
                 ` : tracking ? `
                     <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Tracking ID</p>
-                        <p class="font-black text-bosch-blue">${tracking}</p>
+                        <p class="font-black text-bosch-blue">${escapeHTML(tracking)}</p>
                     </div>
                 ` : ''}
             </div>
         </div>
-    `;
+    `);
     document.body.appendChild(modal);
 }
 

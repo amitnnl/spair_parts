@@ -1,4 +1,4 @@
-package com.partspro.app;
+package com.torvo.app;
 
 import com.getcapacitor.BridgeActivity;
 

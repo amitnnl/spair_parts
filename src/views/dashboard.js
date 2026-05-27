@@ -1,3 +1,5 @@
+import { escapeHTML, setHTML } from '../api.js';
+
 export async function renderDashboard(container, app) {
     if (!app.state.user) {
         history.pushState(null, null, app.basePath + '/login');
@@ -5,7 +7,7 @@ export async function renderDashboard(container, app) {
         return;
     }
 
-    container.innerHTML = `
+    setHTML(container, `
         <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
             ${app.getSidebar('dashboard')}
 
@@ -16,7 +18,7 @@ export async function renderDashboard(container, app) {
                             <div class="w-2 h-8 bg-bosch-blue rounded-none"></div>
                             <h2 class="text-4xl font-black text-bosch-blue tracking-tight uppercase">Partner <span class="text-bosch-blue">Portal</span></h2>
                         </div>
-                        <p class="text-slate-500 font-bold text-lg">Exclusive procurement overview for ${app.state.user.name}.</p>
+                        <p class="text-slate-500 font-bold text-lg">Exclusive procurement overview for ${escapeHTML(app.state.user.name)}.</p>
                     </div>
                 </div>
 
@@ -28,11 +30,11 @@ export async function renderDashboard(container, app) {
                         { l:'Saved Items', v:'0', s:'- -', c:'indigo' }
                     ].map(s => `
                         <div class="bg-white rounded-none p-8 shadow-2xl shadow-slate-200/50 border-2 border-slate-100 group hover:border-bosch-blue transition-all duration-300 relative overflow-hidden">
-                            <div class="absolute -right-4 -top-4 w-24 h-24 bg-${s.c}-50 rounded-none blur-xl group-hover:scale-150 transition-transform duration-500"></div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 relative z-10">${s.l}</p>
+                            <div class="absolute -right-4 -top-4 w-24 h-24 bg-${escapeHTML(s.c)}-50 rounded-none blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 relative z-10">${escapeHTML(s.l)}</p>
                             <div class="flex items-end justify-between relative z-10">
-                                <h3 class="text-4xl font-black text-bosch-blue">${s.v}</h3>
-                                <span class="text-[10px] font-black text-${s.c}-600 bg-${s.c}-50 px-3 py-1.5 rounded-none border border-${s.c}-100 shadow-sm">${s.s}</span>
+                                <h3 class="text-4xl font-black text-bosch-blue">${escapeHTML(s.v)}</h3>
+                                <span class="text-[10px] font-black text-${escapeHTML(s.c)}-600 bg-${escapeHTML(s.c)}-50 px-3 py-1.5 rounded-none border border-${escapeHTML(s.c)}-100 shadow-sm">${escapeHTML(s.s)}</span>
                             </div>
                         </div>
                     `).join('')}
@@ -54,7 +56,7 @@ export async function renderDashboard(container, app) {
                 </div>
             </main>
         </div>
-    `;
+    `);
     
     app.loadDashboardStats();
 }
@@ -145,10 +147,10 @@ export function renderBulkOrderModal(app) {
 
 export async function renderMyPartsList(container, app) {
     if (!app.state.user) { history.pushState(null, null, app.basePath + '/login'); app.handleRouting(); return; }
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full"></div></div>`;
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full"></div></div>`);
     
     try {
-        container.innerHTML = `
+        setHTML(container, `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${app.getSidebar('parts_list')}
 
@@ -179,7 +181,7 @@ export async function renderMyPartsList(container, app) {
                     </div>
                 </main>
             </div>
-        `;
+        `);
     } catch (e) {
         app.showToast('Failed to load parts list', 'error');
     }
