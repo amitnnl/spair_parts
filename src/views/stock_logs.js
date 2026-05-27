@@ -26,7 +26,7 @@ export async function renderStockLogs(container, app) {
                             <p class="text-slate-500 mt-2 font-medium">Real-time tracking of all stock-in and stock-out transactions.</p>
                         </div>
                         <button onclick="app.renderStockAdjustModal()"
-                            class="px-6 py-3.5 bg-blue-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2 hover:-translate-y-1">
+                            class="px-6 py-3.5 bg-blue-600 text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2 hover:-translate-y-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                             Adjust Stock
                         </button>
@@ -34,7 +34,7 @@ export async function renderStockLogs(container, app) {
 
                     <!-- Low Stock Alerts -->
                     ${lowStock.length > 0 ? `
-                        <div class="bg-rose-50 border border-rose-200 rounded-3xl p-6">
+                        <div class="bg-rose-50 border border-rose-200 rounded-3xl p-8">
                             <div class="flex items-center gap-3 mb-5">
                                 <div class="w-10 h-10 rounded-2xl bg-rose-100 flex items-center justify-center">
                                     <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -45,7 +45,7 @@ export async function renderStockLogs(container, app) {
                             </div>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                                 ${lowStock.map(item => `
-                                    <div class="bg-white border border-rose-100 rounded-2xl p-4 flex flex-col gap-1">
+                                    <div class="bg-white border border-rose-100 rounded-3xl p-4 flex flex-col gap-1">
                                         <p class="text-xs font-black text-slate-900">${item.part_name}</p>
                                         <p class="text-[10px] text-slate-400 font-bold uppercase">${item.brand || 'N/A'}</p>
                                         <div class="mt-2 flex items-center justify-between">
@@ -66,7 +66,7 @@ export async function renderStockLogs(container, app) {
                     `}
 
                     <!-- Transaction History Table -->
-                    <div class="bg-white rounded-[32px] border border-slate-200 overflow-hidden shadow-xl shadow-slate-200/40">
+                    <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xl shadow-slate-200/40">
                         <div class="p-8 border-b border-slate-100 flex items-center gap-4">
                             <div class="w-2 h-8 bg-blue-600 rounded-full"></div>
                             <h3 class="text-lg font-black text-slate-900">Transaction History</h3>
@@ -151,7 +151,7 @@ export function renderStockAdjustModal(preselectedPartId = null, app) {
                     <input type="number" id="stock-part-id" value="${preselectedPartId || ''}" placeholder="Enter Part ID"
                         class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-bold text-sm">
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-8">
                     <div class="space-y-2">
                         <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Transaction Type</label>
                         <select id="stock-type" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 outline-none font-bold text-sm">
@@ -170,7 +170,7 @@ export function renderStockAdjustModal(preselectedPartId = null, app) {
                     <input type="text" id="stock-note" placeholder="e.g. Monthly restock from supplier, or Used for repair order"
                         class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-bold text-sm">
                 </div>
-                <button onclick="app.submitStockAdjustment()" class="w-full py-4 bg-blue-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20">
+                <button onclick="app.submitStockAdjustment()" class="w-full py-4 bg-blue-600 text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20">
                     Record Transaction
                 </button>
             </div>

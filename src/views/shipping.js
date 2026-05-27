@@ -30,7 +30,7 @@ export default {
                             <div class="space-y-8">
                                 <div>
                                     <h2 class="text-2xl font-black text-slate-900 mb-4 flex items-center gap-3 uppercase tracking-widest">
-                                        <div class="w-10 h-10 rounded-none bg-industrial-gray text-white flex items-center justify-center">
+                                        <div class="w-10 h-10 rounded-2xl bg-industrial-gray text-white flex items-center justify-center">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                                         </div>
                                         Fast Delivery
@@ -66,7 +66,7 @@ export default {
                             <div class="space-y-8">
                                 <div>
                                     <h2 class="text-2xl font-black text-slate-900 mb-4 flex items-center gap-3 uppercase tracking-widest">
-                                        <div class="w-10 h-10 rounded-none bg-industrial-gray text-white flex items-center justify-center">
+                                        <div class="w-10 h-10 rounded-2xl bg-industrial-gray text-white flex items-center justify-center">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                         </div>
                                         Shipping Costs
@@ -91,7 +91,7 @@ export default {
                             <div class="relative z-10">
                                 <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-widest">Track Your Order</h3>
                                 <p class="text-slate-400 font-medium mb-8">Once your order is shipped, we will send you a tracking link via SMS and Email.</p>
-                                <a href="/support" data-link class="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-none font-black text-xs uppercase tracking-widest hover:bg-bosch-blue hover:text-white transition-all duration-300">
+                                <a href="/support" data-link class="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-3xl font-black text-xs uppercase tracking-widest hover:bg-bosch-blue hover:text-white transition-all duration-300">
                                     Need Help? Contact Support
                                 </a>
                             </div>

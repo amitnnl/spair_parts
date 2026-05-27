@@ -34,7 +34,7 @@ export async function renderStaffPanel(container, app) {
                     </div>
 
                     <!-- Stats -->
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
                         ${[
                             { label: 'Total SKUs', value: products?.length || 0, color: 'blue', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
                             { label: 'Total Units', value: totalStock, color: 'emerald', icon: 'M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4' },
@@ -55,7 +55,7 @@ export async function renderStaffPanel(container, app) {
 
                     <!-- Low Stock Alert -->
                     ${low_stock && low_stock.length > 0 ? `
-                        <div class="bg-rose-50 border border-rose-200 rounded-3xl p-6">
+                        <div class="bg-rose-50 border border-rose-200 rounded-3xl p-8">
                             <div class="flex items-center justify-between mb-5">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-2xl bg-rose-100 flex items-center justify-center">
@@ -63,13 +63,13 @@ export async function renderStaffPanel(container, app) {
                                     </div>
                                     <p class="text-xs font-black text-rose-700 uppercase tracking-widest">⚠ ${low_stock.length} Item${low_stock.length > 1 ? 's' : ''} Need Restocking</p>
                                 </div>
-                                <button onclick="app.renderStockAdjustModal()" class="px-4 py-2 bg-rose-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-rose-700 transition-all">
+                                <button onclick="app.renderStockAdjustModal()" class="px-4 py-2 bg-rose-600 text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-rose-700 transition-all">
                                     Adjust Stock
                                 </button>
                             </div>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                                 ${low_stock.map(item => `
-                                    <div class="bg-white border border-rose-100 rounded-2xl p-4">
+                                    <div class="bg-white border border-rose-100 rounded-3xl p-4">
                                         <p class="text-xs font-black text-slate-900 truncate">${item.part_name}</p>
                                         <p class="text-[10px] text-slate-400 font-bold uppercase mt-1">${item.brand || 'N/A'}</p>
                                         <div class="mt-3 flex items-center justify-between">
@@ -90,7 +90,7 @@ export async function renderStaffPanel(container, app) {
                     `}
 
                     <!-- Quick Actions -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <button onclick="app.renderStockAdjustModal()"
                             class="bg-white border-2 border-dashed border-blue-200 rounded-3xl p-8 text-center hover:border-blue-600 hover:bg-blue-50 transition-all group space-y-3">
                             <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto group-hover:bg-blue-600 group-hover:text-white transition-all">

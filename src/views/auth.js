@@ -7,7 +7,7 @@ export function renderLogin(container, app) {
             <div class="lightning-glow w-[200px] h-[200px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5" style="animation-delay: -4s;"></div>
 
             <div class="w-full max-w-sm relative z-10 animate-fade-in">
-                <div class="bg-white rounded-none shadow-premium border-t-8 border-bosch-blue p-8 space-y-6">
+                <div class="bg-white rounded-3xl shadow-premium border-t-8 border-bosch-blue p-8 space-y-6">
                     <div class="text-center">
                         <h2 class="text-2xl font-black text-bosch-blue tracking-tight uppercase">Partner Login</h2>
                         <p class="text-slate-500 mt-1 font-bold text-sm">Secure access to the B2B portal.</p>
@@ -19,7 +19,7 @@ export function renderLogin(container, app) {
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Corporate Email</label>
                             <div class="relative">
                                 <input type="email" name="email" required 
-                                    class="h-11 pl-11 pr-4 rounded-none border-2 border-slate-100 bg-slate-50 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" 
+                                    class="h-11 pl-11 pr-4 rounded-full border-2 border-slate-100 bg-slate-50 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" 
                                     placeholder="name@company.com">
                                 <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/></svg>
@@ -31,7 +31,7 @@ export function renderLogin(container, app) {
                             <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Access Password</label>
                             <div class="relative">
                                 <input type="password" name="password" required 
-                                    class="h-11 pl-11 pr-4 rounded-none border-2 border-slate-100 bg-slate-50 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" 
+                                    class="h-11 pl-11 pr-4 rounded-full border-2 border-slate-100 bg-slate-50 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" 
                                     placeholder="••••••••">
                                 <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
@@ -47,7 +47,7 @@ export function renderLogin(container, app) {
                             <a href="#" class="text-[9px] font-black text-bosch-blue uppercase tracking-widest hover:underline">Reset Password</a>
                         </div>
 
-                        <button type="submit" class="w-full h-11 rounded-none bg-bosch-blue text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-slate-900/10 hover:bg-industrial-gray transition-all flex items-center justify-center gap-2 group">
+                        <button type="submit" class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-slate-900/10 hover:bg-industrial-gray transition-all flex items-center justify-center gap-2 group">
                             Synchronize & Enter
                             <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                         </button>
@@ -107,7 +107,7 @@ export function renderRegister(container, app) {
             <div class="lightning-glow w-[300px] h-[300px] -bottom-20 -right-20 opacity-10" style="animation-delay: -3s;"></div>
             
             <div class="w-full max-w-xl relative z-10 animate-fade-in">
-                <div class="bg-white rounded-none shadow-premium border-t-8 border-bosch-blue p-8 lg:p-10 space-y-6 relative overflow-hidden">
+                <div class="bg-white rounded-3xl shadow-premium border-t-8 border-bosch-blue p-8 lg:p-10 space-y-6 relative overflow-hidden">
                     <!-- Subtle Interior Glow -->
                     <div class="absolute -top-24 -right-24 w-48 h-48 bg-bosch-blue/5 rounded-full blur-3xl"></div>
                     <div class="flex flex-col md:flex-row gap-8 items-center">
@@ -139,7 +139,7 @@ export function renderRegister(container, app) {
                                 <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-2">Create Password</label>
                                 <input type="password" name="password" required class="rounded-none border-2 border-slate-100 bg-slate-50 h-11 px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" placeholder="••••••••">
                             </div>
-                            <button type="submit" class="w-full h-11 rounded-none bg-industrial-gray text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:bg-bosch-blue transition-all">Submit Application</button>
+                            <button type="submit" class="w-full h-11 rounded-full bg-industrial-gray text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:bg-bosch-blue transition-all">Submit Application</button>
                             <p class="text-center text-[9px] font-bold text-slate-400">By applying, you agree to our B2B Terms of Service.</p>
                         </form>
                     </div>

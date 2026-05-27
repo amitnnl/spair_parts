@@ -179,7 +179,7 @@ export function renderHome(container, app) {
                 <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-wrap items-center gap-4">
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-zinc-800">Popular Searches:</span>
                     <div class="flex flex-wrap gap-2">
-                        ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => '<button onclick="clickPopularSearch(\'' + term + '\')" class="px-4 py-1.5 bg-zinc-50 border border-zinc-200 hover:border-[#ed1c24] hover:text-[#ed1c24] text-[10px] font-bold uppercase tracking-wider rounded-none transition-all cursor-pointer">' + term + '</button>').join('') + `
+                        ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => '<button onclick="clickPopularSearch(\'' + term + '\')" class="px-4 py-1.5 bg-zinc-50 border border-zinc-200 hover:border-[#ed1c24] hover:text-[#ed1c24] text-[10px] font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer">' + term + '</button>').join('') + `
                     </div>
                 </div>
             </section>
@@ -200,20 +200,20 @@ export function renderHome(container, app) {
                     </div>
 
                     <!-- Dynamic Category Grid -->
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         ` + (app.state.categories || []).map(c => `
-                            <div onclick="clickCategorySearch('${escapeHTML(c.title).replace(/'/g, "\\'")}')" class="bg-white border border-zinc-200 rounded-none p-4 flex flex-col justify-between h-[250px] group cursor-pointer hover-red-glow transition-all duration-300">
-                                <div class="h-32 bg-slate-50 flex items-center justify-center overflow-hidden p-4 relative">
+                            <div onclick="clickCategorySearch('${escapeHTML(c.title).replace(/'/g, "\\'")}')" class="bg-white rounded-3xl overflow-hidden group cursor-pointer transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-4 animate-in zoom-in duration-700">
+                                <div class="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100">
                                     ${c.image_url 
-                                        ? `<img src="${escapeHTML(app.api(c.image_url))}" alt="${escapeHTML(c.title)}" class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700">` 
-                                        : `<div class="w-16 h-16 rounded-none bg-rose-50 flex items-center justify-center text-[#ed1c24] group-hover:bg-[#ed1c24] group-hover:text-white transition-all duration-300"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="${escapeHTML(c.icon_svg)}"/></svg></div>`}
+                                        ? `<img src="${escapeHTML(app.api(c.image_url))}" alt="${escapeHTML(c.title)}" class="w-full h-full object-contain p-2 drop-shadow-sm group-hover:scale-110 transition-transform duration-500">` 
+                                        : `<div class="w-full h-full flex items-center justify-center text-slate-300 group-hover:text-[#ed1c24] transition-colors duration-300"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="${escapeHTML(c.icon_svg)}"/></svg></div>`}
                                 </div>
-                                <div class="flex items-end justify-between w-full pt-3">
-                                    <div class="space-y-0.5 min-w-0 flex-1">
-                                        <h4 class="text-xs font-black text-[#111111] uppercase tracking-widest truncate group-hover:text-[#ed1c24] transition-colors">${escapeHTML(c.title)}</h4>
-                                        <p class="text-[9px] text-zinc-400 font-bold leading-normal truncate">${escapeHTML(c.description || 'Explore Parts')}</p>
-                                    </div>
-                                    <span class="text-[#ed1c24] font-black text-sm leading-none transition-transform group-hover:translate-x-1 pl-2">&rarr;</span>
+                                <div class="flex-1 min-w-0 pr-2">
+                                    <h4 class="font-bold text-sm text-slate-900 tracking-tight truncate group-hover:text-[#ed1c24] transition-colors" title="${escapeHTML(c.title)}">${escapeHTML(c.title)}</h4>
+                                    <p class="text-[10px] text-slate-400 font-medium truncate mt-0.5">${escapeHTML(c.description || 'Explore Parts')}</p>
+                                </div>
+                                <div class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-400 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                                 </div>
                             </div>
                         `).join('') + `

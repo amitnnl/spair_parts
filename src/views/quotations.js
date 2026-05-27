@@ -8,7 +8,7 @@ export async function renderQuotations(container, appInstance) {
     const isAdmin = userRole === 'admin';
     
     console.log('Quotation View Access - Role:', userRole, 'IsAdmin:', isAdmin);
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>`;
+    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-2xl"></div></div>`;
     
     try {
         const apiUrl = isAdmin ? 'api/admin_quotations.php' : 'api/quotations.php';
@@ -18,7 +18,7 @@ export async function renderQuotations(container, appInstance) {
         container.innerHTML = `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${appInstance.getSidebar('quotations')}
-                <main class="flex-1 p-8 lg:p-12">
+                <main class="flex-1 m-4 lg:m-6 p-6 lg:p-10 bg-white rounded-[2.5rem] shadow-sm border border-slate-200">
                     <div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                             <div>
@@ -27,7 +27,7 @@ export async function renderQuotations(container, appInstance) {
                                 <p class="text-slate-500 font-medium mt-2 text-lg">${isAdmin ? 'Manage and price all incoming partner requests.' : 'Track your request for quotes and approval statuses.'}</p>
                             </div>
                             ${!isAdmin ? `
-                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="btn btn-secondary rounded-none hover:border-bosch-blue hover:text-bosch-blue flex items-center gap-2">
+                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="btn btn-secondary rounded-full hover:border-bosch-blue hover:text-bosch-blue flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                                 New Request
                             </button>
@@ -63,11 +63,11 @@ export async function renderQuotations(container, appInstance) {
                                             </td>
                                             <td class="p-6 text-right">
                                                 <div class="flex justify-end gap-3">
-                                                    <button onclick="${isAdmin ? `app.renderProcessQuotation(${q.id})` : `app.viewQuotationDetails(${q.id})`}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">
+                                                    <button onclick="${isAdmin ? `app.renderProcessQuotation(${q.id})` : `app.viewQuotationDetails(${q.id})`}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">
                                                         ${isAdmin && q.status === 'pending' ? 'Process' : 'View'}
                                                     </button>
-                                                    ${!isAdmin && q.status === 'pending' ? `<button onclick="app.editQuotation(${q.id})" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>` : ''}
-                                                    ${!isAdmin && q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-none font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Approve</button>` : ''}
+                                                    ${!isAdmin && q.status === 'pending' ? `<button onclick="app.editQuotation(${q.id})" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>` : ''}
+                                                    ${!isAdmin && q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Approve</button>` : ''}
                                                 </div>
                                             </td>
                                         </tr>
@@ -98,13 +98,13 @@ export async function viewQuotationDetails(id, appInstance) {
         const data = await res.json();
         
         modal.innerHTML = `
-            <div class="bg-white w-full max-w-4xl rounded-none border-2 border-slate-100 shadow-premium overflow-hidden relative animate-in zoom-in duration-300 my-8">
+            <div class="bg-white w-full max-w-4xl rounded-3xl border-2 border-slate-100 shadow-premium overflow-hidden relative animate-in zoom-in duration-300 my-8">
                 <div class="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                     <div>
                         <h2 class="text-2xl font-black text-bosch-blue uppercase">Quotation Details</h2>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">#Q-${String(id).padStart(4, '0')} • Requested on ${new Date(data.created_at).toLocaleDateString()}</p>
                     </div>
-                    <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-none border border-slate-200 bg-white text-slate-400 hover:bg-slate-100 hover:text-bosch-blue flex items-center justify-center transition-all">
+                    <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-400 hover:bg-slate-100 hover:text-bosch-blue flex items-center justify-center transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
@@ -145,8 +145,8 @@ export async function viewQuotationDetails(id, appInstance) {
                     </div>
                     
                     <div class="flex justify-end gap-4">
-                        <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-none border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 hover:text-bosch-blue transition-all">Close Details</button>
-                        ${data.status === 'priced' ? `<button onclick="app.approveQuotation(${id})" class="px-10 py-4 rounded-none bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray transition-all">Approve & Order</button>` : ''}
+                        <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-full border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 hover:text-bosch-blue transition-all">Close Details</button>
+                        ${data.status === 'priced' ? `<button onclick="app.approveQuotation(${id})" class="px-10 py-4 rounded-full bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray transition-all">Approve & Order</button>` : ''}
                     </div>
                 </div>
             </div>
