@@ -1,4 +1,5 @@
 import { escapeHTML, setHTML } from '../api.js';
+import { productCard } from './catalog.js';
 
 export function renderHome(container, app) {
     const s = app.state.settings || {};
@@ -451,34 +452,7 @@ export function renderHome(container, app) {
                 return;
             }
             
-            const html = parts.map(part => 
-                '<div class="bg-white border border-slate-200 rounded-3xl p-5 hover:shadow-xl hover:shadow-slate-900/5 transition-all group flex flex-col relative overflow-hidden">' +
-                    '<div class="absolute top-4 right-4 z-10">' +
-                        '<span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border border-slate-200">' +
-                            escapeHTML(part.brand || part.brand_name || 'Generic') +
-                        '</span>' +
-                    '</div>' +
-                    '<div class="aspect-square w-full rounded-2xl bg-zinc-50 flex items-center justify-center mb-4 p-4 shrink-0 group-hover:bg-zinc-100 transition-colors">' +
-                        (part.image_url ? 
-                            '<img src="' + escapeHTML(app.api(part.image_url)) + '" class="max-w-full max-h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" loading="lazy">' : 
-                            '<svg class="w-16 h-16 text-slate-300 group-hover:text-[#ed1c24] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>'
-                        ) +
-                    '</div>' +
-                    '<div class="flex-1 flex flex-col justify-between">' +
-                        '<div class="mb-4">' +
-                            '<h3 class="font-bold text-sm text-slate-900 group-hover:text-[#ed1c24] transition-colors line-clamp-2 leading-tight" title="' + escapeHTML(part.part_name) + '">' +
-                                escapeHTML(part.part_name) +
-                            '</h3>' +
-                            '<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-2 line-clamp-1">' +
-                                escapeHTML(part.machine_model || part.model_name || 'Universal') +
-                            '</p>' +
-                        '</div>' +
-                        '<button onclick="app.addToCart(' + part.id + ')" class="w-full py-2.5 bg-zinc-50 hover:bg-[#ed1c24] border border-zinc-200 hover:border-[#ed1c24] text-zinc-600 hover:text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-sm">' +
-                            'Add To Quote' +
-                        '</button>' +
-                    '</div>' +
-                '</div>'
-            ).join('');
+            const html = parts.map(part => productCard(part)).join('');
             
             setHTML(partsContainer, html);
         })
