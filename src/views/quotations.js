@@ -67,7 +67,7 @@ export async function renderQuotations(container, appInstance) {
                                                         ${isAdmin && q.status === 'pending' ? 'Process' : 'View'}
                                                     </button>
                                                     ${!isAdmin && q.status === 'pending' ? '<button onclick="app.editQuotation(' + q.id + ')" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-full font-black text-xs uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>' : ''}
-                                                    (!isAdmin && q.status === 'priced' ? '<button onclick="app.approveQuotation(' + q.id + ')" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Approve</button>' : '')
+                                                    ${(!isAdmin && q.status === 'priced' ? '<button onclick="app.approveQuotation(' + q.id + ')" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Approve</button>' : '')}
                                                 </div>
                                             </td>
                                         </tr>
