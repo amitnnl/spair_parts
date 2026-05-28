@@ -221,6 +221,32 @@ export function renderHome(container, app) {
                 </div>
             </section>
 
+            </section>
+
+            <!-- ═══ GENUINE PARTS CATALOG ═══ -->
+            <section class="py-16 bg-white border-y border-zinc-200/80">
+                <div class="max-w-7xl mx-auto px-6 lg:px-10">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-10">
+                        <div>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight font-display">Genuine Parts Catalog</h2>
+                        </div>
+                        <a href="/catalog" data-link class="text-sm font-bold text-[#ed1c24] hover:text-[#c1121f] transition-colors flex items-center gap-1.5 uppercase tracking-widest underline decoration-2 underline-offset-4 decoration-rose-200 hover:decoration-[#ed1c24]">
+                            View All Parts 
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+
+                    <!-- Products Grid Placeholder -->
+                    <div id="home-genuine-parts-container" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-6">
+                        <div class="col-span-full py-20 text-center flex flex-col items-center justify-center">
+                            <div class="animate-spin w-10 h-10 border-4 border-slate-200 border-t-[#ed1c24] rounded-full mb-4"></div>
+                            <p class="text-xs font-black text-slate-500 uppercase tracking-widest">Loading Catalog...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- ═══ Trusted By PROFESSIONALS (100% Mockup Exact brand logos with actual visual styling) ═══ -->
             <section class="py-12 bg-white border-y border-zinc-200/80">
                 <div class="max-w-7xl mx-auto px-6 lg:px-10">
@@ -410,4 +436,56 @@ export function renderHome(container, app) {
         });
         observer.observe(document.body, { childList: true, subtree: true });
     }, 100);
+
+    // Fetch and render genuine parts catalog
+    fetch(app.api('api/products.php'))
+        .then(res => res.json())
+        .then(data => {
+            const partsContainer = document.getElementById('home-genuine-parts-container');
+            if (!partsContainer) return;
+            
+            const parts = (data.products || []).slice(0, 10);
+            
+            if (parts.length === 0) {
+                setHTML(partsContainer, '<div class="col-span-full py-10 text-center text-slate-500 font-bold">No parts available.</div>');
+                return;
+            }
+            
+            const html = parts.map(part => 
+                '<div class="bg-white border border-slate-200 rounded-3xl p-5 hover:shadow-xl hover:shadow-slate-900/5 transition-all group flex flex-col relative overflow-hidden">' +
+                    '<div class="absolute top-4 right-4 z-10">' +
+                        '<span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border border-slate-200">' +
+                            escapeHTML(part.brand || part.brand_name || 'Generic') +
+                        '</span>' +
+                    '</div>' +
+                    '<div class="aspect-square w-full rounded-2xl bg-zinc-50 flex items-center justify-center mb-4 p-4 shrink-0 group-hover:bg-zinc-100 transition-colors">' +
+                        (part.image_url ? 
+                            '<img src="' + escapeHTML(app.api(part.image_url)) + '" class="max-w-full max-h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500" loading="lazy">' : 
+                            '<svg class="w-16 h-16 text-slate-300 group-hover:text-[#ed1c24] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>'
+                        ) +
+                    '</div>' +
+                    '<div class="flex-1 flex flex-col justify-between">' +
+                        '<div class="mb-4">' +
+                            '<h3 class="font-bold text-sm text-slate-900 group-hover:text-[#ed1c24] transition-colors line-clamp-2 leading-tight" title="' + escapeHTML(part.part_name) + '">' +
+                                escapeHTML(part.part_name) +
+                            '</h3>' +
+                            '<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mt-2 line-clamp-1">' +
+                                escapeHTML(part.machine_model || part.model_name || 'Universal') +
+                            '</p>' +
+                        '</div>' +
+                        '<button onclick="app.addToCart(' + part.id + ')" class="w-full py-2.5 bg-zinc-50 hover:bg-[#ed1c24] border border-zinc-200 hover:border-[#ed1c24] text-zinc-600 hover:text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-sm">' +
+                            'Add To Quote' +
+                        '</button>' +
+                    '</div>' +
+                '</div>'
+            ).join('');
+            
+            setHTML(partsContainer, html);
+        })
+        .catch(err => {
+            const partsContainer = document.getElementById('home-genuine-parts-container');
+            if (partsContainer) {
+                setHTML(partsContainer, '<div class="col-span-full py-10 text-center text-rose-500 font-bold">Failed to load parts catalog.</div>');
+            }
+        });
 }
