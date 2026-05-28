@@ -1,4 +1,4 @@
-import { escapeHTML } from '../api.js';
+import { escapeHTML, setHTML } from '../api.js';
 
 export async function renderQuotations(container, appInstance) {
     if (!appInstance.state.user) { history.pushState(null, null, appInstance.basePath + '/login'); appInstance.handleRouting(); return; }
@@ -8,14 +8,14 @@ export async function renderQuotations(container, appInstance) {
     const isAdmin = userRole === 'admin';
     
     console.log('Quotation View Access - Role:', userRole, 'IsAdmin:', isAdmin);
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-2xl"></div></div>`;
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-2xl"></div></div>`);
     
     try {
         const apiUrl = isAdmin ? 'api/admin_quotations.php' : 'api/quotations.php';
         const res = await fetch(appInstance.api(apiUrl));
         const quotations = await res.json();
         
-        container.innerHTML = `
+        setHTML(container, `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${appInstance.getSidebar('quotations')}
                 <main class="flex-1 m-4 lg:m-6 p-6 lg:p-10 bg-white rounded-[2.5rem] shadow-sm border border-slate-200">
@@ -82,9 +82,9 @@ export async function renderQuotations(container, appInstance) {
                     </div>
                 </main>
             </div>
-        `;
+        `);
     } catch (e) {
-        container.innerHTML = `<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load quotations.</div>`;
+        setHTML(container, `<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load quotations.</div>`);
     }
 }
 
@@ -97,7 +97,7 @@ export async function viewQuotationDetails(id, appInstance) {
         const res = await fetch(appInstance.api(`api/quotations.php?id=${id}`));
         const data = await res.json();
         
-        modal.innerHTML = `
+        setHTML(modal, `
             <div class="bg-white w-full max-w-4xl rounded-3xl border-2 border-slate-100 shadow-premium overflow-hidden relative animate-in zoom-in duration-300 my-8">
                 <div class="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                     <div>
@@ -150,7 +150,7 @@ export async function viewQuotationDetails(id, appInstance) {
                     </div>
                 </div>
             </div>
-        `;
+        `);
         document.body.appendChild(modal);
     } catch (e) {
         appInstance.showToast('Failed to load quotation details', 'error');

@@ -1,3 +1,5 @@
+import { escapeHTML, setHTML } from '../api.js';
+
 export async function renderStaffPanel(container, app) {
     const role = app.state.user?.role?.toLowerCase();
     if (role !== 'staff' && role !== 'admin') {
@@ -7,7 +9,7 @@ export async function renderStaffPanel(container, app) {
         return;
     }
 
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`);
 
     try {
         const [productsRes, logsRes] = await Promise.all([
@@ -21,7 +23,7 @@ export async function renderStaffPanel(container, app) {
         const outOfStock = (products || []).filter(p => (parseInt(p.stock_quantity) || 0) <= 0).length;
         const recentLogs = (logs || []).slice(0, 8);
 
-        container.innerHTML = `
+        setHTML(container, `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${getStaffSidebar(app)}
                 <main class="flex-1 p-8 lg:p-12 space-y-10">
@@ -149,9 +151,9 @@ export async function renderStaffPanel(container, app) {
 
                 </main>
             </div>
-        `;
+        `);
     } catch (e) {
-        container.innerHTML = `<div class="p-20 text-center text-rose-500 font-bold">Failed to load staff panel.</div>`;
+        setHTML(container, `<div class="p-20 text-center text-rose-500 font-bold">Failed to load staff panel.</div>`);
     }
 }
 
