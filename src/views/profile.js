@@ -32,7 +32,7 @@ export async function renderProfile(container, app) {
                                 <form id="profile-form" class="space-y-4">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div class="space-y-1.5">
-                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
+                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name <span class="text-rose-500">*</span></label>
                                             <input type="text" name="name" value="${escapeHTML(user.name || '')}" required
                                                 class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-full px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         </div>
@@ -42,8 +42,18 @@ export async function renderProfile(container, app) {
                                                 class="w-full h-11 bg-slate-100 border-2 border-slate-100 rounded-full px-4 text-xs font-black text-slate-400 cursor-not-allowed">
                                         </div>
                                         <div class="space-y-1.5">
-                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Mobile Number</label>
-                                            <input type="text" name="phone" value="${escapeHTML(user.phone || '')}" placeholder="+91 00000 00000"
+                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Company / Business Name <span class="text-rose-500">*</span></label>
+                                            <input type="text" name="company_name" value="${escapeHTML(user.company_name || '')}" required
+                                                class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-full px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                                        </div>
+                                        <div class="space-y-1.5">
+                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">GST / Tax ID Number <span class="text-rose-500">*</span></label>
+                                            <input type="text" name="gst_number" value="${escapeHTML(user.gst_number || '')}" required
+                                                class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-full px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                                        </div>
+                                        <div class="space-y-1.5">
+                                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Mobile Number <span class="text-rose-500">*</span></label>
+                                            <input type="text" name="phone" value="${escapeHTML(user.phone || '')}" placeholder="+91 00000 00000" required
                                                 class="w-full h-11 bg-slate-50 border-2 border-slate-100 rounded-full px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         </div>
                                         <div class="space-y-1.5">
@@ -54,8 +64,8 @@ export async function renderProfile(container, app) {
                                     </div>
 
                                     <div class="space-y-1.5">
-                                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Business / Delivery Address</label>
-                                        <textarea name="address" 
+                                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Business / Delivery Address <span class="text-rose-500">*</span></label>
+                                        <textarea name="address" required
                                             class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl p-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all h-24 resize-none">${escapeHTML(user.address || '')}</textarea>
                                     </div>
 
@@ -105,8 +115,10 @@ export async function renderProfile(container, app) {
                     // Update local storage name if changed
                     const localUser = JSON.parse(localStorage.getItem('user'));
                     localUser.name = data.name;
+                    localUser.profile_complete = true;
                     localStorage.setItem('user', JSON.stringify(localUser));
                     app.state.user.name = data.name;
+                    app.state.user.profile_complete = true;
                     // Re-render to show new name in sidebar etc
                     app.renderProfile(container);
                 } else {

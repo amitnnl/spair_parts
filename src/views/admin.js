@@ -1617,3 +1617,80 @@ export async function updateOrderStatus(invoiceId, status, app) {
         }
     } catch (e) { app.showToast('Failed to update status', 'error'); }
 }
+
+
+export async function renderAdminInvoicesFull(container, app) {
+    if (!app.state.user || app.state.user.role !== 'admin') {
+        app.showToast('Administrative privileges required', 'error');
+        history.pushState(null, null, app.basePath + '/login');
+        app.handleRouting();
+        return;
+    }
+
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-full"></div></div>`);
+
+    try {
+        const res = await fetch(app.api('api/invoices.php'));
+        const invoices = await res.json();
+
+        setHTML(container, `
+            <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
+                ${app.getSidebar('admin-invoices')}
+
+                <main class="flex-1 m-4 lg:m-6 p-6 lg:p-10 bg-white rounded-[2.5rem] shadow-sm border border-slate-200 space-y-12">
+                    <div class="max-w-7xl mx-auto space-y-12 animate-fade-in">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                            <div>
+                                <h2 class="text-4xl font-black text-bosch-blue tracking-tight">Invoice <span class="text-bosch-blue">Archive</span></h2>
+                                <p class="text-slate-500 mt-2 font-bold text-lg">Comprehensive history of all generated invoices and orders.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40 animate-in fade-in duration-500">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50/80 border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-6 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Invoice / Date</th>
+                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Partner</th>
+                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Amount</th>
+                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                        <th class="p-6 pr-8 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 bg-white">
+                                    ${invoices.length ? invoices.map(inv => `
+                                        <tr class="hover:bg-slate-50/80 transition-all group">
+                                            <td class="p-6 pl-8">
+                                                <div class="font-black text-bosch-blue uppercase tracking-widest">${escapeHTML(inv.invoice_number)}</div>
+                                                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(inv.created_at).toLocaleDateString()}</div>
+                                            </td>
+                                            <td class="p-6">
+                                                <div class="font-bold text-slate-700">${escapeHTML(inv.user_name)}</div>
+                                            </td>
+                                            <td class="p-6 font-black text-bosch-blue">
+                                                ₹${parseFloat(inv.total_amount).toLocaleString()}
+                                            </td>
+                                            <td class="p-6">
+                                                <span class="px-3 py-1 rounded-none border border-slate-200 text-[10px] font-black uppercase tracking-wider ${inv.status === 'processing' ? 'bg-amber-50 text-amber-600' : inv.status === 'dispatched' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}">
+                                                    ${escapeHTML(inv.status)}
+                                                </span>
+                                            </td>
+                                            <td class="p-6 pr-8 text-right">
+                                                <div class="flex justify-end gap-3 opacity-100 transition-opacity">
+                                                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">Manage</button>
+                                                    <button onclick="app.renderInvoiceDocument(${inv.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">View PDF</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `).join('') : `<tr><td colspan="5" class="p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No invoices found.</td></tr>`}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        `);
+    } catch (e) {
+        setHTML(container, '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load invoices</div>');
+    }
+}

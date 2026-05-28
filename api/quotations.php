@@ -21,6 +21,16 @@ if ($method === 'POST') {
         exit;
     }
 
+    // Check if user has completed their profile
+    $stmtUser = $db->prepare("SELECT email, phone, address, company_name, gst_number FROM users WHERE id = ?");
+    $stmtUser->execute([$user_id]);
+    $userProfile = $stmtUser->fetch();
+    
+    if (empty($userProfile['phone']) || empty($userProfile['address']) || empty($userProfile['email']) || empty($userProfile['company_name']) || empty($userProfile['gst_number'])) {
+        echo json_encode(['error' => 'Please complete your profile (Company Name, GST/Tax ID, Contact No, Address) before placing an order.']);
+        exit;
+    }
+
     try {
         $db->beginTransaction();
 

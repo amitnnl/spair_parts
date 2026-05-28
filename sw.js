@@ -1,11 +1,11 @@
 const CACHE_NAME = 'torvo-v1';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/src/index.css',
-  '/src/main.js',
-  '/manifest.webmanifest',
-  '/assets/app-icon.png'
+  './',
+  './index.html',
+  './src/index.css',
+  './src/main.js',
+  './manifest.webmanifest',
+  './assets/app-icon.png'
 ];
 
 self.addEventListener('install', (event) => {

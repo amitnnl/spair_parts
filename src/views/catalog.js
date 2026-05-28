@@ -140,6 +140,16 @@ export function productCard(p) {
     const escapedModel = escapeHTML(p.machine_model || 'Universal');
     const escapedId = escapeHTML(p.id);
     
+    const isProfileComplete = !state.user || state.user.profile_complete;
+
+    const actionButton = isProfileComplete 
+        ? `<button onclick="app.addToCart(${escapedId})" class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-400 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Add to RFQ Cart">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+           </button>`
+        : `<a href="/profile" data-link class="w-8 h-8 rounded-full bg-amber-50 group-hover:bg-amber-500 text-amber-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-amber-500/30" title="Complete Profile to Order">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+           </a>`;
+
     return `
         <div class="bg-white rounded-3xl overflow-hidden group transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-3 animate-in zoom-in duration-700 h-full">
             <div class="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100">
@@ -155,9 +165,7 @@ export function productCard(p) {
                 </div>
                 <p class="text-[10px] text-slate-500 font-medium truncate">Fits: ${escapedModel}</p>
             </div>
-            <button onclick="app.addToCart(${escapedId})" class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-400 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Add to RFQ Cart">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-            </button>
+            ${actionButton}
         </div>
     `;
 }

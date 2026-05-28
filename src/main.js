@@ -24,6 +24,7 @@ import {
     applyDiscountToItem as discountItem,
     applyDiscountToAll as discountAll,
     generateInvoice as createInvoice,
+    renderAdminInvoicesFull as viewAdminInvoicesFull,
     renderSystemSettings as viewSystemSettings,
     printAdminReport as printReport,
     renderImportModal as viewImportModal,
@@ -266,6 +267,12 @@ const app = {
                 this.handleRouting();
             } else {
                 this.showToast(result.error || 'Submission failed', 'error');
+                if (result.error && result.error.includes('complete your profile')) {
+                    setTimeout(() => {
+                        history.pushState(null, null, this.basePath + '/profile');
+                        this.handleRouting();
+                    }, 1500);
+                }
             }
         } catch (e) {
             this.showToast('Network error, please try again', 'error');
@@ -476,10 +483,11 @@ const app = {
         const cartBtn = document.getElementById('header-cart-btn');
         const mobileCartBtn = document.getElementById('mobile-cart-btn');
         if (this.state.user) {
-            if (cartBtn) cartBtn.classList.remove('hidden');
-            if (mobileCartBtn) mobileCartBtn.classList.remove('hidden');
             localStorage.setItem('user', JSON.stringify(this.state.user));
             const isAdmin = this.state.user.role && this.state.user.role.toLowerCase() === 'admin';
+            
+            if (cartBtn) isAdmin ? cartBtn.classList.add('hidden') : cartBtn.classList.remove('hidden');
+            if (mobileCartBtn) isAdmin ? mobileCartBtn.classList.add('hidden') : mobileCartBtn.classList.remove('hidden');
             
             setHTML(authContainer, `
                 <div class="relative group/user z-50">
@@ -508,8 +516,9 @@ const app = {
                                 <svg class="w-4 h-4 text-[#ed1c24]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                                 Dashboard
                             </a>
-                        `) + `
+                        `) + (!isAdmin ? `
                         <a href="/profile" data-link class="block px-4 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-[#ed1c24] transition-colors uppercase tracking-wider">My Profile</a>
+                        ` : '') + `
                         <a href="/logout" data-link class="block px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors uppercase tracking-wider border-t border-zinc-100 mt-1 flex items-center gap-1.5">
                             <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                             Log Out
@@ -543,6 +552,14 @@ const app = {
         const path = (this.basePath ? raw.replace(this.basePath, '') : raw) || '/';
         const container = document.getElementById('view-container');
         
+        const isAdmin = this.state.user && this.state.user.role && this.state.user.role.toLowerCase() === 'admin';
+        const restrictedAdminRoutes = ['/dashboard', '/cart', '/profile', '/quotations', '/invoices'];
+        
+        if (isAdmin && restrictedAdminRoutes.includes(path)) {
+            history.pushState(null, null, this.basePath + '/admin');
+            return this.handleRouting();
+        }
+        
         if (path === '/') {
             renderHome(container, this);
         } else if (path === '/catalog') {
@@ -563,6 +580,8 @@ const app = {
             this.renderReports(container);
         } else if (path === '/admin/partners') {
             this.renderAdminUsers(container);
+        } else if (path === '/admin/invoices') {
+            viewAdminInvoicesFull(container, this);
         } else if (path === '/quotations') {
             this.renderQuotations(container);
         } else if (path === '/login') {

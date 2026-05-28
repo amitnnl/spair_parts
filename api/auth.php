@@ -9,6 +9,8 @@ $db = getDB();
 try { $db->exec("ALTER TABLE users ADD COLUMN phone VARCHAR(20) DEFAULT NULL"); } catch(Exception $e){}
 try { $db->exec("ALTER TABLE users ADD COLUMN whatsapp VARCHAR(20) DEFAULT NULL"); } catch(Exception $e){}
 try { $db->exec("ALTER TABLE users ADD COLUMN address TEXT DEFAULT NULL"); } catch(Exception $e){}
+try { $db->exec("ALTER TABLE users ADD COLUMN company_name VARCHAR(255) DEFAULT NULL"); } catch(Exception $e){}
+try { $db->exec("ALTER TABLE users ADD COLUMN gst_number VARCHAR(100) DEFAULT NULL"); } catch(Exception $e){}
 
 $data = json_decode(file_get_contents('php://input'), true);
 $action = $data['action'] ?? '';
@@ -29,11 +31,13 @@ if ($action === 'login') {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
         $_SESSION['user_role'] = $user['role'];
+        $profile_complete = !empty($user['phone']) && !empty($user['address']) && !empty($user['company_name']) && !empty($user['gst_number']);
         
         echo json_encode(['success' => true, 'user' => [
             'id' => $user['id'],
             'name' => $user['name'],
-            'role' => $user['role']
+            'role' => $user['role'],
+            'profile_complete' => $profile_complete
         ]]);
     } else {
         echo json_encode(['error' => 'Invalid credentials']);
@@ -69,10 +73,16 @@ if ($action === 'login') {
     echo json_encode(['success' => true]);
 } elseif ($action === 'check') {
     if (isset($_SESSION['user_id'])) {
+        $stmt = $db->prepare("SELECT phone, address, company_name, gst_number FROM users WHERE id = ?");
+        $stmt->execute([$_SESSION['user_id']]);
+        $u = $stmt->fetch();
+        $profile_complete = $u && !empty($u['phone']) && !empty($u['address']) && !empty($u['company_name']) && !empty($u['gst_number']);
+        
         echo json_encode(['logged_in' => true, 'user' => [
             'id' => $_SESSION['user_id'],
             'name' => $_SESSION['user_name'],
-            'role' => $_SESSION['user_role']
+            'role' => $_SESSION['user_role'],
+            'profile_complete' => $profile_complete
         ]]);
     } else {
         echo json_encode(['logged_in' => false]);
