@@ -21,9 +21,9 @@ export default {
         },
       },
       fontFamily: {
-        sans:    ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
-        display: ['Poppins', 'Outfit', 'sans-serif'],
-        poppins: ['Poppins', 'sans-serif'],
+        sans:    ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Inter', 'sans-serif'],
+        poppins: ['Roboto', 'sans-serif'],
       },
       boxShadow: {
         'premium':       '0 10px 30px -10px rgba(0, 86, 179, 0.10), 0 4px 6px -4px rgba(0, 86, 179, 0.05)',

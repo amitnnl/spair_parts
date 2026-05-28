@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
-    echo json_encode(['error' => 'Unauthorized']);
+    echo json_encode(['error' => 'Unauthorized.']);
     exit;
 }
 
@@ -33,7 +33,7 @@ try {
 
 if ($method === 'GET') {
     if (!$isAdmin) {
-        echo json_encode(['error' => 'Admin only']);
+        echo json_encode(['error' => 'Administrator access required.']);
         exit;
     }
 
@@ -85,7 +85,7 @@ if ($method === 'GET') {
 
 } elseif ($method === 'POST') {
     if (!$isAdmin) {
-        echo json_encode(['error' => 'Admin only']);
+        echo json_encode(['error' => 'Administrator access required.']);
         exit;
     }
 

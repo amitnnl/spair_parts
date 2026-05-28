@@ -78,7 +78,7 @@ if ($method === 'POST') {
     }
     
     if (!$isAdmin) {
-        echo json_encode(['error' => 'Unauthorized']);
+        echo json_encode(['error' => 'Unauthorized.']);
         exit;
     }
 

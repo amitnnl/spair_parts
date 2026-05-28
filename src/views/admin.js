@@ -34,7 +34,7 @@ export async function renderAdmin(container, app) {
             { l: 'Monthly Revenue', v: '₹0', id: 'stat-revenue', c: 'rose' }
         ].map(s => `
                         <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 space-y-4 hover:border-bosch-blue transition-all">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${escapeHTML(s.l)}</p>
+                            <p class="text-xs font-black text-slate-500 uppercase tracking-widest">${escapeHTML(s.l)}</p>
                             <h3 class="text-3xl font-black text-bosch-blue" id="${escapeHTML(s.id)}">${escapeHTML(s.v)}</h3>
                             <div class="w-full h-1 bg-${escapeHTML(s.c)}-100 rounded-full overflow-hidden">
                                 <div class="w-1/3 h-full bg-${escapeHTML(s.c)}-600"></div>
@@ -82,25 +82,25 @@ export async function loadAdminInvoices(app) {
         setHTML(list, invoices.length ? invoices.map(inv => `
             <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div class="flex items-center gap-6">
-                    <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-500">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
                     <div>
                         <div class="font-black text-bosch-blue uppercase tracking-widest">${escapeHTML(inv.invoice_number)} • ${escapeHTML(inv.user_name)}</div>
-                        <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">
+                        <div class="text-xs text-slate-500 font-medium mt-1 uppercase tracking-widest">
                             ${new Date(inv.created_at).toLocaleDateString()} • ₹${parseFloat(inv.total_amount).toLocaleString()}
                             ${inv.tracking_number ? ` • Tracking: <span class="text-bosch-blue font-bold">${escapeHTML(inv.tracking_number)}</span>` : ''}
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
-                    <span class="px-3 py-1 rounded-none border border-slate-200 text-[10px] font-black uppercase tracking-wider ${getInvoiceStatusClass(inv.status)}">
+                    <span class="px-3 py-1 rounded-none border border-slate-200 text-xs font-black uppercase tracking-widest ${getInvoiceStatusClass(inv.status)}">
                         ${escapeHTML(inv.status)}
                     </span>
-                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-5 py-2 rounded-full bg-industrial-gray text-white text-[11px] font-black uppercase tracking-widest hover:bg-bosch-blue transition-all">Manage</button>
+                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-5 py-2 rounded-full bg-industrial-gray text-white text-xs font-black uppercase tracking-widest hover:bg-bosch-blue transition-all">Manage</button>
                 </div>
             </div>
-        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No active orders in fulfillment</div>');
+        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-500 font-bold uppercase tracking-widest">No active orders in fulfillment</div>');
     } catch (e) {
         setHTML(list, '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load orders</div>');
     }
@@ -130,17 +130,17 @@ export async function loadAdminQuotations(app) {
             <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div>
                     <div class="font-black text-bosch-blue uppercase tracking-widest">${escapeHTML(q.user_name)}</div>
-                    <div class="text-[11px] text-slate-500 font-medium mt-1 uppercase tracking-widest">${escapeHTML(q.user_email)} • ${new Date(q.created_at).toLocaleString()}</div>
+                    <div class="text-xs text-slate-500 font-medium mt-1 uppercase tracking-widest">${escapeHTML(q.user_email)} • ${new Date(q.created_at).toLocaleString()}</div>
                 </div>
                 <div class="flex items-center gap-6">
-                    <span class="px-3 py-1 rounded-none border border-slate-200 text-[10px] font-black uppercase tracking-wider ${app.getStatusClass(q.status)}">
+                    <span class="px-3 py-1 rounded-none border border-slate-200 text-xs font-black uppercase tracking-widest ${app.getStatusClass(q.status)}">
                         ${escapeHTML(q.status)}
                     </span>
-                    ${q.status === 'pending' ? `<button onclick="app.renderProcessQuotation(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-full bg-bosch-blue text-white text-[11px] font-black uppercase tracking-widest hover:bg-industrial-gray transition-all">Process</button>` : ''}
-                    ${q.status === 'approved' ? `<button onclick="app.generateInvoice(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-full bg-bosch-red text-white text-[11px] font-black uppercase tracking-widest hover:bg-red-700 transition-all">Generate Invoice</button>` : ''}
+                    ${q.status === 'pending' ? `<button onclick="app.renderProcessQuotation(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-full bg-bosch-blue text-white text-xs font-black uppercase tracking-widest hover:bg-industrial-gray transition-all">Process</button>` : ''}
+                    ${q.status === 'approved' ? `<button onclick="app.generateInvoice(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-full bg-bosch-red text-white text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-all">Generate Invoice</button>` : ''}
                 </div>
             </div>
-        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No pending requests</div>');
+        `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-500 font-bold uppercase tracking-widest">No pending requests</div>');
     } catch (e) {
         setHTML(list, '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load requests</div>');
     }
@@ -166,11 +166,11 @@ export async function renderAdminInventory(container, app) {
                             <p class="text-slate-500 mt-2 font-bold text-lg">Real-time stock monitoring and fitment management.</p>
                         </div>
                         <div class="flex gap-4 no-print">
-                            <button onclick="app.renderImportModal()" class="px-6 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-3xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
-                                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                            <button onclick="app.renderImportModal()" class="px-6 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-3xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+                                <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                 Bulk Import
                             </button>
-                            <button onclick="app.renderAddProductForm()" class="px-6 py-3.5 bg-bosch-blue text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-xl shadow-blue-900/20 flex items-center gap-2 hover:-translate-y-1">
+                            <button onclick="app.renderAddProductForm()" class="px-6 py-3.5 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-xl shadow-blue-900/20 flex items-center gap-2 hover:-translate-y-1">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                                 Add Product
                             </button>
@@ -180,7 +180,7 @@ export async function renderAdminInventory(container, app) {
                     <div class="bg-white rounded-3xl border-2 border-slate-100 p-4 flex gap-6 shadow-sm">
                         <div class="relative flex-grow">
                             <input type="text" id="inventory-search" oninput="app.filterInventory()" class="w-full h-14 bg-slate-50 border border-slate-100 rounded-full px-14 text-sm font-bold text-slate-700 focus:outline-none focus:border-bosch-blue focus:ring-4 focus:ring-bosch-blue/10 transition-all" placeholder="Search by Part Name, Brand, or Machine Model...">
-                            <svg class="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <svg class="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                     </div>
                     
@@ -188,11 +188,11 @@ export async function renderAdminInventory(container, app) {
                         <table class="w-full text-left border-collapse">
                             <thead class="bg-slate-50/80 border-b border-slate-200">
                                 <tr>
-                                    <th class="p-6 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Product & Fitment</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Brand</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Stock Status</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Admin Cost</th>
-                                    <th class="p-6 pr-8 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
+                                    <th class="p-6 pl-8 text-xs font-black text-slate-500 uppercase tracking-widest">Product & Fitment</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Brand</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Stock Status</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Admin Cost</th>
+                                    <th class="p-6 pr-8 text-right text-xs font-black text-slate-500 uppercase tracking-widest">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="inventory-table-body" class="divide-y divide-slate-100 bg-white">
@@ -230,16 +230,16 @@ function createInventoryRow(p, app) {
                     </div>
                     <div>
                         <span class="font-black block text-bosch-blue text-sm mb-0.5 uppercase tracking-widest">${escapeHTML(p.part_name)}</span>
-                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-slate-100 px-2 py-0.5 rounded-none inline-block">${escapeHTML(p.machine_model || 'Universal')}</span>
+                        <span class="text-xs text-slate-500 uppercase font-black tracking-widest bg-slate-100 px-2 py-0.5 rounded-none inline-block">${escapeHTML(p.machine_model || 'Universal')}</span>
                     </div>
                 </div>
             </td>
             <td class="p-6">
-                <span class="px-3.5 py-1.5 rounded-none bg-industrial-gray text-white text-[9px] font-black uppercase tracking-widest border border-slate-700">${escapeHTML(p.brand)}</span>
+                <span class="px-3.5 py-1.5 rounded-none bg-industrial-gray text-white text-xs font-black uppercase tracking-widest border border-slate-700">${escapeHTML(p.brand)}</span>
             </td>
             <td class="p-6">
                 <div class="space-y-2">
-                    <span class="text-[11px] font-black uppercase tracking-widest ${isLowStock ? 'text-bosch-red' : 'text-bosch-blue'}">${p.stock_quantity || 0} Units in Reserve</span>
+                    <span class="text-xs font-black uppercase tracking-widest ${isLowStock ? 'text-bosch-red' : 'text-bosch-blue'}">${p.stock_quantity || 0} Units in Reserve</span>
                     <div class="w-28 h-1.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
                         <div class="h-full rounded-none ${isLowStock ? 'bg-bosch-red' : 'bg-bosch-blue'}" style="width: ${Math.min((p.stock_quantity || 0) * 5, 100)}%"></div>
                     </div>
@@ -248,10 +248,10 @@ function createInventoryRow(p, app) {
             <td class="p-6 font-black text-bosch-blue text-sm">₹${escapeHTML(p.cost || '0.00')}</td>
             <td class="p-6 pr-8 text-right">
                 <div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-white hover:border-bosch-blue hover:bg-bosch-blue transition-all">
+                    <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-full bg-white border border-slate-200 text-slate-500 hover:text-white hover:border-bosch-blue hover:bg-bosch-blue transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                     </button>
-                    <button onclick="app.deleteProduct(${p.id})" class="p-3 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-white hover:border-bosch-red hover:bg-bosch-red transition-all">
+                    <button onclick="app.deleteProduct(${p.id})" class="p-3 rounded-full bg-white border border-slate-200 text-slate-500 hover:text-white hover:border-bosch-red hover:bg-bosch-red transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                     </button>
                 </div>
@@ -290,11 +290,11 @@ export async function renderAdminUsers(container, app) {
                         <table class="w-full text-left border-collapse">
                             <thead class="bg-slate-50/80 border-b border-slate-200">
                                 <tr>
-                                    <th class="p-6 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">User Details</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Role</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Discount Tier</th>
-                                    <th class="p-6 pr-8 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
+                                    <th class="p-6 pl-8 text-xs font-black text-slate-500 uppercase tracking-widest">User Details</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Status</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Role</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Discount Tier</th>
+                                    <th class="p-6 pr-8 text-right text-xs font-black text-slate-500 uppercase tracking-widest">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 bg-white">
@@ -305,7 +305,7 @@ export async function renderAdminUsers(container, app) {
                                                 <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-emerald-100">${escapeHTML((u.name || '?').charAt(0).toUpperCase())}</div>
                                                 <div>
                                                     <span class="font-black block text-bosch-blue text-sm mb-0.5">${escapeHTML(u.name)}</span>
-                                                    <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${escapeHTML(u.email)}</span>
+                                                    <span class="text-xs text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${escapeHTML(u.email)}</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -325,11 +325,11 @@ export async function renderAdminUsers(container, app) {
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
                                                 <input type="number" step="0.1" value="${escapeHTML(u.discount_tier || 0)}" id="discount_${parseInt(u.id, 10)}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-bosch-blue focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
-                                                <span class="text-slate-400 font-bold text-sm">%</span>
+                                                <span class="text-slate-500 font-bold text-sm">%</span>
                                             </div>
                                         </td>
                                         <td class="p-6 pr-8 text-right">
-                                            <button onclick="app.updateUser(${parseInt(u.id, 10)}, 'discount_tier', document.getElementById('discount_${parseInt(u.id, 10)}').value)" class="px-5 py-2.5 rounded-full bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save</button>
+                                            <button onclick="app.updateUser(${parseInt(u.id, 10)}, 'discount_tier', document.getElementById('discount_${parseInt(u.id, 10)}').value)" class="px-5 py-2.5 rounded-full bg-slate-900 text-white font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save</button>
                                         </td>
                                     </tr>
                                 `).join('')}
@@ -370,7 +370,7 @@ export async function renderProcessQuotation(quotationId, app) {
             <div class="bg-slate-900 p-8 text-white flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-black tracking-tight">Process Quotation</h2>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Request from ${escapeHTML(q.user_name)} (#Q-${String(q.id).padStart(4, '0')})</p>
+                    <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-1">Request from ${escapeHTML(q.user_name)} (#Q-${String(q.id).padStart(4, '0')})</p>
                 </div>
                 <button onclick="document.getElementById('process-modal').remove()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -380,11 +380,11 @@ export async function renderProcessQuotation(quotationId, app) {
             <div class="p-8 space-y-8">
                 <div class="flex flex-wrap gap-4">
                     <div class="flex-1 min-w-[200px] p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
-                        <p class="text-[10px] font-black text-bosch-blue uppercase tracking-widest mb-1">Partner Tier</p>
+                        <p class="text-xs font-black text-bosch-blue uppercase tracking-widest mb-1">Partner Tier</p>
                         <h4 class="text-xl font-black text-bosch-blue">${discountTier}% Automatic Discount</h4>
                     </div>
                     <div class="flex-1 min-w-[200px] p-6 bg-slate-50 border border-slate-200 rounded-2xl">
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Status</p>
+                        <p class="text-xs font-black text-slate-500 uppercase tracking-widest mb-1">Current Status</p>
                         <h4 class="text-xl font-black text-amber-600 uppercase">${escapeHTML(q.status)}</h4>
                     </div>
                 </div>
@@ -394,11 +394,11 @@ export async function renderProcessQuotation(quotationId, app) {
                         <table class="w-full text-left">
                             <thead class="bg-slate-50 border-b border-slate-200">
                                 <tr>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Spare Part Detail</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Qty</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">MSRP (₹)</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Final Unit Price (₹)</th>
-                                    <th class="p-6 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Subtotal</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Spare Part Detail</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Qty</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">MSRP (₹)</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Final Unit Price (₹)</th>
+                                    <th class="p-6 text-right text-xs font-black text-slate-500 uppercase tracking-widest">Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
@@ -406,10 +406,10 @@ export async function renderProcessQuotation(quotationId, app) {
                                     <tr class="group">
                                         <td class="p-6">
                                             <div class="font-bold text-bosch-blue">${escapeHTML(item.part_name)}</div>
-                                            <div class="text-[10px] text-slate-500 uppercase font-black tracking-tighter mt-0.5">${escapeHTML(item.brand)} • ${escapeHTML(item.machine_model)}</div>
+                                            <div class="text-xs text-slate-500 uppercase font-black tracking-tighter mt-0.5">${escapeHTML(item.brand)} • ${escapeHTML(item.machine_model)}</div>
                                         </td>
                                         <td class="p-6 text-slate-600 font-black">${parseInt(item.quantity, 10)}</td>
-                                        <td class="p-6 text-slate-400 font-bold text-sm">₹${escapeHTML(item.cost || '0.00')}</td>
+                                        <td class="p-6 text-slate-500 font-bold text-sm">₹${escapeHTML(item.cost || '0.00')}</td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
                                                 <input type="number" name="price_${parseInt(item.id, 10)}" data-item-id="${parseInt(item.id, 10)}" data-qty="${parseInt(item.quantity, 10)}" data-msrp="${escapeHTML(item.cost || 0)}" step="0.01" value="${escapeHTML(item.unit_price || '')}" required class="w-28 bg-slate-50 border-2 border-slate-100 rounded-full px-3 h-10 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-4 focus:bg-white transition-all unit-price-input">
@@ -424,7 +424,7 @@ export async function renderProcessQuotation(quotationId, app) {
                             </tbody>
                             <tfoot class="bg-slate-50 border-t border-slate-200">
                                 <tr>
-                                    <td colspan="4" class="p-6 text-right font-black text-slate-400 uppercase tracking-widest text-xs">Total Quotation Value:</td>
+                                    <td colspan="4" class="p-6 text-right font-black text-slate-500 uppercase tracking-widest text-xs">Total Quotation Value:</td>
                                     <td class="p-6 text-right font-black text-2xl text-bosch-blue" id="quotation-total-display">₹0.00</td>
                                 </tr>
                             </tfoot>
@@ -432,13 +432,13 @@ export async function renderProcessQuotation(quotationId, app) {
                     </div>
                     
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-2">
-                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-2 h-11 px-5 rounded-full bg-bosch-blue text-white hover:bg-industrial-gray transition-all font-black text-[10px] uppercase tracking-widest shadow-lg">
+                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-2 h-11 px-5 rounded-full bg-bosch-blue text-white hover:bg-industrial-gray transition-all font-black text-xs uppercase tracking-widest shadow-lg">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             Apply Partner Discount to All
                         </button>
                         <div class="flex gap-4 w-full md:w-auto">
-                            <button type="button" onclick="document.getElementById('process-modal').remove()" class="h-11 px-6 rounded-full border-2 border-slate-100 text-slate-400 hover:bg-slate-50 transition-all font-black text-[10px] uppercase tracking-widest">Cancel</button>
-                            <button type="submit" class="h-11 px-8 rounded-full bg-slate-900 text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Publish & Send</button>
+                            <button type="button" onclick="document.getElementById('process-modal').remove()" class="h-11 px-6 rounded-full border-2 border-slate-100 text-slate-500 hover:bg-slate-50 transition-all font-black text-xs uppercase tracking-widest">Cancel</button>
+                            <button type="submit" class="h-11 px-8 rounded-full bg-slate-900 text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Publish & Send</button>
                         </div>
                     </div>
                 </form>
@@ -613,21 +613,21 @@ export async function renderSystemSettings(container, app) {
 
         const field = (label, name, val, type = 'text', placeholder = '', extra = '') => `
             <div class="space-y-1.5 ${escapeHTML(extra)}">
-                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${escapeHTML(label)}</label>
+                <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">${escapeHTML(label)}</label>
                 <input type="${escapeHTML(type)}" name="${escapeHTML(name)}" value="${escapeHTML(val || '')}" placeholder="${escapeHTML(placeholder)}"
                     class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
             </div>`;
 
         const textarea = (label, name, val, extra = '') => `
             <div class="space-y-1.5 ${escapeHTML(extra)}">
-                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${escapeHTML(label)}</label>
+                <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">${escapeHTML(label)}</label>
                 <textarea name="${escapeHTML(name)}" rows="3"
                     class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all resize-none h-24">${escapeHTML(val || '')}</textarea>
             </div>`;
 
         const imgField = (label, name, current) => `
             <div class="space-y-1.5 flex flex-col min-w-0">
-                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">${escapeHTML(label)}</label>
+                <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">${escapeHTML(label)}</label>
                 <div class="flex flex-row items-center gap-3 w-full bg-slate-50 border-2 border-dashed border-slate-200 rounded-none p-2 hover:border-bosch-blue transition-all min-w-0">
                     ${current
                 ? `<img src="${escapeHTML(app.api(current))}" class="w-10 h-10 rounded-2xl object-cover border border-slate-200 shadow-sm flex-shrink-0">`
@@ -635,7 +635,7 @@ export async function renderSystemSettings(container, app) {
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                            </div>`}
                     <input type="file" name="${escapeHTML(name)}" accept="image/*"
-                        class="block w-full text-[10px] text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-none file:border-0 file:text-[9px] file:font-black file:uppercase file:tracking-widest file:bg-white file:text-slate-700 hover:file:bg-slate-100 cursor-pointer focus:outline-none min-w-0 overflow-hidden">
+                        class="block w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-none file:border-0 file:text-xs file:font-black file:uppercase file:tracking-widest file:bg-white file:text-slate-700 hover:file:bg-slate-100 cursor-pointer focus:outline-none min-w-0 overflow-hidden">
                 </div>
             </div>`;
 
@@ -675,7 +675,7 @@ export async function renderSystemSettings(container, app) {
                             <div id="cms-tab-general" class="cms-tab-panel space-y-6 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
                                 <div class="pb-6 border-b border-slate-100 mb-6">
                                     <h3 class="text-xl font-black text-bosch-blue">General Settings</h3>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Site identity, pricing & contact info</p>
+                                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Site identity, pricing & contact info</p>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     ${field('Platform / Site Name', 'site_name', s.site_name, 'text', 'TORVO')}
@@ -696,13 +696,13 @@ export async function renderSystemSettings(container, app) {
                                 <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Hero Section</h3>
-                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Main banner headline, subtitle, background image</p>
+                                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Main banner headline, subtitle, background image</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-5">
                                         ${field('Hero Headline', 'hero_title', s.hero_title, 'text', 'THE RIGHT PART. EVERY TIME.')}
                                         ${textarea('Hero Subtitle', 'hero_subtitle', s.hero_subtitle)}
                                         <div class="space-y-4 p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Hero Slider Images</span>
+                                            <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Hero Slider Images</span>
                                             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                                                 ${imgField('Hero Image 1', 'hero_image', s.hero_image)}
                                                 ${imgField('Hero Image 2', 'hero_image_2', s.hero_image_2)}
@@ -718,7 +718,7 @@ export async function renderSystemSettings(container, app) {
                                 <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Brands Page</h3>
-                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading and 6 brand cards</p>
+                                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Page heading and 6 brand cards</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-8">
                                         ${field('Page Heading', 'brands_title', s.brands_title, 'text', 'Our Trusted Brands')}
@@ -728,7 +728,7 @@ export async function renderSystemSettings(container, app) {
             const n = i + 1;
             return `
                                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
-                                            <span class="inline-block px-3 py-1 rounded-lg bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest">Brand ${n} — Default: ${bn}</span>
+                                            <span class="inline-block px-3 py-1 rounded-lg bg-rose-100 text-rose-700 text-xs font-black uppercase tracking-widest">Brand ${n} — Default: ${bn}</span>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 ${field('Brand Name', 'brand' + n + '_name', getBrandVal(n, 'name'), 'text', bn)}
                                                 ${field('Tag / Specialty', 'brand' + n + '_tag', getBrandVal(n, 'tag'), 'text', 'Power Tools')}
@@ -745,7 +745,7 @@ export async function renderSystemSettings(container, app) {
                                 <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Categories Page</h3>
-                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading and 4 category cards</p>
+                                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Page heading and 4 category cards</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-8">
                                         ${field('Page Heading', 'cats_page_title', s.cats_page_title, 'text', 'Core Categories')}
@@ -753,7 +753,7 @@ export async function renderSystemSettings(container, app) {
                                     </div>
                                     <div class="flex items-center justify-between mt-8">
                                         <h4 class="text-sm font-black text-slate-800 uppercase tracking-widest">Active Categories</h4>
-                                        <button type="button" onclick="window.openCategoryModal()" class="px-4 py-2 bg-bosch-blue hover:bg-blue-800 text-white text-[10px] font-black uppercase tracking-widest transition-all">
+                                        <button type="button" onclick="window.openCategoryModal()" class="px-4 py-2 bg-bosch-blue hover:bg-blue-800 text-white text-xs font-black uppercase tracking-widest transition-all">
                                             + Add New Category
                                         </button>
                                     </div>
@@ -768,7 +768,7 @@ export async function renderSystemSettings(container, app) {
                                 <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Support Page</h3>
-                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Page heading, description and contact info cards</p>
+                                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Page heading, description and contact info cards</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-8">
                                         ${field('Page Heading', 'support_title', s.support_title, 'text', 'Expert Support Center')}
@@ -791,7 +791,7 @@ export async function renderSystemSettings(container, app) {
                                 <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Footer Content</h3>
-                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Tagline, address, email and copyright text</p>
+                                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Tagline, address, email and copyright text</p>
                                     </div>
                                     <div class="grid grid-cols-1 gap-8">
                                         ${field('Footer Brand Tagline', 'footer_desc', s.footer_desc, 'text', 'The premium B2B platform for genuine power tool spare parts.')}
@@ -806,12 +806,12 @@ export async function renderSystemSettings(container, app) {
                             <div id="cms-tab-system" class="cms-tab-panel space-y-6 hidden bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
                                 <div class="pb-6 border-b border-slate-100">
                                     <h3 class="text-xl font-black text-bosch-blue">Platform Diagnostics</h3>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Verify live database values and system integrity</p>
+                                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Verify live database values and system integrity</p>
                                 </div>
                                 <div class="bg-slate-50 rounded-2xl p-6 space-y-4">
                                     <div class="flex justify-between items-center border-b border-slate-200 pb-3">
-                                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Database Key</span>
-                                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Value</span>
+                                        <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Database Key</span>
+                                        <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Live Value</span>
                                     </div>
                                     <div class="space-y-3 font-mono text-xs overflow-x-auto">
                                         <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all" onclick="window.switchCMSTab('general')">
@@ -846,11 +846,11 @@ export async function renderSystemSettings(container, app) {
                             <!-- Save -->
                             <div class="mt-8 flex flex-col sm:flex-row justify-end gap-3">
                                 <button type="button" onclick="app.renderAdmin(document.getElementById('view-container'))"
-                                    class="h-11 px-6 rounded-full font-black text-[10px] uppercase tracking-widest text-slate-500 hover:bg-white border-2 border-slate-100 transition-all">
+                                    class="h-11 px-6 rounded-full font-black text-xs uppercase tracking-widest text-slate-500 hover:bg-white border-2 border-slate-100 transition-all">
                                     Cancel
                                 </button>
                                 <button type="submit" id="cms-save-btn"
-                                    class="h-11 px-8 rounded-full bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all flex items-center gap-2">
+                                    class="h-11 px-8 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                                     Save All Changes
                                 </button>
@@ -865,7 +865,7 @@ export async function renderSystemSettings(container, app) {
                 <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h3 id="uicat-modal-title" class="text-xl font-black text-bosch-blue uppercase">Add Category</h3>
-                        <button type="button" onclick="window.closeCategoryModal()" class="text-slate-400 hover:text-rose-500 transition-colors">
+                        <button type="button" onclick="window.closeCategoryModal()" class="text-slate-500 hover:text-rose-500 transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                         </button>
                     </div>
@@ -874,33 +874,33 @@ export async function renderSystemSettings(container, app) {
                         <input type="hidden" id="uicat-action" name="action" value="create">
                         
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Title</label>
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Title</label>
                             <input type="text" id="uicat-title" name="title" required class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
                         </div>
                         
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Description</label>
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Description</label>
                             <textarea id="uicat-desc" name="description" rows="3" class="w-full bg-slate-50 border-2 border-slate-100 px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all resize-none"></textarea>
                         </div>
                         
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Icon SVG Data</label>
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Icon SVG Data</label>
                             <input type="text" id="uicat-icon" name="icon_svg" placeholder="M13 10V3L4..." class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
                         </div>
                         
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Sort Order</label>
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Sort Order</label>
                             <input type="number" id="uicat-sort" name="sort_order" value="0" class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
                         </div>
 
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Category Image</label>
-                            <input type="file" id="uicat-image" name="image" accept="image/*" class="block w-full text-[10px] text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:border-0 file:text-[9px] file:font-black file:uppercase file:tracking-widest file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Category Image</label>
+                            <input type="file" id="uicat-image" name="image" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:border-0 file:text-xs file:font-black file:uppercase file:tracking-widest file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
                         </div>
                         
                         <div class="flex justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
-                            <button type="button" onclick="window.closeCategoryModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest transition-all">Cancel</button>
-                            <button type="submit" id="uicat-save-btn" class="px-5 py-2.5 bg-bosch-blue hover:bg-blue-800 text-white text-[10px] font-black uppercase tracking-widest transition-all shadow-md">Save Category</button>
+                            <button type="button" onclick="window.closeCategoryModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest transition-all">Cancel</button>
+                            <button type="submit" id="uicat-save-btn" class="px-5 py-2.5 bg-bosch-blue hover:bg-blue-800 text-white text-xs font-black uppercase tracking-widest transition-all shadow-md">Save Category</button>
                         </div>
                     </form>
                 </div>
@@ -914,7 +914,7 @@ export async function renderSystemSettings(container, app) {
             const cats = app.state.categories || [];
             
             if (cats.length === 0) {
-                list.innerHTML = `<div class="col-span-full p-6 text-center bg-slate-50 border-2 border-dashed border-slate-200 text-slate-400 text-xs font-black uppercase tracking-widest">No categories created yet.</div>`;
+                list.innerHTML = `<div class="col-span-full p-6 text-center bg-slate-50 border-2 border-dashed border-slate-200 text-slate-500 text-xs font-black uppercase tracking-widest">No categories created yet.</div>`;
                 return;
             }
             
@@ -923,10 +923,10 @@ export async function renderSystemSettings(container, app) {
                     ${c.image_url ? `<img src="${escapeHTML(app.api(c.image_url))}" class="w-16 h-16 object-cover bg-slate-50 border border-slate-200">` : `<div class="w-16 h-16 bg-slate-100 flex items-center justify-center text-slate-300"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>`}
                     <div class="flex-1 min-w-0">
                         <h5 class="text-xs font-black text-slate-800 uppercase tracking-widest truncate">${escapeHTML(c.title)}</h5>
-                        <p class="text-[10px] text-slate-500 font-medium truncate mt-0.5">${escapeHTML(c.description || 'No description')}</p>
+                        <p class="text-xs text-slate-500 font-medium truncate mt-0.5">${escapeHTML(c.description || 'No description')}</p>
                         <div class="mt-3 flex gap-2">
-                            <button type="button" onclick="window.editCategory(${c.id})" class="text-[9px] font-black uppercase tracking-widest text-bosch-blue hover:text-blue-800 transition-colors">Edit</button>
-                            <button type="button" onclick="window.deleteCategory(${c.id})" class="text-[9px] font-black uppercase tracking-widest text-rose-500 hover:text-rose-700 transition-colors">Delete</button>
+                            <button type="button" onclick="window.editCategory(${c.id})" class="text-xs font-black uppercase tracking-widest text-bosch-blue hover:text-blue-800 transition-colors">Edit</button>
+                            <button type="button" onclick="window.deleteCategory(${c.id})" class="text-xs font-black uppercase tracking-widest text-rose-500 hover:text-rose-700 transition-colors">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -1159,7 +1159,7 @@ export function renderImportModal(app) {
         <div class="bg-white rounded-3xl w-full max-w-xl p-8 space-y-6 shadow-2xl animate-in zoom-in duration-300">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-black text-bosch-blue">Bulk <span class="text-bosch-blue">Import</span></h2>
-                <button onclick="document.getElementById('import-modal').remove()" class="text-slate-400 hover:text-bosch-blue transition-all">
+                <button onclick="document.getElementById('import-modal').remove()" class="text-slate-500 hover:text-bosch-blue transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -1167,9 +1167,9 @@ export function renderImportModal(app) {
                 <div class="border-2 border-dashed border-slate-200 rounded-none p-6 text-center hover:border-bosch-blue transition-all cursor-pointer relative group">
                     <input type="file" name="import_csv" accept=".csv" required class="absolute inset-0 opacity-0 cursor-pointer">
                     <p class="text-slate-500 font-bold text-xs">Drop CSV file here or <span class="text-bosch-blue underline">browse</span></p>
-                    <p class="text-[9px] text-slate-400 mt-2 uppercase tracking-widest font-black">Headers: Part Name, Machine Model, Brand, Cost, Stock</p>
+                    <p class="text-xs text-slate-500 mt-2 uppercase tracking-widest font-black">Headers: Part Name, Machine Model, Brand, Cost, Stock</p>
                 </div>
-                <button type="submit" class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Process Import</button>
+                <button type="submit" class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Process Import</button>
             </form>
         </div>
     `);
@@ -1224,7 +1224,7 @@ async function renderProductForm(product, app) {
         <div class="bg-white rounded-3xl w-full max-w-3xl p-6 md:p-8 space-y-4 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-black text-bosch-blue">${isEdit ? 'Edit' : 'Add New'} <span class="text-bosch-blue">Product</span></h2>
-                <button onclick="document.getElementById('product-modal').remove()" class="text-slate-400 hover:text-bosch-blue transition-all">
+                <button onclick="document.getElementById('product-modal').remove()" class="text-slate-500 hover:text-bosch-blue transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -1234,7 +1234,7 @@ async function renderProductForm(product, app) {
 
                 <!-- Spare Part Name -->
                 <div class="col-span-2 space-y-1.5">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Spare Part Name</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Spare Part Name</label>
                     <div class="flex gap-2">
                         <select id="pf-partname" name="part_name_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Part Name...</option>
@@ -1245,16 +1245,16 @@ async function renderProductForm(product, app) {
 
                 <!-- Primary Fitment Section -->
                 <div class="col-span-2 pt-4 pb-1 border-t border-slate-100 mt-1 flex justify-between items-center">
-                    <h3 class="text-[10px] font-black text-bosch-blue uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
+                    <h3 class="text-xs font-black text-bosch-blue uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
                     <label class="flex items-center gap-2 cursor-pointer group">
                         <input type="checkbox" onchange="window._pfToggleUnknownMachine(this.checked)" class="w-4 h-4 rounded border-slate-300 text-bosch-blue focus:ring-blue-500">
-                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest group-hover:text-bosch-blue transition-all">Suitable machine abhi pata nahi hai</span>
+                        <span class="text-xs font-black text-slate-500 uppercase tracking-widest group-hover:text-bosch-blue transition-all">Suitable machine abhi pata nahi hai</span>
                     </label>
                 </div>
 
                 <!-- Machine Brand -->
                 <div class="space-y-1.5">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Machine Brand</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Machine Brand</label>
                     <div class="flex gap-2">
                         <select id="pf-brand" name="brand_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Brand...</option>
@@ -1265,7 +1265,7 @@ async function renderProductForm(product, app) {
 
                 <!-- Machine Name -->
                 <div class="space-y-1.5">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Machine Name</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Machine Name</label>
                     <div class="flex gap-2">
                         <select id="pf-machine" name="machine_name_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Machine...</option>
@@ -1276,7 +1276,7 @@ async function renderProductForm(product, app) {
 
                 <!-- Machine Model -->
                 <div class="space-y-1.5">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Machine Model</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Machine Model</label>
                     <div class="flex gap-2">
                         <select id="pf-model" name="model_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Model...</option>
@@ -1287,7 +1287,7 @@ async function renderProductForm(product, app) {
 
                 <!-- Machine Size -->
                 <div class="space-y-1.5">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Machine Size</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Machine Size</label>
                     <div class="flex gap-2">
                         <select id="pf-size" name="machine_size_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Size...</option>
@@ -1299,8 +1299,8 @@ async function renderProductForm(product, app) {
                 <!-- Additional Machines Section -->
                 <div class="col-span-2 pt-4 pb-1 border-t border-slate-100 mt-1">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-[10px] font-black text-bosch-blue uppercase tracking-[0.2em]">Other Suitable Machines</h3>
-                        <button type="button" onclick="window._pfAddMachineRow()" class="text-[9px] font-black text-bosch-blue uppercase tracking-widest hover:underline">+ Add More Machine</button>
+                        <h3 class="text-xs font-black text-bosch-blue uppercase tracking-[0.2em]">Other Suitable Machines</h3>
+                        <button type="button" onclick="window._pfAddMachineRow()" class="text-xs font-black text-bosch-blue uppercase tracking-widest hover:underline">+ Add More Machine</button>
                     </div>
                     <div id="additional-machines-container" class="space-y-3 mt-3">
                         <!-- Dynamic rows here -->
@@ -1309,40 +1309,40 @@ async function renderProductForm(product, app) {
 
                 <!-- Product Details -->
                 <div class="col-span-2 pt-4 pb-1 border-t border-slate-100 mt-1">
-                    <h3 class="text-[10px] font-black text-bosch-blue uppercase tracking-[0.2em]">Product Details</h3>
+                    <h3 class="text-xs font-black text-bosch-blue uppercase tracking-[0.2em]">Product Details</h3>
                 </div>
 
                 <!-- Cost -->
                 <div class="space-y-1.5">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Cost (₹)</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Cost (₹)</label>
                     <input type="number" step="0.01" name="cost" value="${escapeHTML(product?.cost || '')}" placeholder="Enter Cost"
                         class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Stock Quantity -->
                 <div class="space-y-1.5">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Stock Quantity</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Stock Quantity</label>
                     <input type="number" name="stock_quantity" value="${escapeHTML(product?.stock_quantity || '')}" placeholder="Enter Stock"
                         class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Note -->
                 <div class="col-span-2 space-y-1.5">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Note</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Note</label>
                     <input type="text" name="note" value="${escapeHTML(product?.note || '')}" placeholder="Technical notes or descriptions"
                         class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Photo -->
                 <div class="col-span-2 space-y-1.5 pt-1">
-                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Product Photo</label>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Product Photo</label>
                     <input type="file" name="photo" accept="image/*"
-                        class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-[9px] file:font-black file:uppercase file:tracking-widest file:bg-emerald-50 file:text-bosch-blue hover:file:bg-blue-100 cursor-pointer">
+                        class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-black file:uppercase file:tracking-widest file:bg-emerald-50 file:text-bosch-blue hover:file:bg-blue-100 cursor-pointer">
                 </div>
 
                 <div class="col-span-2 pt-2">
                     <button type="submit" id="pf-submit-btn"
-                        class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-[10px] uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">
+                        class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">
                         Save Complete Product
                     </button>
                 </div>
@@ -1403,7 +1403,7 @@ async function renderProductForm(product, app) {
 
         const genSelect = (name, items, selected) => `
             <div class="space-y-1">
-                <select name="${escapeHTML(name)}" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-[10px] font-bold text-slate-700 focus:outline-none focus:border-blue-500">
+                <select name="${escapeHTML(name)}" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:border-blue-500">
                     <option value="">Select...</option>
                     ${items.map(i => `<option value="${parseInt(i.id, 10)}" ${i.id == selected ? 'selected' : ''}>${escapeHTML(i.name)}</option>`).join('')}
                 </select>
@@ -1543,7 +1543,7 @@ export function getInvoiceStatusClass(status) {
         case 'processing': return 'bg-amber-50 text-amber-600 border border-amber-200';
         case 'dispatched': return 'bg-emerald-50 text-bosch-blue border border-blue-200';
         case 'delivered': return 'bg-emerald-50 text-emerald-600 border border-emerald-200';
-        default: return 'bg-slate-50 text-slate-400 border border-slate-100';
+        default: return 'bg-slate-50 text-slate-500 border border-slate-100';
     }
 }
 
@@ -1556,13 +1556,13 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
         <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-300">
             <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h2 class="text-xl font-black text-bosch-blue uppercase tracking-tight">Fulfillment Status</h2>
-                <button onclick="document.getElementById('dispatch-modal').remove()" class="text-slate-400 hover:text-bosch-blue transition-all">
+                <button onclick="document.getElementById('dispatch-modal').remove()" class="text-slate-500 hover:text-bosch-blue transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             <div class="p-8 space-y-8">
                 <div class="space-y-4">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Update Order Status</label>
+                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest">Update Order Status</label>
                     <div class="grid grid-cols-1 gap-3">
                         ${currentStatus === 'processing' ? `
                             <button onclick="app.updateOrderStatus(${parseInt(invoiceId, 10)}, 'dispatched')" class="flex items-center justify-between p-4 rounded-full border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-blue-600 transition-all group">
@@ -1586,12 +1586,12 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
 
                 ${currentStatus === 'processing' ? `
                     <div class="space-y-3">
-                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tracking Number (Optional)</label>
+                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest">Tracking Number (Optional)</label>
                         <input type="text" id="tracking-input" placeholder="Enter Courier Tracking ID" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-bold text-sm">
                     </div>
                 ` : tracking ? `
                     <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Tracking ID</p>
+                        <p class="text-xs font-black text-slate-500 uppercase tracking-widest mb-1">Current Tracking ID</p>
                         <p class="font-black text-bosch-blue">${escapeHTML(tracking)}</p>
                     </div>
                 ` : ''}
@@ -1650,11 +1650,11 @@ export async function renderAdminInvoicesFull(container, app) {
                             <table class="w-full text-left border-collapse">
                                 <thead class="bg-slate-50/80 border-b border-slate-200">
                                     <tr>
-                                        <th class="p-6 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Invoice / Date</th>
-                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Partner</th>
-                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Amount</th>
-                                        <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
-                                        <th class="p-6 pr-8 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
+                                        <th class="p-6 pl-8 text-xs font-black text-slate-500 uppercase tracking-widest">Invoice / Date</th>
+                                        <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Partner</th>
+                                        <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Amount</th>
+                                        <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Status</th>
+                                        <th class="p-6 pr-8 text-right text-xs font-black text-slate-500 uppercase tracking-widest">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100 bg-white">
@@ -1662,7 +1662,7 @@ export async function renderAdminInvoicesFull(container, app) {
                                         <tr class="hover:bg-slate-50/80 transition-all group">
                                             <td class="p-6 pl-8">
                                                 <div class="font-black text-bosch-blue uppercase tracking-widest">${escapeHTML(inv.invoice_number)}</div>
-                                                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(inv.created_at).toLocaleDateString()}</div>
+                                                <div class="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(inv.created_at).toLocaleDateString()}</div>
                                             </td>
                                             <td class="p-6">
                                                 <div class="font-bold text-slate-700">${escapeHTML(inv.user_name)}</div>
@@ -1671,18 +1671,18 @@ export async function renderAdminInvoicesFull(container, app) {
                                                 ₹${parseFloat(inv.total_amount).toLocaleString()}
                                             </td>
                                             <td class="p-6">
-                                                <span class="px-3 py-1 rounded-none border border-slate-200 text-[10px] font-black uppercase tracking-wider ${inv.status === 'processing' ? 'bg-amber-50 text-amber-600' : inv.status === 'dispatched' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}">
+                                                <span class="px-3 py-1 rounded-none border border-slate-200 text-xs font-black uppercase tracking-widest ${inv.status === 'processing' ? 'bg-amber-50 text-amber-600' : inv.status === 'dispatched' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}">
                                                     ${escapeHTML(inv.status)}
                                                 </span>
                                             </td>
                                             <td class="p-6 pr-8 text-right">
                                                 <div class="flex justify-end gap-3 opacity-100 transition-opacity">
-                                                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">Manage</button>
-                                                    <button onclick="app.renderInvoiceDocument(${inv.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">View PDF</button>
+                                                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">Manage</button>
+                                                    <button onclick="app.renderInvoiceDocument(${inv.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">View PDF</button>
                                                 </div>
                                             </td>
                                         </tr>
-                                    `).join('') : `<tr><td colspan="5" class="p-12 text-center text-slate-400 font-bold uppercase tracking-widest">No invoices found.</td></tr>`}
+                                    `).join('') : `<tr><td colspan="5" class="p-12 text-center text-slate-500 font-bold uppercase tracking-widest">No invoices found.</td></tr>`}
                                 </tbody>
                             </table>
                         </div>

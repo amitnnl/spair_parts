@@ -4,7 +4,7 @@ require_once '../config/database.php';
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
-    echo json_encode(['error' => 'Unauthorized']);
+    echo json_encode(['error' => 'Unauthorized.']);
     exit;
 }
 

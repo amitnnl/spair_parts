@@ -22,18 +22,18 @@ export async function renderReports(container, app) {
                     <!-- Header -->
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
-                            <div class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-2">Analytics</div>
+                            <div class="text-xs font-black uppercase tracking-[0.3em] text-blue-600 mb-2">Analytics</div>
                             <h2 class="text-4xl font-black text-slate-900 tracking-tight">Inventory <span class="text-blue-600">Reports</span></h2>
                             <p class="text-slate-500 mt-2 font-medium">Stock overview, low-stock alerts, and exportable reports.</p>
                         </div>
                         <div class="flex flex-wrap gap-3 no-print">
                             <button onclick="app.exportStockReport()" 
-                                class="px-5 py-3 bg-emerald-600 text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-emerald-700 transition-all shadow-xl shadow-emerald-600/20 flex items-center gap-2">
+                                class="px-5 py-3 bg-emerald-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-emerald-700 transition-all shadow-xl shadow-emerald-600/20 flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                                 Export PDF
                             </button>
                             <button onclick="app.exportStockCSV()" 
-                                class="px-5 py-3 bg-blue-600 text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2">
+                                class="px-5 py-3 bg-blue-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 Export Excel / CSV
                             </button>
@@ -53,7 +53,7 @@ export async function renderReports(container, app) {
                                     <svg class="w-6 h-6 text-${s.color}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${s.icon}"/></svg>
                                 </div>
                                 <div>
-                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${s.label}</p>
+                                    <p class="text-xs font-black text-slate-500 uppercase tracking-widest">${s.label}</p>
                                     <p class="text-3xl font-black text-slate-900 mt-1">${s.value}</p>
                                 </div>
                             </div>
@@ -81,17 +81,17 @@ export async function renderReports(container, app) {
                                 <div class="w-2 h-8 bg-rose-500 rounded-full"></div>
                                 <h3 class="text-lg font-black text-slate-900">Low Stock Report</h3>
                             </div>
-                            <span class="text-xs text-slate-400 font-bold">Generated: ${new Date().toLocaleDateString()}</span>
+                            <span class="text-xs text-slate-500 font-bold">Generated: ${new Date().toLocaleDateString()}</span>
                         </div>
                         ${low_stock && low_stock.length > 0 ? `
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left">
                                     <thead class="bg-slate-50 border-b border-slate-200">
                                         <tr>
-                                            <th class="p-5 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Part Name</th>
-                                            <th class="p-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Brand</th>
-                                            <th class="p-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Current Stock</th>
-                                            <th class="p-5 pr-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                            <th class="p-5 pl-8 text-xs font-black text-slate-500 uppercase tracking-widest">Part Name</th>
+                                            <th class="p-5 text-xs font-black text-slate-500 uppercase tracking-widest">Brand</th>
+                                            <th class="p-5 text-xs font-black text-slate-500 uppercase tracking-widest">Current Stock</th>
+                                            <th class="p-5 pr-8 text-xs font-black text-slate-500 uppercase tracking-widest">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-100">
@@ -101,7 +101,7 @@ export async function renderReports(container, app) {
                                                 <td class="p-5 text-xs font-bold text-slate-500 uppercase">${item.brand || 'N/A'}</td>
                                                 <td class="p-5 text-sm font-black ${item.stock_quantity <= 0 ? 'text-rose-600' : 'text-amber-600'}">${item.stock_quantity} units</td>
                                                 <td class="p-5 pr-8">
-                                                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${item.stock_quantity <= 0 ? 'bg-rose-50 text-rose-600 border border-rose-200' : 'bg-amber-50 text-amber-600 border border-amber-200'}">
+                                                    <span class="px-3 py-1 rounded-full text-xs font-black uppercase ${item.stock_quantity <= 0 ? 'bg-rose-50 text-rose-600 border border-rose-200' : 'bg-amber-50 text-amber-600 border border-amber-200'}">
                                                         ${item.stock_quantity <= 0 ? 'Out of Stock' : 'Low Stock'}
                                                     </span>
                                                 </td>
@@ -110,7 +110,7 @@ export async function renderReports(container, app) {
                                     </tbody>
                                 </table>
                             </div>
-                        ` : `<div class="p-16 text-center text-slate-400 font-bold">✓ All items are well-stocked.</div>`}
+                        ` : `<div class="p-16 text-center text-slate-500 font-bold">✓ All items are well-stocked.</div>`}
                     </div>
 
                 </main>

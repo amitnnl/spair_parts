@@ -4,7 +4,7 @@ require_once '../config/database.php';
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['error' => 'Unauthorized']);
+    echo json_encode(['error' => 'Unauthorized.']);
     exit;
 }
 
@@ -17,7 +17,7 @@ if ($method === 'POST') {
     $items = $data['items'] ?? [];
 
     if (empty($items)) {
-        echo json_encode(['error' => 'No items in quotation']);
+        echo json_encode(['error' => 'No items in quotation.']);
         exit;
     }
 
@@ -58,7 +58,7 @@ if ($method === 'POST') {
         $quotation = $stmt->fetch();
         
         if (!$quotation) {
-            echo json_encode(['error' => 'Quotation not found']);
+            echo json_encode(['error' => 'Quotation not found.']);
             exit;
         }
         
@@ -94,7 +94,7 @@ if ($method === 'POST') {
         if ($stmt->rowCount() > 0) {
             echo json_encode(['success' => true]);
         } else {
-            echo json_encode(['error' => 'Quotation not found or not in priced status']);
+            echo json_encode(['error' => 'Quotation not found or not in priced status.']);
         }
     } catch (Exception $e) {
         echo json_encode(['error' => $e->getMessage()]);

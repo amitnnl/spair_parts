@@ -86,6 +86,6 @@ if ($method === 'POST') {
         }
         fclose($handle);
     } else {
-        echo json_encode(['error' => 'No file uploaded']);
+        echo json_encode(['error' => 'No file uploaded.']);
     }
 }

@@ -24,7 +24,7 @@ export function renderSupport(container, app) {
             <!-- Header -->
             <section class="bg-white border-b border-slate-100 py-24">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div class="text-[10px] font-black uppercase tracking-[0.4em] text-bosch-blue mb-6">Connect with us</div>
+                    <div class="text-xs font-black uppercase tracking-[0.4em] text-bosch-blue mb-6">Connect with us</div>
                     <h2 class="text-6xl font-black text-slate-900 tracking-tight mb-6 uppercase">${supportTitle}</h2>
                     <p class="text-slate-500 font-bold text-lg max-w-2xl mx-auto">${supportSubtitle}</p>
                 </div>
@@ -68,15 +68,15 @@ export function renderSupport(container, app) {
                         <form id="support-form" class="space-y-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="space-y-1.5">
-                                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</label>
+                                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Full Name</label>
                                     <input type="text" required class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all" placeholder="Enter your name">
                                 </div>
                                 <div class="space-y-1.5">
-                                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Work Email</label>
+                                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Work Email</label>
                                     <input type="email" required class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all" placeholder="Enter work email">
                                 </div>
                                 <div class="space-y-1.5">
-                                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Inquiry Subject</label>
+                                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Inquiry Subject</label>
                                     <select class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                                         <option>Part Fitment Assistance</option>
                                         <option>Bulk Order Inquiry</option>
@@ -85,15 +85,15 @@ export function renderSupport(container, app) {
                                     </select>
                                 </div>
                                 <div class="space-y-1.5">
-                                    <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Part No. / Model (Optional)</label>
+                                    <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Part No. / Model (Optional)</label>
                                     <input type="text" class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all" placeholder="e.g. GWS 600">
                                 </div>
                             </div>
                             <div class="space-y-1.5">
-                                <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Detailed Message</label>
+                                <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Detailed Message</label>
                                 <textarea required class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all h-28 resize-none" placeholder="Describe your technical requirement..."></textarea>
                             </div>
-                            <button type="submit" class="w-full h-11 bg-bosch-blue text-white rounded-full font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:bg-industrial-gray transition-colors">${supportCTA}</button>
+                            <button type="submit" class="w-full h-11 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-[0.2em] shadow-lg hover:bg-industrial-gray transition-colors">${supportCTA}</button>
                         </form>
                     </div>
                 </div>

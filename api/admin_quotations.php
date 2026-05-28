@@ -8,7 +8,7 @@ $isAdmin = isset($_SESSION['user_role']) && strtolower($_SESSION['user_role']) =
 
 if (!$isAdmin) {
     http_response_code(403);
-    echo json_encode(['error' => 'Administrative privileges required']);
+    echo json_encode(['error' => 'Administrative privileges required.']);
     exit;
 }
 

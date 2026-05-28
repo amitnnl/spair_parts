@@ -7,7 +7,7 @@ export function renderCart(container, app) {
                 </div>
                 <h2 class="text-2xl font-black text-slate-900 mb-2">Your cart is empty</h2>
                 <p class="text-slate-500 font-medium mb-8">Add spare parts to your cart to request a quotation.</p>
-                <a href="/catalog" data-link class="px-8 py-3 bg-bosch-blue text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Browse Catalogue</a>
+                <a href="/catalog" data-link class="px-8 py-3 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Browse Catalogue</a>
             </div>
         `;
         return;
@@ -24,9 +24,9 @@ export function renderCart(container, app) {
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-slate-50 border-b border-slate-200">
                         <tr>
-                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Spare Part Details</th>
-                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Quantity</th>
-                            <th class="p-6 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Action</th>
+                            <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Spare Part Details</th>
+                            <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Quantity</th>
+                            <th class="p-6 text-right text-xs font-black text-slate-500 uppercase tracking-widest">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
@@ -39,7 +39,7 @@ export function renderCart(container, app) {
                                 <td class="p-6">
                                     <div class="flex items-center gap-3">
                                         <input type="number" min="1" value="${item.quantity}" onchange="app.updateCartQty(${item.id}, this.value)" class="w-20 h-10 bg-slate-50 border border-slate-200 rounded-2xl px-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
-                                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Units</span>
+                                        <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Units</span>
                                     </div>
                                 </td>
                                 <td class="p-6 text-right">
@@ -57,11 +57,11 @@ export function renderCart(container, app) {
                 <div class="flex items-center gap-4 text-slate-500">
                     <svg class="w-10 h-10 text-white bg-bosch-blue p-2 rounded-2xl" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <div>
-                        <p class="text-[10px] font-black text-slate-900 uppercase tracking-widest">Standard Response Time: 24 Hours</p>
-                        <p class="text-[11px] font-medium leading-tight">Our team will review your request and provide competitive B2B pricing via email.</p>
+                        <p class="text-xs font-black text-slate-900 uppercase tracking-widest">Standard Response Time: 24 Hours</p>
+                        <p class="text-xs font-medium leading-tight">Our team will review your request and provide competitive B2B pricing via email.</p>
                     </div>
                 </div>
-                <button onclick="app.submitQuotation()" class="w-full md:w-auto h-14 px-12 rounded-full bg-bosch-blue text-white font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-slate-900/30 hover:bg-industrial-gray transition-all">
+                <button onclick="app.submitQuotation()" class="w-full md:w-auto h-14 px-12 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-slate-900/30 hover:bg-industrial-gray transition-all">
                     Submit RFQ Request
                 </button>
             </div>

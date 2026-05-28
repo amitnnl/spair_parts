@@ -21,12 +21,12 @@ export async function renderStockLogs(container, app) {
                     <!-- Header -->
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
-                            <div class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-2">Inventory Control</div>
+                            <div class="text-xs font-black uppercase tracking-[0.3em] text-blue-600 mb-2">Inventory Control</div>
                             <h2 class="text-4xl font-black text-slate-900 tracking-tight">Stock <span class="text-blue-600">Movement Log</span></h2>
                             <p class="text-slate-500 mt-2 font-medium">Real-time tracking of all stock-in and stock-out transactions.</p>
                         </div>
                         <button onclick="app.renderStockAdjustModal()"
-                            class="px-6 py-3.5 bg-blue-600 text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2 hover:-translate-y-1">
+                            class="px-6 py-3.5 bg-blue-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2 hover:-translate-y-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                             Adjust Stock
                         </button>
@@ -47,10 +47,10 @@ export async function renderStockLogs(container, app) {
                                 ${lowStock.map(item => `
                                     <div class="bg-white border border-rose-100 rounded-3xl p-4 flex flex-col gap-1">
                                         <p class="text-xs font-black text-slate-900">${item.part_name}</p>
-                                        <p class="text-[10px] text-slate-400 font-bold uppercase">${item.brand || 'N/A'}</p>
+                                        <p class="text-xs text-slate-500 font-bold uppercase">${item.brand || 'N/A'}</p>
                                         <div class="mt-2 flex items-center justify-between">
                                             <span class="text-xs font-black ${item.stock_quantity <= 0 ? 'text-rose-600' : 'text-amber-600'}">${item.stock_quantity} left</span>
-                                            <button onclick="app.renderStockAdjustModal(${item.id})" class="text-[9px] font-black uppercase tracking-widest text-blue-600 hover:underline">Restock</button>
+                                            <button onclick="app.renderStockAdjustModal(${item.id})" class="text-xs font-black uppercase tracking-widest text-blue-600 hover:underline">Restock</button>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -70,19 +70,19 @@ export async function renderStockLogs(container, app) {
                         <div class="p-8 border-b border-slate-100 flex items-center gap-4">
                             <div class="w-2 h-8 bg-blue-600 rounded-full"></div>
                             <h3 class="text-lg font-black text-slate-900">Transaction History</h3>
-                            <span class="ml-auto text-xs font-black text-slate-400 uppercase tracking-widest">Last ${logs.length} entries</span>
+                            <span class="ml-auto text-xs font-black text-slate-500 uppercase tracking-widest">Last ${logs.length} entries</span>
                         </div>
                         ${logs.length > 0 ? `
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left">
                                     <thead class="bg-slate-50/80 border-b border-slate-200">
                                         <tr>
-                                            <th class="p-5 pl-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Date & Time</th>
-                                            <th class="p-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Part</th>
-                                            <th class="p-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Type</th>
-                                            <th class="p-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Quantity</th>
-                                            <th class="p-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Note</th>
-                                            <th class="p-5 pr-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Logged By</th>
+                                            <th class="p-5 pl-8 text-xs font-black text-slate-500 uppercase tracking-widest">Date & Time</th>
+                                            <th class="p-5 text-xs font-black text-slate-500 uppercase tracking-widest">Part</th>
+                                            <th class="p-5 text-xs font-black text-slate-500 uppercase tracking-widest">Type</th>
+                                            <th class="p-5 text-xs font-black text-slate-500 uppercase tracking-widest">Quantity</th>
+                                            <th class="p-5 text-xs font-black text-slate-500 uppercase tracking-widest">Note</th>
+                                            <th class="p-5 pr-8 text-xs font-black text-slate-500 uppercase tracking-widest">Logged By</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-100">
@@ -90,14 +90,14 @@ export async function renderStockLogs(container, app) {
                                             <tr class="hover:bg-slate-50/80 transition-all">
                                                 <td class="p-5 pl-8">
                                                     <p class="text-xs font-black text-slate-900">${new Date(log.created_at).toLocaleDateString()}</p>
-                                                    <p class="text-[10px] text-slate-400 font-bold">${new Date(log.created_at).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</p>
+                                                    <p class="text-xs text-slate-500 font-bold">${new Date(log.created_at).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</p>
                                                 </td>
                                                 <td class="p-5">
                                                     <p class="text-xs font-black text-slate-900">${log.part_name}</p>
-                                                    <p class="text-[10px] text-slate-400 font-bold uppercase">${log.brand_name || 'N/A'}</p>
+                                                    <p class="text-xs text-slate-500 font-bold uppercase">${log.brand_name || 'N/A'}</p>
                                                 </td>
                                                 <td class="p-5">
-                                                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${log.type === 'in' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-rose-50 text-rose-600 border border-rose-200'}">
+                                                    <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest ${log.type === 'in' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-rose-50 text-rose-600 border border-rose-200'}">
                                                         ${log.type === 'in' ? '▲ Stock In' : '▼ Stock Out'}
                                                     </span>
                                                 </td>
@@ -114,7 +114,7 @@ export async function renderStockLogs(container, app) {
                                 </table>
                             </div>
                         ` : `
-                            <div class="p-20 text-center text-slate-400 font-bold">No stock transactions recorded yet.</div>
+                            <div class="p-20 text-center text-slate-500 font-bold">No stock transactions recorded yet.</div>
                         `}
                     </div>
 
@@ -139,38 +139,38 @@ export function renderStockAdjustModal(preselectedPartId = null, app) {
             <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <div>
                     <h2 class="text-xl font-black text-slate-900">Stock Adjustment</h2>
-                    <p class="text-xs text-slate-400 font-bold mt-1">Add or remove units from inventory</p>
+                    <p class="text-xs text-slate-500 font-bold mt-1">Add or remove units from inventory</p>
                 </div>
-                <button onclick="document.getElementById('stock-adjust-modal').remove()" class="text-slate-400 hover:text-slate-900 transition-all">
+                <button onclick="document.getElementById('stock-adjust-modal').remove()" class="text-slate-500 hover:text-slate-900 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             <div class="p-8 space-y-6">
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Part ID or Search</label>
+                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest">Part ID or Search</label>
                     <input type="number" id="stock-part-id" value="${preselectedPartId || ''}" placeholder="Enter Part ID"
                         class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-bold text-sm">
                 </div>
                 <div class="grid grid-cols-2 gap-8">
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Transaction Type</label>
+                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest">Transaction Type</label>
                         <select id="stock-type" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 outline-none font-bold text-sm">
                             <option value="in">▲ Stock In (Add)</option>
                             <option value="out">▼ Stock Out (Remove)</option>
                         </select>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Quantity</label>
+                        <label class="text-xs font-black text-slate-500 uppercase tracking-widest">Quantity</label>
                         <input type="number" id="stock-qty" min="1" value="1" placeholder="Units"
                             class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-bold text-sm">
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Note (Optional)</label>
+                    <label class="text-xs font-black text-slate-500 uppercase tracking-widest">Note (Optional)</label>
                     <input type="text" id="stock-note" placeholder="e.g. Monthly restock from supplier, or Used for repair order"
                         class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-bold text-sm">
                 </div>
-                <button onclick="app.submitStockAdjustment()" class="w-full py-4 bg-blue-600 text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20">
+                <button onclick="app.submitStockAdjustment()" class="w-full py-4 bg-blue-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20">
                     Record Transaction
                 </button>
             </div>

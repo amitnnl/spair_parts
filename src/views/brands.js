@@ -103,7 +103,7 @@ export function renderBrands(container, app) {
             <!-- Page Header -->
             <section class="bg-white border-b border-slate-100 py-24">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div class="text-[10px] font-black uppercase tracking-[0.4em] text-[#ed1c24] mb-6">Authorized Partners</div>
+                    <div class="text-xs font-black uppercase tracking-[0.4em] text-[#ed1c24] mb-6">Authorized Partners</div>
                     <h1 class="text-6xl font-black text-slate-900 tracking-tight mb-6 uppercase">
                         ${rawTitleHTML}
                     </h1>
@@ -126,11 +126,11 @@ export function renderBrands(container, app) {
                             <div class="flex-1 min-w-0 pr-1 flex flex-col justify-center">
                                 <h4 class="font-bold text-sm text-slate-900 leading-tight tracking-tight truncate mb-0.5 group-hover:text-[#ed1c24] transition-colors">${escapeHTML(b.name)}</h4>
                                 <div class="flex items-center gap-1.5 mb-1">
-                                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100">${escapeHTML(b.tag)}</span>
+                                    <span class="text-xs font-black text-slate-500 uppercase tracking-widest bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100">${escapeHTML(b.tag)}</span>
                                 </div>
-                                <p class="text-[10px] text-slate-500 font-medium truncate">${escapeHTML(b.desc)}</p>
+                                <p class="text-xs text-slate-500 font-medium truncate">${escapeHTML(b.desc)}</p>
                             </div>
-                            <a href="/catalog" data-link class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-400 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Explore Spares">
+                            <a href="/catalog" data-link class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Explore Spares">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                             </a>
                         </div>

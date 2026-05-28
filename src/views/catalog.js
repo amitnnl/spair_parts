@@ -21,10 +21,10 @@ export async function renderCatalog(container, appInstance) {
                     <div class="p-6 space-y-6 flex-1 overflow-y-auto no-scrollbar">
                         <!-- Search -->
                         <div class="space-y-3">
-                            <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Search</label>
+                            <label class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Search</label>
                             <div class="relative">
-                                <input type="text" id="catalog-search" class="w-full h-12 bg-slate-50 border border-slate-200 rounded-full pl-10 pr-4 text-xs font-bold text-slate-700 focus:outline-none focus:border-[#ed1c24] focus:bg-white transition-all placeholder:text-slate-400" placeholder="Part name or Model...">
-                                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                <input type="text" id="catalog-search" class="w-full h-12 bg-slate-50 border border-slate-200 rounded-full pl-10 pr-4 text-xs font-bold text-slate-700 focus:outline-none focus:border-[#ed1c24] focus:bg-white transition-all placeholder:text-slate-500" placeholder="Part name or Model...">
+                                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                 </div>
                             </div>
@@ -32,25 +32,25 @@ export async function renderCatalog(container, appInstance) {
 
                         <!-- Brand -->
                         <div class="space-y-3">
-                            <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Brand</label>
+                            <label class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Brand</label>
                             <div class="relative">
                                 <select id="brand-filter" class="w-full h-12 bg-slate-50 border border-slate-200 rounded-full px-4 text-xs font-bold text-slate-700 appearance-none focus:outline-none focus:border-[#ed1c24] transition-all cursor-pointer uppercase tracking-widest">
                                     <option value="">All Brands</option>
                                     ` + (state.brands || []).map(b => '<option value="' + escapeHTML(b) + '">' + escapeHTML(b) + '</option>').join('') + `
                                 </select>
-                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
                             </div>
                         </div>
 
                         <!-- Model -->
                         <div class="space-y-3">
-                            <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Model</label>
+                            <label class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Model</label>
                             <div class="relative">
                                 <select id="model-filter" class="w-full h-12 bg-slate-50 border border-slate-200 rounded-full px-4 text-xs font-bold text-slate-700 appearance-none focus:outline-none focus:border-[#ed1c24] transition-all cursor-pointer uppercase tracking-widest">
                                     <option value="">All Models</option>
                                     ` + (state.models || []).map(m => '<option value="' + escapeHTML(m) + '">' + escapeHTML(m) + '</option>').join('') + `
                                 </select>
-                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@ export async function renderCatalog(container, appInstance) {
                     <div class="max-w-[100rem] mx-auto space-y-12 animate-fade-in">
                         <div class="flex items-start justify-between">
                             <div>
-                                <div class="text-[10px] font-black uppercase tracking-[0.3em] text-[#ed1c24] mb-2">Inventory Explorer</div>
+                                <div class="text-xs font-black uppercase tracking-[0.3em] text-[#ed1c24] mb-2">Inventory Explorer</div>
                                 <h2 class="text-4xl font-black tracking-tight text-[#111111] uppercase">Genuine <span class="text-[#ed1c24]">Parts Catalog</span></h2>
                                 <p class="text-slate-500 font-medium mt-2 text-lg">Browse through our extensive collection of industrial spare parts.</p>
                             </div>
@@ -126,7 +126,7 @@ export function filterAndRenderProducts() {
     if (filtered.length === 0) {
         return `
             <div class="col-span-full py-20 text-center animate-in fade-in duration-500">
-                <h3 class="text-xl font-bold text-slate-400">No parts found</h3>
+                <h3 class="text-xl font-bold text-slate-500">No parts found</h3>
             </div>
         `;
     }
@@ -143,7 +143,7 @@ export function productCard(p) {
     const isProfileComplete = !state.user || state.user.profile_complete;
 
     const actionButton = isProfileComplete 
-        ? `<button onclick="app.addToCart(${escapedId})" class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-400 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Add to RFQ Cart">
+        ? `<button onclick="app.addToCart(${escapedId})" class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Add to RFQ Cart">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
            </button>`
         : `<a href="/profile" data-link class="w-8 h-8 rounded-full bg-amber-50 group-hover:bg-amber-500 text-amber-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-amber-500/30" title="Complete Profile to Order">
@@ -155,15 +155,15 @@ export function productCard(p) {
             <div class="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100">
                 <img src="${cleanImageUrl(p.photo, p.part_name)}" class="w-full h-full object-contain p-2 drop-shadow-sm group-hover:scale-110 transition-transform duration-500">
                 <div class="absolute -top-2 -left-2 scale-75 origin-top-left">
-                    <span class="px-2.5 py-1 bg-white/90 backdrop-blur-md border border-white/50 text-slate-900 shadow-sm text-[9px] font-bold uppercase tracking-widest rounded-xl">${escapedBrand}</span>
+                    <span class="px-2.5 py-1 bg-white/90 backdrop-blur-md border border-white/50 text-slate-900 shadow-sm text-xs font-bold uppercase tracking-widest rounded-xl">${escapedBrand}</span>
                 </div>
             </div>
             <div class="flex-1 min-w-0 pr-1 flex flex-col justify-center">
                 <h4 class="font-bold text-sm text-slate-900 leading-tight tracking-tight truncate mb-0.5 group-hover:text-[#ed1c24] transition-colors" title="${escapedName}">${escapedName}</h4>
                 <div class="flex items-center gap-1.5 mb-1">
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100">#${escapedId}</span>
+                    <span class="text-xs font-black text-slate-500 uppercase tracking-widest bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100">#${escapedId}</span>
                 </div>
-                <p class="text-[10px] text-slate-500 font-medium truncate">Fits: ${escapedModel}</p>
+                <p class="text-xs text-slate-500 font-medium truncate">Fits: ${escapedModel}</p>
             </div>
             ${actionButton}
         </div>

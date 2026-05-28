@@ -47,7 +47,7 @@ export function renderHome(container, app) {
                         <!-- Left Column: Dynamic Content & Mockup layout -->
                         <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
                             <div class="flex items-center justify-center lg:justify-start gap-2 text-zinc-800">
-                                <span class="text-xs font-black uppercase tracking-[0.2em] font-sans text-zinc-900">All Power Tool</span>
+                                <span class="text-xs font-black uppercase tracking-[0.25em] font-sans text-slate-900">All Power Tools</span>
                                 <div class="w-10 h-[2.5px] bg-[#ed1c24]"></div>
                             </div>
                             
@@ -58,7 +58,7 @@ export function renderHome(container, app) {
                                 </span>
                             </h1>
 
-                            <p class="text-[10px] font-black tracking-[0.2em] text-zinc-500 uppercase flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                            <p class="text-xs font-extrabold tracking-[0.25em] text-slate-600 uppercase flex flex-wrap items-center justify-center lg:justify-start gap-3">
                                 ` + subtitleHTML + `
                             </p>
 
@@ -70,7 +70,7 @@ export function renderHome(container, app) {
                                             <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                         </svg>
                                     </div>
-                                    <span class="text-[9px] font-black uppercase tracking-wider text-zinc-700 leading-tight">Premium<br>Quality</span>
+                                    <span class="text-xs sm:text-xs font-black uppercase tracking-widest text-slate-800 leading-tight">Premium<br>Quality</span>
                                 </div>
                                 <div class="flex flex-col items-center text-center">
                                     <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm hover:scale-105 transition-transform duration-300">
@@ -78,7 +78,7 @@ export function renderHome(container, app) {
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                         </svg>
                                     </div>
-                                    <span class="text-[9px] font-black uppercase tracking-wider text-zinc-700 leading-tight">Wide Range<br>of Parts</span>
+                                    <span class="text-xs sm:text-xs font-black uppercase tracking-widest text-slate-800 leading-tight">Wide Range<br>Of Parts</span>
                                 </div>
                                 <div class="flex flex-col items-center text-center">
                                     <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm hover:scale-105 transition-transform duration-300">
@@ -86,7 +86,7 @@ export function renderHome(container, app) {
                                             <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" />
                                         </svg>
                                     </div>
-                                    <span class="text-[9px] font-black uppercase tracking-wider text-zinc-700 leading-tight">High<br>Durability</span>
+                                    <span class="text-xs sm:text-xs font-black uppercase tracking-widest text-slate-800 leading-tight">High<br>Durability</span>
                                 </div>
                                 <div class="flex flex-col items-center text-center">
                                     <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm hover:scale-105 transition-transform duration-300">
@@ -94,7 +94,7 @@ export function renderHome(container, app) {
                                             <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1" />
                                         </svg>
                                     </div>
-                                    <span class="text-[9px] font-black uppercase tracking-wider text-zinc-700 leading-tight">Fast & Reliable<br>Delivery</span>
+                                    <span class="text-xs sm:text-xs font-black uppercase tracking-widest text-slate-800 leading-tight">Fast & Reliable<br>Delivery</span>
                                 </div>
                             </div>
                         </div>
@@ -132,9 +132,9 @@ export function renderHome(container, app) {
                                     <path d="M12 9V6M5.5 7.5l4.5 3M18.5 7.5l-4.5 3M12 15v1.5" stroke="currentColor" stroke-width="2.5"/>
                                 </svg>
                             </div>
-                            <div class="space-y-0.5">
-                                <span class="block text-xl font-extrabold tracking-tight leading-none text-white font-poppins">10,000+</span>
-                                <span class="block text-[9px] font-bold uppercase tracking-wider text-zinc-400">Parts Across Top Brands</span>
+                            <div class="space-y-1">
+                                <span class="block text-2xl font-extrabold tracking-tight leading-none text-white font-poppins">10,000+</span>
+                                <span class="block text-xs font-bold uppercase tracking-widest text-zinc-300">Parts Across Top Brands</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
@@ -143,9 +143,9 @@ export function renderHome(container, app) {
                                     <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                 </svg>
                             </div>
-                            <div class="space-y-0.5">
-                                <span class="block text-xl font-extrabold tracking-tight leading-none text-white font-poppins">500+</span>
-                                <span class="block text-[9px] font-bold uppercase tracking-wider text-zinc-400">Brands Available</span>
+                            <div class="space-y-1">
+                                <span class="block text-2xl font-extrabold tracking-tight leading-none text-white font-poppins">500+</span>
+                                <span class="block text-xs font-bold uppercase tracking-widest text-zinc-300">Brands Available</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
@@ -154,9 +154,9 @@ export function renderHome(container, app) {
                                     <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                             </div>
-                            <div class="space-y-0.5">
-                                <span class="block text-xl font-extrabold tracking-tight leading-none text-white font-poppins">1L+</span>
-                                <span class="block text-[9px] font-bold uppercase tracking-wider text-zinc-400">Happy B2B Customers</span>
+                            <div class="space-y-1">
+                                <span class="block text-2xl font-extrabold tracking-tight leading-none text-white font-poppins">1L+</span>
+                                <span class="block text-xs font-bold uppercase tracking-widest text-zinc-300">Happy B2B Customers</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
@@ -165,9 +165,9 @@ export function renderHome(container, app) {
                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <div class="space-y-0.5">
-                                <span class="block text-xl font-extrabold tracking-tight leading-none text-white font-poppins">99.7%</span>
-                                <span class="block text-[9px] font-bold uppercase tracking-wider text-zinc-400">Order Accuracy</span>
+                            <div class="space-y-1">
+                                <span class="block text-2xl font-extrabold tracking-tight leading-none text-white font-poppins">99.7%</span>
+                                <span class="block text-xs font-bold uppercase tracking-widest text-zinc-300">Order Accuracy</span>
                             </div>
                         </div>
                     </div>
@@ -177,9 +177,9 @@ export function renderHome(container, app) {
             <!-- ═══ POPULAR SEARCHES BAR (Mockup: White bar with grey tag pills) ═══ -->
             <section class="bg-white py-3 border-b border-zinc-200/50 no-print shadow-sm">
                 <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-wrap items-center gap-4">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-zinc-800">Popular Searches:</span>
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-slate-700">Popular Searches:</span>
                     <div class="flex flex-wrap gap-2">
-                        ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => '<button onclick="clickPopularSearch(\'' + term + '\')" class="px-4 py-1.5 bg-zinc-50 border border-zinc-200 hover:border-[#ed1c24] hover:text-[#ed1c24] text-[10px] font-bold uppercase tracking-wider rounded-full transition-all cursor-pointer">' + term + '</button>').join('') + `
+                        ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => '<button onclick="clickPopularSearch(\'' + term + '\')" class="px-5 py-2 bg-zinc-50 border border-zinc-200 hover:border-[#ed1c24] hover:text-[#ed1c24] text-xs font-semibold uppercase tracking-widest rounded-full transition-all cursor-pointer">' + term + '</button>').join('') + `
                     </div>
                 </div>
             </section>
@@ -191,9 +191,9 @@ export function renderHome(container, app) {
                     <!-- Header -->
                     <div class="flex items-center justify-between mb-10">
                         <div>
-                            <h2 class="text-2xl sm:text-3xl font-black text-black tracking-tight font-poppins uppercase">Shop by Top Categories</h2>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight font-display">Shop By Top Categories</h2>
                         </div>
-                        <a href="/categories" data-link class="text-xs font-bold text-[#ed1c24] hover:text-[#c1121f] transition-colors flex items-center gap-1.5 uppercase tracking-wider font-poppins">
+                        <a href="/categories" data-link class="text-sm font-bold text-[#ed1c24] hover:text-[#c1121f] transition-colors flex items-center gap-1.5 uppercase tracking-widest underline decoration-2 underline-offset-4 decoration-rose-200 hover:decoration-[#ed1c24]">
                             View All Categories 
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
                         </a>
@@ -209,10 +209,10 @@ export function renderHome(container, app) {
                                         : `<div class="w-full h-full flex items-center justify-center text-slate-300 group-hover:text-[#ed1c24] transition-colors duration-300"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="${escapeHTML(c.icon_svg)}"/></svg></div>`}
                                 </div>
                                 <div class="flex-1 min-w-0 pr-2">
-                                    <h4 class="font-bold text-sm text-slate-900 tracking-tight truncate group-hover:text-[#ed1c24] transition-colors" title="${escapeHTML(c.title)}">${escapeHTML(c.title)}</h4>
-                                    <p class="text-[10px] text-slate-400 font-medium truncate mt-0.5">${escapeHTML(c.description || 'Explore Parts')}</p>
+                                    <h4 class="font-bold text-base text-slate-900 tracking-tight truncate group-hover:text-[#ed1c24] transition-colors" title="${escapeHTML(c.title)}">${escapeHTML(c.title)}</h4>
+                                    <p class="text-xs text-slate-500 font-medium truncate mt-1">${escapeHTML(c.description || 'Explore Parts')}</p>
                                 </div>
-                                <div class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-400 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30">
+                                <div class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                                 </div>
                             </div>
@@ -221,16 +221,16 @@ export function renderHome(container, app) {
                 </div>
             </section>
 
-            <!-- ═══ TRUSTED BY PROFESSIONALS (100% Mockup Exact brand logos with actual visual styling) ═══ -->
+            <!-- ═══ Trusted By PROFESSIONALS (100% Mockup Exact brand logos with actual visual styling) ═══ -->
             <section class="py-12 bg-white border-y border-zinc-200/80">
                 <div class="max-w-7xl mx-auto px-6 lg:px-10">
                     <div class="text-center mb-8">
-                        <span class="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400">Trusted by Professionals. Preferred by Brands.</span>
+                        <span class="text-xs font-extrabold uppercase tracking-[0.3em] text-slate-500">Trusted By Professionals. Preferred By Brands.</span>
                     </div>
                     
                     <div class="flex items-center justify-between gap-4 relative">
                         <!-- Left Arrow (Red circle chevrons) -->
-                        <button class="w-8 h-8 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-400 hover:text-[#ed1c24] transition-all flex-shrink-0 cursor-pointer shadow-sm bg-white hover:bg-rose-50">
+                        <button class="w-8 h-8 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all flex-shrink-0 cursor-pointer shadow-sm bg-white hover:bg-rose-50">
                             <span class="text-xs font-bold font-mono">&lt;</span>
                         </button>
                         
@@ -256,7 +256,7 @@ export function renderHome(container, app) {
                                 <span class="text-xl font-extrabold italic tracking-tighter text-zinc-950 font-sans">metabo</span>
 
                                 <!-- 5. BLACK+DECKER -->
-                                <div class="border-2 border-[#ff6b00] px-3 py-1 text-black font-black text-[10px] tracking-tight uppercase shadow-sm">BLACK+DECKER</div>
+                                <div class="border-2 border-[#ff6b00] px-3 py-1 text-black font-black text-xs tracking-tight uppercase shadow-sm">BLACK+DECKER</div>
 
                                 <!-- 6. HITACHI -->
                                 <span class="text-lg font-black tracking-tight text-[#ed1c24] uppercase font-sans">HITACHI</span>
@@ -270,7 +270,7 @@ export function renderHome(container, app) {
                         </div>
 
                         <!-- Right Arrow (Red circle chevrons) -->
-                        <button class="w-8 h-8 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-400 hover:text-[#ed1c24] transition-all flex-shrink-0 cursor-pointer shadow-sm bg-white hover:bg-rose-50">
+                        <button class="w-8 h-8 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all flex-shrink-0 cursor-pointer shadow-sm bg-white hover:bg-rose-50">
                             <span class="text-xs font-bold font-mono">&gt;</span>
                         </button>
                     </div>
@@ -290,8 +290,8 @@ export function renderHome(container, app) {
                                 </svg>
                             </div>
                             <div class="space-y-1">
-                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Wide Range</span>
-                                <span class="block text-[10px] text-zinc-400 font-medium">10,000+ parts in 100+ categories</span>
+                                <span class="block text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">Wide Range</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-1">10,000+ parts in 100+ categories</span>
                             </div>
                         </div>
 
@@ -303,8 +303,8 @@ export function renderHome(container, app) {
                                 </svg>
                             </div>
                             <div class="space-y-1">
-                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Easy Lookup</span>
-                                <span class="block text-[10px] text-zinc-400 font-medium">Find parts by model, diagram & part number</span>
+                                <span class="block text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">Easy Lookup</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-1">Find parts by model, diagram & part number</span>
                             </div>
                         </div>
 
@@ -316,8 +316,8 @@ export function renderHome(container, app) {
                                 </svg>
                             </div>
                             <div class="space-y-1">
-                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Bulk Ordering</span>
-                                <span class="block text-[10px] text-zinc-400 font-medium">Simplified bulk order & repeat order</span>
+                                <span class="block text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">Bulk Ordering</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-1">Simplified bulk order & repeat order</span>
                             </div>
                         </div>
 
@@ -329,8 +329,8 @@ export function renderHome(container, app) {
                                 </svg>
                             </div>
                             <div class="space-y-1">
-                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Secure Payments</span>
-                                <span class="block text-[10px] text-zinc-400 font-medium">Multiple payment options & GST invoicing</span>
+                                <span class="block text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">Secure Payments</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-1">Multiple payment options & GST invoicing</span>
                             </div>
                         </div>
 
@@ -342,8 +342,8 @@ export function renderHome(container, app) {
                                 </svg>
                             </div>
                             <div class="space-y-1">
-                                <span class="block text-[11px] font-black uppercase tracking-wider text-slate-800 leading-tight">Pan India Delivery</span>
-                                <span class="block text-[10px] text-zinc-400 font-medium">Fast & reliable delivery across India</span>
+                                <span class="block text-xs font-black uppercase tracking-widest text-slate-900 leading-tight">Pan India Delivery</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-1">Fast & reliable delivery across India</span>
                             </div>
                         </div>
 

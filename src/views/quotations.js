@@ -22,7 +22,7 @@ export async function renderQuotations(container, appInstance) {
                     <div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                             <div>
-                                <div class="text-[10px] font-black uppercase tracking-[0.3em] text-bosch-blue">${isAdmin ? 'Global Transaction Monitor' : 'Procurement History'}</div>
+                                <div class="text-xs font-black uppercase tracking-[0.3em] text-bosch-blue">${isAdmin ? 'Global Transaction Monitor' : 'Procurement History'}</div>
                                 <h2 class="text-4xl font-black tracking-tight text-bosch-blue uppercase">${isAdmin ? 'All <span class="text-bosch-blue">Quotations</span>' : 'Your <span class="text-bosch-blue">Quotations</span>'}</h2>
                                 <p class="text-slate-500 font-medium mt-2 text-lg">${isAdmin ? 'Manage and price all incoming partner requests.' : 'Track your request for quotes and approval statuses.'}</p>
                             </div>
@@ -50,32 +50,32 @@ export async function renderQuotations(container, appInstance) {
                                         <tr class="hover:bg-slate-50 transition-all">
                                             <td class="p-6">
                                                 <div class="font-bold text-bosch-blue">${isAdmin ? escapeHTML(q.user_name) : `#Q-${String(q.id).padStart(4, '0')}`}</div>
-                                                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(q.created_at).toLocaleDateString()} ${isAdmin ? `• #Q-${String(q.id).padStart(4, '0')}` : ''}</div>
+                                                <div class="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">${new Date(q.created_at).toLocaleDateString()} ${isAdmin ? `• #Q-${String(q.id).padStart(4, '0')}` : ''}</div>
                                             </td>
                                             <td class="p-6 font-bold text-slate-600">${q.item_count || 0} Products</td>
                                             <td class="p-6">
-                                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${appInstance.getStatusClass(q.status)}">
+                                                <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest ${appInstance.getStatusClass(q.status)}">
                                                     ${escapeHTML(q.status)}
                                                 </span>
                                             </td>
                                             <td class="p-6 font-black text-bosch-blue">
-                                                ${q.status === 'pending' ? '<span class="text-slate-400 font-bold italic">Awaiting Pricing</span>' : `₹${parseFloat(q.total_amount || 0).toLocaleString()}`}
+                                                ${q.status === 'pending' ? '<span class="text-slate-500 font-bold italic">Awaiting Pricing</span>' : `₹${parseFloat(q.total_amount || 0).toLocaleString()}`}
                                             </td>
                                             <td class="p-6 text-right">
                                                 <div class="flex justify-end gap-3">
-                                                    <button onclick="${isAdmin ? `app.renderProcessQuotation(${q.id})` : `app.viewQuotationDetails(${q.id})`}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-slate-200 transition-all">
+                                                    <button onclick="${isAdmin ? `app.renderProcessQuotation(${q.id})` : `app.viewQuotationDetails(${q.id})`}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">
                                                         ${isAdmin && q.status === 'pending' ? 'Process' : 'View'}
                                                     </button>
-                                                    ${!isAdmin && q.status === 'pending' ? `<button onclick="app.editQuotation(${q.id})" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>` : ''}
-                                                    ${!isAdmin && q.status === 'priced' ? `<button onclick="app.approveQuotation(${q.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Approve</button>` : ''}
+                                                    ${!isAdmin && q.status === 'pending' ? '<button onclick="app.editQuotation(' + q.id + ')" class="px-4 py-2 bg-amber-50 text-amber-600 rounded-full font-black text-xs uppercase tracking-widest hover:bg-amber-600 hover:text-white transition-all">Edit</button>' : ''}
+                                                    (!isAdmin && q.status === 'priced' ? '<button onclick="app.approveQuotation(' + q.id + ')" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">Approve</button>' : '')
                                                 </div>
                                             </td>
                                         </tr>
-                                    `).join('') : `
-                                        <tr>
-                                            <td colspan="5" class="p-20 text-center text-slate-400 font-bold">${isAdmin ? 'No partner requests found.' : "You haven't requested any quotations yet."}</td>
-                                        </tr>
-                                    `}
+                                    `).join('') : (
+                                        '<tr>' +
+                                            '<td colspan="5" class="p-20 text-center text-slate-500 font-bold">' + (isAdmin ? 'No partner requests found.' : "You haven't requested any quotations yet.") + '</td>' +
+                                        '</tr>'
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -102,9 +102,9 @@ export async function viewQuotationDetails(id, appInstance) {
                 <div class="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                     <div>
                         <h2 class="text-2xl font-black text-bosch-blue uppercase">Quotation Details</h2>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">#Q-${String(id).padStart(4, '0')} • Requested on ${new Date(data.created_at).toLocaleDateString()}</p>
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">#Q-${String(id).padStart(4, '0')} • Requested on ${new Date(data.created_at).toLocaleDateString()}</p>
                     </div>
-                    <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-400 hover:bg-slate-100 hover:text-bosch-blue flex items-center justify-center transition-all">
+                    <button onclick="document.getElementById('quotation-modal').remove()" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 hover:text-bosch-blue flex items-center justify-center transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
@@ -114,39 +114,39 @@ export async function viewQuotationDetails(id, appInstance) {
                         <table class="w-full text-left">
                             <thead class="bg-slate-50">
                                 <tr>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Spare Part</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Qty</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Unit Price</th>
-                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Subtotal</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Spare Part</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Qty</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest text-right">Unit Price</th>
+                                    <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest text-right">Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
-                                ${data.items.map(item => `
-                                    <tr>
-                                        <td class="p-6">
-                                            <div class="font-bold text-bosch-blue">${escapeHTML(item.part_name)}</div>
-                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-tight mt-0.5">${escapeHTML(item.brand)} • ${escapeHTML(item.machine_model)}</div>
-                                        </td>
-                                        <td class="p-6 text-sm font-bold text-slate-600">${item.quantity}</td>
-                                        <td class="p-6 text-sm font-black text-bosch-blue text-right">${item.unit_price ? `₹${parseFloat(item.unit_price).toLocaleString()}` : '<span class="text-slate-400 italic">Pending</span>'}</td>
-                                        <td class="p-6 text-sm font-black text-bosch-blue text-right">${item.unit_price ? `₹${(item.quantity * item.unit_price).toLocaleString()}` : '---'}</td>
-                                    </tr>
-                                `).join('')}
+                                ${data.items.map(item => 
+                                    '<tr>' +
+                                        '<td class="p-6">' +
+                                            '<div class="font-bold text-bosch-blue">' + escapeHTML(item.part_name) + '</div>' +
+                                            '<div class="text-xs text-slate-500 font-bold uppercase tracking-tight mt-0.5">' + escapeHTML(item.brand) + ' • ' + escapeHTML(item.machine_model) + '</div>' +
+                                        '</td>' +
+                                        '<td class="p-6 text-sm font-bold text-slate-600">' + escapeHTML(String(item.quantity)) + '</td>' +
+                                        '<td class="p-6 text-sm font-black text-bosch-blue text-right">' + (item.unit_price ? '₹' + escapeHTML(parseFloat(item.unit_price).toLocaleString()) : '<span class="text-slate-500 italic">Pending</span>') + '</td>' +
+                                        '<td class="p-6 text-sm font-black text-bosch-blue text-right">' + (item.unit_price ? '₹' + escapeHTML((item.quantity * item.unit_price).toLocaleString()) : '---') + '</td>' +
+                                    '</tr>'
+                                ).join('')}
                             </tbody>
-                            ${data.total_amount ? `
-                                <tfoot class="bg-slate-50 font-black">
-                                    <tr>
-                                        <td colspan="3" class="p-6 text-right text-slate-400 uppercase tracking-widest text-xs">Total Amount</td>
-                                        <td class="p-6 text-right text-2xl text-bosch-blue">₹${parseFloat(data.total_amount).toLocaleString()}</td>
-                                    </tr>
-                                </tfoot>
-                            ` : ''}
+                            ${data.total_amount ? (
+                                '<tfoot class="bg-slate-50 font-black">' +
+                                    '<tr>' +
+                                        '<td colspan="3" class="p-6 text-right text-slate-500 uppercase tracking-widest text-xs">Total Amount</td>' +
+                                        '<td class="p-6 text-right text-2xl text-bosch-blue">₹' + escapeHTML(parseFloat(data.total_amount).toLocaleString()) + '</td>' +
+                                    '</tr>' +
+                                '</tfoot>'
+                            ) : ''}
                         </table>
                     </div>
                     
                     <div class="flex justify-end gap-4">
-                        <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-full border border-slate-200 text-slate-400 font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 hover:text-bosch-blue transition-all">Close Details</button>
-                        ${data.status === 'priced' ? `<button onclick="app.approveQuotation(${id})" class="px-10 py-4 rounded-full bg-bosch-blue text-white font-black text-[11px] uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray transition-all">Approve & Order</button>` : ''}
+                        <button onclick="document.getElementById('quotation-modal').remove()" class="px-8 py-4 rounded-full border border-slate-200 text-slate-500 font-black text-xs uppercase tracking-widest hover:bg-slate-50 hover:text-bosch-blue transition-all">Close Details</button>
+                        ${data.status === 'priced' ? '<button onclick="app.approveQuotation(' + id + ')" class="px-10 py-4 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-slate-900/20 hover:bg-industrial-gray transition-all">Approve & Order</button>' : ''}
                     </div>
                 </div>
             </div>

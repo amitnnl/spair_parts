@@ -4,7 +4,7 @@ require_once '../config/database.php';
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['error' => 'Unauthorized']);
+    echo json_encode(['error' => 'Unauthorized.']);
     exit;
 }
 
@@ -21,7 +21,7 @@ try {
 
 if ($method === 'POST') {
     if (!isset($_SESSION['user_role']) || strtolower($_SESSION['user_role']) !== 'admin') {
-        echo json_encode(['error' => 'Unauthorized - Admin access required to generate invoices']);
+        echo json_encode(['error' => 'Unauthorized. Admin access required to generate invoices.']);
         exit;
     }
     // Generate invoice from approved quotation
@@ -58,7 +58,7 @@ if ($method === 'POST') {
 } elseif ($method === 'PUT') {
     // Update order status (Dispatch/Delivery)
     if ($_SESSION['user_role'] !== 'admin') {
-        echo json_encode(['error' => 'Unauthorized']);
+        echo json_encode(['error' => 'Unauthorized.']);
         exit;
     }
     $data = json_decode(file_get_contents('php://input'), true);
@@ -104,7 +104,7 @@ if ($method === 'POST') {
         $invoice = $stmt->fetch();
         
         if (!$invoice) {
-            echo json_encode(['error' => 'Invoice not found or unauthorized']);
+            echo json_encode(['error' => 'Invoice not found or unauthorized.']);
             exit;
         }
         

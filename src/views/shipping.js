@@ -14,9 +14,9 @@ export default {
                     </div>
                     
                     <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
-                        <span class="inline-block px-4 py-1.5 rounded-none bg-bosch-blue/20 text-bosch-blue text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-bosch-blue/30">Logistics & Delivery</span>
+                        <span class="inline-block px-4 py-1.5 rounded-none bg-bosch-blue/20 text-bosch-blue text-xs font-black uppercase tracking-[0.2em] mb-6 border border-bosch-blue/30">Logistics & Delivery</span>
                         <h1 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight uppercase tracking-tight">Shipping <span class="text-bosch-red">Information</span></h1>
-                        <p class="text-slate-400 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
+                        <p class="text-slate-500 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
                             Everything you need to know about how we deliver genuine spare parts to your doorstep across India.
                         </p>
                     </div>
@@ -90,7 +90,7 @@ export default {
                             <div class="absolute inset-0 bg-bosch-blue/10 mix-blend-overlay"></div>
                             <div class="relative z-10">
                                 <h3 class="text-2xl font-black text-white mb-4 uppercase tracking-widest">Track Your Order</h3>
-                                <p class="text-slate-400 font-medium mb-8">Once your order is shipped, we will send you a tracking link via SMS and Email.</p>
+                                <p class="text-slate-500 font-medium mb-8">Once your order is shipped, we will send you a tracking link via SMS and Email.</p>
                                 <a href="/support" data-link class="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-3xl font-black text-xs uppercase tracking-widest hover:bg-bosch-blue hover:text-white transition-all duration-300">
                                     Need Help? Contact Support
                                 </a>

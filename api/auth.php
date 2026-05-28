@@ -40,7 +40,7 @@ if ($action === 'login') {
             'profile_complete' => $profile_complete
         ]]);
     } else {
-        echo json_encode(['error' => 'Invalid credentials']);
+        echo json_encode(['error' => 'Invalid credentials.']);
     }
 } elseif ($action === 'register') {
     $name = $data['name'] ?? '';
@@ -48,7 +48,7 @@ if ($action === 'login') {
     $password = $data['password'] ?? '';
 
     if (empty($name) || empty($email) || empty($password)) {
-        echo json_encode(['error' => 'All fields are required']);
+        echo json_encode(['error' => 'All fields are required.']);
         exit;
     }
 
@@ -56,7 +56,7 @@ if ($action === 'login') {
     $stmt = $db->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
-        echo json_encode(['error' => 'Email already registered']);
+        echo json_encode(['error' => 'Email already registered.']);
         exit;
     }
 

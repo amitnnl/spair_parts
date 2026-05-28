@@ -16,24 +16,24 @@ export function renderLogin(container, app) {
                     
                     <form id="login-form" class="space-y-4">
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Corporate Email</label>
+                            <label class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Corporate Email</label>
                             <div class="relative">
                                 <input type="email" name="email" required 
                                     class="h-11 pl-11 pr-4 rounded-full border-2 border-slate-100 bg-slate-50 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" 
                                     placeholder="name@company.com">
-                                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/></svg>
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Access Password</label>
+                            <label class="text-xs font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Access Password</label>
                             <div class="relative">
                                 <input type="password" name="password" required 
                                     class="h-11 pl-11 pr-4 rounded-full border-2 border-slate-100 bg-slate-50 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" 
                                     placeholder="••••••••">
-                                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                                 </div>
                             </div>
@@ -42,20 +42,20 @@ export function renderLogin(container, app) {
                         <div class="flex items-center justify-between">
                             <label class="flex items-center gap-2 cursor-pointer group">
                                 <input type="checkbox" class="w-4 h-4 border-2 border-slate-200 rounded-none text-bosch-blue focus:ring-bosch-blue transition-all">
-                                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest group-hover:text-bosch-blue transition-colors">Keep me active</span>
+                                <span class="text-xs font-black text-slate-500 uppercase tracking-widest group-hover:text-bosch-blue transition-colors">Keep me active</span>
                             </label>
-                            <a href="#" class="text-[9px] font-black text-bosch-blue uppercase tracking-widest hover:underline">Reset Password</a>
+                            <a href="#" class="text-xs font-black text-bosch-blue uppercase tracking-widest hover:underline">Reset Password</a>
                         </div>
 
-                        <button type="submit" class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-slate-900/10 hover:bg-industrial-gray transition-all flex items-center justify-center gap-2 group">
+                        <button type="submit" class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-[0.2em] shadow-lg shadow-slate-900/10 hover:bg-industrial-gray transition-all flex items-center justify-center gap-2 group">
                             Synchronize & Enter
                             <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                         </button>
                     </form>
 
                     <div class="text-center pt-4 border-t border-slate-100">
-                        <p class="text-[11px] font-bold text-slate-500">
-                            New Partner? <a href="/register" data-link class="text-bosch-blue font-black uppercase tracking-widest text-[10px] ml-1 hover:underline">Request Onboarding</a>
+                        <p class="text-xs font-bold text-slate-500">
+                            New Partner? <a href="/register" data-link class="text-bosch-blue font-black uppercase tracking-widest text-xs ml-1 hover:underline">Request Onboarding</a>
                         </p>
                     </div>
                 </div>
@@ -117,38 +117,38 @@ export function renderRegister(container, app) {
                             <div class="space-y-3 pt-2">
                                 <div class="flex items-center gap-2.5">
                                     <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
-                                    <span class="text-[9px] font-black text-slate-700 uppercase tracking-widest">Wholesale Contract Pricing</span>
+                                    <span class="text-xs font-black text-slate-700 uppercase tracking-widest">Wholesale Contract Pricing</span>
                                 </div>
                                 <div class="flex items-center gap-2.5">
                                     <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
-                                    <span class="text-[9px] font-black text-slate-700 uppercase tracking-widest">Priority Stock Allocation</span>
+                                    <span class="text-xs font-black text-slate-700 uppercase tracking-widest">Priority Stock Allocation</span>
                                 </div>
                             </div>
                         </div>
 
                         <form id="register-form" class="flex-1 space-y-4">
                             <div class="space-y-1.5">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-2">Full Name</label>
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2">Full Name</label>
                                 <input type="text" name="name" required class="rounded-none border-2 border-slate-100 bg-slate-50 h-11 px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" placeholder="Full Name">
                             </div>
                             <div class="space-y-1.5">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-2">Business Email</label>
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2">Business Email</label>
                                 <input type="email" name="email" required class="rounded-none border-2 border-slate-100 bg-slate-50 h-11 px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" placeholder="Corporate Email">
                             </div>
                             <div class="space-y-1.5">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-2">Create Password</label>
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-widest ml-2">Create Password</label>
                                 <input type="password" name="password" required class="rounded-none border-2 border-slate-100 bg-slate-50 h-11 px-4 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white focus:ring-4 focus:ring-bosch-blue/10 transition-all w-full" placeholder="••••••••">
                             </div>
-                            <button type="submit" class="w-full h-11 rounded-full bg-industrial-gray text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:bg-bosch-blue transition-all">Submit Application</button>
-                            <p class="text-center text-[9px] font-bold text-slate-400">By applying, you agree to our B2B Terms of Service.</p>
+                            <button type="submit" class="w-full h-11 rounded-full bg-industrial-gray text-white font-black text-xs uppercase tracking-[0.2em] shadow-lg hover:bg-bosch-blue transition-all">Submit Application</button>
+                            <p class="text-center text-xs font-bold text-slate-500">By applying, you agree to our B2B Terms of Service.</p>
                         </form>
                     </div>
 
                     <div class="h-[1px] bg-slate-100 my-4"></div>
 
                     <div class="text-center pt-2">
-                        <p class="text-[11px] font-bold text-slate-500">
-                            Already a registered partner? <a href="/login" data-link class="text-bosch-blue font-black uppercase tracking-widest text-[10px] ml-1 hover:underline">Access Portal</a>
+                        <p class="text-xs font-bold text-slate-500">
+                            Already a registered partner? <a href="/login" data-link class="text-bosch-blue font-black uppercase tracking-widest text-xs ml-1 hover:underline">Access Portal</a>
                         </p>
                     </div>
                 </div>

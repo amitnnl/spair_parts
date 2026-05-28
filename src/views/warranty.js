@@ -14,9 +14,9 @@ export default {
                     </div>
                     
                     <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
-                        <span class="inline-block px-4 py-1.5 rounded-none bg-bosch-blue/20 text-bosch-blue text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-bosch-blue/30">Quality Assurance</span>
+                        <span class="inline-block px-4 py-1.5 rounded-none bg-bosch-blue/20 text-bosch-blue text-xs font-black uppercase tracking-[0.2em] mb-6 border border-bosch-blue/30">Quality Assurance</span>
                         <h1 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight uppercase tracking-tight">Warranty & <span class="text-bosch-red">Returns</span></h1>
-                        <p class="text-slate-400 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
+                        <p class="text-slate-500 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
                             Our commitment to quality means your satisfaction is guaranteed. Learn about our genuine parts warranty and hassle-free return policy.
                         </p>
                     </div>
@@ -42,11 +42,11 @@ export default {
 
                                 <div class="p-8 bg-slate-50 rounded-none border border-slate-100 border-l-8 border-l-bosch-blue space-y-6">
                                     <div class="space-y-2">
-                                        <h4 class="text-sm font-black text-slate-900 uppercase tracking-wider">What's Covered?</h4>
+                                        <h4 class="text-sm font-black text-slate-900 uppercase tracking-widest">What's Covered?</h4>
                                         <p class="text-xs font-bold text-slate-500 leading-relaxed">Manufacturing defects, material failure, and performance inconsistencies under normal operating conditions.</p>
                                     </div>
                                     <div class="space-y-2">
-                                        <h4 class="text-sm font-black text-slate-900 uppercase tracking-wider">Duration</h4>
+                                        <h4 class="text-sm font-black text-slate-900 uppercase tracking-widest">Duration</h4>
                                         <p class="text-xs font-bold text-slate-500 leading-relaxed">Varies by brand (typically 3-12 months). Please refer to the specific brand card for exact details.</p>
                                     </div>
                                 </div>
