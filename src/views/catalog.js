@@ -76,6 +76,39 @@ export async function renderCatalog(container, appInstance) {
             </div>
         `);
         renderCatalogContent(data.products, document.getElementById('catalog-content'), appInstance);
+
+        // Initialize Spotlight Tracking for Catalog
+        setTimeout(() => {
+            const trackSpotlight = () => {
+                document.querySelectorAll('.spotlight-card').forEach(card => {
+                    if (card.dataset.spotlightBound) return;
+                    card.dataset.spotlightBound = 'true';
+                    card.addEventListener('mousemove', e => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        card.style.setProperty('--mouse-x', `${x}px`);
+                        card.style.setProperty('--mouse-y', `${y}px`);
+                    });
+                });
+            };
+            trackSpotlight();
+
+            // Set up MutationObserver to automatically bind fresh filtered products
+            const catalogObserver = new MutationObserver(() => {
+                trackSpotlight();
+            });
+            catalogObserver.observe(container, { childList: true, subtree: true });
+
+            // Auto-cleanup on navigation away
+            const navObserver = new MutationObserver(() => {
+                if (!container.isConnected) {
+                    catalogObserver.disconnect();
+                    navObserver.disconnect();
+                }
+            });
+            navObserver.observe(document.body, { childList: true, subtree: true });
+        }, 150);
     } catch (e) {
         setHTML(container, '<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load products.</div>');
     }
@@ -161,7 +194,7 @@ export function productCard(p) {
        </div>`;
 
     return `
-        <div class="bg-white rounded-3xl overflow-hidden group transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-3 animate-in zoom-in duration-700 h-full">
+        <div class="bg-white rounded-3xl overflow-hidden group transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-3 animate-in zoom-in duration-700 h-full spotlight-card">
             <div class="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100">
                 <img src="${cleanImageUrl(p.photo, p.part_name)}" class="w-full h-full object-contain p-2 drop-shadow-sm group-hover:scale-110 transition-transform duration-500">
                 <div class="absolute -top-2 -left-2 scale-75 origin-top-left">
