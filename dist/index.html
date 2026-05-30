@@ -8,6 +8,19 @@
     <meta name="description"
         content="Professional B2B portal for power tool spare parts. Genuine spares, bulk ordering, and inventory management.">
 
+    <!-- Dynamic Base Path for SPA Routing -->
+    <script>
+        (function() {
+            var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            var basePath = isLocal ? '/spairparts/' : '/';
+            window.APP_BASE_PATH = basePath;
+            
+            var base = document.createElement('base');
+            base.href = basePath;
+            document.head.insertBefore(base, document.head.firstChild);
+        })();
+    </script>
+
     <!-- Suppress Tailwind Production Warning & Extension Noise -->
     <script>
         (function () {
@@ -40,6 +53,11 @@
         })();
     </script>
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
     <!-- Tailwind CSS Play CDN (For local XAMPP/Dev) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -53,8 +71,9 @@
                         primary: { DEFAULT: '#ed1c24', dark: '#c1121f', light: '#ef233c' }
                     },
                     fontFamily: {
-                        sans: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
-                        poppins: ['Outfit', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        poppins: ['Roboto', 'sans-serif'],
+                        display: ['Inter', 'sans-serif'],
                     },
                     boxShadow: {
                         'premium': '0 10px 30px -10px rgba(237, 28, 36, 0.08), 0 4px 6px -4px rgba(237, 28, 36, 0.03)',
@@ -88,8 +107,13 @@
         }
     </script>
 
-    <!-- Production Styles handled by Vite/PostCSS -->
-    
+    <!-- Production Styles (Dynamically Loaded) -->
+    <script>
+        var cssLink = document.createElement('link');
+        cssLink.rel = 'stylesheet';
+        cssLink.href = (window.APP_BASE_PATH || '/') + 'src/index.css?v=1.0.4';
+        document.head.appendChild(cssLink);
+    </script>
 
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ed1c24'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
@@ -121,8 +145,6 @@
             }
         }
     </style>
-  <script type="module" crossorigin src="./assets/index-074c07e2.js"></script>
-  <link rel="stylesheet" href="./assets/index-89a5c59e.css">
 </head>
 
 <body class="bg-slate-50">
@@ -183,7 +205,7 @@
                         <!-- Logo: TORVO with custom gear cogwheel -->
                     <a href="/" data-link aria-label="Home" class="logo-container flex items-center gap-2 group transition-all duration-300 hover:scale-[1.02]">
                         <div class="flex items-center">
-                            <span class="text-3xl font-extrabold text-[#111111] tracking-tight font-poppins ">TORV</span>
+                            <span class="text-3xl font-extrabold text-[#111111] tracking-tight font-poppins italic">TORV</span>
                             <!-- SVG cogwheel as 'O' -->
                             <div class="w-8 h-8 ml-0.5 flex items-center justify-center animate-[spin_10s_linear_infinite] group-hover:animate-[spin_2s_linear_infinite]">
                                 <svg viewBox="0 0 100 100" fill="none" class="w-full h-full text-[#ed1c24] drop-shadow-[0_2px_4px_rgba(237,28,36,0.3)]">
@@ -202,9 +224,14 @@
                         </div>
                     </a>
 
-                    <!-- Nav Links - Centered (Products, Brands, Categories, Support) -->
+                    <!-- Nav Links - Centered (Home, Products, Brands, Categories, Support) -->
                     <div class="hidden md:flex flex-1 justify-center px-6">
                         <div class="flex items-center gap-1 lg:gap-4">
+                            <div class="relative group/menu">
+                                <a href="/" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
+                                    Home <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
+                                </a>
+                            </div>
                             <div class="relative group/menu">
                                 <a href="/catalog" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
                                     Products <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
@@ -337,21 +364,22 @@
             <div class="w-72 bg-white h-full shadow-2xl flex flex-col p-6 transform -translate-x-full transition-transform duration-300 max-w-[85vw]">
                 <div class="flex items-center justify-between pb-6 border-b border-zinc-100">
                     <a href="/" data-link class="logo-container flex items-center group">
-                        <span class="text-xl font-semibold text-[#ed1c24]  tracking-tight font-poppins">TORVO</span>
+                        <span class="text-xl font-black text-[#ed1c24] italic tracking-tight font-poppins">TORVO</span>
                     </a>
                     <button id="mobile-menu-close" title="Close mobile menu" aria-label="Close mobile menu" class="p-2 text-zinc-400 hover:text-rose-600 transition-colors">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
-                <div class="flex-1 py-8 flex flex-col gap-6 overflow-y-auto uppercase text-xs font-semibold tracking-wide text-zinc-700">
+                <div class="flex-1 py-8 flex flex-col gap-6 overflow-y-auto uppercase text-xs font-black tracking-widest text-zinc-700">
+                    <a href="/" data-link class="mobile-side-link hover:text-rose-600">Home</a>
                     <a href="/catalog" data-link class="mobile-side-link hover:text-rose-600">Products</a>
                     <a href="/brands" data-link class="mobile-side-link hover:text-rose-600">Brands</a>
                     <a href="/categories" data-link class="mobile-side-link hover:text-rose-600">Categories</a>
                     <a href="/support" data-link class="mobile-side-link hover:text-rose-600">Support</a>
                 </div>
                 <div class="pt-6 border-t border-zinc-100 flex flex-col gap-3">
-                    <a href="/login" data-link class="w-full py-3.5 text-center text-xs font-semibold text-[#ed1c24] border border-[#ed1c24] rounded-none uppercase tracking-wide hover:bg-[#ed1c24] hover:text-white transition-all">Partner Login</a>
-                    <a href="/register" data-link class="w-full py-3.5 text-center text-xs font-semibold text-white bg-[#ed1c24] rounded-none uppercase tracking-wide hover:bg-[#111111] transition-all shadow-sm">Partner Sign Up</a>
+                    <a href="/login" data-link class="w-full py-3.5 text-center text-xs font-black text-[#ed1c24] border border-[#ed1c24] rounded-none uppercase tracking-widest hover:bg-[#ed1c24] hover:text-white transition-all">Partner Login</a>
+                    <a href="/register" data-link class="w-full py-3.5 text-center text-xs font-black text-white bg-[#ed1c24] rounded-none uppercase tracking-widest hover:bg-[#111111] transition-all shadow-sm">Partner Sign Up</a>
                 </div>
             </div>
         </div>
@@ -361,7 +389,7 @@
 
         <!-- ═══ MOBILE FOOTER TOGGLE BAR ═══ -->
         <div class="md:hidden text-center py-6 bg-[#111111] border-t border-white/10 no-print select-none">
-            <button id="mobile-footer-toggle" class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ed1c24] hover:text-white transition-all bg-[#111111] px-6 py-3 border border-[#ed1c24] hover:bg-[#ed1c24] rounded-none focus:outline-none" onclick="app.toggleMobileFooter()">
+            <button id="mobile-footer-toggle" class="text-[10px] font-black uppercase tracking-[0.2em] text-[#ed1c24] hover:text-white transition-all bg-[#111111] px-6 py-3 border border-[#ed1c24] hover:bg-[#ed1c24] rounded-none focus:outline-none" onclick="app.toggleMobileFooter()">
                 Show Footer & Site Map
             </button>
         </div>
@@ -375,11 +403,11 @@
             <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 border-b border-white/10 pb-12">
                     <div class="space-y-6">
-                        <h4 id="footer-site-name" class="text-2xl font-semibold tracking-tight text-white uppercase">TORVO TOOLS <span class="text-white">PRIVATE LIMITED</span></h4>
+                        <h4 id="footer-site-name" class="text-2xl font-black tracking-tight text-white uppercase">TORVO TOOLS <span class="text-white">PRIVATE LIMITED</span></h4>
                         <p id="footer-desc" class="text-slate-200 text-sm font-medium leading-relaxed">The premium B2B platform for genuine power tool spare parts procurement and industrial maintenance solutions.</p>
                     </div>
                     <div>
-                        <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-6">Quick Links</h4>
+                        <h4 class="text-sm font-black text-white uppercase tracking-wider mb-6">Quick Links</h4>
                         <ul class="space-y-3 text-sm font-semibold text-slate-200">
                             <li><a href="/catalog" data-link class="hover:text-white hover:underline transition-all">Product Catalog</a></li>
                             <li><a href="/brands" data-link class="hover:text-white hover:underline transition-all">Browse Brands</a></li>
@@ -388,7 +416,7 @@
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-6">Customer Care</h4>
+                        <h4 class="text-sm font-black text-white uppercase tracking-wider mb-6">Customer Care</h4>
                         <ul class="space-y-3 text-sm font-semibold text-slate-200">
                             <li><a href="/support" data-link class="hover:text-white hover:underline transition-all">Help Center</a></li>
                             <li><a href="/shipping" data-link class="hover:text-white hover:underline transition-all">Shipping Information</a></li>
@@ -396,7 +424,7 @@
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-6">Contact Us</h4>
+                        <h4 class="text-sm font-black text-white uppercase tracking-wider mb-6">Contact Us</h4>
                         <p id="footer-address" class="text-sm font-semibold text-slate-200 mb-4">Phase 2, Industrial Estate<br>New Delhi, IN 110020</p>
                         <div class="flex flex-col gap-3">
                             <a id="footer-phone" href="tel:+915555512345" class="text-white hover:text-bosch-red font-bold text-base transition-colors flex items-center gap-2">
@@ -413,8 +441,8 @@
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-semibold text-slate-300">
                     <p>&copy; 2026 TORVO TOOLS B2B DIVISION. ALL RIGHTS RESERVED.</p>
                     <div class="flex gap-8">
-                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                        <a href="/privacy" data-link class="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="/terms" data-link class="hover:text-white transition-colors">Terms of Service</a>
                     </div>
                 </div>
             </div>
@@ -470,7 +498,13 @@
     <!-- Toast Container -->
     <div id="toast-container" class="fixed bottom-24 right-6 z-[100] flex flex-col gap-3"></div>
 
-    
+    <!-- Main JS (Dynamically Loaded) -->
+    <script>
+        var jsScript = document.createElement('script');
+        jsScript.type = 'module';
+        jsScript.src = (window.APP_BASE_PATH || '/') + 'src/main.js?v=1.0.9';
+        document.body.appendChild(jsScript);
+    </script>
 </body>
 
 </html>
