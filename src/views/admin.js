@@ -1779,7 +1779,7 @@ export async function renderAdminSupport(container, app) {
 }
 
 export function viewTicketThread(id, app) {
-    const ticket = app.state.supportTickets.find(t => t.id === id);
+    const ticket = app.state.supportTickets.find(t => String(t.id) === String(id));
     if (!ticket) return;
     
     const modal = document.getElementById('thread-modal');
