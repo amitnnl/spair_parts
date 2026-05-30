@@ -9,6 +9,20 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $db = getDB();
+
+// Ensure table exists
+$db->exec("
+    CREATE TABLE IF NOT EXISTS user_parts_list (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        part_id INT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY user_part (user_id, part_id),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (part_id) REFERENCES spare_parts(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+");
+
 $user_id = $_SESSION['user_id'];
 $method = $_SERVER['REQUEST_METHOD'];
 
