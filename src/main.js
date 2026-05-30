@@ -1,5 +1,5 @@
 import { getSidebar } from './components/sidebar.js';
-import { renderCatalog as viewCatalog } from './views/catalog.js';
+import { renderCatalog as viewCatalog, renderProductModal as viewProductModal } from './views/catalog.js';
 import { 
     renderQuotations as viewQuotations, 
     viewQuotationDetails as viewQuotationInfo, 
@@ -26,6 +26,12 @@ import {
     generateInvoice as createInvoice,
     renderAdminInvoicesFull as viewAdminInvoicesFull,
     renderSystemSettings as viewSystemSettings,
+    renderAdminSupport,
+    resolveSupportTicket,
+    deleteSupportTicket,
+    viewTicketThread,
+    sendTicketReply,
+    simulateWebhook,
     printAdminReport as printReport,
     renderImportModal as viewImportModal,
     renderAddProductForm as viewAddProductForm,
@@ -53,13 +59,15 @@ import { renderLogin, renderRegister } from './views/auth.js';
 import { renderCart } from './views/cart.js';
 import { renderBrands } from './views/brands.js';
 import { renderCategories } from './views/categories.js';
-import { renderSupport } from './views/support.js';
-import { renderHome } from './views/home.js';
+import { renderSupport } from './views/support.js?v=2';
+import { renderHome } from './views/home.js?v=4';
 import { renderProfile as viewProfile } from './views/profile.js';
 import { state } from './state.js';
 import { setHTML } from './api.js';
 import viewShipping from './views/shipping.js';
 import viewWarranty from './views/warranty.js';
+import { renderPrivacy } from './views/privacy.js';
+import { renderTerms } from './views/terms.js';
 
 // Auto-detect whether running locally or on live cPanel server.
 // LOCAL:  http://localhost/spairparts  => basePath = '/spairparts'
@@ -99,6 +107,7 @@ const app = {
     getSidebar(active) { return getSidebar(active, this); },
 
     renderCatalog(container) { return viewCatalog(container, this); },
+    viewProduct(id) { return viewProductModal(id, this); },
 
     renderQuotations(container) { return viewQuotations(container, this); },
     viewQuotationDetails(id) { return viewQuotationInfo(id, this); },
@@ -116,6 +125,12 @@ const app = {
     renderAdminInventory(container) { return viewAdminInventory(container, this); },
     filterInventory() { return searchInventory(); },
     renderAdminUsers(container) { return viewAdminUsers(container, this); },
+    renderAdminSupport(container) { return renderAdminSupport(container, this); },
+    resolveSupportTicket(id) { return resolveSupportTicket(id, this); },
+    deleteSupportTicket(id) { return deleteSupportTicket(id, this); },
+    viewTicketThread(id) { return viewTicketThread(id, this); },
+    sendTicketReply(id) { return sendTicketReply(id, this); },
+    simulateWebhook() { return simulateWebhook(this); },
     updateUser(id, field, value) { return patchUser(id, field, value, this); },
     renderProcessQuotation(id) { return viewProcessQuotation(id, this); },
     applyDiscountToItem(btn, discount) { return discountItem(btn, discount); },
@@ -158,6 +173,8 @@ const app = {
     renderBrands(container) { return renderBrands(container, this); },
     renderShipping(container) { return viewShipping.render(container); },
     renderWarranty(container) { return viewWarranty.render(container); },
+    renderPrivacy(container) { return renderPrivacy(container, this); },
+    renderTerms(container) { return renderTerms(container, this); },
     renderMyPartsList(container) { return viewMyPartsList(container, this); },
 
     renderLogin(container) { return renderLogin(container, this); },
@@ -182,6 +199,30 @@ const app = {
                 badge.classList.add('hidden');
             }
         });
+    },
+
+    async addToPartsList(part_id) {
+        if (!this.state.user) {
+            this.showToast('Please login to save parts', 'error');
+            history.pushState(null, null, this.basePath + '/login');
+            this.handleRouting();
+            return;
+        }
+        try {
+            const res = await fetch(this.api('api/user_parts.php'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ part_id })
+            });
+            const data = await res.json();
+            if (data.success) {
+                this.showToast('Part saved to your personal list!');
+            } else {
+                this.showToast(data.error || 'Failed to save part', 'error');
+            }
+        } catch (e) {
+            this.showToast('Network error while saving part', 'error');
+        }
     },
 
     addToCart(productOrId) {
@@ -580,6 +621,8 @@ const app = {
             this.renderReports(container);
         } else if (path === '/admin/partners') {
             this.renderAdminUsers(container);
+        } else if (path === '/admin/support') {
+            this.renderAdminSupport(container);
         } else if (path === '/admin/invoices') {
             viewAdminInvoicesFull(container, this);
         } else if (path === '/quotations') {
@@ -602,6 +645,10 @@ const app = {
             this.renderShipping(container);
         } else if (path === '/warranty') {
             this.renderWarranty(container);
+        } else if (path === '/privacy') {
+            this.renderPrivacy(container);
+        } else if (path === '/terms') {
+            this.renderTerms(container);
         } else if (path === '/logout') {
             fetch(this.api('api/auth.php'), { 
                 method: 'POST', 

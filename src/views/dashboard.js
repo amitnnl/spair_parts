@@ -152,33 +152,78 @@ export async function renderMyPartsList(container, app) {
     setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full"></div></div>`);
     
     try {
+        const res = await fetch(app.api('api/user_parts.php'));
+        const result = await res.json();
+        const parts = result.parts || [];
+
+        window.removeFromPartsList = async (partId) => {
+            if (!confirm('Remove this part from your list?')) return;
+            try {
+                const r = await fetch(app.api('api/user_parts.php'), {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ part_id: partId })
+                });
+                const data = await r.json();
+                if (data.success) {
+                    app.showToast('Part removed from your list');
+                    renderMyPartsList(container, app);
+                } else {
+                    app.showToast(data.error || 'Failed to remove', 'error');
+                }
+            } catch (e) {
+                app.showToast('Network error', 'error');
+            }
+        };
+
+        const partsHtml = parts.length > 0 ? parts.map(p => `
+            <div class="card p-8 group border border-slate-200 rounded-3xl shadow-sm bg-white relative">
+                <div class="w-full h-48 bg-slate-50 rounded-none mb-6 overflow-hidden border border-slate-100 flex items-center justify-center relative">
+                    ${p.stock_quantity <= 0 ? `<div class="absolute top-3 left-3 bg-rose-500 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-sm shadow-sm">Out of Stock</div>` : ''}
+                    <svg class="w-20 h-20 text-slate-200 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                </div>
+                <h4 class="text-lg font-black text-[#111111] mb-1 uppercase tracking-widest line-clamp-1">${p.part_name || 'Unknown Part'}</h4>
+                <p class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6">Model: ${p.machine_model || 'N/A'}</p>
+                <div class="flex gap-3">
+                    <button onclick='app.addToCart(${JSON.stringify({id: p.id, part_name: p.part_name, quantity: 1})})' class="flex-1 h-12 rounded-2xl bg-[#111111] hover:bg-[#ed1c24] text-white font-black text-[10px] uppercase tracking-widest transition-all duration-300 shadow-md hover:shadow-[#ed1c24]/20 transform hover:-translate-y-0.5 border border-transparent">Add to Cart</button>
+                    <button onclick="window.removeFromPartsList(${p.id})" class="w-12 h-12 rounded-2xl border-2 border-slate-200 flex items-center justify-center text-rose-500 hover:bg-rose-50 hover:border-rose-200 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                </div>
+            </div>
+        `).join('') : `
+            <div class="col-span-full py-20 text-center">
+                <div class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-slate-100">
+                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                </div>
+                <h3 class="text-xl font-black text-slate-900 mb-2 uppercase tracking-widest">List is Empty</h3>
+                <p class="text-slate-500 font-semibold mb-8 text-sm">You haven't saved any parts to your personal collection yet.</p>
+                <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-8 py-3.5 bg-[#111111] hover:bg-[#ed1c24] text-white font-black text-[11px] uppercase tracking-widest rounded-2xl transition-all duration-300 shadow-xl shadow-[#111111]/10 hover:shadow-[#ed1c24]/20 transform hover:-translate-y-0.5">Browse Spares</button>
+            </div>
+        `;
+
         setHTML(container, `
             <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
                 ${app.getSidebar('parts_list')}
 
                 <main class="flex-1 m-4 lg:m-6 p-6 lg:p-10 bg-white rounded-[2.5rem] shadow-sm border border-slate-200">
                     <div class="max-w-6xl mx-auto space-y-12 animate-fade-in">
-                        <div class="flex justify-between items-end">
+                        <div class="flex justify-between items-end border-b border-slate-100 pb-8">
                             <div>
-                                <div class="text-xs font-black uppercase tracking-[0.3em] text-bosch-blue">Personal Collection</div>
-                                <h2 class="text-4xl font-black tracking-tight text-bosch-blue uppercase">My <span class="text-bosch-blue">Parts List</span></h2>
-                                <p class="text-slate-500 font-medium mt-2 text-lg">Your curated selection of essential spares for quick procurement.</p>
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-12 h-12 bg-[#ed1c24]/10 rounded-2xl flex items-center justify-center border border-[#ed1c24]/20">
+                                        <svg class="w-6 h-6 text-[#ed1c24]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                                    </div>
+                                </div>
+                                <h2 class="text-4xl font-black tracking-tight text-[#111111] uppercase">My <span class="text-[#ed1c24]">Parts List</span></h2>
+                                <p class="text-slate-500 font-medium mt-2 text-sm max-w-lg">Your curated selection of essential spares for quick procurement.</p>
                             </div>
-                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="px-8 py-3.5 bg-bosch-blue text-white font-black text-xs uppercase tracking-widest rounded-full hover:bg-industrial-gray transition-all shadow-lg shadow-blue-900/20">Add More Spares</button>
+                            <button onclick="app.renderCatalog(document.getElementById('view-container'))" class="hidden sm:flex px-8 py-4 bg-[#111111] hover:bg-[#ed1c24] text-white font-black text-[11px] uppercase tracking-widest rounded-2xl transition-all duration-300 shadow-xl shadow-[#111111]/10 hover:shadow-[#ed1c24]/20 transform hover:-translate-y-0.5 items-center gap-2">
+                                <span>Add More Spares</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            </button>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div class="card p-8 group border border-slate-200 rounded-3xl shadow-sm">
-                                <div class="w-full h-48 bg-slate-50 rounded-none mb-6 overflow-hidden border border-slate-100 flex items-center justify-center">
-                                    <svg class="w-20 h-20 text-slate-200 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                                </div>
-                                <h4 class="text-lg font-black text-bosch-blue mb-1 uppercase tracking-widest">Carbon Brush GWS 600</h4>
-                                <p class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6">SKU: CB-GWS600</p>
-                                <div class="flex gap-3">
-                                    <button class="flex-1 h-12 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-colors">Add to Cart</button>
-                                    <button class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-bosch-red hover:bg-bosch-red/10 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
-                                </div>
-                            </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${partsHtml}
                         </div>
                     </div>
                 </main>

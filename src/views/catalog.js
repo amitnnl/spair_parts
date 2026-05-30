@@ -142,13 +142,23 @@ export function productCard(p) {
     
     const isProfileComplete = !state.user || state.user.profile_complete;
 
-    const actionButton = isProfileComplete 
-        ? `<button onclick="app.addToCart(${escapedId})" class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Add to RFQ Cart">
+    const orderButtons = isProfileComplete 
+        ? `<button onclick="app.addToCart(${escapedId})" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-[#ed1c24] text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-red-500/30" title="Add to RFQ Cart">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+           </button>
+           <button onclick="app.addToPartsList(${escapedId})" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-amber-400 text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-amber-400/30" title="Save to My Parts List">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
            </button>`
         : `<a href="/profile" data-link class="w-8 h-8 rounded-full bg-amber-50 group-hover:bg-amber-500 text-amber-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-amber-500/30" title="Complete Profile to Order">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
            </a>`;
+
+    const actionButton = `<div class="flex flex-col gap-1 shrink-0">
+           ${orderButtons}
+           <button onclick="app.viewProduct(${escapedId})" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-blue-500 text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-blue-500/30" title="View Details">
+               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+           </button>
+       </div>`;
 
     return `
         <div class="bg-white rounded-3xl overflow-hidden group transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-3 animate-in zoom-in duration-700 h-full">
@@ -173,4 +183,91 @@ export function productCard(p) {
 function cleanImageUrl(url, fallbackText = 'Part') {
     if (!url) return `https://placehold.co/600x600/0f172a/6366f1?text=${encodeURIComponent(fallbackText)}`;
     return url.replace('via.placeholder.com', 'placehold.co');
+}
+
+export function renderProductModal(id, appInstance) {
+    const product = state.products?.find(p => p.id == id);
+    if (!product) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-300';
+    modal.id = 'product-view-modal';
+
+    const escapedBrand = escapeHTML(product.brand);
+    const escapedName = escapeHTML(product.part_name);
+    const escapedModel = escapeHTML(product.machine_model || 'Universal');
+    const imageUrl = cleanImageUrl(product.photo, product.part_name);
+    
+    // Additional data fields
+    const escapedCategory = escapeHTML(product.category || 'Uncategorized');
+    const escapedItem = escapeHTML(product.item || 'Part');
+
+    const isProfileComplete = !state.user || state.user.profile_complete;
+
+    modal.innerHTML = `
+        <div class="bg-white w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 relative flex flex-col md:flex-row max-h-[90vh]">
+            <button class="absolute top-4 right-4 p-2 text-slate-400 hover:text-[#ed1c24] transition-colors z-10 bg-white/80 backdrop-blur rounded-full hover:bg-rose-50" onclick="document.getElementById('product-view-modal').remove()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            
+            <div class="w-full md:w-2/5 bg-slate-50 flex items-center justify-center p-8 border-b md:border-b-0 md:border-r border-slate-100 min-h-[300px]">
+                <img src="${imageUrl}" class="w-full h-full max-h-64 object-contain drop-shadow-md mix-blend-multiply" alt="${escapedName}">
+            </div>
+            
+            <div class="w-full md:w-3/5 p-8 flex flex-col overflow-y-auto">
+                <div class="mb-3 flex items-center gap-2 flex-wrap">
+                    <span class="px-3 py-1 bg-rose-50 text-[#ed1c24] text-xs font-black uppercase tracking-widest rounded-lg border border-rose-100">${escapedBrand}</span>
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-widest rounded-lg border border-slate-200">${escapedCategory}</span>
+                </div>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight leading-tight mb-3">${escapedName}</h2>
+                
+                <div class="flex items-center gap-2 mb-6 pb-6 border-b border-slate-100">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest bg-slate-50 px-2 py-1 rounded-md border border-slate-200">ID: #${product.id}</span>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest bg-slate-50 px-2 py-1 rounded-md border border-slate-200">${escapedItem}</span>
+                </div>
+                
+                <div class="space-y-5 mb-8 flex-1">
+                    <div>
+                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5">Primary Compatibility</h4>
+                        <p class="text-base font-bold text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100">Fits: ${escapedModel}</p>
+                    </div>
+                    ${product.other_fitments ? `
+                    <div>
+                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5">Other Fitments</h4>
+                        <p class="text-sm text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed">${escapeHTML(product.other_fitments)}</p>
+                    </div>
+                    ` : ''}
+                    ${product.description ? `
+                    <div>
+                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5">Description</h4>
+                        <p class="text-sm text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed">${escapeHTML(product.description).replace(/\\n/g, '<br>')}</p>
+                    </div>
+                    ` : ''}
+                </div>
+                
+                <div class="flex gap-3 mt-auto pt-6 border-t border-slate-100">
+                    ${isProfileComplete ? `
+                    <button onclick="app.addToCart(${product.id}); document.getElementById('product-view-modal').remove()" class="flex-1 bg-[#ed1c24] hover:bg-[#111111] text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-xs transition-all shadow-[0_4px_14px_rgba(237,28,36,0.2)] hover:shadow-[0_6px_20px_rgba(17,17,17,0.2)] flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                        Add to RFQ Cart
+                    </button>
+                    <button onclick="app.addToPartsList(${product.id})" class="flex-1 bg-amber-400 hover:bg-amber-500 text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-xs transition-all shadow-[0_4px_14px_rgba(251,191,36,0.2)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.2)] flex items-center justify-center gap-2 hover:-translate-y-0.5" title="Save to My Parts List">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                        Save Part
+                    </button>
+                    ` : `
+                    <a href="/profile" onclick="document.getElementById('product-view-modal').remove()" data-link class="w-full bg-amber-500 hover:bg-amber-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs transition-all shadow-[0_4px_14px_rgba(245,158,11,0.2)] text-center hover:-translate-y-0.5">
+                        Complete Profile to Order
+                    </a>
+                    `}
+                </div>
+            </div>
+        </div>
+    `;
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+    });
+
+    document.body.appendChild(modal);
 }

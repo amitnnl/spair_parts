@@ -1694,3 +1694,244 @@ export async function renderAdminInvoicesFull(container, app) {
         setHTML(container, '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load invoices</div>');
     }
 }
+
+export async function renderAdminSupport(container, app) {
+    if (!app.state.user || app.state.user.role !== 'admin') return;
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-full"></div></div>`);
+
+    try {
+        const res = await fetch(app.api('api/admin_support.php'));
+        const { tickets } = await res.json();
+        app.state.supportTickets = tickets || [];
+
+        setHTML(container, `
+            <div class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-slate-50">
+                ${app.getSidebar('support')}
+
+                <main class="flex-1 m-4 lg:m-6 p-6 lg:p-10 bg-white rounded-[2.5rem] shadow-sm border border-slate-200 space-y-12">
+                    <div class="max-w-7xl mx-auto space-y-12 animate-fade-in">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                            <div>
+                                <h2 class="text-4xl font-black text-bosch-blue tracking-tight">Technical <span class="text-bosch-red">Inquiries</span></h2>
+                                <p class="text-slate-500 mt-2 font-bold text-lg">Manage and reply to customer technical support tickets.</p>
+                            </div>
+                            <button onclick="app.simulateWebhook()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                                Simulate Inbound Email
+                            </button>
+                        </div>
+                        
+                        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50/80 border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-6 pl-8 text-xs font-black text-slate-500 uppercase tracking-widest">Customer Details</th>
+                                        <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Inquiry Info</th>
+                                        <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Message Snippet</th>
+                                        <th class="p-6 text-xs font-black text-slate-500 uppercase tracking-widest">Status</th>
+                                        <th class="p-6 pr-8 text-right text-xs font-black text-slate-500 uppercase tracking-widest">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    ${(app.state.supportTickets).map(t => `
+                                        <tr class="hover:bg-slate-50/80 transition-all group cursor-pointer" onclick="app.viewTicketThread(${t.id})">
+                                            <td class="p-6 pl-8">
+                                                <div class="font-black text-bosch-blue text-sm uppercase tracking-widest">${escapeHTML(t.name)}</div>
+                                                <div class="text-xs text-slate-500 font-bold mt-1">${escapeHTML(t.email)}</div>
+                                                ${t.phone ? `<div class="text-xs text-slate-500 font-bold mt-0.5">📞 ${escapeHTML(t.phone)}</div>` : ''}
+                                                <div class="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest">${new Date(t.created_at).toLocaleString()}</div>
+                                            </td>
+                                            <td class="p-6">
+                                                <div class="font-bold text-slate-700 text-sm">${escapeHTML(t.subject)}</div>
+                                                ${t.part_no ? `<div class="text-[10px] font-black text-slate-500 uppercase tracking-widest bg-slate-100 px-2 py-0.5 rounded-md inline-block mt-1">Part: ${escapeHTML(t.part_no)}</div>` : ''}
+                                            </td>
+                                            <td class="p-6 max-w-xs truncate text-sm text-slate-600 font-medium" title="${escapeHTML(t.message)}">
+                                                ${escapeHTML(t.message)}
+                                                ${t.messages && t.messages.length > 0 ? `<span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-bosch-blue text-white text-[9px] font-bold">${t.messages.length} replies</span>` : ''}
+                                            </td>
+                                            <td class="p-6">
+                                                <span class="px-3 py-1 rounded-none border text-xs font-black uppercase tracking-widest ${t.status === 'resolved' ? 'border-emerald-200 text-emerald-600 bg-emerald-50' : 'border-amber-200 text-amber-600 bg-amber-50'}">
+                                                    ${escapeHTML(t.status)}
+                                                </span>
+                                            </td>
+                                            <td class="p-6 pr-8 text-right">
+                                                <div class="flex justify-end gap-2" onclick="event.stopPropagation()">
+                                                    <button onclick="app.viewTicketThread(${t.id})" class="px-3 py-1.5 bg-bosch-blue text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-all shadow-md">View Thread</button>
+                                                    ${t.status === 'pending' ? `<button onclick="app.resolveSupportTicket(${t.id})" class="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-200 transition-all">Resolve</button>` : ''}
+                                                    <button onclick="app.deleteSupportTicket(${t.id})" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-rose-100 transition-all">Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                    ${(!app.state.supportTickets || app.state.supportTickets.length === 0) ? `<tr><td colspan="5" class="p-12 text-center text-slate-500 font-bold uppercase tracking-widest">No inquiries found.</td></tr>` : ''}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            
+            <div id="thread-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"></div>
+        `);
+    } catch (e) {
+        setHTML(container, '<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold uppercase tracking-widest">Failed to load inquiries</div>');
+    }
+}
+
+export function viewTicketThread(id, app) {
+    const ticket = app.state.supportTickets.find(t => t.id === id);
+    if (!ticket) return;
+    
+    const modal = document.getElementById('thread-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    const allMessages = [
+        { sender_type: 'customer', message: ticket.message, created_at: ticket.created_at, name: ticket.name },
+        ...(ticket.messages || []).map(m => ({
+            ...m,
+            name: m.sender_type === 'customer' ? ticket.name : 'Support Team'
+        }))
+    ];
+
+    setHTML(modal, `
+        <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden animate-slide-up border border-slate-100">
+            <div class="px-8 py-6 bg-slate-50 border-b border-slate-200 flex justify-between items-start">
+                <div>
+                    <h3 class="text-2xl font-black text-bosch-blue tracking-tight">${escapeHTML(ticket.subject)}</h3>
+                    <p class="text-sm text-slate-500 font-bold mt-1 uppercase tracking-widest">Customer: <span class="text-bosch-red">${escapeHTML(ticket.name)}</span> &bull; ${escapeHTML(ticket.email)}</p>
+                    ${ticket.phone ? `<p class="text-xs text-slate-500 font-bold mt-1">📞 ${escapeHTML(ticket.phone)}</p>` : ''}
+                </div>
+                <button onclick="document.getElementById('thread-modal').classList.add('hidden')" class="p-2 text-slate-400 hover:text-rose-500 transition-colors bg-white rounded-full shadow-sm border border-slate-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-8 space-y-6 bg-slate-50/50" id="thread-messages-container">
+                ${allMessages.map(msg => `
+                    <div class="flex flex-col ${msg.sender_type === 'admin' ? 'items-end' : 'items-start'}">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1 ml-1">${msg.sender_type === 'admin' ? 'Support Team' : escapeHTML(msg.name)}</span>
+                        <div class="max-w-[85%] px-6 py-4 rounded-3xl ${msg.sender_type === 'admin' ? 'bg-bosch-blue text-white rounded-br-sm shadow-md shadow-bosch-blue/20' : 'bg-white text-slate-700 border border-slate-200 rounded-bl-sm shadow-sm'}">
+                            <p class="text-sm font-medium whitespace-pre-wrap">${escapeHTML(msg.message)}</p>
+                        </div>
+                        <span class="text-[9px] font-bold text-slate-400 mt-1.5 uppercase tracking-widest">${new Date(msg.created_at).toLocaleString()}</span>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div class="p-6 bg-white border-t border-slate-100">
+                <textarea id="reply-message" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:border-bosch-blue focus:ring-4 focus:ring-bosch-blue/10 transition-all resize-none" placeholder="Type your reply to ${escapeHTML(ticket.name)}..."></textarea>
+                <div class="flex justify-end mt-4">
+                    <button onclick="app.sendTicketReply(${ticket.id})" class="px-6 py-2.5 bg-bosch-red text-white rounded-full text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-all shadow-lg shadow-bosch-red/30 flex items-center gap-2">
+                        <span>Send Reply</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `);
+    
+    setTimeout(() => {
+        const container = document.getElementById('thread-messages-container');
+        if (container) container.scrollTop = container.scrollHeight;
+    }, 50);
+}
+
+export async function sendTicketReply(id, app) {
+    const msgInput = document.getElementById('reply-message');
+    if (!msgInput || !msgInput.value.trim()) {
+        app.showToast('Please enter a message', 'error');
+        return;
+    }
+    
+    try {
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'Sending...';
+        btn.disabled = true;
+        
+        const res = await fetch(app.api('api/admin_support.php'), {
+            method: 'POST',
+            body: JSON.stringify({ action: 'reply', id: id, message: msgInput.value.trim() })
+        });
+        const result = await res.json();
+        if (result.success) {
+            app.showToast('Reply sent successfully!');
+            await app.renderAdminSupport(document.getElementById('view-container'));
+            app.viewTicketThread(id); // re-open modal
+        } else {
+            app.showToast(result.error, 'error');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    } catch (e) {
+        app.showToast('Failed to send reply', 'error');
+    }
+}
+
+export async function simulateWebhook(app) {
+    const email = prompt("Enter a customer email to simulate a reply from:");
+    if (!email) return;
+    const body = prompt("Enter the message content:");
+    if (!body) return;
+    
+    app.showToast("Simulating inbound webhook POST...");
+    try {
+        const formData = new FormData();
+        formData.append('sender', email);
+        formData.append('subject', 'Re: Simulation');
+        formData.append('stripped-text', body);
+        
+        const res = await fetch(app.api('api/inbound_email.php'), {
+            method: 'POST',
+            body: formData
+        });
+        const result = await res.json();
+        if (result.success) {
+            app.showToast('Inbound email processed!');
+            app.renderAdminSupport(document.getElementById('view-container'));
+        } else {
+            app.showToast('Webhook Error: ' + result.error, 'error');
+        }
+    } catch(e) {
+        app.showToast('Failed to trigger webhook', 'error');
+    }
+}
+
+export async function resolveSupportTicket(id, app) {
+    if (!confirm('Mark this inquiry as resolved?')) return;
+    try {
+        const res = await fetch(app.api('api/admin_support.php'), {
+            method: 'POST',
+            body: JSON.stringify({ id, status: 'resolved' })
+        });
+        const result = await res.json();
+        if (result.success) {
+            app.showToast('Ticket marked as resolved.');
+            app.renderAdminSupport(document.getElementById('view-container'));
+        } else {
+            app.showToast(result.error, 'error');
+        }
+    } catch (e) {
+        app.showToast('Failed to resolve ticket', 'error');
+    }
+}
+
+export async function deleteSupportTicket(id, app) {
+    if (!confirm('Are you sure you want to delete this ticket?')) return;
+    try {
+        const res = await fetch(app.api('api/admin_support.php'), {
+            method: 'DELETE',
+            body: JSON.stringify({ id })
+        });
+        const result = await res.json();
+        if (result.success) {
+            app.showToast('Ticket deleted.');
+            app.renderAdminSupport(document.getElementById('view-container'));
+        } else {
+            app.showToast(result.error, 'error');
+        }
+    } catch (e) {
+        app.showToast('Failed to delete ticket', 'error');
+    }
+}

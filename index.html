@@ -104,7 +104,7 @@
     </script>
 
     <!-- Production Styles handled by Vite/PostCSS -->
-    <link rel="stylesheet" href="src/index.css?v=1.0.1">
+    <link rel="stylesheet" href="src/index.css?v=1.0.2">
 
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ed1c24'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E">
@@ -215,9 +215,14 @@
                         </div>
                     </a>
 
-                    <!-- Nav Links - Centered (Products, Brands, Categories, Support) -->
+                    <!-- Nav Links - Centered (Home, Products, Brands, Categories, Support) -->
                     <div class="hidden md:flex flex-1 justify-center px-6">
                         <div class="flex items-center gap-1 lg:gap-4">
+                            <div class="relative group/menu">
+                                <a href="/" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
+                                    Home <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
+                                </a>
+                            </div>
                             <div class="relative group/menu">
                                 <a href="/catalog" data-link class="px-3.5 py-4 text-xs font-bold text-slate-700 hover:text-[#ed1c24] flex items-center gap-1 transition-colors uppercase tracking-wider">
                                     Products <svg class="w-3.5 h-3.5 text-slate-400 group-hover/menu:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2.5"/></svg>
@@ -357,6 +362,7 @@
                     </button>
                 </div>
                 <div class="flex-1 py-8 flex flex-col gap-6 overflow-y-auto uppercase text-xs font-black tracking-widest text-zinc-700">
+                    <a href="/" data-link class="mobile-side-link hover:text-rose-600">Home</a>
                     <a href="/catalog" data-link class="mobile-side-link hover:text-rose-600">Products</a>
                     <a href="/brands" data-link class="mobile-side-link hover:text-rose-600">Brands</a>
                     <a href="/categories" data-link class="mobile-side-link hover:text-rose-600">Categories</a>
@@ -426,8 +432,8 @@
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-semibold text-slate-300">
                     <p>&copy; 2026 TORVO TOOLS B2B DIVISION. ALL RIGHTS RESERVED.</p>
                     <div class="flex gap-8">
-                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                        <a href="/privacy" data-link class="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="/terms" data-link class="hover:text-white transition-colors">Terms of Service</a>
                     </div>
                 </div>
             </div>
@@ -483,7 +489,7 @@
     <!-- Toast Container -->
     <div id="toast-container" class="fixed bottom-24 right-6 z-[100] flex flex-col gap-3"></div>
 
-    <script type="module" src="src/main.js?v=1.0.2"></script>
+    <script type="module" src="src/main.js?v=1.0.7"></script>
 </body>
 
 </html>

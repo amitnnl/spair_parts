@@ -175,54 +175,89 @@ export function renderHome(container, app) {
                 </div>
             </section>
 
-            <!-- ═══ POPULAR SEARCHES BAR (Mockup: White bar with grey tag pills) ═══ -->
-            <section class="bg-white py-3 border-b border-zinc-200/50 no-print shadow-sm">
-                <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-wrap items-center gap-4">
-                    <span class="text-xs font-extrabold uppercase tracking-widest text-slate-700">Popular Searches:</span>
-                    <div class="flex flex-wrap gap-2">
-                        ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => '<button onclick="clickPopularSearch(\'' + term + '\')" class="px-5 py-2 bg-zinc-50 border border-zinc-200 hover:border-[#ed1c24] hover:text-[#ed1c24] text-xs font-semibold uppercase tracking-widest rounded-full transition-all cursor-pointer">' + term + '</button>').join('') + `
-                    </div>
-                </div>
-            </section>
+            <!-- 🏆 TRENDING SEARCHES BAR (Premium Redesign) 🏆 -->
+              <section class="bg-white py-5 border-b border-zinc-100 no-print relative z-20 shadow-sm">
+                  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8">
+                      <div class="flex items-center gap-3 shrink-0">
+                          <div class="relative flex h-2.5 w-2.5">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ed1c24] opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ed1c24]"></span>
+                          </div>
+                          <span class="text-xs font-black uppercase tracking-[0.2em] text-slate-900">Trending Now</span>
+                      </div>
+                      
+                      <!-- Hide scrollbar, allow horizontal scroll on smaller screens -->
+                      <div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 lg:pb-0 -mx-6 px-6 lg:mx-0 lg:px-0">
+                          ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => `
+                              <button onclick="clickPopularSearch('${term}')" class="group flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 hover:border-[#ed1c24]/40 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_6px_15px_rgba(237,28,36,0.08)] transition-all duration-300 hover:-translate-y-0.5 whitespace-nowrap cursor-pointer">
+                                  <svg class="w-3.5 h-3.5 text-zinc-400 group-hover:text-[#ed1c24] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                  <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600 group-hover:text-[#ed1c24] transition-colors">${term}</span>
+                              </button>
+                          `).join('') + `
+                      </div>
+                  </div>
+              </section>
 
-            <!-- ═══ SHOP BY TOP CATEGORIES (Mockup categories layout with DYNAMIC text/images) ═══ -->
-            <section class="py-16 bg-zinc-50">
-                <div class="max-w-7xl mx-auto px-6 lg:px-10">
-                    
-                    <!-- Header -->
-                    <div class="flex items-center justify-between mb-10">
-                        <div>
-                            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight font-display">Shop By Top Categories</h2>
-                        </div>
-                        <a href="/categories" data-link class="text-sm font-bold text-[#ed1c24] hover:text-[#c1121f] transition-colors flex items-center gap-1.5 uppercase tracking-widest underline decoration-2 underline-offset-4 decoration-rose-200 hover:decoration-[#ed1c24]">
-                            View All Categories 
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-
-                    <!-- Dynamic Category Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        ` + (app.state.categories || []).map(c => `
-                            <div onclick="clickCategorySearch('${escapeHTML(c.title).replace(/'/g, "\\'")}')" class="bg-white rounded-3xl overflow-hidden group cursor-pointer transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-4 animate-in zoom-in duration-700">
-                                <div class="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100">
-                                    ${c.image_url 
-                                        ? `<img src="${escapeHTML(app.api(c.image_url))}" alt="${escapeHTML(c.title)}" class="w-full h-full object-contain p-2 drop-shadow-sm group-hover:scale-110 transition-transform duration-500">` 
-                                        : `<div class="w-full h-full flex items-center justify-center text-slate-300 group-hover:text-[#ed1c24] transition-colors duration-300"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="${escapeHTML(c.icon_svg)}"/></svg></div>`}
-                                </div>
-                                <div class="flex-1 min-w-0 pr-2">
-                                    <h4 class="font-bold text-base text-slate-900 tracking-tight truncate group-hover:text-[#ed1c24] transition-colors" title="${escapeHTML(c.title)}">${escapeHTML(c.title)}</h4>
-                                    <p class="text-xs text-slate-500 font-medium truncate mt-1">${escapeHTML(c.description || 'Explore Parts')}</p>
-                                </div>
-                                <div class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-                                </div>
-                            </div>
-                        `).join('') + `
-                    </div>
-                </div>
-            </section>
-
-            </section>
+              <!-- 🏆 SHOP BY TOP CATEGORIES (Premium Light Redesign) 🏆 -->
+              <section class="py-20 relative overflow-hidden bg-zinc-50">
+                  <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+                      <!-- Header -->
+                      <div class="flex items-end justify-between mb-12">
+                          <div class="max-w-2xl">
+                              <div class="text-[10px] font-black uppercase tracking-[0.4em] text-[#ed1c24] mb-3 flex items-center gap-3">
+                                  <span class="w-8 h-[2px] bg-[#ed1c24] rounded-full"></span>
+                                  Discover Inventory
+                              </div>
+                              <h2 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight font-display">Top Categories</h2>
+                          </div>
+                          <div class="flex items-center gap-5">
+                              <!-- Scroll Arrows -->
+                              <div class="hidden sm:flex gap-3">
+                                  <button onclick="document.getElementById('category-scroll-track').scrollBy({left: -344, behavior: 'smooth'})" class="w-12 h-12 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all duration-300 flex-shrink-0 cursor-pointer bg-white hover:bg-rose-50 shadow-sm group">
+                                      <svg class="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                                  </button>
+                                  <button onclick="document.getElementById('category-scroll-track').scrollBy({left: 344, behavior: 'smooth'})" class="w-12 h-12 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all duration-300 flex-shrink-0 cursor-pointer bg-white hover:bg-rose-50 shadow-sm group">
+                                      <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                                  </button>
+                              </div>
+                              <a href="/categories" data-link class="group flex items-center justify-center w-12 h-12 sm:w-auto sm:px-6 sm:py-3 rounded-full bg-slate-900 text-white font-bold text-xs uppercase tracking-widest hover:bg-[#ed1c24] transition-all duration-300 shadow-md hover:shadow-red-500/20 ml-2">
+                                  <span class="hidden sm:block mr-2">View All</span>
+                                  <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                              </a>
+                          </div>
+                      </div>
+  
+                      <!-- Standard Width Dynamic Category Horizontal Row -->
+                      <div class="w-full relative">
+                          <div id="category-scroll-track" class="flex overflow-x-auto no-scrollbar gap-6 pb-8 pt-4 snap-x items-stretch px-1">
+                              ` + (app.state.categories || []).map(c => {
+                                  const iconOrImg = c.image_url 
+                                      ? '<img src="' + escapeHTML(app.api(c.image_url)) + '" alt="' + escapeHTML(c.title) + '" class="w-full h-full object-contain p-2 drop-shadow-sm group-hover:scale-110 transition-transform duration-500">' 
+                                      : '<div class="w-full h-full flex items-center justify-center text-slate-300 group-hover:text-[#ed1c24] transition-colors duration-500"><svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="' + escapeHTML(c.icon_svg) + '"/></svg></div>';
+                                  
+                                  return '<div onclick="clickCategorySearch(\'' + escapeHTML(c.title).replace(/'/g, "\\'") + '\')" class="relative bg-white rounded-3xl overflow-hidden group cursor-pointer transition-all duration-500 hover:-translate-y-2 ring-1 ring-slate-900/5 hover:ring-[#ed1c24]/50 shadow-sm hover:shadow-[0_8px_30px_rgba(237,28,36,0.1)] flex flex-col sm:flex-row items-center sm:items-start p-5 gap-5 shrink-0 w-[260px] sm:w-[340px] snap-start h-full">' +
+                                      '<div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100 group-hover:border-[#ed1c24]/20 group-hover:bg-rose-50/30 transition-colors duration-500">' +
+                                          iconOrImg +
+                                      '</div>' +
+                                      '<div class="flex-1 min-w-0 text-center sm:text-left flex flex-col justify-between h-full z-10">' +
+                                          '<div>' +
+                                              '<h4 class="font-bold text-lg text-slate-900 tracking-tight truncate group-hover:text-[#ed1c24] transition-colors duration-300" title="' + escapeHTML(c.title) + '">' + escapeHTML(c.title) + '</h4>' +
+                                              '<p class="text-xs text-slate-500 font-medium line-clamp-2 mt-1 leading-relaxed">' + escapeHTML(c.description || 'Explore Parts') + '</p>' +
+                                          '</div>' +
+                                          '<div class="mt-4 sm:mt-auto flex items-center justify-center sm:justify-start gap-2 text-[10px] font-black uppercase tracking-widest text-[#ed1c24] group-hover:text-[#c1121f] transition-colors duration-300">' +
+                                              'Shop Now ' +
+                                              '<svg class="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>' +
+                                          '</div>' +
+                                      '</div>' +
+                                  '</div>';
+                              }).join('') + `
+                          </div>
+                          
+                          <!-- Right Edge Fade Mask -->
+                          <div class="absolute top-0 right-0 w-12 lg:w-32 h-full bg-gradient-to-l from-zinc-50 to-transparent pointer-events-none z-10"></div>
+                      </div>
+                  </div>
+              </section>
 
             <!-- ═══ GENUINE PARTS CATALOG ═══ -->
             <section class="py-16 bg-white border-y border-zinc-200/80">
@@ -255,51 +290,30 @@ export function renderHome(container, app) {
                         <span class="text-xs font-extrabold uppercase tracking-[0.3em] text-slate-500">Trusted By Professionals. Preferred By Brands.</span>
                     </div>
                     
-                    <div class="flex items-center justify-between gap-4 relative">
-                        <!-- Left Arrow (Red circle chevrons) -->
-                        <button class="w-8 h-8 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all flex-shrink-0 cursor-pointer shadow-sm bg-white hover:bg-rose-50">
-                            <span class="text-xs font-bold font-mono">&lt;</span>
-                        </button>
+                    <div class="relative w-full overflow-hidden py-4">
+                        <!-- Fade masks -->
+                        <div class="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+                        <div class="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
                         
-                        <!-- Brand Logos Row -->
-                        <div class="flex-1 overflow-x-auto no-scrollbar py-2">
-                            <div class="flex justify-between items-center min-w-[900px] gap-8 select-none">
-                                
-                                <!-- 1. BOSCH -->
-                                <div class="flex items-center gap-1">
-                                    <div class="w-5 h-5 rounded-full border-[1.5px] border-[#ed1c24] flex items-center justify-center flex-shrink-0">
-                                        <div class="w-2.5 h-2.5 bg-[#ed1c24] rounded-full"></div>
+                        <div class="animate-marquee select-none">
+                            ` + Array(3).fill(`
+                                <div class="flex items-center gap-16 px-8">
+                                    <div class="flex items-center gap-1">
+                                        <div class="w-5 h-5 rounded-full border-[1.5px] border-[#ed1c24] flex items-center justify-center flex-shrink-0">
+                                            <div class="w-2.5 h-2.5 bg-[#ed1c24] rounded-full"></div>
+                                        </div>
+                                        <span class="text-lg font-black tracking-tight text-zinc-950 uppercase font-sans">BOSCH</span>
                                     </div>
-                                    <span class="text-lg font-black tracking-tight text-zinc-950 uppercase font-sans">BOSCH</span>
+                                    <span class="text-xl font-extrabold tracking-tight text-[#008f8c] font-sans lowercase" style="font-family: sans-serif;">makita</span>
+                                    <div class="bg-[#feb80a] text-black px-3 py-1 font-black text-xs uppercase tracking-tighter shadow-sm font-sans">DEWALT</div>
+                                    <span class="text-xl font-extrabold italic tracking-tighter text-zinc-950 font-sans">metabo</span>
+                                    <div class="border-2 border-[#ff6b00] px-3 py-1 text-black font-black text-xs tracking-tight uppercase shadow-sm">BLACK+DECKER</div>
+                                    <span class="text-lg font-black tracking-tight text-[#ed1c24] uppercase font-sans">HITACHI</span>
+                                    <span class="text-2xl font-bold tracking-tighter text-[#ed1c24] italic" style="font-family: 'Brush Script MT', cursive, sans-serif;">Milwaukee</span>
+                                    <span class="text-xl font-extrabold tracking-widest text-zinc-950 font-sans">RYOBI</span>
                                 </div>
-
-                                <!-- 2. Makita -->
-                                <span class="text-xl font-extrabold tracking-tight text-[#008f8c] font-sans lowercase" style="font-family: sans-serif;">makita</span>
-
-                                <!-- 3. DEWALT -->
-                                <div class="bg-[#feb80a] text-black px-3 py-1 font-black text-xs uppercase tracking-tighter shadow-sm font-sans">DEWALT</div>
-
-                                <!-- 4. metabo -->
-                                <span class="text-xl font-extrabold italic tracking-tighter text-zinc-950 font-sans">metabo</span>
-
-                                <!-- 5. BLACK+DECKER -->
-                                <div class="border-2 border-[#ff6b00] px-3 py-1 text-black font-black text-xs tracking-tight uppercase shadow-sm">BLACK+DECKER</div>
-
-                                <!-- 6. HITACHI -->
-                                <span class="text-lg font-black tracking-tight text-[#ed1c24] uppercase font-sans">HITACHI</span>
-
-                                <!-- 7. Milwaukee -->
-                                <span class="text-2xl font-bold tracking-tighter text-[#ed1c24] italic" style="font-family: 'Brush Script MT', cursive, sans-serif;">Milwaukee</span>
-
-                                <!-- 8. RYOBI -->
-                                <span class="text-xl font-extrabold tracking-widest text-zinc-950 font-sans">RYOBI</span>
-                            </div>
+                            `).join('') + `
                         </div>
-
-                        <!-- Right Arrow (Red circle chevrons) -->
-                        <button class="w-8 h-8 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all flex-shrink-0 cursor-pointer shadow-sm bg-white hover:bg-rose-50">
-                            <span class="text-xs font-bold font-mono">&gt;</span>
-                        </button>
                     </div>
                 </div>
             </section>
