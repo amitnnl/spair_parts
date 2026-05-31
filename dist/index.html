@@ -396,13 +396,6 @@
         <!-- ═══ MAIN CONTENT ═══ -->
         <main id="view-container" class="flex-1"></main>
 
-        <!-- ═══ MOBILE FOOTER TOGGLE BAR ═══ -->
-        <div class="md:hidden text-center py-6 bg-[#111111] border-t border-white/10 no-print select-none">
-            <button id="mobile-footer-toggle" class="text-[10px] font-black uppercase tracking-[0.2em] text-[#ed1c24] hover:text-white transition-all bg-[#111111] px-6 py-3 border border-[#ed1c24] hover:bg-[#ed1c24] rounded-none focus:outline-none" onclick="app.toggleMobileFooter()">
-                Show Footer & Site Map
-            </button>
-        </div>
-
         <!-- ═══ FOOTER ═══ -->
         <footer id="main-footer" class="bg-[#111111] text-white py-24 no-print border-t-8 border-bosch-blue relative overflow-hidden lightning-bg hidden md:block">
             <!-- Lightning Glow Elements in Footer -->
@@ -456,6 +449,13 @@
                 </div>
             </div>
         </footer>
+
+        <!-- ═══ MOBILE FOOTER TOGGLE BAR ═══ -->
+        <div class="md:hidden text-center pt-6 pb-24 bg-[#111111] border-t border-white/10 no-print select-none">
+            <button id="mobile-footer-toggle" class="text-[10px] font-black uppercase tracking-[0.2em] text-[#ed1c24] hover:text-white transition-all bg-[#111111] px-6 py-3 border border-[#ed1c24] hover:bg-[#ed1c24] rounded-none focus:outline-none" onclick="app.toggleMobileFooter()">
+                Show Footer & Site Map
+            </button>
+        </div>
 
         <!-- ═══ PREMIUM MOBILE BOTTOM NAV (Mockup: App Style Red/Black) ═══ -->
         <nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-zinc-200 z-50 flex justify-around items-center h-16 rounded-none shadow-[0_-4px_12px_rgba(0,0,0,0.05)] no-print px-4 py-2">
