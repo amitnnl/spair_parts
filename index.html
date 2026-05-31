@@ -11,8 +11,7 @@
     <!-- Dynamic Base Path for SPA Routing -->
     <script>
         (function() {
-            var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            var basePath = isLocal ? '/spairparts/' : '/';
+            var basePath = window.location.pathname.includes('/spairparts') ? '/spairparts/' : '/';
             window.APP_BASE_PATH = basePath;
             
             var base = document.createElement('base');

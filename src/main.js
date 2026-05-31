@@ -72,8 +72,7 @@ import { renderTerms } from './views/terms.js';
 // Auto-detect whether running locally or on live cPanel server.
 // LOCAL:  http://localhost/spairparts  => basePath = '/spairparts'
 // LIVE:   https://torvotools.com/      => basePath = ''
-const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const BASE_PATH = isLocal ? '/spairparts' : '';
+const BASE_PATH = window.location.pathname.includes('/spairparts') ? '/spairparts' : '';
 
 const api = (endpoint) => {
     // If endpoint is missing, return an empty string or a default
