@@ -76,39 +76,6 @@ export async function renderCatalog(container, appInstance) {
             </div>
         `);
         renderCatalogContent(data.products, document.getElementById('catalog-content'), appInstance);
-
-        // Initialize Spotlight Tracking for Catalog
-        setTimeout(() => {
-            const trackSpotlight = () => {
-                document.querySelectorAll('.spotlight-card').forEach(card => {
-                    if (card.dataset.spotlightBound) return;
-                    card.dataset.spotlightBound = 'true';
-                    card.addEventListener('mousemove', e => {
-                        const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        card.style.setProperty('--mouse-x', `${x}px`);
-                        card.style.setProperty('--mouse-y', `${y}px`);
-                    });
-                });
-            };
-            trackSpotlight();
-
-            // Set up MutationObserver to automatically bind fresh filtered products
-            const catalogObserver = new MutationObserver(() => {
-                trackSpotlight();
-            });
-            catalogObserver.observe(container, { childList: true, subtree: true });
-
-            // Auto-cleanup on navigation away
-            const navObserver = new MutationObserver(() => {
-                if (!container.isConnected) {
-                    catalogObserver.disconnect();
-                    navObserver.disconnect();
-                }
-            });
-            navObserver.observe(document.body, { childList: true, subtree: true });
-        }, 150);
     } catch (e) {
         setHTML(container, '<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load products.</div>');
     }
@@ -237,6 +204,11 @@ export function renderProductModal(id, appInstance) {
 
     const isProfileComplete = !state.user || state.user.profile_complete;
 
+    const discount = appInstance.state.user && appInstance.state.user.discount_tier ? parseFloat(appInstance.state.user.discount_tier) : 0;
+    const discountBadge = discount > 0 
+        ? `<span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-black uppercase tracking-widest rounded-lg border border-emerald-100">🎉 ${discount}% wholesale discount applied</span>` 
+        : '';
+
     modal.innerHTML = `
         <div class="bg-white w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 relative flex flex-col md:flex-row max-h-[90vh]">
             <button class="absolute top-4 right-4 p-2 text-slate-400 hover:text-[#ed1c24] transition-colors z-10 bg-white/80 backdrop-blur rounded-full hover:bg-rose-50" onclick="document.getElementById('product-view-modal').remove()">
@@ -251,6 +223,7 @@ export function renderProductModal(id, appInstance) {
                 <div class="mb-3 flex items-center gap-2 flex-wrap">
                     <span class="px-3 py-1 bg-rose-50 text-[#ed1c24] text-xs font-black uppercase tracking-widest rounded-lg border border-rose-100">${escapedBrand}</span>
                     <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-widest rounded-lg border border-slate-200">${escapedCategory}</span>
+                    ${discountBadge}
                 </div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight leading-tight mb-3">${escapedName}</h2>
                 

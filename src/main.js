@@ -170,6 +170,14 @@ const app = {
             toggleBtn.innerHTML = 'Show Footer & Site Map';
         }
     },
+    toggleSidebar() {
+        const sidebar = document.querySelector('aside');
+        if (!sidebar) return;
+        
+        sidebar.classList.toggle('sidebar-collapsed');
+        const isCollapsed = sidebar.classList.contains('sidebar-collapsed');
+        localStorage.setItem('sidebarCollapsed', isCollapsed ? 'true' : 'false');
+    },
     renderBrands(container) { return renderBrands(container, this); },
     renderShipping(container) { return viewShipping.render(container); },
     renderWarranty(container) { return viewWarranty.render(container); },
@@ -674,6 +682,15 @@ const app = {
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
         this.animatePageEntry();
+
+        // Attach Global Scroll Reveal Observers dynamically
+        setTimeout(() => {
+            if (this.revealObserver) {
+                document.querySelectorAll('.reveal-element').forEach(el => {
+                    this.revealObserver.observe(el);
+                });
+            }
+        }, 150);
     },
 
     showToast(message, type = 'success') {
@@ -735,6 +752,35 @@ const app = {
     },
 
     async init() {
+        // Global mouse pointer spotlight tracking
+        document.addEventListener('mousemove', e => {
+            const card = e.target.closest('.spotlight-card');
+            if (!card) return;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+
+        // Global Scroll Reveal IntersectionObserver
+        this.revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    this.revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
+
+        // Set up mutation observer to also track dynamically rendered spotlight cards & reveal elements
+        const globalObserver = new MutationObserver(() => {
+            document.querySelectorAll('.reveal-element').forEach(el => {
+                this.revealObserver.observe(el);
+            });
+        });
+        globalObserver.observe(document.body, { childList: true, subtree: true });
+
         // 1. Verify session with backend first
         try {
             const checkRes = await fetch(this.api('api/auth.php'), { 

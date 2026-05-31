@@ -1,9 +1,17 @@
 export function getSidebar(active, app) {
     const isAdmin = app.state.user && app.state.user.role && app.state.user.role.toLowerCase() === 'admin';
     const userName = app.state.user ? app.state.user.name : 'Guest Partner';
+    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    const collapseClass = isCollapsed ? 'sidebar-collapsed' : '';
     
     return `
-        <aside class="hidden lg:flex w-72 bg-[#fdfdfd] border-r border-slate-200 flex-col sticky top-20 h-[calc(100vh-80px)] z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)] print:hidden">
+        <aside class="hidden lg:flex relative transition-all duration-300 w-72 bg-[#fdfdfd] border-r border-slate-200 flex-col sticky top-20 h-[calc(100vh-80px)] z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)] print:hidden ${collapseClass}">
+            <!-- Sidebar Collapse Toggle Button (Arrow floats on the right border) -->
+            <button onclick="app.toggleSidebar()" class="absolute top-1/2 -right-3.5 transform -translate-y-1/2 w-7 h-7 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center cursor-pointer shadow-md hover:text-[#ed1c24] hover:border-[#ed1c24] transition-all z-30 group/toggle" title="Toggle Sidebar">
+                <svg class="w-3.5 h-3.5 text-slate-500 group-hover/toggle:text-[#ed1c24] transition-transform duration-300 sidebar-toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
             <!-- User Status Card -->
             <div class="p-5 border-b border-slate-100 bg-slate-50/30">
                 <div class="flex items-center gap-3">

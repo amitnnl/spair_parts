@@ -33,6 +33,16 @@ export default {
         '4xl': '2rem',
         '5xl': '2.5rem',
         '6xl': '3rem',
+      },
+      maxWidth: {
+        '7xl': '95rem',
+        '6xl': '85rem',
+        '5xl': '75rem',
+        '4xl': '70rem',
+        '3xl': '60rem',
+        '2xl': '50rem',
+        'xl': '40rem',
+        'lg': '34rem',
       }
     },
   },

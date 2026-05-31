@@ -241,7 +241,7 @@ body {
 /* ── WhatsApp Widget ─────────────────────────────────────── */
 .whatsapp-widget {
     position: fixed;
-    bottom: 2rem;
+    bottom: 6.5rem;
     right: 2rem;
     z-index: 90;
     display: flex;
@@ -363,7 +363,7 @@ body {
 
 @media (max-width: 768px) {
     .whatsapp-widget {
-        bottom: 6rem;
+        bottom: 8.5rem;
         right: 1.5rem;
     }
 }
@@ -523,5 +523,95 @@ svg, svg * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     shape-rendering: geometricPrecision;
+}
+
+/* ── Robust B2B Industrial Enhancements (Bulky Aesthetic) ── */
+.premium-heavy-card {
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.05), 0 5px 15px -5px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.premium-heavy-card:hover {
+    border-color: #ed1c24;
+    box-shadow: 0 25px 50px -15px rgba(237, 28, 36, 0.08), 0 10px 25px -10px rgba(237, 28, 36, 0.04);
+}
+
+/* Make default tailwind cards visually heavier */
+.bg-white.rounded-3xl, .bg-white.rounded-\[2\.5rem\] {
+    border: 2px solid #e2e8f0 !important;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Robust headers and B2B visual weight */
+h1, h2, h3 {
+    letter-spacing: -0.02em;
+}
+
+/* Bulky forms and inputs */
+input[type="text"], input[type="number"], select, textarea {
+    border-width: 2px !important;
+    border-color: #e2e8f0 !important;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+    border-color: #ed1c24 !important;
+}
+
+/* ── Admin Sidebar Collapsible Toggle (Bulky B2B Console) ── */
+aside.sidebar-collapsed {
+    width: 5rem !important; /* Shrink sidebar to 80px */
+}
+
+/* Hide all text inside collapsed sidebar with smooth fade */
+aside.sidebar-collapsed span,
+aside.sidebar-collapsed p,
+aside.sidebar-collapsed .text-\[9px\],
+aside.sidebar-collapsed .text-\[11px\],
+aside.sidebar-collapsed .text-\[8px\],
+aside.sidebar-collapsed p.text-slate-400 {
+    opacity: 0 !important;
+    max-width: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    display: none !important;
+}
+
+/* Center user icon when collapsed */
+aside.sidebar-collapsed .p-5 > div {
+    justify-content: center !important;
+    gap: 0 !important;
+}
+
+/* Adjust sidebar links spacing when collapsed */
+aside.sidebar-collapsed a,
+aside.sidebar-collapsed button {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    gap: 0 !important;
+    border-left-width: 0 !important; /* Hide left accent border to keep it clean */
+}
+
+/* Ensure icons scale and center nicely */
+aside.sidebar-collapsed svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    margin: 0 auto !important;
+}
+
+/* Rotate toggle arrow 180 degrees when collapsed */
+aside.sidebar-collapsed .sidebar-toggle-icon {
+    transform: rotate(180deg) !important;
+}
+
+/* Adjust paddings for sections */
+aside.sidebar-collapsed .p-4 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
 }
 
