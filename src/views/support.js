@@ -129,6 +129,34 @@ export function renderSupport(container, app) {
                     </div>
                 </div>
             </section>
+
+            <!-- Google Maps Location Section -->
+            <section class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 reveal-element">
+                <div class="bg-white/95 backdrop-blur-2xl rounded-[2rem] p-6 lg:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#ed1c24] via-[#111111] to-[#ed1c24] opacity-80"></div>
+                    <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h3 class="text-2xl lg:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                                <span class="bg-[#ed1c24]/10 text-[#ed1c24] p-2 rounded-xl">
+                                    <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                </span>
+                                Visit Our Warehouse & Headquarters
+                            </h3>
+                            <p class="text-slate-500 font-medium mt-1 text-sm pl-12">
+                                Located in the industrial heart of New Delhi. Direct procurement and technical consultations available.
+                            </p>
+                        </div>
+                        <a href="https://maps.google.com/?q=${encodeURIComponent(contactInfo.address)}" target="_blank" class="px-5 py-2.5 bg-slate-900 hover:bg-[#ed1c24] text-white text-xs font-black uppercase tracking-widest rounded-xl transition-all shadow-md shrink-0 flex items-center gap-2">
+                            Open in Google Maps
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
+                    </div>
+                    
+                    <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-inner relative w-full h-[400px]">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14022.428784869542!2d77.26834199342084!3d28.521481512411986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce110196238b7%3A0xe10438cfebdf4a!2sPhase%20II%2C%20Okhla%20Industrial%20Estate%2C%20New%20Delhi%2C%20Delhi%20110020!5e0!3m2!1sen!2sin!4v1717140000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full filter brightness-95 contrast-100 hover:brightness-100 transition-all duration-300"></iframe>
+                    </div>
+                </div>
+            </section>
         </div>
     `);
 
