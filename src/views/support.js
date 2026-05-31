@@ -7,6 +7,8 @@ export function renderSupport(container, app) {
         address: app.state.settings.contact_address || 'Phase 2, Industrial Estate, New Delhi, IN 110020'
     };
 
+    const mapEmbedSrc = app.state.settings.support_map_embed || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14022.428784869542!2d77.26834199342084!3d28.521481512411986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce110196238b7%3A0xe10438cfebdf4a!2sPhase%20II%2C%20Okhla%20Industrial%20Estate%2C%20New%20Delhi%2C%20Delhi%20110020!5e0!3m2!1sen!2sin!4v1717140000000!5m2!1sen!2sin';
+
     const supportTitle = app.state.settings.support_title
         ? escapeHTML(app.state.settings.support_title)
         : 'Expert Support <span class="text-[#ed1c24]">Center</span>';
@@ -153,7 +155,7 @@ export function renderSupport(container, app) {
                     </div>
                     
                     <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-inner relative w-full h-[400px]">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14022.428784869542!2d77.26834199342084!3d28.521481512411986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce110196238b7%3A0xe10438cfebdf4a!2sPhase%20II%2C%20Okhla%20Industrial%20Estate%2C%20New%20Delhi%2C%20Delhi%20110020!5e0!3m2!1sen!2sin!4v1717140000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full filter brightness-95 contrast-100 hover:brightness-100 transition-all duration-300"></iframe>
+                        <iframe src="${mapEmbedSrc}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full filter brightness-95 contrast-100 hover:brightness-100 transition-all duration-300"></iframe>
                     </div>
                 </div>
             </section>

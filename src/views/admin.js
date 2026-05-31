@@ -774,6 +774,8 @@ export async function renderSystemSettings(container, app) {
                                         ${field('Page Heading', 'support_title', s.support_title, 'text', 'Expert Support Center')}
                                         ${textarea('Page Subtitle / Description', 'support_subtitle', s.support_subtitle)}
                                         ${field('Form Submit Button Text', 'support_form_cta', s.support_form_cta, 'text', 'Submit Technical Ticket')}
+                                        ${field('Google Maps Embed URL', 'support_map_embed', s.support_map_embed, 'text', 'https://www.google.com/maps/embed?...')}
+                                        <p class="text-[9px] text-slate-500 font-black uppercase tracking-widest -mt-6 ml-3">Tip: Go to Google Maps -> Search Address -> click Share -> click Embed a Map -> Copy only the URL inside the src="..." attribute.</p>
                                     </div>
                                     <div class="p-5 bg-green-50 border border-green-100 rounded-2xl space-y-4">
                                         <span class="text-xs font-black text-green-700 uppercase tracking-widest">Contact Cards (auto-pulled from General Settings)</span>
