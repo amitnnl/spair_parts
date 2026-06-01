@@ -4,7 +4,7 @@ export function renderCategories(container, app) {
     const categories = app.state.categories || [];
 
     setHTML(container, `
-        <div class="animate-fade-in py-12 bg-slate-50 min-h-screen">
+        <div class="animate-fade-in py-8 bg-slate-50 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
                     <h2 class="text-5xl font-black text-slate-900 tracking-tighter mb-4 uppercase font-display">Core <span class="text-[#ed1c24]">Categories</span></h2>

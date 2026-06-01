@@ -14,7 +14,7 @@ export function renderCart(container, app) {
     }
     
     container.innerHTML = `
-        <div class="max-w-4xl mx-auto py-12 px-4 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div class="max-w-4xl mx-auto py-8 px-4 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight">Quotation Cart</h2>
                 <p class="text-slate-500 mt-1 font-medium">Review and adjust items before submitting for pricing.</p>

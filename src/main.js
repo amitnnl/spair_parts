@@ -530,12 +530,14 @@ const app = {
         const authContainer = document.getElementById('auth-nav');
         const cartBtn = document.getElementById('header-cart-btn');
         const mobileCartBtn = document.getElementById('mobile-cart-btn');
+        
+        // Ensure cart is always visible
+        if (cartBtn) cartBtn.classList.remove('hidden');
+        if (mobileCartBtn) mobileCartBtn.classList.remove('hidden');
+
         if (this.state.user) {
             localStorage.setItem('user', JSON.stringify(this.state.user));
             const isAdmin = this.state.user.role && this.state.user.role.toLowerCase() === 'admin';
-            
-            if (cartBtn) isAdmin ? cartBtn.classList.add('hidden') : cartBtn.classList.remove('hidden');
-            if (mobileCartBtn) isAdmin ? mobileCartBtn.classList.add('hidden') : mobileCartBtn.classList.remove('hidden');
             
             setHTML(authContainer, `
                 <div class="relative group/user z-50">
@@ -575,8 +577,6 @@ const app = {
                 </div>
             `);
         } else {
-            if (cartBtn) cartBtn.classList.add('hidden');
-            if (mobileCartBtn) mobileCartBtn.classList.add('hidden');
             localStorage.removeItem('user');
             setHTML(authContainer, `
                 <div class="relative group/user z-50">
@@ -813,10 +813,11 @@ const app = {
                 e.preventDefault();
                 const brand = document.getElementById('global-brand-select')?.value || '';
                 const category = document.getElementById('global-category-select')?.value || '';
+                const model = document.getElementById('global-model-select')?.value || '';
                 const item = document.getElementById('global-item-select')?.value || '';
                 const query = document.getElementById('global-text-search')?.value || '';
 
-                this.state.searchFilters = { brand, category, item, query };
+                this.state.searchFilters = { brand, category, model, item, query };
                 
                 history.pushState(null, null, this.basePath + '/catalog');
                 this.handleRouting();
@@ -866,13 +867,31 @@ const app = {
                 e.preventDefault();
                 const brand = document.getElementById('global-brand-select')?.value || '';
                 const category = document.getElementById('global-category-select')?.value || '';
+                const model = document.getElementById('global-model-select')?.value || '';
                 const item = document.getElementById('global-item-select')?.value || '';
                 const query = document.getElementById('global-text-search')?.value || '';
 
-                this.state.searchFilters = { brand, category, item, query };
+                this.state.searchFilters = { brand, category, model, item, query };
                 
                 history.pushState(null, null, this.basePath + '/catalog');
                 this.handleRouting();
+                return;
+            }
+
+            const clearBtn = e.target.closest('#global-clear-btn');
+            if (clearBtn) {
+                e.preventDefault();
+                document.getElementById('global-brand-select').value = '';
+                document.getElementById('global-category-select').value = '';
+                document.getElementById('global-model-select').value = '';
+                document.getElementById('global-item-select').value = '';
+                document.getElementById('global-text-search').value = '';
+                this.state.searchFilters = { brand: '', category: '', model: '', item: '', query: '' };
+                
+                if (window.location.pathname.endsWith('/catalog')) {
+                    history.pushState(null, null, this.basePath + '/catalog');
+                    this.handleRouting();
+                }
                 return;
             }
 

@@ -37,7 +37,7 @@ export function renderHome(container, app) {
     setHTML(container, `
         <div class="animate-fade-in bg-zinc-50 min-h-screen">
             <!-- ═══ HERO SECTION (Mockup layout & styling with dynamic content) ═══ -->
-            <section class="relative bg-white overflow-hidden py-10 lg:py-16 border-b border-zinc-100">
+            <section class="relative bg-white overflow-hidden py-8 lg:py-8 border-b border-zinc-100">
                 <!-- Visual Background Accents -->
                 <div class="absolute top-0 right-0 w-1/3 h-full bg-[#111111] transform skew-x-12 translate-x-20 z-0 hidden lg:block"></div>
                 <div class="absolute top-0 right-0 w-2 h-full bg-[#ed1c24] transform skew-x-12 translate-x-8 z-0 hidden lg:block"></div>
@@ -120,7 +120,7 @@ export function renderHome(container, app) {
             </section>
 
             <!-- ═══ BLACK STATS RIBBON (Mockup layout & red icons) ═══ -->
-            <section class="bg-[#111111] text-white py-6 border-b border-zinc-800 no-print select-none">
+            <section class="bg-[#111111] text-white py-4 border-b border-zinc-800 no-print select-none">
                 <div class="max-w-7xl mx-auto px-6 lg:px-10">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
                         <div class="flex items-center gap-4 group/badge cursor-pointer">
@@ -175,31 +175,9 @@ export function renderHome(container, app) {
                 </div>
             </section>
 
-            <!-- 🏆 TRENDING SEARCHES BAR (Premium Redesign) 🏆 -->
-              <section class="bg-white py-5 border-b border-zinc-100 no-print relative z-20 shadow-sm">
-                  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8">
-                      <div class="flex items-center gap-3 shrink-0">
-                          <div class="relative flex h-2.5 w-2.5">
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ed1c24] opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ed1c24]"></span>
-                          </div>
-                          <span class="text-xs font-black uppercase tracking-[0.2em] text-slate-900">Trending Now</span>
-                      </div>
-                      
-                      <!-- Hide scrollbar, allow horizontal scroll on smaller screens -->
-                      <div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 lg:pb-0 -mx-6 px-6 lg:mx-0 lg:px-0">
-                          ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => `
-                              <button onclick="clickPopularSearch('${term}')" class="group flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 hover:border-[#ed1c24]/40 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_6px_15px_rgba(237,28,36,0.08)] transition-all duration-300 hover:-translate-y-0.5 whitespace-nowrap cursor-pointer">
-                                  <svg class="w-3.5 h-3.5 text-zinc-400 group-hover:text-[#ed1c24] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                                  <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600 group-hover:text-[#ed1c24] transition-colors">${term}</span>
-                              </button>
-                          `).join('') + `
-                      </div>
-                  </div>
-              </section>
 
               <!-- 🏆 SHOP BY TOP CATEGORIES (Premium Light Redesign) 🏆 -->
-              <section class="py-20 relative overflow-hidden bg-zinc-50">
+              <section class="py-8 relative overflow-hidden bg-zinc-50">
                   <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 reveal-element">
                       <!-- Header -->
                       <div class="flex items-end justify-between mb-12">
@@ -259,8 +237,31 @@ export function renderHome(container, app) {
                   </div>
               </section>
 
+            <!-- 🏆 TRENDING SEARCHES BAR (Sitting Upon Catalog) 🏆 -->
+              <section class="bg-white pt-10 pb-4 border-b-0 no-print relative z-20">
+                  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8">
+                      <div class="flex items-center gap-3 shrink-0">
+                          <div class="relative flex h-2.5 w-2.5">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ed1c24] opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ed1c24]"></span>
+                          </div>
+                          <span class="text-xs font-black uppercase tracking-[0.2em] text-slate-900">Trending Now</span>
+                      </div>
+                      
+                      <!-- Hide scrollbar, allow horizontal scroll on smaller screens -->
+                      <div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 lg:pb-0 -mx-6 px-6 lg:mx-0 lg:px-0">
+                          ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => `
+                              <button onclick="clickPopularSearch('${term}')" class="group flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 hover:border-[#ed1c24]/40 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_6px_15px_rgba(237,28,36,0.08)] transition-all duration-300 hover:-translate-y-0.5 whitespace-nowrap cursor-pointer">
+                                  <svg class="w-3.5 h-3.5 text-zinc-400 group-hover:text-[#ed1c24] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                  <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600 group-hover:text-[#ed1c24] transition-colors">${term}</span>
+                              </button>
+                          `).join('') + `
+                      </div>
+                  </div>
+              </section>
+
             <!-- ═══ GENUINE PARTS CATALOG ═══ -->
-            <section class="py-16 bg-white border-y border-zinc-200/80">
+            <section class="py-8 bg-white border-y border-zinc-200/80">
                 <div class="max-w-7xl mx-auto px-6 lg:px-10 reveal-element">
                     <!-- Header -->
                     <div class="flex items-center justify-between mb-10">
@@ -275,7 +276,7 @@ export function renderHome(container, app) {
 
                     <!-- Products Grid Placeholder -->
                     <div id="home-genuine-parts-container" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-6">
-                        <div class="col-span-full py-20 text-center flex flex-col items-center justify-center">
+                        <div class="col-span-full py-8 text-center flex flex-col items-center justify-center">
                             <div class="animate-spin w-10 h-10 border-4 border-slate-200 border-t-[#ed1c24] rounded-full mb-4"></div>
                             <p class="text-xs font-black text-slate-500 uppercase tracking-widest">Loading Catalog...</p>
                         </div>
@@ -284,7 +285,7 @@ export function renderHome(container, app) {
             </section>
 
             <!-- ═══ Trusted By PROFESSIONALS (100% Mockup Exact brand logos with actual visual styling) ═══ -->
-            <section class="py-12 bg-white border-y border-zinc-200/80">
+            <section class="py-8 bg-white border-y border-zinc-200/80">
                 <div class="max-w-7xl mx-auto px-6 lg:px-10 reveal-element">
                     <div class="text-center mb-8">
                         <span class="text-xs font-extrabold uppercase tracking-[0.3em] text-slate-500">Trusted By Professionals. Preferred By Brands.</span>
@@ -319,7 +320,7 @@ export function renderHome(container, app) {
             </section>
 
             <!-- ═══ BOTTOM STATS/INFO BAR (Mockup: 5 columns with red outline circles) ═══ -->
-            <section class="py-12 bg-white border-b border-zinc-100 text-zinc-600 no-print">
+            <section class="py-8 bg-white border-b border-zinc-100 text-zinc-600 no-print">
                 <div class="max-w-7xl mx-auto px-6 lg:px-10 reveal-element">
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-start">
                         
@@ -462,7 +463,7 @@ export function renderHome(container, app) {
             const parts = (data.products || []).slice(0, 10);
             
             if (parts.length === 0) {
-                setHTML(partsContainer, '<div class="col-span-full py-10 text-center text-slate-500 font-bold">No parts available.</div>');
+                setHTML(partsContainer, '<div class="col-span-full py-8 text-center text-slate-500 font-bold">No parts available.</div>');
                 return;
             }
             
@@ -473,7 +474,7 @@ export function renderHome(container, app) {
         .catch(err => {
             const partsContainer = document.getElementById('home-genuine-parts-container');
             if (partsContainer) {
-                setHTML(partsContainer, '<div class="col-span-full py-10 text-center text-rose-500 font-bold">Failed to load parts catalog.</div>');
+                setHTML(partsContainer, '<div class="col-span-full py-8 text-center text-rose-500 font-bold">Failed to load parts catalog.</div>');
             }
         });
 

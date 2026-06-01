@@ -125,7 +125,7 @@ export function filterAndRenderProducts() {
 
     if (filtered.length === 0) {
         return `
-            <div class="col-span-full py-20 text-center animate-in fade-in duration-500">
+            <div class="col-span-full py-8 text-center animate-in fade-in duration-500">
                 <h3 class="text-xl font-bold text-slate-500">No parts found</h3>
             </div>
         `;

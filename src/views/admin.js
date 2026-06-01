@@ -1798,7 +1798,7 @@ export function viewTicketThread(id, app) {
 
     setHTML(modal, `
         <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden animate-slide-up border border-slate-100">
-            <div class="px-8 py-6 bg-slate-50 border-b border-slate-200 flex justify-between items-start">
+            <div class="px-8 py-4 bg-slate-50 border-b border-slate-200 flex justify-between items-start">
                 <div>
                     <h3 class="text-2xl font-black text-bosch-blue tracking-tight">${escapeHTML(ticket.subject)}</h3>
                     <p class="text-sm text-slate-500 font-bold mt-1 uppercase tracking-widest">Customer: <span class="text-bosch-red">${escapeHTML(ticket.name)}</span> &bull; ${escapeHTML(ticket.email)}</p>

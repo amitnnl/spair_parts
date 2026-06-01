@@ -101,7 +101,7 @@ export async function renderInvoiceDocument(invoiceId, app) {
                     </div>
                 </div>
 
-                <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 py-10 print:py-8">
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 py-8 print:py-8">
                     <div>
                         <p class="text-xs font-black text-slate-500 uppercase tracking-widest mb-3 border-b border-slate-100 pb-2">Billed To:</p>
                         <div class="space-y-1">

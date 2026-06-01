@@ -101,7 +101,7 @@ export function renderBrands(container, app) {
     setHTML(container, `
         <div class="animate-fade-in min-h-screen bg-slate-50">
             <!-- Page Header -->
-            <section class="bg-white border-b border-slate-100 py-24">
+            <section class="bg-white border-b border-slate-100 py-8">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div class="text-xs font-black uppercase tracking-[0.4em] text-[#ed1c24] mb-6">Authorized Partners</div>
                     <h1 class="text-6xl font-black text-slate-900 tracking-tight mb-6 uppercase">
@@ -114,7 +114,7 @@ export function renderBrands(container, app) {
             </section>
 
             <!-- Brand Cards -->
-            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     ` + brands.map(b => `
                         <div class="bg-white rounded-3xl overflow-hidden group transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-3 animate-in zoom-in duration-700 h-full cursor-pointer" onclick="app.renderCatalog(document.getElementById('view-container'))">

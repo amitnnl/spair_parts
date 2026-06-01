@@ -5,7 +5,7 @@ export default {
         container.innerHTML = `
             <div class="bg-white min-h-screen">
                 <!-- Header Section -->
-                <section class="relative py-20 bg-slate-900 overflow-hidden">
+                <section class="relative py-8 bg-slate-900 overflow-hidden">
                     <div class="absolute inset-0 opacity-10">
                         <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,179,86,1),transparent)]"></div>
                         <div class="grid grid-cols-6 h-full">
@@ -23,7 +23,7 @@ export default {
                 </section>
 
                 <!-- Content Section -->
-                <section class="py-20">
+                <section class="py-8">
                     <div class="max-w-4xl mx-auto px-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                             <!-- Warranty Policy -->
