@@ -680,6 +680,7 @@ export async function renderSystemSettings(container, app) {
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     ${field('Platform / Site Name', 'site_name', s.site_name, 'text', 'TORVO')}
                                     ${imgField('Platform Logo', 'site_logo', s.site_logo)}
+                                    ${field('Admin Deletion PIN', 'admin_deletion_pin', s.admin_deletion_pin, 'password', 'e.g. 1234')}
                                     ${field('Currency Symbol', 'currency', s.currency, 'text', '₹')}
                                     ${field('Tax Rate (%)', 'tax_percent', s.tax_percent, 'number', '18')}
                                     ${field('Support Email', 'contact_email', s.contact_email, 'email', 'support@torvotools.com')}
@@ -967,11 +968,13 @@ export async function renderSystemSettings(container, app) {
         };
 
         window.deleteCategory = async (id) => {
-            if (!confirm('Are you sure you want to delete this category?')) return;
+            const pin = prompt('Please enter the Admin Deletion PIN to confirm category deletion:');
+            if (!pin) return;
             try {
                 const fd = new FormData();
                 fd.append('action', 'delete');
                 fd.append('id', id);
+                fd.append('pin', pin);
                 
                 const res = await fetch(app.api('api/ui_categories.php'), { method: 'POST', body: fd, credentials: 'include' });
                 const data = await res.json();
@@ -1522,10 +1525,10 @@ async function handleProductSubmit(e, app) {
 }
 
 export async function deleteProduct(id, app) {
-    if (!confirm('Are you sure you want to remove this product?')) return;
-
+    const pin = prompt('Please enter the Admin Deletion PIN to confirm product deletion:');
+    if (!pin) return;
     try {
-        const res = await fetch(app.api(`api/admin_products.php?action=delete_product&id=${id}`), {
+        const res = await fetch(app.api(`api/admin_products.php?action=delete_product&id=${id}&pin=${encodeURIComponent(pin)}`), {
             method: 'DELETE'
         });
         const result = await res.json();
@@ -1920,11 +1923,12 @@ export async function resolveSupportTicket(id, app) {
 }
 
 export async function deleteSupportTicket(id, app) {
-    if (!confirm('Are you sure you want to delete this ticket?')) return;
+    const pin = prompt('Please enter the Admin Deletion PIN to confirm ticket deletion:');
+    if (!pin) return;
     try {
         const res = await fetch(app.api('api/admin_support.php'), {
             method: 'DELETE',
-            body: JSON.stringify({ id })
+            body: JSON.stringify({ id, pin })
         });
         const result = await res.json();
         if (result.success) {

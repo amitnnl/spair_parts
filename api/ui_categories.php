@@ -86,6 +86,14 @@ if ($method === 'POST') {
     
     if ($action === 'delete') {
         $id = $_POST['id'] ?? 0;
+        $pin = $_POST['pin'] ?? '';
+
+        // Verify PIN
+        $correctPin = $db->query("SELECT setting_value FROM settings WHERE setting_key = 'admin_deletion_pin'")->fetchColumn();
+        if ($correctPin && $pin !== $correctPin) {
+            echo json_encode(['error' => 'Invalid Admin Deletion PIN.']);
+            exit;
+        }
         
         // Remove image if exists
         $stmt = $db->prepare("SELECT image_url FROM ui_categories WHERE id = ?");

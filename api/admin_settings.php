@@ -24,6 +24,7 @@ if (!file_exists($jsonFile)) {
         'contact_address'   => 'Phase 2, Industrial Estate, New Delhi, IN 110020',
         'footer_desc'       => 'The premium B2B platform for genuine power tool spare parts procurement and industrial maintenance solutions.',
         'footer_copyright'  => '© 2026 PARTSPRO B2B Division. All rights reserved.',
+        'admin_deletion_pin'=> '1234',
         // Home page
         'hero_title'        => 'THE RIGHT PART. EVERY TIME.',
         'hero_subtitle'     => 'Premium B2B procurement portal for genuine power tool spare parts from the world\'s leading brands.',

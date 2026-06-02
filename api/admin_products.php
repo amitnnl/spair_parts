@@ -191,8 +191,15 @@ if ($method === 'POST') {
 } elseif ($method === 'DELETE') {
     $action = $_GET['action'] ?? 'delete_product';
     $id = $_GET['id'];
+    $pin = $_GET['pin'] ?? '';
 
     try {
+        // Verify PIN
+        $correctPin = $db->query("SELECT setting_value FROM settings WHERE setting_key = 'admin_deletion_pin'")->fetchColumn();
+        if ($correctPin && $pin !== $correctPin) {
+            echo json_encode(['error' => 'Invalid Admin Deletion PIN.']);
+            exit;
+        }
         if ($action === 'delete_product') {
             // Get photo path before deletion
             $stmt = $db->prepare("SELECT photo FROM spare_parts WHERE id = ?");

@@ -145,6 +145,13 @@ try {
         // Delete a ticket
         $data = json_decode(file_get_contents('php://input'), true);
         if (isset($data['id'])) {
+            $pin = $data['pin'] ?? '';
+            $correctPin = $db->query("SELECT setting_value FROM settings WHERE setting_key = 'admin_deletion_pin'")->fetchColumn();
+            if ($correctPin && $pin !== $correctPin) {
+                echo json_encode(['error' => 'Invalid Admin Deletion PIN.']);
+                exit;
+            }
+
             $stmt = $db->prepare("DELETE FROM support_tickets WHERE id = ?");
             $stmt->execute([$data['id']]);
             echo json_encode(['success' => true]);
