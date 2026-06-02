@@ -106,10 +106,10 @@ export function productCard(p) {
     const isProfileComplete = !state.user || state.user.profile_complete;
 
     const orderButtons = isProfileComplete 
-        ? `<button onclick="app.addToCart(${escapedId})" class="w-8 h-8 rounded-none bg-slate-50 hover:bg-[#ed1c24] text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-red-500/30" title="Add to RFQ Cart">
+        ? `<button onclick="app.addToCart('${escapedId}')" class="w-8 h-8 rounded-none bg-slate-50 hover:bg-[#ed1c24] text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-red-500/30" title="Add to RFQ Cart">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
            </button>
-           <button onclick="app.addToPartsList(${escapedId})" class="w-8 h-8 rounded-none bg-slate-50 hover:bg-amber-400 text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-amber-400/30" title="Save to My Parts List">
+           <button onclick="app.addToPartsList('${escapedId}')" class="w-8 h-8 rounded-none bg-slate-50 hover:bg-amber-400 text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-amber-400/30" title="Save to My Parts List">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
            </button>`
         : `<a href="/profile" data-link class="w-8 h-8 rounded-none bg-amber-50 group-hover:bg-amber-500 text-amber-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-amber-500/30" title="Complete Profile to Order">
@@ -118,7 +118,7 @@ export function productCard(p) {
 
     const actionButton = `<div class="flex flex-col gap-1 shrink-0">
            ${orderButtons}
-           <button onclick="app.viewProduct(${escapedId})" class="w-8 h-8 rounded-none bg-slate-50 hover:bg-blue-500 text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-blue-500/30" title="View Details">
+           <button onclick="app.viewProduct('${escapedId}')" class="w-8 h-8 rounded-none bg-slate-50 hover:bg-blue-500 text-slate-500 hover:text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-blue-500/30" title="View Details">
                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
            </button>
        </div>`;
@@ -216,11 +216,11 @@ export function renderProductModal(id, appInstance) {
                 
                 <div class="flex gap-3 mt-auto pt-6 border-t border-slate-100">
                     ${isProfileComplete ? `
-                    <button onclick="app.addToCart(${product.id}); document.getElementById('product-view-modal').remove()" class="flex-1 bg-[#ed1c24] hover:bg-[#111111] text-white py-3.5 rounded-none font-black uppercase tracking-widest text-xs transition-all shadow-[0_4px_14px_rgba(237,28,36,0.2)] hover:shadow-[0_6px_20px_rgba(17,17,17,0.2)] flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                    <button onclick="app.addToCart('${product.id}'); document.getElementById('product-view-modal').remove()" class="flex-1 bg-[#ed1c24] hover:bg-[#111111] text-white py-3.5 rounded-none font-black uppercase tracking-widest text-xs transition-all shadow-[0_4px_14px_rgba(237,28,36,0.2)] hover:shadow-[0_6px_20px_rgba(17,17,17,0.2)] flex items-center justify-center gap-2 hover:-translate-y-0.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
                         Add to RFQ Cart
                     </button>
-                    <button onclick="app.addToPartsList(${product.id})" class="flex-1 bg-amber-400 hover:bg-amber-500 text-white py-3.5 rounded-none font-black uppercase tracking-widest text-xs transition-all shadow-[0_4px_14px_rgba(251,191,36,0.2)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.2)] flex items-center justify-center gap-2 hover:-translate-y-0.5" title="Save to My Parts List">
+                    <button onclick="app.addToPartsList('${product.id}')" class="flex-1 bg-amber-400 hover:bg-amber-500 text-white py-3.5 rounded-none font-black uppercase tracking-widest text-xs transition-all shadow-[0_4px_14px_rgba(251,191,36,0.2)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.2)] flex items-center justify-center gap-2 hover:-translate-y-0.5" title="Save to My Parts List">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                         Save Part
                     </button>
