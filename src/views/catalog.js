@@ -153,7 +153,7 @@ export function renderProductModal(id, appInstance) {
         const product = state.products?.find(p => p.id == id);
         if (!product) {
             console.error('Product not found for id:', id, 'State:', state);
-            alert('Product not found. Please refresh the page.');
+            alert(`Product not found! ID requested: ${id}. Total products in state: ${state.products ? state.products.length : 'undefined'}. First product ID: ${state.products && state.products.length ? state.products[0].id : 'N/A'}`);
             return;
         }
 

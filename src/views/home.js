@@ -1,5 +1,6 @@
 import { escapeHTML, setHTML } from '../api.js';
 import { productCard } from './catalog.js';
+import { state } from '../state.js';
 
 export function renderHome(container, app) {
     const s = app.state.settings || {};
@@ -460,7 +461,9 @@ export function renderHome(container, app) {
             const partsContainer = document.getElementById('home-genuine-parts-container');
             if (!partsContainer) return;
             
-            const parts = (data.products || []).slice(0, 10);
+            state.products = data.products || [];
+            
+            const parts = state.products.slice(0, 10);
             
             if (parts.length === 0) {
                 setHTML(partsContainer, '<div class="col-span-full py-8 text-center text-slate-500 font-bold">No parts available.</div>');
