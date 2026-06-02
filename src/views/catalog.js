@@ -149,12 +149,18 @@ function cleanImageUrl(url, fallbackText = 'Part') {
 }
 
 export function renderProductModal(id, appInstance) {
-    const product = state.products?.find(p => p.id == id);
-    if (!product) return;
+    try {
+        const product = state.products?.find(p => p.id == id);
+        if (!product) {
+            console.error('Product not found for id:', id, 'State:', state);
+            alert('Product not found. Please refresh the page.');
+            return;
+        }
 
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-300';
-    modal.id = 'product-view-modal';
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-300';
+        modal.style.zIndex = '99999';
+        modal.id = 'product-view-modal';
 
     const escapedBrand = escapeHTML(product.brand);
     const escapedName = escapeHTML(product.part_name);
@@ -239,4 +245,8 @@ export function renderProductModal(id, appInstance) {
     });
 
     document.body.appendChild(modal);
+    } catch (err) {
+        console.error('Error rendering product modal:', err);
+        alert('An error occurred while loading the product details: ' + err.message);
+    }
 }
