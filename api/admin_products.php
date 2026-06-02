@@ -199,6 +199,12 @@ if ($method === 'POST') {
             $stmt->execute([$id]);
             $photo = $stmt->fetchColumn();
 
+            // Delete dependent records first to avoid foreign key constraints
+            $db->prepare("DELETE FROM part_fitments WHERE part_id = ?")->execute([$id]);
+            $db->prepare("DELETE FROM quotation_items WHERE part_id = ?")->execute([$id]);
+            try { $db->prepare("DELETE FROM invoice_items WHERE part_id = ?")->execute([$id]); } catch(Exception $e) {}
+            try { $db->prepare("DELETE FROM user_parts WHERE part_id = ?")->execute([$id]); } catch(Exception $e) {}
+
             // Delete from DB
             $stmt = $db->prepare("DELETE FROM spare_parts WHERE id = ?");
             $stmt->execute([$id]);
