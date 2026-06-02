@@ -117,8 +117,8 @@ export function renderBrands(container, app) {
             <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     ` + brands.map(b => `
-                        <div class="bg-white rounded-3xl overflow-hidden group transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-3 animate-in zoom-in duration-700 h-full cursor-pointer" onclick="app.renderCatalog(document.getElementById('view-container'))">
-                            <div class="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100 overflow-hidden">
+                        <div class="bg-white rounded-none overflow-hidden group transition-all duration-500 hover:-translate-y-1 ring-1 ring-slate-900/5 shadow-sm hover:shadow-md flex flex-row items-center p-3 gap-3 animate-in zoom-in duration-700 h-full cursor-pointer" onclick="app.renderCatalog(document.getElementById('view-container'))">
+                            <div class="relative w-20 h-20 rounded-none bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100 overflow-hidden">
                                 ` + (b.logo
                                     ? `<img src="${escapeHTML(app.api(b.logo))}" alt="${escapeHTML(b.name)}" class="w-full h-full object-contain p-2 drop-shadow-sm group-hover:scale-110 transition-transform duration-500">`
                                     : `<div class="grayscale group-hover:grayscale-0 transition-all duration-500 scale-75">${b.svg}</div>`) + `
@@ -126,11 +126,11 @@ export function renderBrands(container, app) {
                             <div class="flex-1 min-w-0 pr-1 flex flex-col justify-center">
                                 <h4 class="font-bold text-sm text-slate-900 leading-tight tracking-tight truncate mb-0.5 group-hover:text-[#ed1c24] transition-colors">${escapeHTML(b.name)}</h4>
                                 <div class="flex items-center gap-1.5 mb-1">
-                                    <span class="text-xs font-black text-slate-500 uppercase tracking-widest bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100">${escapeHTML(b.tag)}</span>
+                                    <span class="text-xs font-black text-slate-500 uppercase tracking-widest bg-slate-50 px-1.5 py-0.5 rounded-none border border-slate-100">${escapeHTML(b.tag)}</span>
                                 </div>
                                 <p class="text-xs text-slate-500 font-medium truncate">${escapeHTML(b.desc)}</p>
                             </div>
-                            <a href="/catalog" data-link class="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-[#ed1c24] text-slate-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Explore Spares">
+                            <a href="/catalog" data-link class="w-8 h-8 rounded-none bg-slate-50 group-hover:bg-[#ed1c24] text-slate-500 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-sm group-hover:shadow-red-500/30" title="Explore Spares">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                             </a>
                         </div>

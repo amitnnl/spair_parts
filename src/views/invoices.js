@@ -2,7 +2,7 @@ import { escapeHTML } from '../api.js';
 
 export async function renderInvoices(container, appInstance) {
     if (!appInstance.state.user) { history.pushState(null, null, appInstance.basePath + '/login'); appInstance.handleRouting(); return; }
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-none"></div></div>`;
     
     try {
         const res = await fetch(appInstance.api('api/invoices.php'));
@@ -21,9 +21,9 @@ export async function renderInvoices(container, appInstance) {
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             ${invoices.length ? invoices.map(inv => `
-                                <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 space-y-6 hover:border-bosch-blue transition-all duration-500 group">
+                                <div class="bg-white border-2 border-slate-100 rounded-none p-8 space-y-6 hover:border-bosch-blue transition-all duration-500 group">
                                     <div class="flex justify-between items-start">
-                                        <div class="w-14 h-14 rounded-2xl bg-industrial-gray text-white flex items-center justify-center group-hover:bg-bosch-blue transition-all">
+                                        <div class="w-14 h-14 rounded-none bg-industrial-gray text-white flex items-center justify-center group-hover:bg-bosch-blue transition-all">
                                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                         </div>
                                         <div class="text-right space-y-2">
@@ -45,7 +45,7 @@ export async function renderInvoices(container, appInstance) {
                                             <span class="text-xs font-bold text-slate-500">Total Amount</span>
                                             <span class="text-xl font-black text-bosch-blue">₹${parseFloat(inv.total_amount).toLocaleString()}</span>
                                         </div>
-                                        <button onclick="app.renderInvoiceDocument(${inv.id})" class="w-full py-4 bg-industrial-gray text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-bosch-blue transition-all shadow-xl shadow-slate-900/20">View & Download</button>
+                                        <button onclick="app.renderInvoiceDocument(${inv.id})" class="w-full py-4 bg-industrial-gray text-white rounded-none font-black text-xs uppercase tracking-widest hover:bg-bosch-blue transition-all shadow-xl shadow-slate-900/20">View & Download</button>
                                     </div>
                                 </div>
                             `).join('') : `
@@ -57,7 +57,7 @@ export async function renderInvoices(container, appInstance) {
             </div>
         `;
     } catch (e) {
-        container.innerHTML = `<div class="bg-rose-50 border border-rose-100 rounded-3xl p-12 text-center text-rose-500 font-bold">Failed to load invoices.</div>`;
+        container.innerHTML = `<div class="bg-rose-50 border border-rose-100 rounded-none p-12 text-center text-rose-500 font-bold">Failed to load invoices.</div>`;
     }
 }
 
@@ -70,7 +70,7 @@ export async function renderInvoiceDocument(invoiceId, app) {
         const res = await fetch(app.api(`api/invoices.php?id=${invoiceId}`));
         const inv = await res.json();
         modal.innerHTML = `
-            <div id="invoice-printable-area" class="bg-white text-bosch-blue w-full max-w-4xl min-h-[11in] p-12 md:p-16 shadow-2xl relative animate-in slide-in-from-bottom-8 duration-500 rounded-3xl overflow-hidden mx-auto print:shadow-none print:p-0">
+            <div id="invoice-printable-area" class="bg-white text-bosch-blue w-full max-w-4xl min-h-[11in] p-12 md:p-16 shadow-2xl relative animate-in slide-in-from-bottom-8 duration-500 rounded-none overflow-hidden mx-auto print:shadow-none print:p-0">
                 
                 <!-- Print-only watermark -->
                 <div class="hidden print:flex absolute inset-0 items-center justify-center opacity-[0.03] pointer-events-none z-0">
@@ -83,7 +83,7 @@ export async function renderInvoiceDocument(invoiceId, app) {
                 <div class="relative z-10 flex flex-col md:flex-row justify-between items-start border-b-[3px] border-slate-900 pb-10 mt-6 print:mt-4 print:pb-8">
                     <div class="space-y-4">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-bosch-blue text-white rounded-2xl flex items-center justify-center font-black text-3xl shadow-lg print:shadow-none">T</div>
+                            <div class="w-14 h-14 bg-bosch-blue text-white rounded-none flex items-center justify-center font-black text-3xl shadow-lg print:shadow-none">T</div>
                             <h1 class="text-4xl font-black tracking-tighter uppercase text-bosch-blue">TOR<span class="text-bosch-red">VO</span></h1>
                         </div>
                         <div class="text-xs md:text-xs font-black text-slate-500 space-y-1.5 uppercase tracking-[0.15em] leading-relaxed">
@@ -173,8 +173,8 @@ export async function renderInvoiceDocument(invoiceId, app) {
                         <p class="text-xs font-black text-slate-500 uppercase tracking-widest">TORVO B2B Procurement</p>
                     </div>
                     <div class="flex gap-4 no-print w-full md:w-auto">
-                        <button onclick="document.getElementById('invoice-doc-modal').remove()" class="flex-1 md:flex-none px-6 py-3.5 bg-slate-100 text-slate-500 rounded-full font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all text-center">Close</button>
-                        <button onclick="window.print()" class="flex-1 md:flex-none px-8 py-3.5 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                        <button onclick="document.getElementById('invoice-doc-modal').remove()" class="flex-1 md:flex-none px-6 py-3.5 bg-slate-100 text-slate-500 rounded-none font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all text-center">Close</button>
+                        <button onclick="window.print()" class="flex-1 md:flex-none px-8 py-3.5 bg-bosch-blue text-white rounded-none font-black text-xs uppercase tracking-widest hover:bg-industrial-gray hover:shadow-lg transition-all flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                             Print Document
                         </button>

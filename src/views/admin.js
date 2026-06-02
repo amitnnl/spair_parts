@@ -20,7 +20,7 @@ export async function renderAdmin(container, app) {
                         <h2 class="text-4xl font-black text-bosch-blue tracking-tight">Executive <span class="text-bosch-blue">Dashboard</span></h2>
                         <p class="text-slate-500 mt-2 font-bold text-lg">Platform status and procurement oversight.</p>
                     </div>
-                    <button onclick="app.printAdminReport()" class="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-3xl font-bold text-sm hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
+                    <button onclick="app.printAdminReport()" class="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-none font-bold text-sm hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                         Generate Report
                     </button>
@@ -33,10 +33,10 @@ export async function renderAdmin(container, app) {
             { l: 'Inventory SKUs', v: '--', id: 'stat-total-skus', c: 'emerald' },
             { l: 'Monthly Revenue', v: '₹0', id: 'stat-revenue', c: 'rose' }
         ].map(s => `
-                        <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 space-y-4 hover:border-bosch-blue transition-all">
+                        <div class="bg-white border-2 border-slate-100 rounded-none p-8 space-y-4 hover:border-bosch-blue transition-all">
                             <p class="text-xs font-black text-slate-500 uppercase tracking-widest">${escapeHTML(s.l)}</p>
                             <h3 class="text-3xl font-black text-bosch-blue" id="${escapeHTML(s.id)}">${escapeHTML(s.v)}</h3>
-                            <div class="w-full h-1 bg-${escapeHTML(s.c)}-100 rounded-full overflow-hidden">
+                            <div class="w-full h-1 bg-${escapeHTML(s.c)}-100 rounded-none overflow-hidden">
                                 <div class="w-1/3 h-full bg-${escapeHTML(s.c)}-600"></div>
                             </div>
                         </div>
@@ -45,21 +45,21 @@ export async function renderAdmin(container, app) {
 
                 <div class="space-y-8">
                     <div class="flex items-center gap-4">
-                        <div class="w-2 h-8 bg-bosch-blue rounded-full"></div>
+                        <div class="w-2 h-8 bg-bosch-blue rounded-none"></div>
                         <h3 class="text-xl font-black text-bosch-blue tracking-tight uppercase">Pending Procurements</h3>
                     </div>
                     <div id="admin-quotation-list" class="grid grid-cols-1 gap-8">
-                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-full"></div></div>
+                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>
                     </div>
                 </div>
 
                 <div class="space-y-8">
                     <div class="flex items-center gap-4">
-                        <div class="w-2 h-8 bg-bosch-red rounded-full"></div>
+                        <div class="w-2 h-8 bg-bosch-red rounded-none"></div>
                         <h3 class="text-xl font-black text-bosch-blue tracking-tight uppercase">Order Fulfillment & Logistics</h3>
                     </div>
                     <div id="admin-invoice-list" class="grid grid-cols-1 gap-8">
-                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-red border-t-transparent rounded-full"></div></div>
+                        <div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-red border-t-transparent rounded-none"></div></div>
                     </div>
                 </div>
                 </div>
@@ -80,9 +80,9 @@ export async function loadAdminInvoices(app) {
         const invoices = await res.json();
 
         setHTML(list, invoices.length ? invoices.map(inv => `
-            <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 flex justify-between items-center hover:border-bosch-blue transition-all">
+            <div class="bg-white border-2 border-slate-100 rounded-none p-8 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div class="flex items-center gap-6">
-                    <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-500">
+                    <div class="w-12 h-12 rounded-none bg-slate-50 flex items-center justify-center text-slate-500">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
                     <div>
@@ -97,7 +97,7 @@ export async function loadAdminInvoices(app) {
                     <span class="px-3 py-1 rounded-none border border-slate-200 text-xs font-black uppercase tracking-widest ${getInvoiceStatusClass(inv.status)}">
                         ${escapeHTML(inv.status)}
                     </span>
-                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-5 py-2 rounded-full bg-industrial-gray text-white text-xs font-black uppercase tracking-widest hover:bg-bosch-blue transition-all">Manage</button>
+                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-5 py-2 rounded-none bg-industrial-gray text-white text-xs font-black uppercase tracking-widest hover:bg-bosch-blue transition-all">Manage</button>
                 </div>
             </div>
         `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-500 font-bold uppercase tracking-widest">No active orders in fulfillment</div>');
@@ -127,7 +127,7 @@ export async function loadAdminQuotations(app) {
         const quotations = await res.json();
 
         setHTML(list, quotations.length ? quotations.map(q => `
-            <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 flex justify-between items-center hover:border-bosch-blue transition-all">
+            <div class="bg-white border-2 border-slate-100 rounded-none p-8 flex justify-between items-center hover:border-bosch-blue transition-all">
                 <div>
                     <div class="font-black text-bosch-blue uppercase tracking-widest">${escapeHTML(q.user_name)}</div>
                     <div class="text-xs text-slate-500 font-medium mt-1 uppercase tracking-widest">${escapeHTML(q.user_email)} • ${new Date(q.created_at).toLocaleString()}</div>
@@ -136,8 +136,8 @@ export async function loadAdminQuotations(app) {
                     <span class="px-3 py-1 rounded-none border border-slate-200 text-xs font-black uppercase tracking-widest ${app.getStatusClass(q.status)}">
                         ${escapeHTML(q.status)}
                     </span>
-                    ${q.status === 'pending' ? `<button onclick="app.renderProcessQuotation(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-full bg-bosch-blue text-white text-xs font-black uppercase tracking-widest hover:bg-industrial-gray transition-all">Process</button>` : ''}
-                    ${q.status === 'approved' ? `<button onclick="app.generateInvoice(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-full bg-bosch-red text-white text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-all">Generate Invoice</button>` : ''}
+                    ${q.status === 'pending' ? `<button onclick="app.renderProcessQuotation(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-none bg-bosch-blue text-white text-xs font-black uppercase tracking-widest hover:bg-industrial-gray transition-all">Process</button>` : ''}
+                    ${q.status === 'approved' ? `<button onclick="app.generateInvoice(${parseInt(q.id, 10)})" class="px-5 py-2 rounded-none bg-bosch-red text-white text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-all">Generate Invoice</button>` : ''}
                 </div>
             </div>
         `).join('') : '<div class="bg-slate-50 border border-slate-100 rounded-none p-12 text-center text-slate-500 font-bold uppercase tracking-widest">No pending requests</div>');
@@ -147,7 +147,7 @@ export async function loadAdminQuotations(app) {
 }
 
 export async function renderAdminInventory(container, app) {
-    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-2xl"></div></div>`);
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>`);
 
     try {
         const res = await fetch(app.api('api/products.php'));
@@ -166,25 +166,25 @@ export async function renderAdminInventory(container, app) {
                             <p class="text-slate-500 mt-2 font-bold text-lg">Real-time stock monitoring and fitment management.</p>
                         </div>
                         <div class="flex gap-4 no-print">
-                            <button onclick="app.renderImportModal()" class="px-6 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-3xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+                            <button onclick="app.renderImportModal()" class="px-6 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-none font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
                                 <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                 Bulk Import
                             </button>
-                            <button onclick="app.renderAddProductForm()" class="px-6 py-3.5 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-xl shadow-blue-900/20 flex items-center gap-2 hover:-translate-y-1">
+                            <button onclick="app.renderAddProductForm()" class="px-6 py-3.5 bg-bosch-blue text-white rounded-none font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-xl shadow-blue-900/20 flex items-center gap-2 hover:-translate-y-1">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                                 Add Product
                             </button>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-3xl border-2 border-slate-100 p-4 flex gap-6 shadow-sm">
+                    <div class="bg-white rounded-none border-2 border-slate-100 p-4 flex gap-6 shadow-sm">
                         <div class="relative flex-grow">
-                            <input type="text" id="inventory-search" oninput="app.filterInventory()" class="w-full h-14 bg-slate-50 border border-slate-100 rounded-full px-14 text-sm font-bold text-slate-700 focus:outline-none focus:border-bosch-blue focus:ring-4 focus:ring-bosch-blue/10 transition-all" placeholder="Search by Part Name, Brand, or Machine Model...">
+                            <input type="text" id="inventory-search" oninput="app.filterInventory()" class="font-sans w-full h-14 bg-slate-50 border border-slate-100 rounded-none px-14 text-sm font-medium text-sm-700 focus:outline-none focus:border-bosch-blue focus:ring-4 focus:ring-bosch-blue/10 transition-all" placeholder="Search by Part Name, Brand, or Machine Model...">
                             <svg class="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-3xl border-2 border-slate-100 overflow-hidden shadow-2xl shadow-slate-200/40">
+                    <div class="bg-white rounded-none border-2 border-slate-100 overflow-hidden shadow-2xl shadow-slate-200/40">
                         <table class="w-full text-left border-collapse">
                             <thead class="bg-slate-50/80 border-b border-slate-200">
                                 <tr>
@@ -205,7 +205,7 @@ export async function renderAdminInventory(container, app) {
             </div>
         `);
     } catch (e) {
-        setHTML(container, `<div class="bg-rose-50 border border-rose-100 rounded-3xl p-20 text-center text-rose-500 font-bold">Error loading warehouse data.</div>`);
+        setHTML(container, `<div class="bg-rose-50 border border-rose-100 rounded-none p-20 text-center text-rose-500 font-bold">Error loading warehouse data.</div>`);
     }
 }
 
@@ -225,7 +225,7 @@ function createInventoryRow(p, app) {
             <td class="p-6 pl-8">
                 <div class="flex items-center gap-5">
                     <div class="relative">
-                        <img src="${escapeHTML(app.cleanImageUrl(p.photo, p.part_name))}" class="w-14 h-14 rounded-2xl object-cover border-2 border-slate-100 shadow-sm group-hover:scale-105 transition-transform">
+                        <img src="${escapeHTML(app.cleanImageUrl(p.photo, p.part_name))}" class="w-14 h-14 rounded-none object-cover border-2 border-slate-100 shadow-sm group-hover:scale-105 transition-transform">
                         ${isLowStock ? '<span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-bosch-red rounded-none border border-white animate-pulse"></span>' : ''}
                     </div>
                     <div>
@@ -240,7 +240,7 @@ function createInventoryRow(p, app) {
             <td class="p-6">
                 <div class="space-y-2">
                     <span class="text-xs font-black uppercase tracking-widest ${isLowStock ? 'text-bosch-red' : 'text-bosch-blue'}">${p.stock_quantity || 0} Units in Reserve</span>
-                    <div class="w-28 h-1.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                    <div class="w-28 h-1.5 bg-slate-100 rounded-none overflow-hidden border border-slate-200">
                         <div class="h-full rounded-none ${isLowStock ? 'bg-bosch-red' : 'bg-bosch-blue'}" style="width: ${Math.min((p.stock_quantity || 0) * 5, 100)}%"></div>
                     </div>
                 </div>
@@ -248,10 +248,10 @@ function createInventoryRow(p, app) {
             <td class="p-6 font-black text-bosch-blue text-sm">₹${escapeHTML(p.cost || '0.00')}</td>
             <td class="p-6 pr-8 text-right">
                 <div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-full bg-white border border-slate-200 text-slate-500 hover:text-white hover:border-bosch-blue hover:bg-bosch-blue transition-all">
+                    <button onclick="app.renderEditProductForm(${p.id})" class="p-3 rounded-none bg-white border border-slate-200 text-slate-500 hover:text-white hover:border-bosch-blue hover:bg-bosch-blue transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                     </button>
-                    <button onclick="app.deleteProduct(${p.id})" class="p-3 rounded-full bg-white border border-slate-200 text-slate-500 hover:text-white hover:border-bosch-red hover:bg-bosch-red transition-all">
+                    <button onclick="app.deleteProduct(${p.id})" class="p-3 rounded-none bg-white border border-slate-200 text-slate-500 hover:text-white hover:border-bosch-red hover:bg-bosch-red transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                     </button>
                 </div>
@@ -263,7 +263,7 @@ function createInventoryRow(p, app) {
 export async function renderAdminUsers(container, app) {
     if (!app.state.user || app.state.user.role !== 'admin') return;
 
-    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`);
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-none"></div></div>`);
 
     try {
         const res = await fetch(app.api('api/admin_users.php'));
@@ -286,7 +286,7 @@ export async function renderAdminUsers(container, app) {
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40 animate-in fade-in duration-500">
+                    <div class="bg-white rounded-none border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40 animate-in fade-in duration-500">
                         <table class="w-full text-left border-collapse">
                             <thead class="bg-slate-50/80 border-b border-slate-200">
                                 <tr>
@@ -302,34 +302,34 @@ export async function renderAdminUsers(container, app) {
                                     <tr class="hover:bg-slate-50/80 transition-all group">
                                         <td class="p-6 pl-8">
                                             <div class="flex items-center gap-4">
-                                                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-emerald-100">${escapeHTML((u.name || '?').charAt(0).toUpperCase())}</div>
+                                                <div class="w-12 h-12 rounded-none bg-emerald-50 text-bosch-blue flex items-center justify-center font-black text-xl shadow-sm border border-emerald-100">${escapeHTML((u.name || '?').charAt(0).toUpperCase())}</div>
                                                 <div>
                                                     <span class="font-black block text-bosch-blue text-sm mb-0.5">${escapeHTML(u.name)}</span>
-                                                    <span class="text-xs text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-md inline-block">${escapeHTML(u.email)}</span>
+                                                    <span class="text-xs text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-none inline-block">${escapeHTML(u.email)}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="p-6">
-                                            <select onchange="app.updateUser(${parseInt(u.id, 10)}, 'status', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest ${u.status === 'active' ? 'text-emerald-600 border-emerald-200' : (u.status === 'pending' ? 'text-amber-600 border-amber-200' : 'text-rose-600 border-rose-200')} focus:outline-none focus:ring-4 transition-all">
+                                            <select onchange="app.updateUser(${parseInt(u.id, 10)}, 'status', this.value)" class="font-sans bg-white border border-slate-200 rounded-none px-3 py-2 text-sm font-medium uppercase tracking-widest ${u.status === 'active' ? 'text-sm-600 border-emerald-200' : (u.status === 'pending' ? 'text-sm-600 border-amber-200' : 'text-sm-600 border-rose-200')} focus:outline-none focus:ring-4 transition-all">
                                                 <option value="pending" ${u.status === 'pending' ? 'selected' : ''}>Pending</option>
                                                 <option value="active" ${u.status === 'active' ? 'selected' : ''}>Active</option>
                                                 <option value="suspended" ${u.status === 'suspended' ? 'selected' : ''}>Suspended</option>
                                             </select>
                                         </td>
                                         <td class="p-6">
-                                            <select onchange="app.updateUser(${parseInt(u.id, 10)}, 'role', this.value)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-widest focus:outline-none focus:ring-4 transition-all">
+                                            <select onchange="app.updateUser(${parseInt(u.id, 10)}, 'role', this.value)" class="font-sans bg-white border border-slate-200 rounded-none px-3 py-2 text-sm font-medium uppercase tracking-widest focus:outline-none focus:ring-4 transition-all">
                                                 <option value="user" ${u.role?.toLowerCase() === 'user' || !u.role ? 'selected' : ''}>Partner</option>
                                                 <option value="staff" ${u.role?.toLowerCase() === 'staff' ? 'selected' : ''}>Staff</option>
                                             </select>
                                         </td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" step="0.1" value="${escapeHTML(u.discount_tier || 0)}" id="discount_${parseInt(u.id, 10)}" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-bosch-blue focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
+                                                <input type="number" step="0.1" value="${escapeHTML(u.discount_tier || 0)}" id="discount_${parseInt(u.id, 10)}" class="font-sans w-20 bg-slate-50 border border-slate-200 rounded-none px-3 py-2 text-sm font-medium text-sm-blue focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all">
                                                 <span class="text-slate-500 font-bold text-sm">%</span>
                                             </div>
                                         </td>
                                         <td class="p-6 pr-8 text-right">
-                                            <button onclick="app.updateUser(${parseInt(u.id, 10)}, 'discount_tier', document.getElementById('discount_${parseInt(u.id, 10)}').value)" class="px-5 py-2.5 rounded-full bg-slate-900 text-white font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save</button>
+                                            <button onclick="app.updateUser(${parseInt(u.id, 10)}, 'discount_tier', document.getElementById('discount_${parseInt(u.id, 10)}').value)" class="px-5 py-2.5 rounded-none bg-slate-900 text-white font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-md shadow-slate-900/20">Save</button>
                                         </td>
                                     </tr>
                                 `).join('')}
@@ -366,31 +366,31 @@ export async function renderProcessQuotation(quotationId, app) {
     const discountTier = parseFloat(data.discount_tier || 0);
 
     setHTML(modal, `
-        <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative animate-in zoom-in duration-300 my-8">
-            <div class="bg-slate-900 p-8 text-white flex justify-between items-center">
+        <div class="bg-white w-full max-w-4xl rounded-none shadow-2xl overflow-hidden relative animate-in zoom-in duration-300 my-8">
+            <div class="bg-slate-50 p-8 text-slate-900 flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-black tracking-tight">Process Quotation</h2>
                     <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-1">Request from ${escapeHTML(q.user_name)} (#Q-${String(q.id).padStart(4, '0')})</p>
                 </div>
-                <button onclick="document.getElementById('process-modal').remove()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all">
+                <button onclick="document.getElementById('process-modal').remove()" class="w-10 h-10 rounded-none bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             
             <div class="p-8 space-y-8">
                 <div class="flex flex-wrap gap-4">
-                    <div class="flex-1 min-w-[200px] p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
+                    <div class="flex-1 min-w-[200px] p-6 bg-emerald-50 border border-emerald-100 rounded-none">
                         <p class="text-xs font-black text-bosch-blue uppercase tracking-widest mb-1">Partner Tier</p>
                         <h4 class="text-xl font-black text-bosch-blue">${discountTier}% Automatic Discount</h4>
                     </div>
-                    <div class="flex-1 min-w-[200px] p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+                    <div class="flex-1 min-w-[200px] p-6 bg-slate-50 border border-slate-200 rounded-none">
                         <p class="text-xs font-black text-slate-500 uppercase tracking-widest mb-1">Current Status</p>
                         <h4 class="text-xl font-black text-amber-600 uppercase">${escapeHTML(q.status)}</h4>
                     </div>
                 </div>
                 
                 <form id="price-quotation-form" class="space-y-8">
-                    <div class="border border-slate-200 rounded-2xl overflow-hidden">
+                    <div class="border border-slate-200 rounded-none overflow-hidden">
                         <table class="w-full text-left">
                             <thead class="bg-slate-50 border-b border-slate-200">
                                 <tr>
@@ -412,8 +412,8 @@ export async function renderProcessQuotation(quotationId, app) {
                                         <td class="p-6 text-slate-500 font-bold text-sm">₹${escapeHTML(item.cost || '0.00')}</td>
                                         <td class="p-6">
                                             <div class="flex items-center gap-2">
-                                                <input type="number" name="price_${parseInt(item.id, 10)}" data-item-id="${parseInt(item.id, 10)}" data-qty="${parseInt(item.quantity, 10)}" data-msrp="${escapeHTML(item.cost || 0)}" step="0.01" value="${escapeHTML(item.unit_price || '')}" required class="w-28 bg-slate-50 border-2 border-slate-100 rounded-full px-3 h-10 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-4 focus:bg-white transition-all unit-price-input">
-                                                <button type="button" onclick="app.applyDiscountToItem(this, ${parseFloat(discountTier)})" class="w-10 h-10 bg-emerald-50 text-bosch-blue rounded-full hover:bg-bosch-blue hover:text-white transition-all flex items-center justify-center shadow-sm">
+                                                <input type="number" name="price_${parseInt(item.id, 10)}" data-item-id="${parseInt(item.id, 10)}" data-qty="${parseInt(item.quantity, 10)}" data-msrp="${escapeHTML(item.cost || 0)}" step="0.01" value="${escapeHTML(item.unit_price || '')}" required class="w-28 bg-slate-50 border-2 border-slate-100 rounded-none px-3 h-10 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-4 focus:bg-white transition-all unit-price-input">
+                                                <button type="button" onclick="app.applyDiscountToItem(this, ${parseFloat(discountTier)})" class="w-10 h-10 bg-emerald-50 text-bosch-blue rounded-none hover:bg-bosch-blue hover:text-white transition-all flex items-center justify-center shadow-sm">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                                 </button>
                                             </div>
@@ -432,13 +432,13 @@ export async function renderProcessQuotation(quotationId, app) {
                     </div>
                     
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-2">
-                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-2 h-11 px-5 rounded-full bg-bosch-blue text-white hover:bg-industrial-gray transition-all font-black text-xs uppercase tracking-widest shadow-lg">
+                        <button type="button" onclick="app.applyDiscountToAll(${discountTier})" class="flex items-center gap-2 h-11 px-5 rounded-none bg-bosch-blue text-white hover:bg-industrial-gray transition-all font-black text-xs uppercase tracking-widest shadow-lg">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             Apply Partner Discount to All
                         </button>
                         <div class="flex gap-4 w-full md:w-auto">
-                            <button type="button" onclick="document.getElementById('process-modal').remove()" class="h-11 px-6 rounded-full border-2 border-slate-100 text-slate-500 hover:bg-slate-50 transition-all font-black text-xs uppercase tracking-widest">Cancel</button>
-                            <button type="submit" class="h-11 px-8 rounded-full bg-slate-900 text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Publish & Send</button>
+                            <button type="button" onclick="document.getElementById('process-modal').remove()" class="h-11 px-6 rounded-none border-2 border-slate-100 text-slate-500 hover:bg-slate-50 transition-all font-black text-xs uppercase tracking-widest">Cancel</button>
+                            <button type="submit" class="h-11 px-8 rounded-none bg-slate-900 text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Publish & Send</button>
                         </div>
                     </div>
                 </form>
@@ -563,7 +563,7 @@ export async function renderSystemSettings(container, app) {
         app.showToast('Access restricted to administrators', 'error');
         return;
     }
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-none"></div></div>`;
 
     try {
         const res = await fetch(app.api('api/admin_settings.php'), { credentials: 'include' });
@@ -615,14 +615,14 @@ export async function renderSystemSettings(container, app) {
             <div class="space-y-1.5 ${escapeHTML(extra)}">
                 <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">${escapeHTML(label)}</label>
                 <input type="${escapeHTML(type)}" name="${escapeHTML(name)}" value="${escapeHTML(val || '')}" placeholder="${escapeHTML(placeholder)}"
-                    class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                    class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
             </div>`;
 
         const textarea = (label, name, val, extra = '') => `
             <div class="space-y-1.5 ${escapeHTML(extra)}">
                 <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">${escapeHTML(label)}</label>
                 <textarea name="${escapeHTML(name)}" rows="3"
-                    class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all resize-none h-24">${escapeHTML(val || '')}</textarea>
+                    class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 py-3 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all resize-none h-24">${escapeHTML(val || '')}</textarea>
             </div>`;
 
         const imgField = (label, name, current) => `
@@ -630,12 +630,12 @@ export async function renderSystemSettings(container, app) {
                 <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">${escapeHTML(label)}</label>
                 <div class="flex flex-row items-center gap-3 w-full bg-slate-50 border-2 border-dashed border-slate-200 rounded-none p-2 hover:border-bosch-blue transition-all min-w-0">
                     ${current
-                ? `<img src="${escapeHTML(app.api(current))}" class="w-10 h-10 rounded-2xl object-cover border border-slate-200 shadow-sm flex-shrink-0">`
-                : `<div class="w-10 h-10 rounded-2xl bg-slate-100 border border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
+                ? `<img src="${escapeHTML(app.api(current))}" class="w-10 h-10 rounded-none object-cover border border-slate-200 shadow-sm flex-shrink-0">`
+                : `<div class="w-10 h-10 rounded-none bg-slate-100 border border-slate-200 flex-shrink-0 flex items-center justify-center text-slate-300">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                            </div>`}
                     <input type="file" name="${escapeHTML(name)}" accept="image/*"
-                        class="block w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-none file:border-0 file:text-xs file:font-black file:uppercase file:tracking-widest file:bg-white file:text-slate-700 hover:file:bg-slate-100 cursor-pointer focus:outline-none min-w-0 overflow-hidden">
+                        class="font-sans block w-full text-sm text-sm-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-none file:border-0 file:text-sm file:font-medium file:uppercase file:tracking-widest file:bg-white file:text-sm-700 hover:file:bg-slate-100 cursor-pointer focus:outline-none min-w-0 overflow-hidden">
                 </div>
             </div>`;
 
@@ -660,10 +660,10 @@ export async function renderSystemSettings(container, app) {
                         </div>
 
                         <!-- Tab Nav -->
-                        <div class="flex gap-2 mb-8 bg-white p-2 rounded-3xl border border-slate-200 shadow-sm overflow-x-auto no-scrollbar">
+                        <div class="flex gap-2 mb-8 bg-white p-2 rounded-none border border-slate-200 shadow-sm overflow-x-auto no-scrollbar">
                             ${tabs.map((tab, i) => `
                                 <button type="button" onclick="window.switchCMSTab('${tab.id}')" id="tab-btn-${tab.id}"
-                                    class="cms-tab-btn flex-shrink-0 px-5 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all ${i === 0 ? 'bg-bosch-blue text-white shadow-lg shadow-slate-900/30' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}">
+                                    class="cms-tab-btn flex-shrink-0 px-5 py-3 rounded-none font-black text-xs uppercase tracking-widest transition-all ${i === 0 ? 'bg-bosch-blue text-white shadow-lg shadow-slate-900/30' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}">
                                     ${tab.label}
                                 </button>
                             `).join('')}
@@ -672,7 +672,7 @@ export async function renderSystemSettings(container, app) {
                         <form id="cms-form" enctype="multipart/form-data">
 
                             <!-- GENERAL -->
-                            <div id="cms-tab-general" class="cms-tab-panel space-y-6 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                            <div id="cms-tab-general" class="cms-tab-panel space-y-6 bg-white rounded-none p-8 border border-slate-200 shadow-sm">
                                 <div class="pb-6 border-b border-slate-100 mb-6">
                                     <h3 class="text-xl font-black text-bosch-blue">General Settings</h3>
                                     <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Site identity, pricing & contact info</p>
@@ -693,7 +693,7 @@ export async function renderSystemSettings(container, app) {
 
                             <!-- HOME PAGE -->
                             <div id="cms-tab-home" class="cms-tab-panel space-y-6 hidden">
-                                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+                                <div class="bg-white rounded-none p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Hero Section</h3>
                                         <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Main banner headline, subtitle, background image</p>
@@ -701,7 +701,7 @@ export async function renderSystemSettings(container, app) {
                                     <div class="grid grid-cols-1 gap-5">
                                         ${field('Hero Headline', 'hero_title', s.hero_title, 'text', 'THE RIGHT PART. EVERY TIME.')}
                                         ${textarea('Hero Subtitle', 'hero_subtitle', s.hero_subtitle)}
-                                        <div class="space-y-4 p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                                        <div class="space-y-4 p-5 bg-slate-50 rounded-none border border-slate-100">
                                             <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Hero Slider Images</span>
                                             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                                                 ${imgField('Hero Image 1', 'hero_image', s.hero_image)}
@@ -715,7 +715,7 @@ export async function renderSystemSettings(container, app) {
 
                             <!-- BRANDS PAGE -->
                             <div id="cms-tab-brands" class="cms-tab-panel space-y-6 hidden">
-                                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+                                <div class="bg-white rounded-none p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Brands Page</h3>
                                         <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Page heading and 6 brand cards</p>
@@ -727,8 +727,8 @@ export async function renderSystemSettings(container, app) {
                                     ${['Bosch', 'Makita', 'DeWalt', 'Hikoki', 'Milwaukee', 'Hilti'].map((bn, i) => {
             const n = i + 1;
             return `
-                                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-4">
-                                            <span class="inline-block px-3 py-1 rounded-lg bg-rose-100 text-rose-700 text-xs font-black uppercase tracking-widest">Brand ${n} — Default: ${bn}</span>
+                                        <div class="p-5 bg-slate-50 rounded-none border border-slate-100 space-y-4">
+                                            <span class="inline-block px-3 py-1 rounded-none bg-rose-100 text-rose-700 text-xs font-black uppercase tracking-widest">Brand ${n} — Default: ${bn}</span>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 ${field('Brand Name', 'brand' + n + '_name', getBrandVal(n, 'name'), 'text', bn)}
                                                 ${field('Tag / Specialty', 'brand' + n + '_tag', getBrandVal(n, 'tag'), 'text', 'Power Tools')}
@@ -742,7 +742,7 @@ export async function renderSystemSettings(container, app) {
 
                             <!-- CATEGORIES PAGE -->
                             <div id="cms-tab-categories" class="cms-tab-panel space-y-6 hidden">
-                                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+                                <div class="bg-white rounded-none p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Categories Page</h3>
                                         <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Page heading and 4 category cards</p>
@@ -765,7 +765,7 @@ export async function renderSystemSettings(container, app) {
 
                             <!-- SUPPORT PAGE -->
                             <div id="cms-tab-support" class="cms-tab-panel space-y-6 hidden">
-                                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+                                <div class="bg-white rounded-none p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Support Page</h3>
                                         <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Page heading, description and contact info cards</p>
@@ -777,7 +777,7 @@ export async function renderSystemSettings(container, app) {
                                         ${field('Google Maps Embed URL', 'support_map_embed', s.support_map_embed, 'text', 'https://www.google.com/maps/embed?...')}
                                         <p class="text-[9px] text-slate-500 font-black uppercase tracking-widest -mt-6 ml-3">Tip: Go to Google Maps -> Search Address -> click Share -> click Embed a Map -> Copy only the URL inside the src="..." attribute.</p>
                                     </div>
-                                    <div class="p-5 bg-green-50 border border-green-100 rounded-2xl space-y-4">
+                                    <div class="p-5 bg-green-50 border border-green-100 rounded-none space-y-4">
                                         <span class="text-xs font-black text-green-700 uppercase tracking-widest">Contact Cards (auto-pulled from General Settings)</span>
                                         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                                             ${field('Email', 'contact_email', s.contact_email, 'email')}
@@ -790,7 +790,7 @@ export async function renderSystemSettings(container, app) {
 
                             <!-- FOOTER -->
                             <div id="cms-tab-footer" class="cms-tab-panel space-y-6 hidden">
-                                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+                                <div class="bg-white rounded-none p-8 border border-slate-200 shadow-sm space-y-6">
                                     <div class="pb-6 border-b border-slate-100">
                                         <h3 class="text-xl font-black text-bosch-blue">Footer Content</h3>
                                         <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Tagline, address, email and copyright text</p>
@@ -805,32 +805,32 @@ export async function renderSystemSettings(container, app) {
                             </div>
  
                             <!-- SYSTEM STATUS -->
-                            <div id="cms-tab-system" class="cms-tab-panel space-y-6 hidden bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                            <div id="cms-tab-system" class="cms-tab-panel space-y-6 hidden bg-white rounded-none p-8 border border-slate-200 shadow-sm">
                                 <div class="pb-6 border-b border-slate-100">
                                     <h3 class="text-xl font-black text-bosch-blue">Platform Diagnostics</h3>
                                     <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Verify live database values and system integrity</p>
                                 </div>
-                                <div class="bg-slate-50 rounded-2xl p-6 space-y-4">
+                                <div class="bg-slate-50 rounded-none p-6 space-y-4">
                                     <div class="flex justify-between items-center border-b border-slate-200 pb-3">
                                         <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Database Key</span>
                                         <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Live Value</span>
                                     </div>
                                     <div class="space-y-3 font-mono text-xs overflow-x-auto">
-                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all" onclick="window.switchCMSTab('general')">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-none cursor-pointer transition-all" onclick="window.switchCMSTab('general')">
                                             <span class="text-bosch-blue font-bold">whatsapp_number</span>
                                             <div class="flex items-center gap-2">
                                                 <span class="text-slate-600">${escapeHTML(s.whatsapp_number) || '<span class="text-rose-500 font-bold">NOT FOUND</span>'}</span>
                                                 <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                                             </div>
                                         </div>
-                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="window.switchCMSTab('general')">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-none cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="window.switchCMSTab('general')">
                                             <span class="text-bosch-blue font-bold">site_name</span>
                                             <div class="flex items-center gap-2">
                                                 <span class="text-slate-600">${escapeHTML(s.site_name)}</span>
                                                 <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                                             </div>
                                         </div>
-                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-lg cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="window.switchCMSTab('general')">
+                                        <div class="flex justify-between gap-4 p-2 hover:bg-white rounded-none cursor-pointer transition-all border-t border-slate-100 pt-3" onclick="window.switchCMSTab('general')">
                                             <span class="text-bosch-blue font-bold">contact_email</span>
                                             <div class="flex items-center gap-2">
                                                 <span class="text-slate-600">${escapeHTML(s.contact_email)}</span>
@@ -839,7 +839,7 @@ export async function renderSystemSettings(container, app) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                <div class="p-6 bg-emerald-50 rounded-none border border-emerald-100">
                                     <h4 class="text-sm font-black text-emerald-900 mb-2">Troubleshooting Tip</h4>
                                     <p class="text-xs text-emerald-700 leading-relaxed font-medium">If "whatsapp_number" shows as <span class="text-rose-500 font-bold">NOT FOUND</span> on your live site, please click "Save All Changes" at the bottom of this page to force-sync the database registry.</p>
                                 </div>
@@ -848,11 +848,11 @@ export async function renderSystemSettings(container, app) {
                             <!-- Save -->
                             <div class="mt-8 flex flex-col sm:flex-row justify-end gap-3">
                                 <button type="button" onclick="app.renderAdmin(document.getElementById('view-container'))"
-                                    class="h-11 px-6 rounded-full font-black text-xs uppercase tracking-widest text-slate-500 hover:bg-white border-2 border-slate-100 transition-all">
+                                    class="h-11 px-6 rounded-none font-black text-xs uppercase tracking-widest text-slate-500 hover:bg-white border-2 border-slate-100 transition-all">
                                     Cancel
                                 </button>
                                 <button type="submit" id="cms-save-btn"
-                                    class="h-11 px-8 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all flex items-center gap-2">
+                                    class="h-11 px-8 rounded-none bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                                     Save All Changes
                                 </button>
@@ -864,7 +864,7 @@ export async function renderSystemSettings(container, app) {
             
             <!-- Category Management Modal -->
             <div id="uicat-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-                <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl p-6">
+                <div class="bg-white w-full max-w-lg rounded-none shadow-2xl p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h3 id="uicat-modal-title" class="text-xl font-black text-bosch-blue uppercase">Add Category</h3>
                         <button type="button" onclick="window.closeCategoryModal()" class="text-slate-500 hover:text-rose-500 transition-colors">
@@ -877,27 +877,27 @@ export async function renderSystemSettings(container, app) {
                         
                         <div class="space-y-1.5">
                             <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Title</label>
-                            <input type="text" id="uicat-title" name="title" required class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
+                            <input type="text" id="uicat-title" name="title" required class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue transition-all">
                         </div>
                         
                         <div class="space-y-1.5">
                             <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Description</label>
-                            <textarea id="uicat-desc" name="description" rows="3" class="w-full bg-slate-50 border-2 border-slate-100 px-4 py-3 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all resize-none"></textarea>
+                            <textarea id="uicat-desc" name="description" rows="3" class="w-full bg-slate-50 border-2 border-slate-100 px-4 py-3 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue transition-all resize-none"></textarea>
                         </div>
                         
                         <div class="space-y-1.5">
                             <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Icon SVG Data</label>
-                            <input type="text" id="uicat-icon" name="icon_svg" placeholder="M13 10V3L4..." class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
+                            <input type="text" id="uicat-icon" name="icon_svg" placeholder="M13 10V3L4..." class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue transition-all">
                         </div>
                         
                         <div class="space-y-1.5">
                             <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Sort Order</label>
-                            <input type="number" id="uicat-sort" name="sort_order" value="0" class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue transition-all">
+                            <input type="number" id="uicat-sort" name="sort_order" value="0" class="w-full bg-slate-50 border-2 border-slate-100 px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue transition-all">
                         </div>
 
                         <div class="space-y-1.5">
                             <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Category Image</label>
-                            <input type="file" id="uicat-image" name="image" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:border-0 file:text-xs file:font-black file:uppercase file:tracking-widest file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
+                            <input type="file" id="uicat-image" name="image" accept="image/*" class="font-sans block w-full text-sm text-sm-500 file:mr-2 file:py-1.5 file:px-3 file:border-0 file:text-sm file:font-medium file:uppercase file:tracking-widest file:bg-slate-100 file:text-sm-700 hover:file:bg-slate-200 cursor-pointer">
                         </div>
                         
                         <div class="flex justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
@@ -921,7 +921,7 @@ export async function renderSystemSettings(container, app) {
             }
             
             list.innerHTML = cats.map(c => `
-                <div class="p-4 bg-white border-2 border-slate-100 rounded-3xl flex items-start gap-6 group hover:border-bosch-blue transition-all">
+                <div class="p-4 bg-white border-2 border-slate-100 rounded-none flex items-start gap-6 group hover:border-bosch-blue transition-all">
                     ${c.image_url ? `<img src="${escapeHTML(app.api(c.image_url))}" class="w-16 h-16 object-cover bg-slate-50 border border-slate-200">` : `<div class="w-16 h-16 bg-slate-100 flex items-center justify-center text-slate-300"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>`}
                     <div class="flex-1 min-w-0">
                         <h5 class="text-xs font-black text-slate-800 uppercase tracking-widest truncate">${escapeHTML(c.title)}</h5>
@@ -1093,7 +1093,7 @@ export async function renderSystemSettings(container, app) {
         };
 
     } catch (e) {
-        setHTML(container, `<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-3xl">Failed to load CMS. ${escapeHTML(e.message)}</div>`);
+        setHTML(container, `<div class="bg-rose-50 p-20 text-center text-rose-500 font-bold rounded-none">Failed to load CMS. ${escapeHTML(e.message)}</div>`);
     }
 }
 
@@ -1158,7 +1158,7 @@ export function renderImportModal(app) {
     modal.id = 'import-modal';
     modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm';
     setHTML(modal, `
-        <div class="bg-white rounded-3xl w-full max-w-xl p-8 space-y-6 shadow-2xl animate-in zoom-in duration-300">
+        <div class="bg-white rounded-none w-full max-w-xl p-8 space-y-6 shadow-2xl animate-in zoom-in duration-300">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-black text-bosch-blue">Bulk <span class="text-bosch-blue">Import</span></h2>
                 <button onclick="document.getElementById('import-modal').remove()" class="text-slate-500 hover:text-bosch-blue transition-all">
@@ -1167,11 +1167,11 @@ export function renderImportModal(app) {
             </div>
             <form id="import-form" class="space-y-4">
                 <div class="border-2 border-dashed border-slate-200 rounded-none p-6 text-center hover:border-bosch-blue transition-all cursor-pointer relative group">
-                    <input type="file" name="import_csv" accept=".csv" required class="absolute inset-0 opacity-0 cursor-pointer">
+                    <input type="file" name="import_csv" accept=".csv" required class="font-sans absolute inset-0 opacity-0 cursor-pointer">
                     <p class="text-slate-500 font-bold text-xs">Drop CSV file here or <span class="text-bosch-blue underline">browse</span></p>
                     <p class="text-xs text-slate-500 mt-2 uppercase tracking-widest font-black">Headers: Part Name, Machine Model, Brand, Cost, Stock</p>
                 </div>
-                <button type="submit" class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Process Import</button>
+                <button type="submit" class="w-full h-11 rounded-none bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">Process Import</button>
             </form>
         </div>
     `);
@@ -1223,7 +1223,7 @@ async function renderProductForm(product, app) {
     modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-900/40 backdrop-blur-sm overflow-y-auto';
 
     setHTML(modal, `
-        <div class="bg-white rounded-3xl w-full max-w-3xl p-6 md:p-8 space-y-4 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
+        <div class="bg-white rounded-none w-full max-w-3xl p-6 md:p-8 space-y-4 shadow-2xl animate-in zoom-in duration-300 my-auto max-h-[95vh] overflow-y-auto custom-scrollbar">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-black text-bosch-blue">${isEdit ? 'Edit' : 'Add New'} <span class="text-bosch-blue">Product</span></h2>
                 <button onclick="document.getElementById('product-modal').remove()" class="text-slate-500 hover:text-bosch-blue transition-all">
@@ -1238,10 +1238,10 @@ async function renderProductForm(product, app) {
                 <div class="col-span-2 space-y-1.5">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Spare Part Name</label>
                     <div class="flex gap-2">
-                        <select id="pf-partname" name="part_name_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                        <select id="pf-partname" name="part_name_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Part Name...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('part_name')" class="w-11 h-11 rounded-full bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center" title="Add new part name">+</button>
+                        <button type="button" onclick="window._pfAddLookup('part_name')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center" title="Add new part name">+</button>
                     </div>
                 </div>
 
@@ -1249,7 +1249,7 @@ async function renderProductForm(product, app) {
                 <div class="col-span-2 pt-4 pb-1 border-t border-slate-100 mt-1 flex justify-between items-center">
                     <h3 class="text-xs font-black text-bosch-blue uppercase tracking-[0.2em]">Primary Suitable Machine</h3>
                     <label class="flex items-center gap-2 cursor-pointer group">
-                        <input type="checkbox" onchange="window._pfToggleUnknownMachine(this.checked)" class="w-4 h-4 rounded border-slate-300 text-bosch-blue focus:ring-blue-500">
+                        <input type="checkbox" onchange="window._pfToggleUnknownMachine(this.checked)" class="font-sans w-4 h-4 rounded-none border-slate-300 text-sm-blue focus:ring-blue-500">
                         <span class="text-xs font-black text-slate-500 uppercase tracking-widest group-hover:text-bosch-blue transition-all">Suitable machine abhi pata nahi hai</span>
                     </label>
                 </div>
@@ -1258,10 +1258,10 @@ async function renderProductForm(product, app) {
                 <div class="space-y-1.5">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Machine Brand</label>
                     <div class="flex gap-2">
-                        <select id="pf-brand" name="brand_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                        <select id="pf-brand" name="brand_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Brand...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('brand')" class="w-11 h-11 rounded-full bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
+                        <button type="button" onclick="window._pfAddLookup('brand')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
                     </div>
                 </div>
 
@@ -1269,10 +1269,10 @@ async function renderProductForm(product, app) {
                 <div class="space-y-1.5">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Machine Name</label>
                     <div class="flex gap-2">
-                        <select id="pf-machine" name="machine_name_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                        <select id="pf-machine" name="machine_name_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Machine...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="w-11 h-11 rounded-full bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
+                        <button type="button" onclick="window._pfAddLookup('machine_name')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
                     </div>
                 </div>
 
@@ -1280,10 +1280,10 @@ async function renderProductForm(product, app) {
                 <div class="space-y-1.5">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Machine Model</label>
                     <div class="flex gap-2">
-                        <select id="pf-model" name="model_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                        <select id="pf-model" name="model_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Model...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('model')" class="w-11 h-11 rounded-full bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
+                        <button type="button" onclick="window._pfAddLookup('model')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
                     </div>
                 </div>
 
@@ -1291,10 +1291,10 @@ async function renderProductForm(product, app) {
                 <div class="space-y-1.5">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Machine Size</label>
                     <div class="flex gap-2">
-                        <select id="pf-size" name="machine_size_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                        <select id="pf-size" name="machine_size_id" class="flex-1 bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                             <option value="">Select Size...</option>
                         </select>
-                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="w-11 h-11 rounded-full bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
+                        <button type="button" onclick="window._pfAddLookup('machine_size')" class="w-11 h-11 rounded-none bg-emerald-50 text-bosch-blue font-black text-lg hover:bg-blue-100 transition-all flex items-center justify-center">+</button>
                     </div>
                 </div>
 
@@ -1318,33 +1318,33 @@ async function renderProductForm(product, app) {
                 <div class="space-y-1.5">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Cost (₹)</label>
                     <input type="number" step="0.01" name="cost" value="${escapeHTML(product?.cost || '')}" placeholder="Enter Cost"
-                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Stock Quantity -->
                 <div class="space-y-1.5">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Stock Quantity</label>
                     <input type="number" name="stock_quantity" value="${escapeHTML(product?.stock_quantity || '')}" placeholder="Enter Stock"
-                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Note -->
                 <div class="col-span-2 space-y-1.5">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Note</label>
                     <input type="text" name="note" value="${escapeHTML(product?.note || '')}" placeholder="Technical notes or descriptions"
-                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl px-4 h-11 text-xs font-black text-slate-700 focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
+                        class="w-full bg-slate-50 border-2 border-slate-100 rounded-none px-4 h-11 text-sm font-medium text-sm-900 font-sans focus:outline-none focus:border-bosch-blue focus:border-l-8 focus:bg-white transition-all">
                 </div>
 
                 <!-- Photo -->
                 <div class="col-span-2 space-y-1.5 pt-1">
                     <label class="text-xs font-black uppercase tracking-widest text-slate-500 ml-1">Product Photo</label>
                     <input type="file" name="photo" accept="image/*"
-                        class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-black file:uppercase file:tracking-widest file:bg-emerald-50 file:text-bosch-blue hover:file:bg-blue-100 cursor-pointer">
+                        class="font-sans w-full text-sm text-sm-500 file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-sm file:font-medium file:uppercase file:tracking-widest file:bg-emerald-50 file:text-sm-blue hover:file:bg-blue-100 cursor-pointer">
                 </div>
 
                 <div class="col-span-2 pt-2">
                     <button type="submit" id="pf-submit-btn"
-                        class="w-full h-11 rounded-full bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">
+                        class="w-full h-11 rounded-none bg-bosch-blue text-white font-black text-xs uppercase tracking-widest shadow-lg hover:bg-industrial-gray transition-all">
                         Save Complete Product
                     </button>
                 </div>
@@ -1401,11 +1401,11 @@ async function renderProductForm(product, app) {
     window._pfAddMachineRow = (existing = null) => {
         const container = document.getElementById('additional-machines-container');
         const row = document.createElement('div');
-        row.className = 'grid grid-cols-2 lg:grid-cols-4 gap-2 p-3 bg-slate-50 rounded-2xl border border-slate-100 relative group animate-in slide-in-from-top-2 duration-300';
+        row.className = 'grid grid-cols-2 lg:grid-cols-4 gap-2 p-3 bg-slate-50 rounded-none border border-slate-100 relative group animate-in slide-in-from-top-2 duration-300';
 
         const genSelect = (name, items, selected) => `
             <div class="space-y-1">
-                <select name="${escapeHTML(name)}" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:border-blue-500">
+                <select name="${escapeHTML(name)}" class="font-sans w-full bg-white border border-slate-200 rounded-none px-2 py-1.5 text-sm font-medium text-sm-700 focus:outline-none focus:border-blue-500">
                     <option value="">Select...</option>
                     ${items.map(i => `<option value="${parseInt(i.id, 10)}" ${i.id == selected ? 'selected' : ''}>${escapeHTML(i.name)}</option>`).join('')}
                 </select>
@@ -1413,7 +1413,7 @@ async function renderProductForm(product, app) {
         `;
 
         setHTML(row, `
-            <button type="button" onclick="this.parentElement.remove()" class="absolute -right-2 -top-2 w-6 h-6 bg-white border border-slate-200 text-rose-500 rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-50">
+            <button type="button" onclick="this.parentElement.remove()" class="absolute -right-2 -top-2 w-6 h-6 bg-white border border-slate-200 text-rose-500 rounded-none flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-50">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             ${genSelect('fit_brand_id', lookupData?.brands || [], existing?.brand_id)}
@@ -1555,7 +1555,7 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
     modal.className = 'fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm';
 
     setHTML(modal, `
-        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-300">
+        <div class="bg-white w-full max-w-md rounded-none shadow-2xl overflow-hidden animate-in zoom-in duration-300">
             <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h2 class="text-xl font-black text-bosch-blue uppercase tracking-tight">Fulfillment Status</h2>
                 <button onclick="document.getElementById('dispatch-modal').remove()" class="text-slate-500 hover:text-bosch-blue transition-all">
@@ -1567,19 +1567,19 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
                     <label class="text-xs font-black text-slate-500 uppercase tracking-widest">Update Order Status</label>
                     <div class="grid grid-cols-1 gap-3">
                         ${currentStatus === 'processing' ? `
-                            <button onclick="app.updateOrderStatus(${parseInt(invoiceId, 10)}, 'dispatched')" class="flex items-center justify-between p-4 rounded-full border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-blue-600 transition-all group">
+                            <button onclick="app.updateOrderStatus(${parseInt(invoiceId, 10)}, 'dispatched')" class="flex items-center justify-between p-4 rounded-none border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-blue-600 transition-all group">
                                 <span class="font-black text-xs uppercase tracking-widest">Mark as Dispatched</span>
                                 <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                             </button>
                         ` : ''}
                         ${currentStatus === 'dispatched' ? `
-                            <button onclick="app.updateOrderStatus(${parseInt(invoiceId, 10)}, 'delivered')" class="flex items-center justify-between p-4 rounded-full border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-emerald-600 transition-all group">
+                            <button onclick="app.updateOrderStatus(${parseInt(invoiceId, 10)}, 'delivered')" class="flex items-center justify-between p-4 rounded-none border-2 border-emerald-100 bg-emerald-50 text-emerald-700 hover:border-emerald-600 transition-all group">
                                 <span class="font-black text-xs uppercase tracking-widest">Mark as Delivered</span>
                                 <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
                             </button>
                         ` : ''}
                         ${currentStatus === 'delivered' ? `
-                            <div class="p-6 text-center bg-slate-50 border border-slate-200 rounded-2xl">
+                            <div class="p-6 text-center bg-slate-50 border border-slate-200 rounded-none">
                                 <p class="text-xs font-black text-bosch-blue uppercase tracking-widest">Order Successfully Delivered</p>
                             </div>
                         ` : ''}
@@ -1589,10 +1589,10 @@ export function renderDispatchModal(invoiceId, currentStatus, tracking, app) {
                 ${currentStatus === 'processing' ? `
                     <div class="space-y-3">
                         <label class="text-xs font-black text-slate-500 uppercase tracking-widest">Tracking Number (Optional)</label>
-                        <input type="text" id="tracking-input" placeholder="Enter Courier Tracking ID" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-bold text-sm">
+                        <input type="text" id="tracking-input" placeholder="Enter Courier Tracking ID" class="font-sans w-full px-5 py-4 rounded-none bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-medium text-sm">
                     </div>
                 ` : tracking ? `
-                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                    <div class="p-5 bg-slate-50 rounded-none border border-slate-200">
                         <p class="text-xs font-black text-slate-500 uppercase tracking-widest mb-1">Current Tracking ID</p>
                         <p class="font-black text-bosch-blue">${escapeHTML(tracking)}</p>
                     </div>
@@ -1629,7 +1629,7 @@ export async function renderAdminInvoicesFull(container, app) {
         return;
     }
 
-    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-full"></div></div>`);
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>`);
 
     try {
         const res = await fetch(app.api('api/invoices.php'));
@@ -1648,7 +1648,7 @@ export async function renderAdminInvoicesFull(container, app) {
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40 animate-in fade-in duration-500">
+                        <div class="bg-white rounded-none border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40 animate-in fade-in duration-500">
                             <table class="w-full text-left border-collapse">
                                 <thead class="bg-slate-50/80 border-b border-slate-200">
                                     <tr>
@@ -1679,8 +1679,8 @@ export async function renderAdminInvoicesFull(container, app) {
                                             </td>
                                             <td class="p-6 pr-8 text-right">
                                                 <div class="flex justify-end gap-3 opacity-100 transition-opacity">
-                                                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">Manage</button>
-                                                    <button onclick="app.renderInvoiceDocument(${inv.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">View PDF</button>
+                                                    <button onclick="app.renderDispatchModal(${inv.id}, '${escapeHTML(inv.status)}', '${escapeHTML(inv.tracking_number || '')}')" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-none font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">Manage</button>
+                                                    <button onclick="app.renderInvoiceDocument(${inv.id})" class="px-4 py-2 bg-bosch-blue text-white rounded-none font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all shadow-lg shadow-slate-900/20">View PDF</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1699,7 +1699,7 @@ export async function renderAdminInvoicesFull(container, app) {
 
 export async function renderAdminSupport(container, app) {
     if (!app.state.user || app.state.user.role !== 'admin') return;
-    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-full"></div></div>`);
+    setHTML(container, `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-bosch-blue border-t-transparent rounded-none"></div></div>`);
 
     try {
         const res = await fetch(app.api('api/admin_support.php'));
@@ -1717,13 +1717,13 @@ export async function renderAdminSupport(container, app) {
                                 <h2 class="text-4xl font-black text-bosch-blue tracking-tight">Technical <span class="text-bosch-red">Inquiries</span></h2>
                                 <p class="text-slate-500 mt-2 font-bold text-lg">Manage and reply to customer technical support tickets.</p>
                             </div>
-                            <button onclick="app.simulateWebhook()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all flex items-center gap-2">
+                            <button onclick="app.simulateWebhook()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-none font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                                 Simulate Inbound Email
                             </button>
                         </div>
                         
-                        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40">
+                        <div class="bg-white rounded-none border border-slate-200 overflow-hidden shadow-2xl shadow-slate-200/40">
                             <table class="w-full text-left border-collapse">
                                 <thead class="bg-slate-50/80 border-b border-slate-200">
                                     <tr>
@@ -1745,11 +1745,11 @@ export async function renderAdminSupport(container, app) {
                                             </td>
                                             <td class="p-6">
                                                 <div class="font-bold text-slate-700 text-sm">${escapeHTML(t.subject)}</div>
-                                                ${t.part_no ? `<div class="text-[10px] font-black text-slate-500 uppercase tracking-widest bg-slate-100 px-2 py-0.5 rounded-md inline-block mt-1">Part: ${escapeHTML(t.part_no)}</div>` : ''}
+                                                ${t.part_no ? `<div class="text-[10px] font-black text-slate-500 uppercase tracking-widest bg-slate-100 px-2 py-0.5 rounded-none inline-block mt-1">Part: ${escapeHTML(t.part_no)}</div>` : ''}
                                             </td>
                                             <td class="p-6 max-w-xs truncate text-sm text-slate-600 font-medium" title="${escapeHTML(t.message)}">
                                                 ${escapeHTML(t.message)}
-                                                ${t.messages && t.messages.length > 0 ? `<span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-bosch-blue text-white text-[9px] font-bold">${t.messages.length} replies</span>` : ''}
+                                                ${t.messages && t.messages.length > 0 ? `<span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 rounded-none bg-bosch-blue text-white text-[9px] font-bold">${t.messages.length} replies</span>` : ''}
                                             </td>
                                             <td class="p-6">
                                                 <span class="px-3 py-1 rounded-none border text-xs font-black uppercase tracking-widest ${t.status === 'resolved' ? 'border-emerald-200 text-emerald-600 bg-emerald-50' : 'border-amber-200 text-amber-600 bg-amber-50'}">
@@ -1758,9 +1758,9 @@ export async function renderAdminSupport(container, app) {
                                             </td>
                                             <td class="p-6 pr-8 text-right">
                                                 <div class="flex justify-end gap-2" onclick="event.stopPropagation()">
-                                                    <button onclick="app.viewTicketThread(${t.id})" class="px-3 py-1.5 bg-bosch-blue text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-all shadow-md">View Thread</button>
-                                                    ${t.status === 'pending' ? `<button onclick="app.resolveSupportTicket(${t.id})" class="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-200 transition-all">Resolve</button>` : ''}
-                                                    <button onclick="app.deleteSupportTicket(${t.id})" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-rose-100 transition-all">Delete</button>
+                                                    <button onclick="app.viewTicketThread(${t.id})" class="px-3 py-1.5 bg-bosch-blue text-white rounded-none text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-all shadow-md">View Thread</button>
+                                                    ${t.status === 'pending' ? `<button onclick="app.resolveSupportTicket(${t.id})" class="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-none text-[10px] font-black uppercase tracking-widest hover:bg-emerald-200 transition-all">Resolve</button>` : ''}
+                                                    <button onclick="app.deleteSupportTicket(${t.id})" class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-none text-[10px] font-black uppercase tracking-widest hover:bg-rose-100 transition-all">Delete</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1804,7 +1804,7 @@ export function viewTicketThread(id, app) {
                     <p class="text-sm text-slate-500 font-bold mt-1 uppercase tracking-widest">Customer: <span class="text-bosch-red">${escapeHTML(ticket.name)}</span> &bull; ${escapeHTML(ticket.email)}</p>
                     ${ticket.phone ? `<p class="text-xs text-slate-500 font-bold mt-1">📞 ${escapeHTML(ticket.phone)}</p>` : ''}
                 </div>
-                <button onclick="document.getElementById('thread-modal').classList.add('hidden')" class="p-2 text-slate-400 hover:text-rose-500 transition-colors bg-white rounded-full shadow-sm border border-slate-100">
+                <button onclick="document.getElementById('thread-modal').classList.add('hidden')" class="p-2 text-slate-400 hover:text-rose-500 transition-colors bg-white rounded-none shadow-sm border border-slate-100">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -1813,7 +1813,7 @@ export function viewTicketThread(id, app) {
                 ${allMessages.map(msg => `
                     <div class="flex flex-col ${msg.sender_type === 'admin' ? 'items-end' : 'items-start'}">
                         <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1 ml-1">${msg.sender_type === 'admin' ? 'Support Team' : escapeHTML(msg.name)}</span>
-                        <div class="max-w-[85%] px-6 py-4 rounded-3xl ${msg.sender_type === 'admin' ? 'bg-bosch-blue text-white rounded-br-sm shadow-md shadow-bosch-blue/20' : 'bg-white text-slate-700 border border-slate-200 rounded-bl-sm shadow-sm'}">
+                        <div class="max-w-[85%] px-6 py-4 rounded-none ${msg.sender_type === 'admin' ? 'bg-bosch-blue text-white rounded-br-sm shadow-md shadow-bosch-blue/20' : 'bg-white text-slate-700 border border-slate-200 rounded-bl-sm shadow-sm'}">
                             <p class="text-sm font-medium whitespace-pre-wrap">${escapeHTML(msg.message)}</p>
                         </div>
                         <span class="text-[9px] font-bold text-slate-400 mt-1.5 uppercase tracking-widest">${new Date(msg.created_at).toLocaleString()}</span>
@@ -1822,9 +1822,9 @@ export function viewTicketThread(id, app) {
             </div>
             
             <div class="p-6 bg-white border-t border-slate-100">
-                <textarea id="reply-message" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:border-bosch-blue focus:ring-4 focus:ring-bosch-blue/10 transition-all resize-none" placeholder="Type your reply to ${escapeHTML(ticket.name)}..."></textarea>
+                <textarea id="reply-message" rows="3" class="font-sans w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-sm font-medium text-sm-700 focus:outline-none focus:border-bosch-blue focus:ring-4 focus:ring-bosch-blue/10 transition-all resize-none" placeholder="Type your reply to ${escapeHTML(ticket.name)}..."></textarea>
                 <div class="flex justify-end mt-4">
-                    <button onclick="app.sendTicketReply(${ticket.id})" class="px-6 py-2.5 bg-bosch-red text-white rounded-full text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-all shadow-lg shadow-bosch-red/30 flex items-center gap-2">
+                    <button onclick="app.sendTicketReply(${ticket.id})" class="px-6 py-2.5 bg-bosch-red text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-all shadow-lg shadow-bosch-red/30 flex items-center gap-2">
                         <span>Send Reply</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                     </button>

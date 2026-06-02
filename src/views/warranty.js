@@ -5,7 +5,7 @@ export default {
         container.innerHTML = `
             <div class="bg-white min-h-screen">
                 <!-- Header Section -->
-                <section class="relative py-8 bg-slate-900 overflow-hidden">
+                <section class="relative py-8 bg-slate-50 overflow-hidden">
                     <div class="absolute inset-0 opacity-10">
                         <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,179,86,1),transparent)]"></div>
                         <div class="grid grid-cols-6 h-full">
@@ -30,7 +30,7 @@ export default {
                             <div class="space-y-8">
                                 <div>
                                     <h2 class="text-2xl font-black text-slate-900 mb-4 flex items-center gap-3 uppercase tracking-widest">
-                                        <div class="w-10 h-10 rounded-2xl bg-industrial-gray text-white flex items-center justify-center">
+                                        <div class="w-10 h-10 rounded-none bg-industrial-gray text-white flex items-center justify-center">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                                         </div>
                                         Genuine Warranty
@@ -56,7 +56,7 @@ export default {
                             <div class="space-y-8">
                                 <div>
                                     <h2 class="text-2xl font-black text-slate-900 mb-4 flex items-center gap-3 uppercase tracking-widest">
-                                        <div class="w-10 h-10 rounded-2xl bg-industrial-gray text-white flex items-center justify-center">
+                                        <div class="w-10 h-10 rounded-none bg-industrial-gray text-white flex items-center justify-center">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                                         </div>
                                         Hassle-Free Returns
@@ -83,7 +83,7 @@ export default {
                             <h3 class="text-2xl font-black text-slate-900 mb-4 uppercase tracking-widest">Initiate a Return</h3>
                             <p class="text-slate-500 font-medium mb-8 max-w-xl mx-auto leading-relaxed text-sm">To start a warranty claim or return request, please have your Order ID and photos of the part ready and contact our support team.</p>
                             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                                <a href="/support" data-link class="px-8 py-4 bg-slate-900 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all duration-300 shadow-sm">
+                                <a href="/support" data-link class="px-8 py-4 bg-slate-900 text-white rounded-none font-black text-xs uppercase tracking-widest hover:bg-industrial-gray transition-all duration-300 shadow-sm">
                                     Open Support Ticket
                                 </a>
                                 <a href="#" onclick="window.open('https://wa.me/${s.whatsapp_number}?text=Hello! I want to initiate a return for my order.', '_blank')" class="px-8 py-4 bg-[#25D366] text-white rounded-none font-black text-xs uppercase tracking-widest hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm">

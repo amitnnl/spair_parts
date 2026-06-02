@@ -66,7 +66,7 @@ export function renderHome(container, app) {
                             <!-- Minimalist Outlined Badges -->
                             <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl mx-auto lg:mx-0 pt-6">
                                 <div class="flex flex-col items-center text-center group/badge cursor-pointer">
-                                    <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_15px_rgba(237,28,36,0.45)] transition-all duration-300">
+                                    <div class="w-12 h-12 rounded-none border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_15px_rgba(237,28,36,0.45)] transition-all duration-300">
                                         <svg class="w-6.5 h-6.5 icon-shield transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                             <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                         </svg>
@@ -74,7 +74,7 @@ export function renderHome(container, app) {
                                     <span class="text-xs sm:text-xs font-black uppercase tracking-widest text-slate-800 leading-tight">Premium<br>Quality</span>
                                 </div>
                                 <div class="flex flex-col items-center text-center group/badge cursor-pointer">
-                                    <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_15px_rgba(237,28,36,0.45)] transition-all duration-300">
+                                    <div class="w-12 h-12 rounded-none border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_15px_rgba(237,28,36,0.45)] transition-all duration-300">
                                         <svg class="w-6.5 h-6.5 icon-cog transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                         </svg>
@@ -82,7 +82,7 @@ export function renderHome(container, app) {
                                     <span class="text-xs sm:text-xs font-black uppercase tracking-widest text-slate-800 leading-tight">Wide Range<br>Of Parts</span>
                                 </div>
                                 <div class="flex flex-col items-center text-center group/badge cursor-pointer">
-                                    <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_15px_rgba(237,28,36,0.45)] transition-all duration-300">
+                                    <div class="w-12 h-12 rounded-none border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_15px_rgba(237,28,36,0.45)] transition-all duration-300">
                                         <svg class="w-6.5 h-6.5 icon-thumbs transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                             <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" />
                                         </svg>
@@ -90,7 +90,7 @@ export function renderHome(container, app) {
                                     <span class="text-xs sm:text-xs font-black uppercase tracking-widest text-slate-800 leading-tight">High<br>Durability</span>
                                 </div>
                                 <div class="flex flex-col items-center text-center group/badge cursor-pointer">
-                                    <div class="w-12 h-12 rounded-full border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_15px_rgba(237,28,36,0.45)] transition-all duration-300">
+                                    <div class="w-12 h-12 rounded-none border-2 border-[#ed1c24] flex items-center justify-center text-[#ed1c24] bg-white mb-2.5 shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_15px_rgba(237,28,36,0.45)] transition-all duration-300">
                                         <svg class="w-6.5 h-6.5 icon-truck transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                             <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1" />
                                         </svg>
@@ -102,7 +102,7 @@ export function renderHome(container, app) {
 
                         <!-- Right Column: Dynamic Slider containing B2B Settings Images -->
                         <div class="lg:col-span-6 relative flex flex-col items-center justify-center h-[350px] lg:h-[420px]">
-                            <div class="absolute inset-0 bg-radial-gradient from-rose-100/30 to-transparent blur-3xl rounded-full opacity-40"></div>
+                            <div class="absolute inset-0 bg-radial-gradient from-rose-100/30 to-transparent blur-3xl rounded-none opacity-40"></div>
                             
                             <!-- Slider Container -->
                             <div id="hero-slider" class="relative z-10 w-full h-full flex items-center justify-center">
@@ -111,7 +111,7 @@ export function renderHome(container, app) {
 
                             <!-- Carousel dots indicators -->
                             <div class="flex gap-2.5 mt-4 relative z-10 select-none">
-                                ` + displaySlides.map((_, i) => '<span class="slider-dot w-2 h-2 rounded-full cursor-pointer transition-colors duration-300 ' + (i === 0 ? 'bg-[#ed1c24]' : 'bg-zinc-300') + '" data-dot="' + escapeHTML(i) + '"></span>').join('') + `
+                                ` + displaySlides.map((_, i) => '<span class="slider-dot w-2 h-2 rounded-none cursor-pointer transition-colors duration-300 ' + (i === 0 ? 'bg-[#ed1c24]' : 'bg-zinc-300') + '" data-dot="' + escapeHTML(i) + '"></span>').join('') + `
                             </div>
                         </div>
 
@@ -183,7 +183,7 @@ export function renderHome(container, app) {
                       <div class="flex items-end justify-between mb-12">
                           <div class="max-w-2xl">
                               <div class="text-[10px] font-black uppercase tracking-[0.4em] text-[#ed1c24] mb-3 flex items-center gap-3">
-                                  <span class="w-8 h-[2px] bg-[#ed1c24] rounded-full"></span>
+                                  <span class="w-8 h-[2px] bg-[#ed1c24] rounded-none"></span>
                                   Discover Inventory
                               </div>
                               <h2 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight font-display">Top Categories</h2>
@@ -191,14 +191,14 @@ export function renderHome(container, app) {
                           <div class="flex items-center gap-5">
                               <!-- Scroll Arrows -->
                               <div class="hidden sm:flex gap-3">
-                                  <button onclick="document.getElementById('category-scroll-track').scrollBy({left: -344, behavior: 'smooth'})" class="w-12 h-12 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all duration-300 flex-shrink-0 cursor-pointer bg-white hover:bg-rose-50 shadow-sm group">
+                                  <button onclick="document.getElementById('category-scroll-track').scrollBy({left: -344, behavior: 'smooth'})" class="w-12 h-12 rounded-none border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all duration-300 flex-shrink-0 cursor-pointer bg-white hover:bg-rose-50 shadow-sm group">
                                       <svg class="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
                                   </button>
-                                  <button onclick="document.getElementById('category-scroll-track').scrollBy({left: 344, behavior: 'smooth'})" class="w-12 h-12 rounded-full border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all duration-300 flex-shrink-0 cursor-pointer bg-white hover:bg-rose-50 shadow-sm group">
+                                  <button onclick="document.getElementById('category-scroll-track').scrollBy({left: 344, behavior: 'smooth'})" class="w-12 h-12 rounded-none border border-zinc-200 hover:border-[#ed1c24] flex items-center justify-center text-zinc-500 hover:text-[#ed1c24] transition-all duration-300 flex-shrink-0 cursor-pointer bg-white hover:bg-rose-50 shadow-sm group">
                                       <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
                                   </button>
                               </div>
-                              <a href="/categories" data-link class="group flex items-center justify-center w-12 h-12 sm:w-auto sm:px-6 sm:py-3 rounded-full bg-slate-900 text-white font-bold text-xs uppercase tracking-widest hover:bg-[#ed1c24] transition-all duration-300 shadow-md hover:shadow-red-500/20 ml-2">
+                              <a href="/categories" data-link class="group flex items-center justify-center w-12 h-12 sm:w-auto sm:px-6 sm:py-3 rounded-none bg-slate-900 text-white font-bold text-xs uppercase tracking-widest hover:bg-[#ed1c24] transition-all duration-300 shadow-md hover:shadow-red-500/20 ml-2">
                                   <span class="hidden sm:block mr-2">View All</span>
                                   <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                               </a>
@@ -213,8 +213,8 @@ export function renderHome(container, app) {
                                       ? '<img src="' + escapeHTML(app.api(c.image_url)) + '" alt="' + escapeHTML(c.title) + '" class="w-full h-full object-contain p-2 drop-shadow-sm group-hover:scale-110 transition-transform duration-500">' 
                                       : '<div class="w-full h-full flex items-center justify-center text-slate-300 group-hover:text-[#ed1c24] transition-colors duration-500"><svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="' + escapeHTML(c.icon_svg) + '"/></svg></div>';
                                   
-                                  return '<div onclick="clickCategorySearch(\'' + escapeHTML(c.title).replace(/'/g, "\\'") + '\')" class="relative bg-white rounded-3xl overflow-hidden group cursor-pointer transition-all duration-500 hover:-translate-y-2 ring-1 ring-slate-900/5 hover:ring-[#ed1c24]/50 shadow-sm hover:shadow-[0_8px_30px_rgba(237,28,36,0.1)] flex flex-col sm:flex-row items-center sm:items-start p-5 gap-5 shrink-0 w-[260px] sm:w-[340px] snap-start h-full spotlight-card">' +
-                                      '<div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100 group-hover:border-[#ed1c24]/20 group-hover:bg-rose-50/30 transition-colors duration-500">' +
+                                  return '<div onclick="clickCategorySearch(\'' + escapeHTML(c.title).replace(/'/g, "\\'") + '\')" class="relative bg-white rounded-none overflow-hidden group cursor-pointer transition-all duration-500 hover:-translate-y-2 ring-1 ring-slate-900/5 hover:ring-[#ed1c24]/50 shadow-sm hover:shadow-[0_8px_30px_rgba(237,28,36,0.1)] flex flex-col sm:flex-row items-center sm:items-start p-5 gap-5 shrink-0 w-[260px] sm:w-[340px] snap-start h-full spotlight-card">' +
+                                      '<div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-none bg-gradient-to-br from-slate-50 to-slate-100/50 flex items-center justify-center shrink-0 border border-slate-100 group-hover:border-[#ed1c24]/20 group-hover:bg-rose-50/30 transition-colors duration-500">' +
                                           iconOrImg +
                                       '</div>' +
                                       '<div class="flex-1 min-w-0 text-center sm:text-left flex flex-col justify-between h-full z-10">' +
@@ -242,8 +242,8 @@ export function renderHome(container, app) {
                   <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8">
                       <div class="flex items-center gap-3 shrink-0">
                           <div class="relative flex h-2.5 w-2.5">
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ed1c24] opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ed1c24]"></span>
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-none bg-[#ed1c24] opacity-75"></span>
+                              <span class="relative inline-flex rounded-none h-2.5 w-2.5 bg-[#ed1c24]"></span>
                           </div>
                           <span class="text-xs font-black uppercase tracking-[0.2em] text-slate-900">Trending Now</span>
                       </div>
@@ -251,7 +251,7 @@ export function renderHome(container, app) {
                       <!-- Hide scrollbar, allow horizontal scroll on smaller screens -->
                       <div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 lg:pb-0 -mx-6 px-6 lg:mx-0 lg:px-0">
                           ` + ['Carbon Brush', 'Armature', 'Bearing', 'Switch', 'Chuck', 'Gear', 'Field Coil', 'Spindle', 'Rotor', 'Stator'].map(term => `
-                              <button onclick="clickPopularSearch('${term}')" class="group flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 hover:border-[#ed1c24]/40 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_6px_15px_rgba(237,28,36,0.08)] transition-all duration-300 hover:-translate-y-0.5 whitespace-nowrap cursor-pointer">
+                              <button onclick="clickPopularSearch('${term}')" class="group flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 hover:border-[#ed1c24]/40 rounded-none shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_6px_15px_rgba(237,28,36,0.08)] transition-all duration-300 hover:-translate-y-0.5 whitespace-nowrap cursor-pointer">
                                   <svg class="w-3.5 h-3.5 text-zinc-400 group-hover:text-[#ed1c24] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                   <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600 group-hover:text-[#ed1c24] transition-colors">${term}</span>
                               </button>
@@ -277,7 +277,7 @@ export function renderHome(container, app) {
                     <!-- Products Grid Placeholder -->
                     <div id="home-genuine-parts-container" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-6">
                         <div class="col-span-full py-8 text-center flex flex-col items-center justify-center">
-                            <div class="animate-spin w-10 h-10 border-4 border-slate-200 border-t-[#ed1c24] rounded-full mb-4"></div>
+                            <div class="animate-spin w-10 h-10 border-4 border-slate-200 border-t-[#ed1c24] rounded-none mb-4"></div>
                             <p class="text-xs font-black text-slate-500 uppercase tracking-widest">Loading Catalog...</p>
                         </div>
                     </div>
@@ -300,8 +300,8 @@ export function renderHome(container, app) {
                             ` + Array(3).fill(`
                                 <div class="flex items-center gap-16 px-8">
                                     <div class="flex items-center gap-1">
-                                        <div class="w-5 h-5 rounded-full border-[1.5px] border-[#ed1c24] flex items-center justify-center flex-shrink-0">
-                                            <div class="w-2.5 h-2.5 bg-[#ed1c24] rounded-full"></div>
+                                        <div class="w-5 h-5 rounded-none border-[1.5px] border-[#ed1c24] flex items-center justify-center flex-shrink-0">
+                                            <div class="w-2.5 h-2.5 bg-[#ed1c24] rounded-none"></div>
                                         </div>
                                         <span class="text-lg font-black tracking-tight text-zinc-950 uppercase font-sans">BOSCH</span>
                                     </div>
@@ -326,7 +326,7 @@ export function renderHome(container, app) {
                         
                         <!-- 1. Wide Range -->
                         <div class="flex items-start gap-3.5 group/badge cursor-pointer">
-                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
+                            <div class="w-8 h-8 rounded-none border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
                                 <svg class="w-4.5 h-4.5 icon-shield" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                     <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2" />
                                 </svg>
@@ -339,7 +339,7 @@ export function renderHome(container, app) {
 
                         <!-- 2. Easy Lookup -->
                         <div class="flex items-start gap-3.5 group/badge cursor-pointer">
-                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
+                            <div class="w-8 h-8 rounded-none border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
                                 <svg class="w-4.5 h-4.5 icon-cog" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                     <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
@@ -352,7 +352,7 @@ export function renderHome(container, app) {
 
                         <!-- 3. Bulk Ordering -->
                         <div class="flex items-start gap-3.5 group/badge cursor-pointer">
-                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
+                            <div class="w-8 h-8 rounded-none border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
                                 <svg class="w-4.5 h-4.5 icon-thumbs" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                     <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
                                 </svg>
@@ -365,7 +365,7 @@ export function renderHome(container, app) {
 
                         <!-- 4. Secure Payments -->
                         <div class="flex items-start gap-3.5 group/badge cursor-pointer">
-                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
+                            <div class="w-8 h-8 rounded-none border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
                                 <svg class="w-4.5 h-4.5 icon-shield" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                     <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
@@ -378,7 +378,7 @@ export function renderHome(container, app) {
 
                         <!-- 5. Pan India Delivery -->
                         <div class="flex items-start gap-3.5 group/badge cursor-pointer">
-                            <div class="w-8 h-8 rounded-full border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
+                            <div class="w-8 h-8 rounded-none border border-[#ed1c24] flex items-center justify-center text-[#ed1c24] flex-shrink-0 bg-white shadow-sm group-hover/badge:scale-110 group-hover/badge:bg-[#ed1c24] group-hover/badge:text-white group-hover/badge:shadow-[0_0_10px_rgba(237,28,36,0.35)] transition-all duration-300">
                                 <svg class="w-4.5 h-4.5 icon-truck" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                                     <path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1" />
                                 </svg>

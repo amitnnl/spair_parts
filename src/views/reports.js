@@ -2,7 +2,7 @@ export async function renderReports(container, app) {
     const role = app.state.user?.role?.toLowerCase();
     if (role !== 'admin' && role !== 'staff') { app.showToast('Access required', 'error'); return; }
 
-    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full"></div></div>`;
+    container.innerHTML = `<div class="flex justify-center p-20"><div class="animate-spin w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-none"></div></div>`;
 
     try {
         const [productsRes, logsRes] = await Promise.all([
@@ -28,12 +28,12 @@ export async function renderReports(container, app) {
                         </div>
                         <div class="flex flex-wrap gap-3 no-print">
                             <button onclick="app.exportStockReport()" 
-                                class="px-5 py-3 bg-emerald-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-emerald-700 transition-all shadow-xl shadow-emerald-600/20 flex items-center gap-2">
+                                class="px-5 py-3 bg-emerald-600 text-white rounded-none font-black text-xs uppercase tracking-widest hover:bg-emerald-700 transition-all shadow-xl shadow-emerald-600/20 flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                                 Export PDF
                             </button>
                             <button onclick="app.exportStockCSV()" 
-                                class="px-5 py-3 bg-blue-600 text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2">
+                                class="px-5 py-3 bg-blue-600 text-white rounded-none font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                 Export Excel / CSV
                             </button>
@@ -48,8 +48,8 @@ export async function renderReports(container, app) {
                             { label: 'Out of Stock', value: (products || []).filter(p => (p.stock_quantity || 0) <= 0).length, color: 'amber', icon: 'M6 18L18 6M6 6l12 12' },
                             { label: 'Stock Transactions', value: logs?.length || 0, color: 'emerald', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' }
                         ].map(s => `
-                            <div class="bg-white border border-slate-200 rounded-3xl p-7 space-y-4">
-                                <div class="w-12 h-12 rounded-2xl bg-${s.color}-50 flex items-center justify-center">
+                            <div class="bg-white border border-slate-200 rounded-none p-7 space-y-4">
+                                <div class="w-12 h-12 rounded-none bg-${s.color}-50 flex items-center justify-center">
                                     <svg class="w-6 h-6 text-${s.color}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${s.icon}"/></svg>
                                 </div>
                                 <div>
@@ -63,22 +63,22 @@ export async function renderReports(container, app) {
                     <!-- Charts Row -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <!-- Stock Level Chart -->
-                        <div class="bg-white border border-slate-200 rounded-3xl p-8">
+                        <div class="bg-white border border-slate-200 rounded-none p-8">
                             <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest mb-6">Stock Level by Brand</h3>
                             <canvas id="chart-stock-brand" height="260"></canvas>
                         </div>
                         <!-- Stock In vs Out Chart -->
-                        <div class="bg-white border border-slate-200 rounded-3xl p-8">
+                        <div class="bg-white border border-slate-200 rounded-none p-8">
                             <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest mb-6">Stock Movement (Last 30 Days)</h3>
                             <canvas id="chart-movement" height="260"></canvas>
                         </div>
                     </div>
 
                     <!-- Low Stock Table (Printable) -->
-                    <div id="printable-report" class="bg-white border border-slate-200 rounded-3xl overflow-hidden">
+                    <div id="printable-report" class="bg-white border border-slate-200 rounded-none overflow-hidden">
                         <div class="p-8 border-b border-slate-100 flex justify-between items-center">
                             <div class="flex items-center gap-4">
-                                <div class="w-2 h-8 bg-rose-500 rounded-full"></div>
+                                <div class="w-2 h-8 bg-rose-500 rounded-none"></div>
                                 <h3 class="text-lg font-black text-slate-900">Low Stock Report</h3>
                             </div>
                             <span class="text-xs text-slate-500 font-bold">Generated: ${new Date().toLocaleDateString()}</span>
@@ -101,7 +101,7 @@ export async function renderReports(container, app) {
                                                 <td class="p-5 text-xs font-bold text-slate-500 uppercase">${item.brand || 'N/A'}</td>
                                                 <td class="p-5 text-sm font-black ${item.stock_quantity <= 0 ? 'text-rose-600' : 'text-amber-600'}">${item.stock_quantity} units</td>
                                                 <td class="p-5 pr-8">
-                                                    <span class="px-3 py-1 rounded-full text-xs font-black uppercase ${item.stock_quantity <= 0 ? 'bg-rose-50 text-rose-600 border border-rose-200' : 'bg-amber-50 text-amber-600 border border-amber-200'}">
+                                                    <span class="px-3 py-1 rounded-none text-xs font-black uppercase ${item.stock_quantity <= 0 ? 'bg-rose-50 text-rose-600 border border-rose-200' : 'bg-amber-50 text-amber-600 border border-amber-200'}">
                                                         ${item.stock_quantity <= 0 ? 'Out of Stock' : 'Low Stock'}
                                                     </span>
                                                 </td>
