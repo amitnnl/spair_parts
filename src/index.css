@@ -5,10 +5,15 @@ body {
     font-family: 'Outfit', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #1e293b; /* professional slate-gray text */
-    background-color: #f8fafc; /* bg-slate-50 */
+    color: #1e293b;
+    /* professional slate-gray text */
+    background-color: #f8fafc;
+    /* bg-slate-50 */
 }
-.font-poppins { font-family: 'Outfit', sans-serif; }
+
+.font-poppins {
+    font-family: 'Outfit', sans-serif;
+}
 
 /* ── Components ─────────────────────────────────────────── */
 
@@ -20,27 +25,34 @@ body {
     padding-bottom: 0.5rem;
     font-size: 0.875rem;
     font-weight: 700;
-    color: #475569; /* text-slate-600 */
+    color: #475569;
+    /* text-slate-600 */
     border-radius: 0;
     transition: all 0.2s;
 }
+
 .nav-link:hover {
     background-color: #f8fafc;
     color: #ed1c24;
 }
+
 .nav-link.active {
-    color: #ed1c24; /* brand red */
-    background-color: #f1f5f9; /* slate-100 */
+    color: #ed1c24;
+    /* brand red */
+    background-color: #f1f5f9;
+    /* slate-100 */
     border-left: 4px solid #ed1c24;
 }
 
 /* Mobile nav items */
 .mobile-nav-item {
-    color: #94a3b8; /* slate-400 */
+    color: #94a3b8;
+    /* slate-400 */
 }
 
 .mobile-nav-item.active {
-    color: #ed1c24; /* brand red */
+    color: #ed1c24;
+    /* brand red */
 }
 
 .mobile-nav-item.active .nav-icon-container {
@@ -81,19 +93,23 @@ body {
     letter-spacing: 0.1em;
     transition: all 0.2s;
 }
+
 .btn-primary {
     background-color: #ed1c24;
     color: white;
     box-shadow: 0 10px 15px -3px rgba(237, 28, 36, 0.15);
 }
+
 .btn-primary:hover {
     background-color: #c1121f;
     transform: translateY(-2px);
 }
+
 .btn-secondary {
     background-color: #f1f5f9;
     color: #334155;
 }
+
 .btn-secondary:hover {
     background-color: #e2e8f0;
 }
@@ -125,6 +141,7 @@ body {
     padding-bottom: 1rem;
     text-align: left;
 }
+
 .table-auto tbody td {
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -140,13 +157,25 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .animate-marquee {
@@ -162,13 +191,29 @@ body {
 
 /* Lightning & Glow Effects */
 @keyframes lightning-pulse {
-    0%, 100% { opacity: 0.15; transform: scale(1); filter: blur(80px); }
-    50% { opacity: 0.3; transform: scale(1.1); filter: blur(100px); }
+
+    0%,
+    100% {
+        opacity: 0.15;
+        transform: scale(1);
+        filter: blur(80px);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: scale(1.1);
+        filter: blur(100px);
+    }
 }
 
 @keyframes lightning-strike {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
 .lightning-glow {
@@ -200,10 +245,25 @@ body {
 }
 
 /* ── Custom Scrollbar ────────────────────────────────────── */
-::-webkit-scrollbar        { width: 12px; height: 12px; }
-::-webkit-scrollbar-track  { background: #f8fafc; border-left: 1px solid #e2e8f0; }
-::-webkit-scrollbar-thumb  { background: #ed1c24; border-radius: 0; border: 2px solid #f8fafc; }
-::-webkit-scrollbar-thumb:hover { background: #c1121f; }
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f8fafc;
+    border-left: 1px solid #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ed1c24;
+    border-radius: 0;
+    border: 2px solid #f8fafc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #c1121f;
+}
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
@@ -212,7 +272,8 @@ body {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
+    -ms-overflow-style: none;
+    /* IE and Edge */
 }
 
 /* ── Print ───────────────────────────────────────────────── */
@@ -220,9 +281,12 @@ body {
     body * {
         visibility: hidden;
     }
-    #invoice-doc-modal, #invoice-doc-modal * {
+
+    #invoice-doc-modal,
+    #invoice-doc-modal * {
         visibility: visible;
     }
+
     #invoice-doc-modal {
         position: absolute !important;
         left: 0 !important;
@@ -232,7 +296,9 @@ body {
         padding: 0 !important;
         background: white !important;
     }
-    .no-print, .no-print * {
+
+    .no-print,
+    .no-print * {
         display: none !important;
         visibility: hidden !important;
     }
@@ -260,8 +326,8 @@ body {
     align-items: center;
     justify-content: center;
     color: #25D366;
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4), 
-                inset 0 0 12px rgba(37, 211, 102, 0.1);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4),
+        inset 0 0 12px rgba(37, 211, 102, 0.1);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: visible;
@@ -346,6 +412,7 @@ body {
         transform: scale(0.95);
         opacity: 1;
     }
+
     100% {
         transform: scale(1.25);
         opacity: 0;
@@ -353,9 +420,12 @@ body {
 }
 
 @keyframes onlineStatusPulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.4;
     }
+
     50% {
         opacity: 1;
     }
@@ -370,15 +440,31 @@ body {
 
 /* ── Premium Logo Effects ────────────────────────────────── */
 @keyframes logoPulse {
-    0% { box-shadow: 0 0 0 0 rgba(237, 28, 36, 0.4); }
-    70% { box-shadow: 0 0 0 15px rgba(0, 62, 100, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 62, 100, 0); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(237, 28, 36, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(0, 62, 100, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 62, 100, 0);
+    }
 }
 
 @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
-    100% { transform: translateY(0px); }
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 .logo-container-premium {
@@ -399,16 +485,22 @@ body {
 }
 
 @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .logo-text-gradient {
     background: linear-gradient(to bottom, #ed1c24, #111111);
     -webkit-background-clip: text;
-    background-clip: text; /* standard property */
+    background-clip: text;
+    /* standard property */
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .logo-badge {
@@ -466,7 +558,7 @@ body {
 }
 
 /* Ensure inner elements stay clickable and layered properly above the background spotlight pseudoelement */
-.spotlight-card > * {
+.spotlight-card>* {
     position: relative;
     z-index: 1;
 }
@@ -487,36 +579,70 @@ body {
 .group\/badge:hover .icon-shield {
     animation: shieldBounce 0.6s ease-in-out;
 }
+
 .group\/badge:hover .icon-cog {
     animation: spinCog 1.2s linear infinite;
 }
+
 .group\/badge:hover .icon-thumbs {
     animation: floatThumbs 0.6s ease-in-out alternate infinite;
 }
+
 .group\/badge:hover .icon-truck {
     animation: driveTruck 0.8s ease-in-out;
 }
 
 @keyframes shieldBounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.25) translateY(-2px); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.25) translateY(-2px);
+    }
 }
+
 @keyframes spinCog {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
 @keyframes floatThumbs {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-4px) rotate(5deg); }
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-4px) rotate(5deg);
+    }
 }
+
 @keyframes driveTruck {
-    0%, 100% { transform: translateX(0); }
-    30% { transform: translateX(-4px); }
-    70% { transform: translateX(6px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    30% {
+        transform: translateX(-4px);
+    }
+
+    70% {
+        transform: translateX(6px);
+    }
 }
 
 /* ── Hardware-Accelerated Sharp Vector SVG Rendering ── */
-svg, svg * {
+svg,
+svg * {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     transform-style: preserve-3d;
@@ -531,35 +657,46 @@ svg, svg * {
     box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.05), 0 5px 15px -5px rgba(0, 0, 0, 0.02);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .premium-heavy-card:hover {
     border-color: #ed1c24;
     box-shadow: 0 25px 50px -15px rgba(237, 28, 36, 0.08), 0 10px 25px -10px rgba(237, 28, 36, 0.04);
 }
 
 /* Make default tailwind cards visually heavier */
-.bg-white.rounded-3xl, .bg-white.rounded-\[2\.5rem\] {
+.bg-white.rounded-3xl,
+.bg-white.rounded-\[2\.5rem\] {
     border: 2px solid #e2e8f0 !important;
     box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.04) !important;
 }
 
 /* Robust headers and B2B visual weight */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     letter-spacing: -0.02em;
 }
 
 /* Bulky forms and inputs */
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"],
+input[type="number"],
+select,
+textarea {
     border-width: 2px !important;
     border-color: #e2e8f0 !important;
 }
 
-input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
     border-color: #ed1c24 !important;
 }
 
 /* ── Admin Sidebar Collapsible Toggle (Bulky B2B Console) ── */
 aside.sidebar-collapsed {
-    width: 5rem !important; /* Shrink sidebar to 80px */
+    width: 5rem !important;
+    /* Shrink sidebar to 80px */
 }
 
 /* Hide all text inside collapsed sidebar with smooth fade */
@@ -582,7 +719,7 @@ aside.sidebar-collapsed p.text-slate-400 {
 }
 
 /* Center user icon when collapsed */
-aside.sidebar-collapsed .p-5 > div {
+aside.sidebar-collapsed .p-5>div {
     justify-content: center !important;
     gap: 0 !important;
 }
@@ -594,7 +731,8 @@ aside.sidebar-collapsed button {
     padding-left: 0 !important;
     padding-right: 0 !important;
     gap: 0 !important;
-    border-left-width: 0 !important; /* Hide left accent border to keep it clean */
+    border-left-width: 0 !important;
+    /* Hide left accent border to keep it clean */
 }
 
 /* Ensure icons scale and center nicely */
@@ -615,3 +753,265 @@ aside.sidebar-collapsed .p-4 {
     padding-right: 0.5rem !important;
 }
 
+/* ══════════════════════════════════════════════════════════ */
+/* ── CLASSY & GLOSSY PREMIUM THEME EFFECTS ────────────────── */
+/* ══════════════════════════════════════════════════════════ */
+
+/* ── 1. Global Glossy Gradient Mesh Backgrounds (Targeting Page-Level Wrappers) ── */
+body,
+#view-container,
+#view-container>div,
+.min-h-screen,
+.min-h-\[calc\(100vh-80px\)\],
+.bg-slate-50:not(.rounded-\[2\.5rem\]),
+.bg-zinc-50 {
+    background:
+        radial-gradient(at 0% 0%, rgba(237, 28, 36, 0.04) 0px, transparent 50%),
+        radial-gradient(at 50% 0%, rgba(15, 23, 42, 0.02) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(237, 28, 36, 0.03) 0px, transparent 50%),
+        radial-gradient(at 10% 80%, rgba(237, 28, 36, 0.015) 0px, transparent 40%),
+        radial-gradient(at 80% 80%, rgba(15, 23, 42, 0.015) 0px, transparent 40%),
+        linear-gradient(180deg, #fafafa 0%, #f4f6f9 100%) !important;
+    background-attachment: fixed !important;
+}
+
+/* Ensure full page wrappers in login, register, warranty, and shipping views are transparent so the gradient mesh background shows */
+.min-h-\[calc\(100vh-80px\)\].bg-white,
+.min-h-screen.bg-white {
+    background: transparent !important;
+}
+
+/* ── Dark Mode Page-level Glass Theme (e.g. staff.js) ── */
+.min-h-\[calc\(100vh-80px\)\].bg-\[\#0B1120\],
+.min-h-screen.bg-\[\#0B1120\],
+.bg-\[\#0B1120\] {
+    background:
+        radial-gradient(at 0% 0%, rgba(237, 28, 36, 0.12) 0px, transparent 55%),
+        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 55%),
+        radial-gradient(at 50% 100%, rgba(237, 28, 36, 0.05) 0px, transparent 50%),
+        #0b1120 !important;
+    background-attachment: fixed !important;
+}
+
+/* ── 2. Glassmorphism Panels ── */
+#main-nav {
+    background: rgba(255, 255, 255, 0.65) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+aside {
+    background: rgba(253, 253, 253, 0.55) !important;
+    backdrop-filter: blur(24px) saturate(170%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(170%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.01) !important;
+}
+
+#mobile-nav {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.03) !important;
+}
+
+#global-search-container {
+    background: rgba(248, 250, 252, 0.75) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* ── 3. Glossy Card Overrides ── */
+.spotlight-card,
+.bg-white.rounded-none,
+.bg-white.rounded-3xl,
+.bg-white.rounded-\[2\.5rem\],
+.bg-slate-50.rounded-\[2\.5rem\],
+.bg-white.rounded-none.shadow-premium {
+    background: rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(16px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.02),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.8) !important;
+    transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.spotlight-card:hover,
+.bg-white.rounded-none:hover,
+.bg-white.rounded-3xl:hover,
+.bg-white.rounded-\[2\.5rem\]:hover,
+.bg-slate-50.rounded-\[2\.5rem\]:hover,
+.bg-white.rounded-none.shadow-premium:hover {
+    background: rgba(255, 255, 255, 0.75) !important;
+    border-color: rgba(237, 28, 36, 0.35) !important;
+    transform: translateY(-4px) !important;
+    box-shadow:
+        0 20px 40px -15px rgba(237, 28, 36, 0.12),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.95),
+        0 0 20px rgba(237, 28, 36, 0.04) !important;
+}
+
+/* ── Dark Mode Glass Card Hover Tweaks ── */
+.bg-white\/5.backdrop-blur-xl:hover,
+.bg-white\/\[0\.03\]:hover,
+.bg-white\/\[0\.02\]:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(237, 28, 36, 0.45) !important;
+    box-shadow: 0 0 25px rgba(237, 28, 36, 0.15) !important;
+}
+
+/* ── 4. Glossy Shine Reflection Hover Sweep ── */
+.spotlight-card,
+.btn-primary,
+.btn-secondary,
+.logo-badge,
+.whatsapp-btn,
+#global-search-btn,
+#main-nav .logo-container,
+.bg-white\/5.backdrop-blur-xl,
+.bg-white\/\[0\.03\],
+.bg-white\/\[0\.02\] {
+    position: relative;
+    overflow: hidden;
+}
+
+.spotlight-card::after,
+.btn-primary::after,
+.btn-secondary::after,
+.logo-badge::after,
+.whatsapp-btn::after,
+#global-search-btn::after,
+#main-nav .logo-container::after,
+.bg-white\/5.backdrop-blur-xl::after,
+.bg-white\/\[0\.03\]::after,
+.bg-white\/\[0\.02\]::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.35) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: rotate(25deg);
+    transition: none;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.spotlight-card:hover::after,
+.btn-primary:hover::after,
+.btn-secondary:hover::after,
+.logo-badge:hover::after,
+.whatsapp-btn:hover::after,
+#global-search-btn:hover::after,
+#main-nav .logo-container:hover::after,
+.bg-white\/5.backdrop-blur-xl:hover::after,
+.bg-white\/\[0\.03\]:hover::after,
+.bg-white\/\[0\.02\]:hover::after {
+    left: 150%;
+    transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── 5. Classy Glossy Inputs & Form Fields ── */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="search"],
+select,
+textarea {
+    background: rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1.5px solid rgba(15, 23, 42, 0.08) !important;
+    border-radius: 0px !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.01) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+select:focus,
+textarea:focus {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: #ed1c24 !important;
+    box-shadow:
+        0 0 0 4px rgba(237, 28, 36, 0.12),
+        inset 0 1px 1px rgba(0, 0, 0, 0.01) !important;
+}
+
+/* ── 6. Classy Modals (Backdrop Blur Overlays) ── */
+#product-view-modal>div,
+#quotation-modal>div,
+#bulk-order-modal>div,
+.fixed.inset-0.flex.items-center.justify-center.bg-black\/60>div {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(30px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow:
+        0 25px 70px -10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ── 7. Glassmorphic Badges ── */
+.bg-rose-50.text-\[\#ed1c24\],
+.bg-slate-100.text-slate-600,
+.bg-slate-50.text-slate-500,
+.bg-emerald-50.text-emerald-600 {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+}
+
+/* ── 8. Glossy Toast Notifications ── */
+.toast {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(16px) saturate(170%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(170%) !important;
+    border: 1.5px solid rgba(237, 28, 36, 0.25) !important;
+    box-shadow:
+        0 10px 30px rgba(237, 28, 36, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+}
+
+/* ── 9. Micro-animations ── */
+.logo-container svg {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo-container:hover svg {
+    transform: rotate(180deg) scale(1.1);
+}
+
+/* ── 10. Layout Shift & Alignment Fixes ── */
+body {
+    overflow-x: hidden;
+}
+
+.px-6 {
+    padding-left: 3.0rem !important;
+    padding-right: 1.5rem !important;
+}
+
+@media (min-width: 1024px) {
+    .lg\:px-10 {
+        padding-left: 3.5rem !important;
+        padding-right: 2.5rem !important;
+    }
+}

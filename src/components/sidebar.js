@@ -1,6 +1,6 @@
 export function getSidebar(active, app) {
     const isAdmin = app.state.user && app.state.user.role && app.state.user.role.toLowerCase() === 'admin';
-    const userName = app.state.user ? app.state.user.name : 'Guest Partner';
+    const userName = (app.state.user && app.state.user.name) ? app.state.user.name : 'Guest Partner';
     const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
     const collapseClass = isCollapsed ? 'sidebar-collapsed' : '';
     
